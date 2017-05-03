@@ -1,0 +1,22 @@
+<svg id="grey" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128.36 19.52">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #90a4ae;
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke: #90a4ae;
+        stroke-miterlimit: 10;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <title>arrows</title>
+  <polygon class="cls-1" points="60.02 19.52 60.09 11.48 67.03 15.56 60.02 19.52"/>
+  <path class="cls-2" d="M238.1,418.45c0,7.16,5.19,8.51,7.23,8.5h106c3,0,6.66-.69,6.66-7" transform="translate(-234.6 -411.45)"/>
+  <circle class="cls-2" cx="123.36" cy="5" r="4"/>
+  <circle class="cls-1" cx="123.36" cy="5" r="1.5"/>
+  <circle class="cls-2" cx="3.5" cy="5.5" r="2.5"/>
+</svg>

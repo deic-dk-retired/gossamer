@@ -1,0 +1,38 @@
+<div {{action 'toggleRulesDetail'}} class="card {{if isDetail "detail"}}">
+  <div class="protocol">
+    <span class="u{{archive.protocol}}">udp</span>
+    <span class="t{{archive.protocol}}">tcp</span>
+    <span class="i{{archive.protocol}}">icmp</span>
+    <span class="o{{archive.protocol}}">other</span>
+    <span class="counter">{{archive.count}}</span>
+  </div>
+  <div class="ruleinfo">
+    <div class="time">
+      <p><i class="icon calendar"></i> {{moment-format archive.fromdate 'ddd, MMM Do, YYYY'}}</p>
+      <p><i class="icon clock"></i> {{archive.maxfromtime}}</p>
+    </div>
+    <div class="duration">
+      <p><i class="icon history"></i><span> <span class="emph">active</span> for </span>
+      {{#if archive.totduration.years}}<span>{{archive.totduration.years}} years</span>{{/if}}
+      {{#if archive.totduration.months}}<span>{{archive.totduration.months}} months</span>{{/if}}
+      {{#if archive.totduration.days}}<span>{{archive.totduration.days}} days</span>{{/if}}
+      {{#if archive.totduration.hours}}<span>{{archive.totduration.hours}} hr</span>{{/if}}
+      {{#if archive.totduration.minutes}}<span>{{archive.totduration.minutes}} min</span>{{/if}}
+      {{#if archive.totduration.seconds}}<span>{{archive.totduration.seconds}} sec</span>{{/if}}
+      </p>
+    </div>
+    <div class="pktlen">
+      <p><i class="icon bullseye"></i>
+        {{archive.maxpktlen}} <span> bit{{#if (gt archive.maxpktlen 1)}}s{{/if}} </span>
+      </p>
+    </div>
+    <div class="name">
+      <p><i class="icon id badge"></i> {{archive.rname}}</p>
+    </div>
+  </div>
+  <div class="ipadd">
+    <div class="srcip"><label>srce. ip</label> <span>{{archive.sourcepre}}</span></div>
+    <div class="destip"><label>dest. ip</label> <span>{{archive.destpre}}</span></div>
+    <div class="atck-arrow"></div>
+  </div>
+</div>

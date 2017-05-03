@@ -1,0 +1,10 @@
+<div class="form-block">
+  <form {{action 'authenticate' on='submit'}}>
+    {{input type='text' id='username' placeholder='Type in your username' value=username}}
+    {{input type='password' id='password' placeholder='and password' value=password}}
+    {{input type="submit" value="Log In"}}
+    {{#if errorMessage}}
+      <p>{{errorMessage}}</p>
+    {{/if}}
+  </form>
+</div>

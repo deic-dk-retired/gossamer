@@ -1,5 +1,7 @@
 {
   "name": "gossamer",
   "dependencies": {
+    "ember-cli-moment-shim": "0.0.3",
+    "semantic-ui": "^2.2.10"
   }
 }
