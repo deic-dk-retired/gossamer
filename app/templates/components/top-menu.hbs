@@ -22,16 +22,16 @@
       <a class="item"><i class="empty heart icon"></i>Themes</a>
       <a class="item"><i class="alarm outline icon"></i>Notifications</a>
       <div class="divider"></div>
-      <div class="header">Super Settings</div>
-      <a class="item"><i class="users icon"></i>Edit Users</a>
-      <a class="item"><i class="server icon"></i>Edit Networks</a>
-      <a class="item"><i class="university icon"></i>Edit Customers</a>
+      {{#if (eq usrtype 'super')}}
+        <div class="header">Super Settings</div>
+        <a class="item"><i class="users icon"></i>Edit Users</a>
+        <a class="item"><i class="server icon"></i>Edit Networks</a>
+        <a class="item"><i class="university icon"></i>Edit Customers</a>
+        <div class="divider"></div>
+      {{/if}}
+      {{#link-to "login" class="item"}}
+        <i class="sign out icon"></i>Sign Out
+       {{/link-to}}
     </div>
   {{/ui-dropdown}}
-  <div class="right menu">
-     {{#link-to 'index' class="item"}}
-      <i class="sign out icon"></i>
-      Sign Out
-     {{/link-to}}
-  </div>
 </div>

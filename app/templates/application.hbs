@@ -1,17 +1,15 @@
 {{#if (not-eq currentRouteName "login")}}
-  <div class="">
-    {{top-menu pagetitle=currentRouteName username='asmo'}}
-    {{side-menu}}
-    <div class="appcontent">
-      <div class="centered">
-        {{outlet}}
-      </div>
+  {{top-menu pagetitle=currentRouteName username='asmo' usrtype='super'}}
+  {{side-menu}}
+  <div class="appcontent">
+    <div class="centered">
+      {{outlet}}
     </div>
   </div>
 {{else}}
-  {{#if (eq currentRouteName "404")}}
-    {{render "404"}}
-  {{else}}
+  {{#if (eq currentRouteName "login")}}
     {{render "login"}}
+  {{else}}
+    {{not-found}}
   {{/if}}
 {{/if}}

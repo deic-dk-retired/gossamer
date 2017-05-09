@@ -12,7 +12,7 @@ Router.map(function () {
   this.route('plan')
   this.route('login')
   this.route('users')
-  this.route('404', { path: '/*wildcard' })
+  this.route('not-found', {path: '/*path'})
 })
 
 export default Router

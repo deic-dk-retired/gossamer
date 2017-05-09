@@ -1,7 +1,7 @@
 {
   "name": "gossamer",
   "version": "0.0.0",
-  "description": "Small description for gossamer goes here",
+  "description": "Gossamer is a analytics tool for DDoS attacks monitored and managed by fastnetmon",
   "license": "MIT",
   "author": "",
   "directories": {
