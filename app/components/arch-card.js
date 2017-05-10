@@ -2,10 +2,10 @@ import Ember from 'ember'
 
 export default Ember.Component.extend({
   tagName: '',
-  isDetail: false,
+  showMore: false,
   actions: {
-    toggleRulesDetail () {
-      this.toggleProperty('isDetail')
+    toggleRulesCard () {
+      this.toggleProperty('showMore')
       // call to detail view/component here
       // console.log('showRulesDetail ' + this.isDetail)
     }
