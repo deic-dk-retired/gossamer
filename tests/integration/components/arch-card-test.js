@@ -24,14 +24,14 @@ moduleForComponent('arch-card', 'Integration | Component | arch card', {
   integration: true
 })
 
-test('should display rules details', function(assert) {
+test('should display rules details', function (assert) {
   this.set('rulesObj', archive)
   this.render(hbs`{{arch-card archive=rulesObj}}`)
-  assert.equal(this.$('.protocol .counter').text().trim(), '2', 'Count: 2');
-  assert.equal(this.$('.name p').text().trim(), '00:25:90:47:2b:48', 'RuleName: 00:25:90:47:2b:48');
+  assert.equal(this.$('.protocol .counter').text().trim(), '2', 'Count: 2')
+  assert.equal(this.$('.name p').text().trim(), '00:25:90:47:2b:48', 'RuleName: 00:25:90:47:2b:48')
 })
 
-test('should toggle detail class on click', function(assert) {
+test('should toggle detail class on click', function (assert) {
   this.set('rulesObj', archive)
   this.render(hbs`{{arch-card archive=rulesObj}}`)
   assert.equal(this.$('.card.detail').length, 0, 'initially rendered as a card')

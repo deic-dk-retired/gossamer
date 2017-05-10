@@ -24,7 +24,7 @@ moduleForComponent('arch-list', 'Integration | Component | arch list', {
   integration: true
 })
 
-test('should display rules listing', function(assert) {
+test('should display rules listing', function (assert) {
   this.set('rulesObj', archive)
   this.render(hbs`{{arch-list archive=rulesObj}}`)
   assert.equal(this.$('.srcip span').text().trim(), '60.28.184.234', 'Source IP: 60.28.184.234')
