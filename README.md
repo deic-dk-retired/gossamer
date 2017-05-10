@@ -19,6 +19,10 @@ You will need the following things properly installed on your computer.
 * `cd gossamer`
 * `npm install`
 * `bower install`
+* `ember install ember-moment`
+* `ember install ember-cli-moment-shim` 
+* `ember install semantic-ui-ember`
+* `ember generate semantic-ui-ember`
 
 ## Running / Development
 
