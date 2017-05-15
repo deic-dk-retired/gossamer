@@ -20,5 +20,5 @@ export default DS.Model.extend({
     hours: DS.attr('number'),
     minutes: DS.attr('number'),
     seconds: DS.attr('number')
-  }
+  };
 })
