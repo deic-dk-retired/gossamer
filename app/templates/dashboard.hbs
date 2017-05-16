@@ -1,6 +1,10 @@
 <p>Dashboard here</p>
-  {{#each model as |t|}}
-    <p>{{t.cidr}}</p>
-    <p>{{t.x}}</p>
-    <p>{{t.y}}</p>
-  {{/each}}
+  {{#if (lt model.size 1)}}
+    <p>no results for the given time interval</p>
+  {{else}}
+    {{#each model.data as |t|}}
+      <p>{{t.cidr}}</p>
+      <p>{{t.x}}</p>
+      <p>{{t.y}}</p>
+    {{/each}}
+  {{/if}}
