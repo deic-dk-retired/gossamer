@@ -1,0 +1,35 @@
+<div {{action 'toggleRulesCard'}} class="card {{if showMore "detail"}}">
+  <div class="protocol">
+    <span class="u{{rule.ipprotocol}}">udp</span>
+    <span class="t{{rule.ipprotocol}}">tcp</span>
+    <span class="i{{rule.ipprotocol}}">icmp</span>
+    <span class="o{{rule.ipprotocol}}">other</span>
+    <span class="counter">{{rule.count}}</span>
+  </div>
+  <div class="ruleinfo">
+    <div class="time">
+      <p><i class="icon calendar"></i> {{moment-format rule.validfrom 'ddd, MMM Do, YYYY'}}</p>
+      <p><i class="icon clock"></i> {{moment-format rule.validfrom 'hh:mm:ss a'}}</p>
+    </div>
+    <div class="duration">
+      <p>
+        <i class="icon history"></i>
+        <span> <span class="emph">active</span> for </span>
+        <span>{{moment-duration rule.validfrom rule.validto}}</span>
+      </p>
+    </div>
+    <div class="pktlen">
+      <p><i class="icon bullseye"></i>
+        {{rule.packetlength}} <span> bit{{#if (gt rule.packetlength 1)}}s{{/if}} </span>
+      </p>
+    </div>
+    <div class="name">
+      <p><i class="icon id badge"></i> {{rule.rule_name}}</p>
+    </div>
+  </div>
+  <div class="ipadd">
+    <div class="srcip"><label>srce. ip</label> <span>{{rule.sourcepre}}</span></div>
+    <div class="destip"><label>dest. ip</label> <span>{{rule.destpre}}</span></div>
+    <div class="atck-arrow"></div>
+  </div>
+</div>

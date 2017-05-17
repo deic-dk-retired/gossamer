@@ -8,10 +8,10 @@ const Router = Ember.Router.extend({
 
 Router.map(function () {
   this.route('dashboard')
-  this.route('archive', {path: '/rules'})
   this.route('plan')
   this.route('login')
   this.route('users')
+  this.route('rules')
   this.route('not-found', {path: '/*path'})
 })
 

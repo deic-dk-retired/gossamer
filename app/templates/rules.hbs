@@ -2,7 +2,7 @@
 <div class="history-cards">
   {{#each model as |rules i|}}
     {{#if (lte i 7)}}
-      {{arch-card archive=rules}}
+      {{rules-card rule=rules}}
     {{/if}}
   {{/each}}
 </div>
@@ -11,7 +11,7 @@
   <ul class="timeline">
   {{#each model as |rules j|}}
     {{#if (and (gt j 7) (lt j 15))}}
-      {{arch-list archive=rules}}
+      {{rules-list rule=rules}}
     {{/if}}
   {{/each}}
   </ul>
