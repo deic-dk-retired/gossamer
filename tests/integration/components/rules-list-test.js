@@ -3,30 +3,24 @@ import hbs from 'htmlbars-inline-precompile'
 import Ember from 'ember'
 
 let rules = Ember.Object.create({
-  flowspecruleid: '2677',
-  rule_name: '00:25:90:47:2b:48',
-  administratorid: 42,
-  direction: 'in',
-  validfrom: '2017-05-17T10:51:22.304Z',
-  validto: '2017-05-17T11:01:22.304Z',
-  fastnetmoninstanceid: 1,
-  isactivated: true,
-  isexpired: true,
-  destinationprefix: '130.226.136.242',
-  sourceprefix: null,
-  ipprotocol: 'tcp',
-  srcordestport: '80',
-  destinationport: '80',
-  sourceport: null,
-  icmptype: null,
-  icmpcode: null,
-  tcpflags: 'syn',
-  packetlength: 174,
-  dscp: null,
-  fragmentencoding: null,
-  description: null,
-  customerid: 1,
-  action: 'rate-limit 9600'
+  admname: 'Fastnetmon Developer',
+  rulename: '00:25:90:47:2b:48',
+  protocol: 'tcp',
+  fromdate: '2017-05-18',
+  minfromtime: '00:44:58',
+  todate: '2017-05-18',
+  maxtotime: '12:57:39',
+  srcprefix: null,
+  destprefix: '130.226.136.242',
+  action: 'discard',
+  portsaff: '26',
+  maxpktlength: null,
+  totduration: {
+    hours: 4,
+    minutes: 20
+  },
+  isactive: true,
+  isexpired: true
 })
 
 moduleForComponent('rules-list', 'Integration | Component | rules list', {
@@ -35,7 +29,18 @@ moduleForComponent('rules-list', 'Integration | Component | rules list', {
 
 test('should display rules listing', function (assert) {
   this.set('rulesObj', rules)
-  this.render(hbs`{{rules-list rules=rulesObj}}`)
-  assert.equal(this.$('.srcip span').text().trim(), '60.28.184.234', 'Source IP: 60.28.184.234')
-  assert.equal(this.$('.destip span').text().trim(), '130.226.136.242', 'Dest IP: 130.226.136.242')
+  this.render(hbs`{{rules-list rule=rulesObj}}`)
+  assert.equal(this.$('.protocol span').text().trim(), 'tcp', 'Protocol: tcp')
+  assert.equal(this.$('.destip span').text(), '130.226.136.242', 'Dest IP: 130.226.136.242')
+  assert.equal(this.$('.ports span').text(), '26', 'Affected Ports: 26')
+})
+
+test('should toggle detail class on click', function (assert) {
+  this.set('rulesObj', rules)
+  this.render(hbs`{{rules-list rule=rulesObj}}`)
+  assert.equal(this.$('.thumb.detail').length, 0, 'initially rendered as a list')
+  this.$('.thumb').click()
+  assert.equal(this.$('.thumb.detail').length, 1, 'rendered list detail')
+  this.$('.thumb').click()
+  assert.equal(this.$('.thumb.detail').length, 0, 'rendered list after second click')
 })

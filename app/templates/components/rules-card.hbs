@@ -1,10 +1,10 @@
-<div {{action 'toggleRulesCard'}} class="card {{if showMore "detail"}}">
+<div {{action 'toggleDetail'}} class="card {{if showMore "detail"}}">
   <div class="protocol">
-    <span class="u{{rule.ipprotocol}}">udp</span>
-    <span class="t{{rule.ipprotocol}}">tcp</span>
-    <span class="i{{rule.ipprotocol}}">icmp</span>
-    <span class="o{{rule.ipprotocol}}">other</span>
-    <span class="counter">{{rule.count}}</span>
+    <span class="u{{rule.protocol}}">udp</span>
+    <span class="t{{rule.protocol}}">tcp</span>
+    <span class="i{{rule.protocol}}">icmp</span>
+    <span class="o{{rule.protocol}}">other</span>
+    <span class="counter">{{rule.portsaff}}</span>
   </div>
   <div class="ruleinfo">
     <div class="time">
@@ -13,31 +13,38 @@
     </div>
     <div class="duration">
       <p>
-        <i class="icon history"></i>
+        <i class="icon hourglass end"></i>
         <span> <span class="emph">active</span> for </span>
-        <span>{{moment-duration rule.validfrom rule.validto}}</span>
+        <span>{{moment-duration rule.totduration}}</span>
       </p>
     </div>
     <div class="pktlen">
-      <p><i class="icon bullseye"></i>
-        {{rule.packetlength}} <span> bit{{#if (gt rule.packetlength 1)}}s{{/if}} </span>
+      <p><i class="icon cube"></i>
+        {{#if (eq rule.maxpktlength null)}}
+          &hellip;
+        {{else}}
+          {{rule.maxpktlength}} <span> bit{{#if (gt rule.maxpktlength 1)}}s{{/if}} </span>
+        {{/if}}
       </p>
     </div>
     <div class="name">
-      <p><i class="icon id badge"></i> {{rule.rule_name}}</p>
+      <p><i class="icon sticky note outline"></i> {{rule.rulename}}</p>
+    </div>
+    <div class="action">
+      <p><i class="icon fire extinguisher"></i> {{rule.action}}</p>
     </div>
   </div>
   <div class="ipadd">
     <div class="srcip"><label>srce. ip</label>
       <span>
-        {{#if (eq rule.sourceprefix null)}}
+        {{#if (eq rule.srcprefix null)}}
          &hellip;:&hellip;:&hellip;:&hellip;
         {{else}}
-          {{rule.sourceprefix}}
+          {{rule.srcprefix}}
         {{/if}}
       </span>
     </div>
-    <div class="destip"><label>dest. ip</label> <span>{{rule.destinationprefix}}</span></div>
+    <div class="destip"><label>dest. ip</label> <span>{{rule.destprefix}}</span></div>
     <div class="atck-arrow"></div>
   </div>
 </div>

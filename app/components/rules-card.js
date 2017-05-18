@@ -4,7 +4,7 @@ export default Ember.Component.extend({
   tagName: '',
   showMore: false,
   actions: {
-    toggleRulesCard () {
+    toggleDetail () {
       this.toggleProperty('showMore')
       // call to detail view/component here
       // console.log('showRulesDetail ' + this.isDetail)
