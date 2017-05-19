@@ -1,15 +1,15 @@
 <div class="required twelve wide field">
   <label>ICMP Type</label>
-    {{#ui-dropdown class="search selection" selected=icmp_type onChange=(action (mut icmp_type)) as |execute mapper|}}
+    {{#ui-dropdown class="search selection" selected=icmptype onChange=(action (mut icmptype)) as |execute mapper|}}
       <div class="default text">Select Type</div>
       <i class="dropdown icon"></i>
       <div class="menu">
         {{!-- <div class="item" data-value="echo">Echo Reply</div>
         <div class="item" data-value="unasgn">Unassigned</div>
         <div class="item" data-value="unreach">Destination Unreachable</div> --}}
-        {{#each model as |types|}}
-          <div class="item" data-value="{{types.value}}">
-            {{types.type}}
+        {{#each type as |t|}}
+          <div class="item" data-value="{{t.value}}">
+            {{t.type}}
           </div>
         {{/each}}
       </div>
@@ -17,18 +17,18 @@
 </div>
 <div class="required twelve wide field">
   <label>ICMP Code</label>
-  {{#ui-dropdown class="search selection" selected=icmp_code onChange=(action (mut icmp_code)) as |execute mapper|}}
+  {{#ui-dropdown class="search selection" selected=icmpcode onChange=(action (mut icmpcode)) as |execute mapper|}}
     <div class="default text">Select Code</div>
     <i class="dropdown icon"></i>
     <div class="menu">
-      <div class="item" data-value="a">Code a</div>
+      {{!-- <div class="item" data-value="a">Code a</div>
       <div class="item" data-value="b">Code b</div>
-      <div class="item" data-value="c">Code c</div>
-     {{!--  {{#each types as |type|}}
-        <div class="item" data-value="{{map-value mapper type}}">
-          {{type}}
+      <div class="item" data-value="c">Code c</div> --}}
+      {{#each code as |c|}}
+        <div class="item" data-value="{{c.value}}">
+          {{c.code}}
         </div>
-      {{/each}} --}}
+      {{/each}}
     </div>
   {{/ui-dropdown}}
 </div>

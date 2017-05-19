@@ -31,7 +31,7 @@
       {{udp-fields}}
     {{else}}
       {{#if (eq protocol "icmp")}}
-        {{icmp-fields}}
+        {{icmp-fields type=model}}
       {{else}}
         Choose a protocol above
       {{/if}}
@@ -69,7 +69,7 @@
     </div>
   </div>
 
-  <div class="ui animated fade button blue" tabindex="0">
+  <div class="ui mini animated fade button blue" tabindex="0">
     <div class="visible content">Add</div>
     <div class="hidden content">
       <i class="add arrow icon"></i>
