@@ -1,26 +1,26 @@
 import DS from 'ember-data'
 
 export default DS.Model.extend({
-  admname: DS.attr('string'),
-  rulename: DS.attr('string'),
-  protocol: DS.attr('string'),
-  fromdate: DS.attr('date'),
-  minfromtime: DS.attr('date'),
-  todate: DS.attr('date'),
-  maxtotime: DS.attr('date'),
-  srcprefix: DS.attr('string'),
-  destprefix: DS.attr('string'),
-  action: DS.attr('string'),
-  portsaff: DS.attr('number'),
-  maxpktlength: DS.attr('number'),
+  admname: DS.attr(),
+  rulename: DS.attr(),
+  protocol: DS.attr(),
+  fromdate: DS.attr(),
+  minfromtime: DS.attr(),
+  todate: DS.attr(),
+  maxtotime: DS.attr(),
+  srcprefix: DS.attr(),
+  destprefix: DS.attr(),
+  action: DS.attr(),
+  portsaff: DS.attr(),
+  maxpktlength: DS.attr(),
   totduration: {
-    years: DS.attr('number'),
-    months: DS.attr('number'),
-    days: DS.attr('number'),
-    hours: DS.attr('number'),
-    minutes: DS.attr('number'),
-    seconds: DS.attr('number')
+    years: DS.attr(),
+    months: DS.attr(),
+    days: DS.attr(),
+    hours: DS.attr(),
+    minutes: DS.attr(),
+    seconds: DS.attr()
   },
-  isactive: DS.attr('boolean'),
-  isexpired: DS.attr('boolean')
+  isactive: DS.attr(),
+  isexpired: DS.attr()
 })
