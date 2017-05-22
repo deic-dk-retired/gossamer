@@ -48,7 +48,7 @@
       </div>
     </div>
     <div class="time">
-      <span>{{moment-to-now (moment-format rule.fromdate) hidePrefix=true interval=86400}} ago at {{moment-format rule.validfrom 'hh:mm:ss a'}}</span>
+      <span>{{moment-to-now (moment-format rule.validfrom) hidePrefix=true interval=86400}} ago at {{moment-format rule.validfrom 'hh:mm:ss a'}}</span>
       <span>{{moment-format rule.fromdate 'ddd, MMM Do, YYYY'}}</span>
     </div>
   </div>

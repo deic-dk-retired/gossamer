@@ -7,7 +7,7 @@ export default Ember.Route.extend({
     //   .then((response) => {
     //     return response.data
     //   })
-    return this.store.findAll('rules')
+    return this.store.findAll('rule')
   },
   actions: {
     showOlder () {
