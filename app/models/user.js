@@ -1,8 +1,8 @@
 import DS from 'ember-data'
 
 export default DS.Model.extend({
-  status: DS.attr(),
-  data: DS.attr(),
-  size: DS.attr(),
-  message: DS.attr()
+  custId: DS.attr(),
+  accessType: DS.attr(),
+  name: DS.attr(),
+  username: DS.attr()
 })
