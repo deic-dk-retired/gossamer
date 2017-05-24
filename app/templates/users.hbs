@@ -1,5 +1,3 @@
-{{#each model as |u|}}
-  <p>{{u.id}}</p>
-  <p>{{u.name}}</p>
-  <p>{{u.username}}</p>
+{{#each model as |appUser|}}
+  <p>{{appUser.id}}, {{appUser.custid}}, {{appUser.accessType}}, {{appUser.name}}, {{appUser.username}}</p>
 {{/each}}
