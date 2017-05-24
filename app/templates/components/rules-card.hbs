@@ -1,9 +1,9 @@
 <div {{action 'toggleDetail'}} class="card {{if showMore "detail"}}">
   <div class="protocol">
-    <span class="u{{rule.protocol}}">udp</span>
-    <span class="t{{rule.protocol}}">tcp</span>
-    <span class="i{{rule.protocol}}">icmp</span>
-    <span class="o{{rule.protocol}}">other</span>
+    <span class="u{{rule.ipprotocol}}">udp</span>
+    <span class="t{{rule.ipprotocol}}">tcp</span>
+    <span class="i{{rule.ipprotocol}}">icmp</span>
+    <span class="o{{rule.ipprotocol}}">other</span>
     <span class="counter">{{rule.portsaff}}</span>
   </div>
   <div class="ruleinfo">
@@ -15,20 +15,20 @@
       <p>
         <i class="icon hourglass end"></i>
         <span> <span class="emph">active</span> for </span>
-        <span>{{moment-duration rule.totduration}}</span>
+        <span>{{moment-duration rule.duration}}</span>
       </p>
     </div>
     <div class="pktlen">
       <p><i class="icon cube"></i>
-        {{#if (eq rule.maxpktlength null)}}
+        {{#if (eq rule.pktlen null)}}
           &hellip;
         {{else}}
-          {{rule.maxpktlength}} <span> bit{{#if (gt rule.maxpktlength 1)}}s{{/if}} </span>
+          {{rule.pktlen}} <span> bit{{#if (gt rule.pktlen 1)}}s{{/if}} </span>
         {{/if}}
       </p>
     </div>
     <div class="name">
-      <p><i class="icon sticky note outline"></i> {{rule.rulename}}</p>
+      <p><i class="icon sticky note outline"></i> {{rule.rname}}</p>
     </div>
     <div class="action">
       <p><i class="icon fire extinguisher"></i> {{rule.action}}</p>
