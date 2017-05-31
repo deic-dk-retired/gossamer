@@ -1,3 +1,9 @@
 {{#each model as |appUser|}}
-  <p>{{appUser.id}}, {{appUser.custid}}, {{appUser.accesstype}}, {{appUser.name}}, {{appUser.username}}</p>
+  <p>{{appUser.id}},
+    {{appUser.custid}},
+    {{appUser.accesstype}},
+    {{appUser.name}},
+    {{appUser.username}},
+    {{moment-format appUser.lastloggedin 'ddd, MMM Do, YY hh:mm:ss a'}},
+    {{moment-format appUser.pwdlastchangedon 'ddd, MMM Do, YY hh:mm:ss a'}} </p>
 {{/each}}

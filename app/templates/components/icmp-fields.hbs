@@ -4,12 +4,9 @@
       <div class="default text">Select Type</div>
       <i class="dropdown icon"></i>
       <div class="menu">
-        {{!-- <div class="item" data-value="echo">Echo Reply</div>
-        <div class="item" data-value="unasgn">Unassigned</div>
-        <div class="item" data-value="unreach">Destination Unreachable</div> --}}
-        {{#each type as |t|}}
-          <div class="item" data-value="{{t.value}}">
-            {{t.type}}
+        {{#each model.icmptypes as |icmptype|}}
+          <div class="item" data-value="{{icmptype.id}}">
+            {{icmptype.value}}
           </div>
         {{/each}}
       </div>
@@ -24,11 +21,11 @@
       {{!-- <div class="item" data-value="a">Code a</div>
       <div class="item" data-value="b">Code b</div>
       <div class="item" data-value="c">Code c</div> --}}
-      {{#each code as |c|}}
-        <div class="item" data-value="{{c.value}}">
-          {{c.code}}
-        </div>
-      {{/each}}
+      {{#each model.icmpcodes as |icmpcode|}}
+          <div class="item" data-value="{{icmpcode.id}}">
+            {{icmpcode.value}}
+          </div>
+        {{/each}}
     </div>
   {{/ui-dropdown}}
 </div>

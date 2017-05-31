@@ -1,12 +1,11 @@
 import Ember from 'ember'
+import RSVP from 'rsvp'
 
 export default Ember.Route.extend({
   model () {
-    // return this.store.findAll('icmpt')
-    var url = 'http://10.33.1.97:4242/api/icmpt'
-    return Ember.$.getJSON(url)
-    .then((response) => {
-      return response.data
+    return RSVP.hash({
+      icmptypes: this.get('store').findAll('icmptype'),
+      icmpcodes: this.get('store').findAll('icmpcode')
     })
   }
 })
