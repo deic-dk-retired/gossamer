@@ -2,4 +2,6 @@ import DS from 'ember-data'
 
 export default DS.Model.extend({
   value: DS.attr('string')
+  // codeid: DS.attr('number'),
+  // codevalue: DS.attr('string')
 })
