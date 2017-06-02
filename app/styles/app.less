@@ -423,26 +423,28 @@ aside {
     background: @light;
     text-align: left;
     min-width: @aside-width;
-    .shadow(2px,2px,2px,0,rgba(0,0,0,.1));
+    .shadow(-1px,2px,1px,1px,rgba(0,0,0,.1));
     p {
       margin:0;
       padding:0;
       line-height: 1.5em;
+      border-bottom: 1px solid @grey100;
+      padding: @sm 0;
     }
     cursor: pointer;
     display: inline-block;
     border-radius: 4px;
-    border: 2px solid @grey200;
+    border: 1px solid @grey200;
     margin:0;
     margin-right: @xlg*2;
     margin-bottom: @xxlg*1.8;
     &:hover {
       .shortTran();
       cursor: pointer;
-      border: 2px solid @liblue500;
+      border: 1px solid @liblue500;
       .protocol {
         .shortTran();
-        border-bottom: 2px solid @liblue500;
+        border-bottom: 1px solid @liblue500;
         > span {
           &.ttcp, &.uudp, &.iicmp, &.oother {
             color: @liblue500;
@@ -470,9 +472,9 @@ aside {
   }
   .protocol {
     text-align: center;
-    padding: @sm*.5;
+    padding: @sm 0;
     margin: auto;
-    border-bottom: 2px solid @grey200;
+    border-bottom: 1px solid @grey200;
     > span {
       display: inline-block;
       width: 50px;
@@ -496,49 +498,29 @@ aside {
       &.counter {
         position: absolute;
         display: block;
-        text-align: center;
-        line-height: 2.2em;
-        background: @light;
-        color: @grey300;
-        font-weight: 300;
-        border: 2px solid @grey200;
-        width: 25px;
-        height: 25px;
-        border-radius: 55%;
-        font-size: @sm*.8;
-        margin-top: -70px;
-        margin-left: 280px;
+        border: 0;
+        margin-top: -85px;
+        margin-left: 275px;
       }
     }
   }
   .ruleinfo {
-    padding: @sm;
+    padding: 0 @sm;
     margin: auto;
     color:@grey300;
-    .pktlen > p, .time > p,.duration > p {
+    p {
       font-size: @md;
-    }
-    .name > p {
-      font-size: @md;
-      text-transform: uppercase;
-    }
-    > div > p > span, > div > p {
-      // color:@grey300;
     }
     > div > p >span:first-child {
-      // color:@grey300;
       width: @md;
       margin-right: @md;
       text-align: center;
     }
-    .emph {
-      // color: @grey500;
-      text-transform: capitalize;
-    }
   }
   .ipadd {
     padding: 0;
-    padding-bottom: @xxlg*3.6;
+    padding-top: @lg;
+    padding-bottom: @xxlg*3.8;
     margin: auto;
     text-align: center;
     height: @xxlg*3;

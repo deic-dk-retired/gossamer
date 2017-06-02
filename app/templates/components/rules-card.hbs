@@ -4,22 +4,22 @@
     <span class="t{{rule.ipprotocol}}">tcp</span>
     <span class="i{{rule.ipprotocol}}">icmp</span>
     <span class="o{{rule.ipprotocol}}">other</span>
-    <span class="counter">{{rule.destport}}</span>
+    <span class="counter"><a class="counter ui basic circular label tiny">{{rule.destport}}</a></span>
   </div>
   <div class="ruleinfo">
     <div class="time">
-      <p><i class="icon calendar"></i> {{moment-format rule.validfrom 'ddd, DD MMM, \'YY'}}</p>
-      <p><i class="icon clock"></i> {{moment-format rule.validfrom 'hh:mm:ss a'}}</p>
+      <p><i class="icon calendar"></i> {{moment-format rule.validfrom 'ddd, DD MMM'}} # {{moment-format rule.validfrom 'hh:mm:ss a'}} #</p>
+      {{!-- <p><i class="icon clock"></i> </p> --}}
     </div>
     <div class="duration">
       <p>
-        <i class="icon hourglass end"></i>
-        <span> <span class="emph">active</span> for </span>
+        <i class="icon circle notched end"></i>
+        <span> <span class="emph">Active</span> for </span>
         <span>{{moment-duration rule.duration}}</span>
       </p>
     </div>
     <div class="pktlen">
-      <p><i class="icon cube"></i>
+      <p><i class="icon bomb"></i>
         {{#if (eq rule.pktlen null)}}
           &hellip;
         {{else}}
@@ -28,10 +28,10 @@
       </p>
     </div>
     <div class="name">
-      <p><i class="icon sticky note outline"></i> {{rule.rname}}</p>
+      <p><i class="icon barcode outline"></i> {{rule.rname}}</p>
     </div>
     <div class="action">
-      <p><i class="icon fire extinguisher"></i> {{rule.action}}</p>
+      <p><i class="icon fire"></i> {{rule.action}}</p>
     </div>
   </div>
   <div class="ipadd">
