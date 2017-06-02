@@ -4,11 +4,11 @@
     <span class="t{{rule.ipprotocol}}">tcp</span>
     <span class="i{{rule.ipprotocol}}">icmp</span>
     <span class="o{{rule.ipprotocol}}">other</span>
-    <span class="counter">{{rule.portsaff}}</span>
+    <span class="counter">{{rule.destport}}</span>
   </div>
   <div class="ruleinfo">
     <div class="time">
-      <p><i class="icon calendar"></i> {{moment-format rule.validfrom 'ddd, MMM Do, YYYY'}}</p>
+      <p><i class="icon calendar"></i> {{moment-format rule.validfrom 'ddd, DD MMM, \'YY'}}</p>
       <p><i class="icon clock"></i> {{moment-format rule.validfrom 'hh:mm:ss a'}}</p>
     </div>
     <div class="duration">
@@ -23,7 +23,7 @@
         {{#if (eq rule.pktlen null)}}
           &hellip;
         {{else}}
-          {{rule.pktlen}} <span> bit{{#if (gt rule.pktlen 1)}}s{{/if}} </span>
+          {{rule.pktlen}}<span>b</span>
         {{/if}}
       </p>
     </div>

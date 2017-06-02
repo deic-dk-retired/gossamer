@@ -19,37 +19,41 @@
     </div>
     <div class="stats">
       <div class="ports">
-        <label>affected port{{#if (gt rule.portsaff 1)}}s{{/if}}</label>
-        {{#if (lte rule.portsaff 9)}}
-        <span class="low">{{rule.portsaff}}</span>
+        <label>port</label>
+        {{#if (lte rule.destport 9)}}
+        <span class="low">{{rule.destport}}</span>
         {{else}}
-        {{#if (lte rule.portsaff 30)}}
-        <span class="med">{{rule.portsaff}}</span>
-        {{else}}
-        {{#if (gte rule.portsaff 31)}}
-        <span class="high">{{rule.portsaff}}</span>
-        {{/if}}
-        {{/if}}
+          {{#if (lte rule.destport 30)}}
+          <span class="med">{{rule.destport}}</span>
+          {{else}}
+            {{#if (gte rule.destport 31)}}
+            <span class="high">{{rule.destport}}</span>
+            {{/if}}
+          {{/if}}
         {{/if}}
       </div>
       <div class="pktsize">
-        <label>bits (max)</label>
-        {{#if (lte rule.maxpktlength 20)}}
-        <span class="low">{{rule.maxpktlength}}</span>
+        <label>bits</label>
+        {{#if (lte rule.pktlen 20)}}
+        <span class="low">{{rule.pktlen}}</span>
         {{else}}
-        {{#if (lte rule.maxpktlength 100)}}
-        <span class="med">{{rule.maxpktlength}}</span>
-        {{else}}
-        {{#if (gte rule.maxpktlength 101)}}
-        <span class="high">{{rule.maxpktlength}}</span>
+          {{#if (lte rule.pktlen 100)}}
+          <span class="med">{{rule.pktlen}}</span>
+          {{else}}
+            {{#if (gte rule.pktlen 101)}}
+            <span class="high">{{rule.pktlen}}</span>
+            {{/if}}
+          {{/if}}
         {{/if}}
-        {{/if}}
-        {{/if}}
+      </div>
+      <div class="action">
+        <label>action</label>
+        <span>{{rule.action}}</span>
       </div>
     </div>
     <div class="time">
-      <span>{{moment-to-now (moment-format rule.validfrom) hidePrefix=true interval=86400}} ago at {{moment-format rule.validfrom 'hh:mm:ss a'}}</span>
-      <span>{{moment-format rule.fromdate 'ddd, MMM Do, YYYY'}}</span>
+      <span>{{moment-from-now (moment-format rule.validfrom) hidePrefix=true interval=86400}}</span>
+      <span>{{moment-format rule.validfrom 'DD MMM, \'YY'}} at {{moment-format rule.validfrom 'hh:mm:ss a'}}</span>
     </div>
   </div>
 </li>

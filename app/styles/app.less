@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import url('https://fonts.googleapis.com/css?family=Work+Sans:300,500');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:200,400');
 
 @liblue500: #03A9F4;
 @liblue600: #039BE5;
@@ -25,8 +25,11 @@
 @xlg: 18/16em;
 @xxlg: 20/16em;
 
-// sidebar width
-@aside-width: 200px;
+
+
+// sidebar and content width
+@aside-width: 8%;
+@content-width: 92%;
 
 // breaks
 @break-small: 480px;
@@ -80,15 +83,15 @@
   -webkit-appearance: none;
    -moz-appearance: none;
         appearance: none;
-        font-weight: 300;
+        font-weight: 200;
 }
 
 .numberfont() {
   // font-family: 'Titillium Web', sans-serif;
-  font-family: 'Work Sans', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 .textfont() {
-  font-family: 'Work Sans', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 //animation
@@ -308,7 +311,7 @@ header {
     padding: 0px;
     img{
       max-height: 20px;
-      padding: 0 4px;
+      padding: 0 6px;
     }
   }
   .ui.menu .item > .label,
@@ -324,7 +327,7 @@ aside {
   height:100%;
   display:block;
   position:absolute;
-  top: 48px;
+  top: 47px;
   background:@aside-bg;
   border-right: 1px solid @bordercolor;
   .shadow(0,0,2px,0,rgba(0,0,0,1));
@@ -348,7 +351,7 @@ aside {
     border-bottom:1px solid @bordercolor;
     nav {
       .unlist(block);
-      .listitem(block, 15px, 15px, @light, @aside-menu-hover, capitalize);
+      .listitem(block, 15px, 15px, @light, @aside-menu-hover, uppercase);
       .listlink(@light, 0px, 0px);
       font-size: @sm*1.1;
       text-align: left;
@@ -373,7 +376,7 @@ aside {
     font-size:@sm;
     line-height:1.5em;
     .settings {
-      .listitem(inline-block, 15px, 0px, @light, @aside-menu-hover, capitalize);
+      .listitem(inline-block, 15px, 0px, @light, @aside-menu-hover, uppercase);
       text-align: center;
       div {
         background: inherit;
@@ -397,12 +400,11 @@ aside {
   color: #777;
   background: @light;
   top:50px;
-  // left:@aside-width;
+  left:@aside-width;
   position:absolute;
   height: 95vh;
   height: 95%;
-  width: 100vw;
-  width: 100%;
+  width: @content-width;
   padding-bottom: @xxlg*2;
   overflow:hidden;
   overflow-y: scroll;
@@ -432,8 +434,8 @@ aside {
     border-radius: 4px;
     border: 2px solid @grey200;
     margin:0;
-    margin-right: @lg*.8;
-    margin-bottom: @xlg;
+    margin-right: @xlg*2;
+    margin-bottom: @xxlg*1.8;
     &:hover {
       .shortTran();
       cursor: pointer;
@@ -452,6 +454,9 @@ aside {
           border-color:@liblue500;
         }
       }
+      .ruleinfo{
+        color:@liblue500;
+      }
       .destip span {
         color: @liblue500;
       }
@@ -465,43 +470,43 @@ aside {
   }
   .protocol {
     text-align: center;
-    padding: @sm;
+    padding: @sm*.5;
     margin: auto;
     border-bottom: 2px solid @grey200;
     > span {
       display: inline-block;
-      width: @aside-width/5;
-      height: @aside-width/5;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       border: 1px solid @grey200;
-      color: @grey200;
-      font-size: @sm*.9;
+      color: @grey300;
+      font-size: @sm;
       text-transform: uppercase;
-      line-height: 3.5em;
+      line-height: 4em;
       text-align: center;
       margin-right: @sm;
       &:last-child {
         margin-right: 0;
       }
       &.ttcp, &.uudp, &.iicmp, &.oother {
-        color: @grey500;
-        border: 2px solid @grey500;
+        color: @grey300;
+        border: 2px solid @grey200;
         font-weight: 500;
       }
       &.counter {
         position: absolute;
         display: block;
         text-align: center;
-        line-height: 2em;
+        line-height: 2.2em;
         background: @light;
-        color: @grey500;
-        font-weight: 500;
-        border: 2px solid @grey500;
-        width: 23px;
-        height: 23px;
+        color: @grey300;
+        font-weight: 300;
+        border: 2px solid @grey200;
+        width: 25px;
+        height: 25px;
         border-radius: 55%;
         font-size: @sm*.8;
-        margin-top: -65px;
+        margin-top: -70px;
         margin-left: 280px;
       }
     }
@@ -509,6 +514,7 @@ aside {
   .ruleinfo {
     padding: @sm;
     margin: auto;
+    color:@grey300;
     .pktlen > p, .time > p,.duration > p {
       font-size: @md;
     }
@@ -517,17 +523,17 @@ aside {
       text-transform: uppercase;
     }
     > div > p > span, > div > p {
-      color:@grey500;
+      // color:@grey300;
     }
     > div > p >span:first-child {
-      color:@grey500;
+      // color:@grey300;
       width: @md;
       margin-right: @md;
       text-align: center;
     }
     .emph {
-      color: @grey500;
-      text-transform: uppercase;
+      // color: @grey500;
+      text-transform: capitalize;
     }
   }
   .ipadd {
@@ -537,6 +543,7 @@ aside {
     text-align: center;
     height: @xxlg*3;
     min-width: 300px;
+    color:@grey300;
     .numberfont();
     > div {
       width: 130px;
@@ -545,18 +552,18 @@ aside {
         display: block;
         font-size: @sm*.8;
         font-weight: 500;
-        color: @dark;
+        // color: @grey500;
         text-transform: uppercase;
       }
       &.destip {
         position: relative;
         span {
-          color: @dark;
+          // color: @grey500;
           font-size: @sm*1.2;
         }
       }
       span:first-child {
-        color:@grey200;
+        // color:@grey200;
       }
       &:first-child {
         margin-right: @xlg*1.4;
@@ -635,8 +642,8 @@ aside {
     .protocol > span {
       &:extend(.history-cards .protocol > span);
       border-width: 2px;
-      border-color: @grey500;
-      color: @grey500;
+      border-color: @grey300;
+      color: @grey300;
       font-weight: 500;
     }
     .ipadd, .stats {
@@ -652,15 +659,15 @@ aside {
         &.srcip span, &.destip span, &.span {
           &:extend(.history-cards .ipadd > div.destip span);
           font-size: @md;
-          color: @dark;
+          color: @grey300;
         }
         &.srcip span {
-          color: @grey500;
+          color: @grey300;
         }
         span {
           &:extend(.history-cards .ipadd > div span:first-child);
           font-size: @md;
-          color: @dark;
+          color: @grey300;
         }
         &:first-child {
           &:extend(.history-cards .ipadd > div:first-child);
@@ -676,11 +683,10 @@ aside {
       }
     }
     .pktlen, .count, .time {
-      font-size: @md;
-      color: @dark;
+      font-size: @sm;
+      color: @grey300;
     }
     .time {
-      font-size: @md;
       margin-right: 0;
       position: absolute;
       right:0;
@@ -699,7 +705,7 @@ aside {
         color: @liblue600;
       }
       .ipadd, .stats {
-        .destip span, .span {
+        .destip span, span {
           color: @liblue500;
         }
         span {
@@ -716,6 +722,9 @@ aside {
         .atck-arrow {
           background: url(@arr-ico-hover) no-repeat;
         }
+      }
+      .time{
+        color: @liblue500;
       }
     }
   }

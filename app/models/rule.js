@@ -7,14 +7,7 @@ export default DS.Model.extend({
   direct: DS.attr('string'),
   validfrom: DS.attr('date'),
   validto: DS.attr('date'),
-  duration: {
-    years: DS.attr('number'),
-    months: DS.attr('number'),
-    days: DS.attr('number'),
-    hours: DS.attr('number'),
-    minutes: DS.attr('number'),
-    seconds: DS.attr('number')
-  },
+  duration: DS.attr(),
   fmnId: DS.attr('number'),
   isActive: DS.attr('boolean'),
   isExpired: DS.attr('boolean'),
