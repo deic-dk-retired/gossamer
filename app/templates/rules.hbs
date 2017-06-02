@@ -1,4 +1,4 @@
-<p>Active Recently</p>
+<p># Recently</p>
 <div class="history-cards">
   {{#each model as |r i|}}
     {{#if (lte i 9)}}
@@ -6,7 +6,7 @@
     {{/if}}
   {{/each}}
 </div>
-<p>Active Earlier</p>
+<p># Earlier</p>
 <div class="history-thumbs">
   <ul class="timeline">
   {{#each model as |r j|}}
@@ -16,9 +16,9 @@
   {{/each}}
   </ul>
   <div class="sec-load center">
-    <button {{action 'showOlder'}} class="ui labeled mini icon button blue">
-      <i class="history icon"></i>
-      further back
+    <button {{action 'showOlder'}} class="compact icon ui button basic black mini">
+       <i class="download icon"></i>
+       More
     </button>
   </div>
 </div>
