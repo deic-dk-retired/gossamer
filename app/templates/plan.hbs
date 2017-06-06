@@ -1,6 +1,4 @@
 <h2>Schedule a rule</h2>
-{{!-- {{input type="text" value=title}} --}}
-{{!-- {{outlet}} --}}
 <form class="ui form mini four wide column">
   <div class="field">
     <label>Source</label>
@@ -31,7 +29,7 @@
       {{udp-fields}}
     {{else}}
       {{#if (eq protocol "icmp")}}
-        {{icmp-fields model=icmptype}}
+        {{icmp-fields}}
       {{else}}
         Choose a protocol above
       {{/if}}

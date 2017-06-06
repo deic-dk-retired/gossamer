@@ -28,8 +28,8 @@
 
 
 // sidebar and content width
-@aside-width: 8%;
-@content-width: 92%;
+@aside-width: 200px;
+@content-width: ~"calc(100% - @{aside-width})";
 
 // breaks
 @break-small: 480px;
@@ -87,7 +87,6 @@
 }
 
 .numberfont() {
-  // font-family: 'Titillium Web', sans-serif;
   font-family: 'Montserrat', sans-serif;
 }
 .textfont() {
@@ -351,7 +350,7 @@ aside {
     border-bottom:1px solid @bordercolor;
     nav {
       .unlist(block);
-      .listitem(block, 15px, 15px, @light, @aside-menu-hover, uppercase);
+      .listitem(block, 10px, 15px, @light, @aside-menu-hover, uppercase);
       .listlink(@light, 0px, 0px);
       font-size: @sm*1.1;
       text-align: left;
@@ -412,7 +411,7 @@ aside {
     padding: @xxlg;
     overflow: hidden;
     overflow-y: scroll;
-    width: 70vw;
+    width: 75vw;
     margin: 0 auto;
   }
 }
@@ -424,24 +423,23 @@ aside {
     text-align: left;
     min-width: @aside-width;
     .shadow(-1px,2px,1px,1px,rgba(0,0,0,.1));
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 3px;
+    border: 1px solid @grey200;
+    margin:0;
+    margin-right: @xxlg*2;
+    margin-bottom: @xxlg*1.8;
     p {
       margin:0;
       padding:0;
       line-height: 1.5em;
-      border-bottom: 1px solid @grey100;
       padding: @sm 0;
     }
-    cursor: pointer;
-    display: inline-block;
-    border-radius: 4px;
-    border: 1px solid @grey200;
-    margin:0;
-    margin-right: @xlg*2;
-    margin-bottom: @xxlg*1.8;
     &:hover {
       .shortTran();
       cursor: pointer;
-      border: 1px solid @liblue500;
+      border: 1px solid @liblue500!important;
       .protocol {
         .shortTran();
         border-bottom: 1px solid @liblue500;
@@ -474,7 +472,7 @@ aside {
     text-align: center;
     padding: @sm 0;
     margin: auto;
-    border-bottom: 1px solid @grey200;
+    border-bottom: 1px solid @grey100;
     > span {
       display: inline-block;
       width: 50px;
@@ -508,6 +506,7 @@ aside {
     padding: 0 @sm;
     margin: auto;
     color:@grey300;
+    border-bottom: 1px solid @grey100;
     p {
       font-size: @md;
     }
@@ -517,10 +516,10 @@ aside {
       text-align: center;
     }
   }
-  .ipadd {
+  .ip-add {
     padding: 0;
-    padding-top: @lg;
-    padding-bottom: @xxlg*3.8;
+    padding-top: @xs*.6;
+    padding-bottom: @xxlg*3.6;
     margin: auto;
     text-align: center;
     height: @xxlg*3;
@@ -543,9 +542,6 @@ aside {
           // color: @grey500;
           font-size: @sm*1.2;
         }
-      }
-      span:first-child {
-        // color:@grey200;
       }
       &:first-child {
         margin-right: @xlg*1.4;
@@ -628,18 +624,18 @@ aside {
       color: @grey300;
       font-weight: 500;
     }
-    .ipadd, .stats {
-      &:extend(.history-cards .ipadd);
+    .ip-add, .stats {
+      &:extend(.history-cards .ip-add);
       padding: 0;
       height: 60px;
       margin-right: @md;
       > div {
-        &:extend(.history-cards .ipadd > div);
+        &:extend(.history-cards .ip-add > div);
         label {
-          &:extend(.history-cards .ipadd > div label);
+          &:extend(.history-cards .ip-add > div label);
         }
         &.srcip span, &.destip span, &.span {
-          &:extend(.history-cards .ipadd > div.destip span);
+          &:extend(.history-cards .ip-add > div.destip span);
           font-size: @md;
           color: @grey300;
         }
@@ -647,16 +643,16 @@ aside {
           color: @grey300;
         }
         span {
-          &:extend(.history-cards .ipadd > div span:first-child);
+          &:extend(.history-cards .ip-add > div span:first-child);
           font-size: @md;
           color: @grey300;
         }
         &:first-child {
-          &:extend(.history-cards .ipadd > div:first-child);
+          &:extend(.history-cards .ip-add > div:first-child);
         }
       }
       .atck-arrow {
-        &:extend(.history-cards .ipadd .atck-arrow);
+        &:extend(.history-cards .ip-add .atck-arrow);
         background: url(@arr-ico) no-repeat;
         width: 122px;
         height: 18px;
@@ -686,7 +682,7 @@ aside {
         border-color: @bordercolor;
         color: @liblue600;
       }
-      .ipadd, .stats {
+      .ip-add, .stats {
         .destip span, span {
           color: @liblue500;
         }
@@ -765,7 +761,7 @@ aside {
   .appcontent {
     left: 57px;
     .centered {
-      width: 70vw;
+      width: 75vw;
     }
   }
 
@@ -823,7 +819,7 @@ aside {
   .appcontent {
     left: 57px;
     .centered {
-      width: 70vw;
+      width: 75vw;
     }
   }
   .history-thumbs {
