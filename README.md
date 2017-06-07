@@ -9,6 +9,7 @@ You will need the following things properly installed on your computer.
 
 * [Git](https://git-scm.com/)
 * [Node.js](https://nodejs.org/) (with NPM)
+* [Bower](https://bower.io/)
 * [Ember CLI](https://ember-cli.com/)
 * [PhantomJS](http://phantomjs.org/)
 
@@ -17,6 +18,11 @@ You will need the following things properly installed on your computer.
 * `git clone <repository-url>` this repository
 * `cd gossamer`
 * `npm install`
+* `bower install`
+* `ember install ember-moment`
+* `ember install ember-cli-moment-shim` 
+* `ember install semantic-ui-ember`
+* `ember generate semantic-ui-ember`
 
 ## Running / Development
 
@@ -30,7 +36,7 @@ Make use of the many generators for code, try `ember help generate` for more det
 ### Running Tests
 
 * `ember test`
-* `ember test --server`
+* `ember test --server` or `ember t -s` for short
 
 ### Building
 
