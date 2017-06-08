@@ -1,6 +1,9 @@
 import Ember from 'ember'
 
 export default Ember.Route.extend({
+  beforeModel () {
+
+  },
   model () {
     return this.get('store').findAll('rule').then((results) => {
       return {
