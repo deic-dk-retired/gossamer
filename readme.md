@@ -25,11 +25,15 @@ You will need the following things properly installed on your computer.
 * `ember generate semantic-ui-ember`
 
 ## Semantic-UI
+* `npm install -g gulp`
 * pull out a terminal window and goto the project directory and then do `cd /bower_components/semantic-ui`
 * run `npm install` and follow the default instrctions to install
-* this would rename the `_site` folder to `site` that you can then modify to reflect changes to semantic-ui
-* `npm install -g gulp`
-* make changes to `/globals/site.variables`, `/collections/menu.varibales`. To start copy some of the variables and properties from `themes/default`
+* `Yes, extend my current settings.`
+* `Automatic (Use defaults locations and all components)`
+* `Do not remove Setup Files`
+* `Yes to building semantic now`
+* this would create a `site` that you can then modify to reflect changes over elements of semantic-ui
+* make changes to `/globals/site.variables`, `/collections/menu.varibales`. To start, copy some of the variables and properties from `themes/default`
 * then run `gulp build` once done with changes.
 * or you can run `gulp watch` to watch changes and build the less files as you go.
 
