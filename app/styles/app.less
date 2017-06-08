@@ -925,9 +925,14 @@ aside {
 }
 
 .dash-widget{
-  rect{
-    fill : @liblue500;
+  text-align: center;
+
+  svg{
+    border-bottom: 1px solid @grey100;
+    rect{
+      fill : @liblue500;
+    }
+    min-height: @aside-width*1.5;
+    width: 100%;
   }
-  min-height: @aside-width*1.5;
-  width: 100%;
 }

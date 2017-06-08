@@ -1,6 +1,6 @@
 import Ember from 'ember'
 import { select } from 'd3-selection'
-// import data from 'dashboard'
+import { scaleLinear, scaleBand } from 'd3-scale'
 
 export default Ember.Component.extend({
   // tagName: '',
@@ -57,12 +57,24 @@ export default Ember.Component.extend({
     }
   ],
   didInsertElement () {
+    let yValues = this.get('data').map(data => data.y)
+
+    let yScale = scaleLinear()
+    .domain([0, Math.max(...yValues)])
+    .range([0, 300])
+
+    let xScale = scaleBand()
+      .domain(this.get('data').map(data => data.cidr))
+      .range([0, 300])
+      .paddingInner(0.12)
+
     let svg = select(this.$('svg')[0])
     svg.selectAll('rect').data(this.get('data'))
-    .enter()
-    .append('rect')
-    .attr('width', 20)
-    .attr('height', data => (data.y / 30))
-    .attr('x', (data, i) => i * 22)
+      .enter()
+      .append('rect')
+      .attr('width', xScale.bandwidth())
+      .attr('height', data => yScale(data.y))
+      .attr('x', (data) => xScale(data.cidr))
+      .attr('y', (data) => 300 - yScale(data.y))
   }
 })
