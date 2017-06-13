@@ -82,6 +82,8 @@ export default Ember.Component.extend({
     svg.selectAll('rect').data(this.get('data'))
       .enter()
       .append('rect')
+      .attr('fill', 'none')
+      .attr('stroke', '#03A9F4')
       .attr('width', xScale.bandwidth())
       .attr('height', data => yScale(data.y))
       .attr('x', (data) => xScale(data.y))
