@@ -67,74 +67,62 @@ export default Ember.Component.extend({
   didInsertElement () {
     let d = this.get('data')
 
-    let svg = d3.select('svg'),
-      margin = {top: 20, right: 0, bottom: 5, left: 55},
-      width = +780 - margin.left - margin.right,
-      height = +300 - margin.top - margin.bottom,
-      g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+    let svg = d3.select('svg')
+    let margin = {top: 20, right: 0, bottom: 10, left: 30}
+    let width = d3.select(svg).width - margin.left - margin.right
+    let height = +300 - margin.top - margin.bottom
+    let g = svg.append('g')
+      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
-    let f = d3.format('.3n')
-    let p = d3.formatPrefix(',.0', 1e6)
+    // let format = d3.format('.4n')
+    // let prefix = d3.formatPrefix(',.0', 1e6)
 
-    var parseTime = d3.utcParse('%Y-%m-%dT%H:%M:%S.%LZ')
+    let parseTime = d3.utcParse('%Y-%m-%dT%H:%M:%SZ')
+    let timeScale = d3.timeFormat('%H:%M:%S')
 
-    var y = d3.scaleLinear()
+    // console.log(prefix(format(1234567890909)))
+
+    let y = d3.scaleLinear()
+    .domain([1e6, 2e6])
     .rangeRound([height, 0])
 
-    var x = d3.scaleTime()
+    let x = d3.scaleTime()
     .rangeRound([0, width])
 
-    var line = d3.line()
-    .x(d => x(d.x))
-    .y(d => y(d.y))
+    let line = d3.line()
+    .x(d => x(100))
+    .y(d => y(20))
 
-    console.log(d)
+    // console.log(d)
 
-    x.domain(d3.extent(this.get('data'), d => parseTime(d.x)))
-    y.domain(d3.extent(this.get('data'), d => d.y))
+    x.domain(d3.extent(d, d => timeScale(parseTime(d.x))))
+    y.domain(d3.extent(d, d => d.y))
 
     g.append('g')
-      .attr('transform', 'translate(0,' + height + ')')
-      .call(d3.axisBottom(x))
+        .attr('transform', 'translate(0,' + height + ')')
+        .call(d3.axisBottom(x))
       .select('.domain')
-      .remove()
+        .remove()
 
     g.append('g')
-      .call(d3.axisLeft(y))
+        .call(d3.axisLeft(y)
+              .ticks(6)
+              .tickFormat(d3.formatPrefix('.1', 1e6)))
       .append('text')
-      .attr('fill', '#000')
-      .attr('transform', 'rotate(-90)')
-      .attr('y', 4)
-      .attr('dy', '0.71em')
-      .attr('text-anchor', 'end')
-      .text('Mb')
+        .attr('fill', '#000')
+        .attr('transform', 'rotate(-90)')
+        .attr('y', 4)
+        .attr('dy', '0.7em')
+        .attr('text-anchor', 'end')
+        .text('bytes')
 
-    // g.append('path')
-    //   .datum(this.get('data'))
-    //   .attr('fill', 'none')
-    //   .attr('stroke', 'steelblue')
-    //   .attr('stroke-linejoin', 'round')
-    //   .attr('stroke-linecap', 'round')
-    //   .attr('stroke-width', 1.5)
-    //   .attr('d', line)
-
-  //   let yScale = d3.scaleLinear()
-  //   .domain([0, Math.max(...y)])
-  //   .range([0, 300])
-
-  //   let xScale = d3.scaleBand()
-  //     .domain(this.get('data').map(data => data.y))
-  //     .range([0, 300])
-  //     .paddingInner(0.12)
-
-  //   // let svg = d3.select(this.$('svg')[0])
-  //   svg.selectAll('rect')
-  //     .data(this.get('data'))
-  //     .enter()
-  //     .append('rect')
-  //     .attr('width', xScale.bandwidth())
-  //     .attr('height', data => yScale(data.y))
-  //     .attr('x', data => xScale(data.y))
-  //     .attr('y', data => 300 - yScale(data.y))
+    g.append('path')
+      .datum(this.get('data'))
+      .attr('fill', 'none')
+      .attr('stroke', 'steelblue')
+      .attr('stroke-linejoin', 'round')
+      .attr('stroke-linecap', 'round')
+      .attr('stroke-width', 1.5)
+      .attr('d', line)
   }
 })
