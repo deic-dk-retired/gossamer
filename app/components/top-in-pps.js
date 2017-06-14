@@ -1,9 +1,8 @@
 import Ember from 'ember'
-import { select } from 'd3-selection'
-import { scaleLinear, scaleBand } from 'd3-scale'
+import * as d3 from 'd3'
 
 export default Ember.Component.extend({
-  // tagName: '',
+  classNames: ['top-10-pps-in'],
   data: [
     {
       'x': '2017-06-09T09:45:03Z',
@@ -67,18 +66,24 @@ export default Ember.Component.extend({
     }
   ],
   didInsertElement () {
+    let widget = d3.select('.' + this.get('classNames') + ' > .dash-widget')
+    widget.append('p')
+      .text('top 10 pps (in)')
+      .style('font-size', '.875rem')
+      .style('font-weight', '100')
+
     let yValues = this.get('data').map(data => data.y)
 
-    let yScale = scaleLinear()
+    let yScale = d3.scaleLinear()
     .domain([0, Math.max(...yValues)])
     .range([0, 300])
 
-    let xScale = scaleBand()
+    let xScale = d3.scaleBand()
       .domain(this.get('data').map(data => data.y))
       .range([0, 300])
       .paddingInner(0.12)
 
-    let svg = select(this.$('svg')[0])
+    let svg = d3.select(this.$('svg')[0])
     svg.selectAll('rect').data(this.get('data'))
       .enter()
       .append('rect')

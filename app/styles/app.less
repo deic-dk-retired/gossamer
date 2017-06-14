@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import url('https://fonts.googleapis.com/css?family=Montserrat:200,400');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:200:300|Kanit:700i');
 
 @liblue500: #03A9F4;
 @liblue600: #039BE5;
@@ -368,7 +368,8 @@ button{
     margin-bottom: @md;
     display: inline-block;
     &:nth-child(2){
-      font-size: @xxlg*2;
+      font-size: @xxlg*3;
+      font-family: 'Kanit', sans-serif;
     }
   }
 
@@ -926,12 +927,8 @@ aside {
 
 .dash-widget{
   text-align: center;
-
+  p{color: @liblue700}
   svg{
-    // border-bottom: 1px solid @grey100;
-    // rect{
-    //   fill : @liblue500;
-    // }
     min-height: @aside-width*1.5;
     width: 100%;
   }

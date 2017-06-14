@@ -2,7 +2,8 @@ import Ember from 'ember'
 import * as d3 from 'd3'
 
 export default Ember.Component.extend({
-  data: [
+  classNames: ['top-10-bps-in'],
+  bps: [
     {
       'x': '2017-06-13T11:45:02Z',
       'y': 3921160,
@@ -65,24 +66,38 @@ export default Ember.Component.extend({
     }
   ],
   didInsertElement () {
+    // time parser for influx timestamp
     let parseTime = d3.utcParse('%Y-%m-%dT%H:%M:%SZ')
+    // only to show hours
     let xTime = d3.timeFormat('%H')
 
-    let d = this.get('data')
-    let dx = d.map(d => parseTime(d.x))
+    // get bps on component call
+    // let data = this.get('bps').stamp
+    let data = this.get('bps')
+    console.log(data)
+    // parse time data using parser
+    let dx = data.map((data) => parseTime(data.x))
 
-    // console.log(d3.extent(dx))
-
+    let widget = d3.select('.' + this.get('classNames') + ' > .dash-widget')
     let svg = d3.select('svg')
+    // get svg width and height from DOM
     let svgW = svg['_groups'][0][0].clientWidth
     let svgH = svg['_groups'][0][0].clientHeight
+
+    // configure chart widget dimensions
     let margin = {top: 20, right: 0, bottom: 20, left: 32}
-    let width = svgW - margin.left - margin.right
+    let width = svgW - margin.left - margin.right - 20
     let height = +svgH - margin.top - margin.bottom
     let g = svg.append('g')
       .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
-    console.log(d)
+    // widget title
+    widget.append('p')
+      .text('top 10 bps (in)')
+      .style('font-size', '.875rem')
+      .style('font-weight', '100')
+
+    console.log(data)
     // let format = d3.format('.4n')
     // let prefix = d3.formatPrefix(',.0', 1e6)
 
@@ -94,8 +109,8 @@ export default Ember.Component.extend({
     .rangeRound([height, 0])
 
     let line = d3.line()
-    .x(function (d) { return x(d.x) })
-    .y(function (d) { return x(d.y) })
+    .x((d) => x(d.x))
+    .y((d) => x(d.y))
 
     // d3.map(d, function(d) {
     //   d.x = parseTime(d.x)
@@ -112,7 +127,7 @@ export default Ember.Component.extend({
     g.append('g')
         .attr('transform', 'translate(0,' + height + ')')
         .call(d3.axisBottom(x)
-                .ticks(d3.timeSecond.every(20))
+                .ticks(d3.timeSecond.every(5))
                 // .tickFormat(xTime)
               )
       .select('.domain')
@@ -132,7 +147,7 @@ export default Ember.Component.extend({
         .text('bytes')
 
     g.append('path')
-      .datum(d)
+      .datum(data)
       .attr('fill', 'none')
       .attr('stroke', 'steelblue')
       .attr('stroke-linejoin', 'round')
