@@ -1,6 +1,10 @@
 import Ember from 'ember'
 
 export default Ember.Route.extend({
+  beforeModel () {
+    // Assume the 'loading' class displays an overlay with a loading animation
+    // Ember.$('body').append(``)
+  },
   model (params) {
     // ifluxObj:{}
     // return this.store.findAll('series/qf-top-10-in-bps')
@@ -9,5 +13,8 @@ export default Ember.Route.extend({
       .then((response) => {
         return response
       })
+  },
+  afterModel () {
+    // Ember.$('.sk-folding-cube').remove()
   }
 })
