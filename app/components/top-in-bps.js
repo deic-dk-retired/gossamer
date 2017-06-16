@@ -3,28 +3,24 @@ import * as d3 from 'd3'
 
 export default Ember.Component.extend({
   classNames: ['top-10-bps-in'],
-  url: '',
   didInsertElement () {
     // time parser for influx timestamp
     let parseTime = d3.utcParse('%Y-%m-%dT%H:%M:%SZ')
     // only to show hours
     let xTime = d3.timeFormat('%S')
 
-    // exp
-
-    // get bps on component call
-    let data = this.get('bps').stamp
+    // get data for `bps` on component call in handlebars
     // parse time data using parser
+    let data = this.get('bps').stamp
     let dx = data.map((data) => parseTime(data.x))
     let dy = data.map((data) => (data.y))
-    console.log(dx)
+    // console.log(dx)
 
+    // get svg width and height from DOM
     let widget = d3.select('.' + this.get('classNames') + ' > .dash-widget')
     let svg = d3.select('svg')
-    // get svg width and height from DOM
     let svgW = svg['_groups'][0][0].clientWidth
     let svgH = svg['_groups'][0][0].clientHeight
-
     // configure chart widget dimensions
     let margin = {top: 20, right: 0, bottom: 32, left: 32}
     let width = svgW - margin.left - margin.right - 20
@@ -32,55 +28,44 @@ export default Ember.Component.extend({
     let g = svg.append('g')
       .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
-    // widget title
+    // set widget title
     widget.append('p')
       .text('top 10 bps (in)')
       .style('font-size', '.875rem')
       .style('font-weight', '100')
 
-    // console.log(data)
-    // let format = d3.format('.4n')
-    // let prefix = d3.formatPrefix(',.0', 1e6)
-
+    // set x scale
     let x = d3.scaleTime()
-    .rangeRound([0, width])
-
+    .domain(d3.extent(dx))
+    .rangeRound([5, width + 5])
+    // set y scale
     let y = d3.scaleLinear()
     .domain(d3.extent(dy))
     .rangeRound([height, 0])
-
-    // console.log(line)
-    x.domain(d3.extent(dx))
 
     // append the x axis
     g.append('g')
         .attr('transform', 'translate(0,' + height + ')')
         .call(d3.axisBottom(x)
-                .ticks(20)
+                .ticks(d3.timeSecond.every(10))
                 .tickFormat(xTime)
                 .tickSize(2)
               )
-      .select('.domain')
-        .attr('stroke', '#448AFF')
-      .selectAll('text')
-        .attr('fill', '#448AFF')
 
     // append the y axis
     g.append('g')
         .call(d3.axisLeft(y)
               .tickSize(2)
-              .ticks(5)
-              .tickFormat(d3.formatPrefix('.0', 1e9))
+              .ticks(6)
+              .tickFormat(d3.formatPrefix('1.1', 1e6))
               )
-      .select('.domain')
-        .remove()
       .append('text')
         .attr('fill', '#448AFF')
         .attr('transform', 'rotate(-90)')
 
     // change y domain to plot
-    let yd = y.domain(d3.extent(dy)).rangeRound([height, 0])
-    // console.log(yd)
+    let yd = y.domain(d3.extent(dy)).rangeRound([5, height])
+    console.log(d3.extent(dy))
 
     g.selectAll('rect')
       .data(data)
