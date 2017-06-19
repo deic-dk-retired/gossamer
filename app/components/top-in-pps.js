@@ -6,62 +6,62 @@ export default Ember.Component.extend({
   pps: {
     'stamp': [
       {
-        'x': '2017-06-16T15:45:02Z',
-        'y': 6221,
+        'x': '2017-06-19T10:45:02Z',
+        'y': 11908,
         'cidr': '130_226_136_242',
         'resource': 'pps'
       },
       {
-        'x': '2017-06-16T15:45:03Z',
-        'y': 11913,
+        'x': '2017-06-19T10:45:03Z',
+        'y': 10727,
         'cidr': '130_226_136_242',
         'resource': 'pps'
       },
       {
-        'x': '2017-06-16T15:45:04Z',
-        'y': 9979,
+        'x': '2017-06-19T10:45:04Z',
+        'y': 11055,
         'cidr': '130_226_136_242',
         'resource': 'pps'
       },
       {
-        'x': '2017-06-16T15:45:05Z',
-        'y': 11713,
+        'x': '2017-06-19T10:45:05Z',
+        'y': 9299,
         'cidr': '130_226_136_242',
         'resource': 'pps'
       },
       {
-        'x': '2017-06-16T15:45:06Z',
-        'y': 9712,
+        'x': '2017-06-19T10:45:06Z',
+        'y': 7637,
         'cidr': '130_226_136_242',
         'resource': 'pps'
       },
       {
-        'x': '2017-06-16T15:45:07Z',
-        'y': 7966,
+        'x': '2017-06-19T10:45:07Z',
+        'y': 6259,
         'cidr': '130_226_136_242',
         'resource': 'pps'
       },
       {
-        'x': '2017-06-16T15:45:08Z',
-        'y': 6524,
+        'x': '2017-06-19T10:47:19Z',
+        'y': 8922,
         'cidr': '130_226_136_242',
         'resource': 'pps'
       },
       {
-        'x': '2017-06-16T15:45:09Z',
-        'y': 6401,
+        'x': '2017-06-19T10:47:20Z',
+        'y': 8016,
         'cidr': '130_226_136_242',
         'resource': 'pps'
       },
       {
-        'x': '2017-06-16T15:47:24Z',
-        'y': 7344,
+        'x': '2017-06-19T10:47:21Z',
+        'y': 6794,
         'cidr': '130_226_136_242',
         'resource': 'pps'
       },
       {
-        'x': '2017-06-16T15:47:25Z',
-        'y': 6713,
+        'x': '2017-06-19T10:47:22Z',
+        'y': 6249,
         'cidr': '130_226_136_242',
         'resource': 'pps'
       }
@@ -82,6 +82,7 @@ export default Ember.Component.extend({
     var dx = data.map((data) => parseTime(data.x))
     var dy = data.map((data) => (data.y))
     // console.log(dx)
+    var n = this.get('pps').meta.total
 
     // get svg width and height from DOM
     var widget = d3.select('.' + this.get('classNames') + ' > .dash-widget')
@@ -118,6 +119,10 @@ export default Ember.Component.extend({
     var y2 = d3.scaleLinear().range([height2, 0])
     // y axis gen
     var yAxis = d3.axisLeft(y)
+
+    var color = d3.scaleOrdinal()
+    .domain(d3.range(n))
+    .range(d3.schemeCategory20c)
 
     // brush and zoom
     var brush = d3.brushX()
@@ -158,10 +163,10 @@ export default Ember.Component.extend({
       .append('rect')
       .attr('class', 'bars')
       .attr('stroke', 'none')
-      .attr('fill', '#448AFF')
-      .attr('width', 1)
+      .attr('fill', function (d, i) { return color(i) })
+      .attr('width', 2)
       .attr('height', (d) => yd(d.y))
-      .attr('x', (d) => x(parseTime(d.x)))
+      .attr('x', (d) => x(parseTime(d.x)) - 0.5)
       .attr('dx', (d) => x(parseTime(d.x)) * 1.2)
       .attr('y', (d) => height - yd(d.y))
 

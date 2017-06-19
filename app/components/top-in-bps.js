@@ -9,12 +9,14 @@ export default Ember.Component.extend({
     // only to show hours
     var xTime = d3.timeFormat('%M:%S')
 
+    console.log(this.get('model').bps)
     // get data for `bps` on component call in handlebars
     // parse time data using parser
-    var data = this.get('bps').stamp
+    var data = this.get('model')
     var dx = data.map((data) => parseTime(data.x))
     var dy = data.map((data) => (data.y))
     // console.log(dx)
+    var n = this.get('model').meta.total
 
     // get svg width and height from DOM
     var widget = d3.select('.' + this.get('classNames') + ' > .dash-widget')
@@ -52,6 +54,10 @@ export default Ember.Component.extend({
     // y axis gen
     var yAxis = d3.axisLeft(y)
 
+    var color = d3.scaleOrdinal()
+    .domain(d3.range(n))
+    .range(d3.schemeCategory20c)
+
     // brush and zoom
     var brush = d3.brushX()
     .extent([[0, 0], [width, height2]])
@@ -74,7 +80,8 @@ export default Ember.Component.extend({
     // append the y axis
     g.append('g')
         .call(yAxis
-              .tickFormat(d3.formatPrefix('1.1', 1e6))
+              // .tickFormat(d3.formatPrefix('.0s', 1e6))
+              .tickFormat(d3.format('.0s'))
               .tickSize(2)
               .ticks(8))
       .append('text')
@@ -91,10 +98,10 @@ export default Ember.Component.extend({
       .append('rect')
       .attr('class', 'bars')
       .attr('stroke', 'none')
-      .attr('fill', '#448AFF')
-      .attr('width', 1)
+      .attr('fill', function (d, i) { return color(i) })
+      .attr('width', 2)
       .attr('height', (d) => yd(d.y))
-      .attr('x', (d) => x(parseTime(d.x)))
+      .attr('x', (d) => x(parseTime(d.x)) - 0.5)
       .attr('dx', (d) => x(parseTime(d.x)) * 1.2)
       .attr('y', (d) => height - yd(d.y))
 
