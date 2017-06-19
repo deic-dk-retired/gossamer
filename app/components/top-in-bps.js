@@ -18,7 +18,7 @@ export default Ember.Component.extend({
 
     // get svg width and height from DOM
     var widget = d3.select('.' + this.get('classNames') + ' > .dash-widget')
-    var svg = d3.select('svg')
+    var svg = d3.select('.' + this.get('classNames') + ' > .dash-widget' + ' > svg')
     var svgW = svg['_groups'][0][0].clientWidth
     var svgH = svg['_groups'][0][0].clientHeight
     // configure chart widget dimensions

@@ -3,95 +3,186 @@ import * as d3 from 'd3'
 
 export default Ember.Component.extend({
   classNames: ['top-10-pps-in'],
-  data: [
-    {
-      'x': '2017-06-09T09:45:03Z',
-      'y': 6793,
-      'cidr': '130_226_136_242',
-      'resource': 'pps'
-    },
-    {
-      'x': '2017-06-09T09:45:04Z',
-      'y': 11899,
-      'cidr': '130_226_136_242',
-      'resource': 'pps'
-    },
-    {
-      'x': '2017-06-09T09:45:05Z',
-      'y': 9872,
-      'cidr': '130_226_136_242',
-      'resource': 'pps'
-    },
-    {
-      'x': '2017-06-09T09:45:06Z',
-      'y': 11220,
-      'cidr': '130_226_136_242',
-      'resource': 'pps'
-    },
-    {
-      'x': '2017-06-09T09:45:07Z',
-      'y': 9217,
-      'cidr': '130_226_136_242',
-      'resource': 'pps'
-    },
-    {
-      'x': '2017-06-09T09:45:08Z',
-      'y': 7554,
-      'cidr': '130_226_136_242',
-      'resource': 'pps'
-    },
-    {
-      'x': '2017-06-09T09:47:12Z',
-      'y': 11785,
-      'cidr': '130_226_136_242',
-      'resource': 'pps'
-    },
-    {
-      'x': '2017-06-09T09:47:13Z',
-      'y': 10466,
-      'cidr': '130_226_136_242',
-      'resource': 'pps'
-    },
-    {
-      'x': '2017-06-09T09:47:14Z',
-      'y': 8835,
-      'cidr': '130_226_136_242',
-      'resource': 'pps'
-    },
-    {
-      'x': '2017-06-09T09:47:15Z',
-      'y': 7826,
-      'cidr': '130_226_136_242',
-      'resource': 'pps'
+  pps: {
+    'stamp': [
+      {
+        'x': '2017-06-16T15:45:02Z',
+        'y': 6221,
+        'cidr': '130_226_136_242',
+        'resource': 'pps'
+      },
+      {
+        'x': '2017-06-16T15:45:03Z',
+        'y': 11913,
+        'cidr': '130_226_136_242',
+        'resource': 'pps'
+      },
+      {
+        'x': '2017-06-16T15:45:04Z',
+        'y': 9979,
+        'cidr': '130_226_136_242',
+        'resource': 'pps'
+      },
+      {
+        'x': '2017-06-16T15:45:05Z',
+        'y': 11713,
+        'cidr': '130_226_136_242',
+        'resource': 'pps'
+      },
+      {
+        'x': '2017-06-16T15:45:06Z',
+        'y': 9712,
+        'cidr': '130_226_136_242',
+        'resource': 'pps'
+      },
+      {
+        'x': '2017-06-16T15:45:07Z',
+        'y': 7966,
+        'cidr': '130_226_136_242',
+        'resource': 'pps'
+      },
+      {
+        'x': '2017-06-16T15:45:08Z',
+        'y': 6524,
+        'cidr': '130_226_136_242',
+        'resource': 'pps'
+      },
+      {
+        'x': '2017-06-16T15:45:09Z',
+        'y': 6401,
+        'cidr': '130_226_136_242',
+        'resource': 'pps'
+      },
+      {
+        'x': '2017-06-16T15:47:24Z',
+        'y': 7344,
+        'cidr': '130_226_136_242',
+        'resource': 'pps'
+      },
+      {
+        'x': '2017-06-16T15:47:25Z',
+        'y': 6713,
+        'cidr': '130_226_136_242',
+        'resource': 'pps'
+      }
+    ],
+    'meta': {
+      'total': 10
     }
-  ],
+  },
   didInsertElement () {
-    let widget = d3.select('.' + this.get('classNames') + ' > .dash-widget')
+    // time parser for influx timestamp
+    var parseTime = d3.utcParse('%Y-%m-%dT%H:%M:%SZ')
+    // only to show hours
+    var xTime = d3.timeFormat('%M:%S')
+
+    // get data for `bps` on component call in handlebars
+    // parse time data using parser
+    var data = this.get('pps').stamp
+    var dx = data.map((data) => parseTime(data.x))
+    var dy = data.map((data) => (data.y))
+    // console.log(dx)
+
+    // get svg width and height from DOM
+    var widget = d3.select('.' + this.get('classNames') + ' > .dash-widget')
+    var svg = d3.select('.' + this.get('classNames') + ' > .dash-widget' + ' > svg')
+    var svgW = svg['_groups'][0][0].clientWidth
+    var svgH = svg['_groups'][0][0].clientHeight
+    // configure chart widget dimensions
+    var margin = {top: 20, right: 0, bottom: 120, left: 32}
+    var margin2 = {top: 200, right: 0, bottom: 20, left: 32}
+    var width = svgW - margin.left - margin.right - 20
+    var height = +svgH - margin.top - margin.bottom
+    var height2 = +svgH - margin2.top - margin2.bottom
+    var g = svg.append('g')
+      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+
+    // set widget title
     widget.append('p')
       .text('top 10 pps (in)')
       .style('font-size', '.875rem')
       .style('font-weight', '100')
 
-    let yValues = this.get('data').map(data => data.y)
+    console.log(height)
+    console.log(height2)
 
-    let yScale = d3.scaleLinear()
-    .domain([0, Math.max(...yValues)])
-    .range([0, 300])
+    // set x scale
+    var x = d3.scaleTime().domain(d3.extent(dx)).rangeRound([5, width])
+    var x2 = d3.scaleTime().range([5, width])
+    // x axis gen
+    var xAxis = d3.axisBottom(x)
+    var xAxis2 = d3.axisBottom(x2)
 
-    let xScale = d3.scaleBand()
-      .domain(this.get('data').map(data => data.y))
-      .range([0, 35])
-      .paddingInner(0.12)
+    // set y scale
+    var y = d3.scaleLinear().domain(d3.extent(dy)).rangeRound([height, 0])
+    var y2 = d3.scaleLinear().range([height2, 0])
+    // y axis gen
+    var yAxis = d3.axisLeft(y)
 
-    let svg = d3.select(this.$('svg')[0])
-    svg.selectAll('rect').data(this.get('data'))
+    // brush and zoom
+    var brush = d3.brushX()
+    .extent([[0, 0], [width, height2]])
+    .on('brush end', brushed)
+    var zoom = d3.zoom()
+        .scaleExtent([1, Infinity])
+        .translateExtent([[0, 0], [width, height]])
+        .extent([[0, 0], [width, height]])
+        .on('zoom', zoomed)
+
+    // console.log(d3.extent(dx))
+
+    // append the x axis
+    g.append('g')
+        .attr('transform', 'translate(0,' + height + ')')
+        .call(xAxis.tickSize(3)
+              .ticks(15)
+              .tickFormat(xTime))
+
+    // append the y axis
+    g.append('g')
+        .call(yAxis
+              .tickFormat(d3.formatPrefix('1.1', 1e3))
+              .tickSize(2)
+              .ticks(8))
+      .append('text')
+        .attr('fill', '#448AFF')
+        .attr('transform', 'rotate(-90)')
+
+    // change y domain to plot
+    var yd = y.domain(d3.extent(dy)).rangeRound([5, height - 10])
+    console.log(d3.extent(dy))
+
+    g.selectAll('rect')
+      .data(data)
       .enter()
       .append('rect')
+      .attr('class', 'bars')
       .attr('stroke', 'none')
       .attr('fill', '#448AFF')
-      .attr('width', 2)
-      .attr('height', (d) => yScale(d.y))
-      .attr('x', (d) => xScale(d.y))
-      .attr('y', (d) => 300 - yScale(d.y))
+      .attr('width', 1)
+      .attr('height', (d) => yd(d.y))
+      .attr('x', (d) => x(parseTime(d.x)))
+      .attr('dx', (d) => x(parseTime(d.x)) * 1.2)
+      .attr('y', (d) => height - yd(d.y))
+
+    function brushed () {
+      if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'zoom') return // ignore brush-by-zoom
+      var s = d3.event.selection || x2.range()
+      x.domain(s.map(x2.invert, x2))
+      focus.select('.bars').attr('d', area)
+      focus.select('.axis--x').call(xAxis)
+      svg.select('.zoom').call(zoom.transform, d3.zoomIdentity
+          .scale(width / (s[1] - s[0]))
+          .translate(-s[0], 0))
+    }
+
+    function zoomed () {
+      if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'brush') return // ignore zoom-by-brush
+      var t = d3.event.transform
+      x.domain(t.rescaleX(x2).domain())
+      focus.select('.bars').attr('d', area)
+      focus.select('.axis--x').call(xAxis)
+      context.select('.brush').call(brush.move, x.range().map(t.invertX, t))
+    }
   }
 })
