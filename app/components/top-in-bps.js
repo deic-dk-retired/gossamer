@@ -9,10 +9,13 @@ export default Ember.Component.extend({
     // only to show hours
     var xTime = d3.timeFormat('%M:%S')
 
-    console.log(this.get('model').bps)
+    var am = this.get('model')
+    console.info(am)
+    am = am.b
+    console.info(am)
     // get data for `bps` on component call in handlebars
     // parse time data using parser
-    var data = this.get('model')
+    var data = this.get('model').stamp
     var dx = data.map((data) => parseTime(data.x))
     var dy = data.map((data) => (data.y))
     // console.log(dx)
@@ -38,8 +41,8 @@ export default Ember.Component.extend({
       .style('font-size', '.875rem')
       .style('font-weight', '100')
 
-    console.log(height)
-    console.log(height2)
+    // console.log(height)
+    // console.log(height2)
 
     // set x scale
     var x = d3.scaleTime().domain(d3.extent(dx)).rangeRound([5, width])
@@ -90,7 +93,7 @@ export default Ember.Component.extend({
 
     // change y domain to plot
     var yd = y.domain(d3.extent(dy)).rangeRound([5, height - 10])
-    console.log(d3.extent(dy))
+    // console.log(d3.extent(dy))
 
     g.selectAll('rect')
       .data(data)

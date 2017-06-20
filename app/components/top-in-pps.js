@@ -104,8 +104,8 @@ export default Ember.Component.extend({
       .style('font-size', '.875rem')
       .style('font-weight', '100')
 
-    console.log(height)
-    console.log(height2)
+    // console.log(height)
+    // console.log(height2)
 
     // set x scale
     var x = d3.scaleTime().domain(d3.extent(dx)).rangeRound([5, width])
@@ -155,7 +155,7 @@ export default Ember.Component.extend({
 
     // change y domain to plot
     var yd = y.domain(d3.extent(dy)).rangeRound([5, height - 10])
-    console.log(d3.extent(dy))
+    // console.log(d3.extent(dy))
 
     g.selectAll('rect')
       .data(data)
