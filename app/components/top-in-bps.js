@@ -9,7 +9,7 @@ export default Ember.Component.extend({
     // only to show hours
     var xTime = d3.timeFormat('%M:%S')
 
-    var am = this.get('model')
+    let am = this.get('model')
     console.info(am)
     am = am.b
     console.info(am)
