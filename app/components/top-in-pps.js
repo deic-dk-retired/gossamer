@@ -3,86 +3,20 @@ import * as d3 from 'd3'
 
 export default Ember.Component.extend({
   classNames: ['top-10-pps-in'],
-  pps: {
-    'stamp': [
-      {
-        'x': '2017-06-19T10:45:02Z',
-        'y': 11908,
-        'cidr': '130_226_136_242',
-        'resource': 'pps'
-      },
-      {
-        'x': '2017-06-19T10:45:03Z',
-        'y': 10727,
-        'cidr': '130_226_136_242',
-        'resource': 'pps'
-      },
-      {
-        'x': '2017-06-19T10:45:04Z',
-        'y': 11055,
-        'cidr': '130_226_136_242',
-        'resource': 'pps'
-      },
-      {
-        'x': '2017-06-19T10:45:05Z',
-        'y': 9299,
-        'cidr': '130_226_136_242',
-        'resource': 'pps'
-      },
-      {
-        'x': '2017-06-19T10:45:06Z',
-        'y': 7637,
-        'cidr': '130_226_136_242',
-        'resource': 'pps'
-      },
-      {
-        'x': '2017-06-19T10:45:07Z',
-        'y': 6259,
-        'cidr': '130_226_136_242',
-        'resource': 'pps'
-      },
-      {
-        'x': '2017-06-19T10:47:19Z',
-        'y': 8922,
-        'cidr': '130_226_136_242',
-        'resource': 'pps'
-      },
-      {
-        'x': '2017-06-19T10:47:20Z',
-        'y': 8016,
-        'cidr': '130_226_136_242',
-        'resource': 'pps'
-      },
-      {
-        'x': '2017-06-19T10:47:21Z',
-        'y': 6794,
-        'cidr': '130_226_136_242',
-        'resource': 'pps'
-      },
-      {
-        'x': '2017-06-19T10:47:22Z',
-        'y': 6249,
-        'cidr': '130_226_136_242',
-        'resource': 'pps'
-      }
-    ],
-    'meta': {
-      'total': 10
-    }
-  },
   didInsertElement () {
     // time parser for influx timestamp
     var parseTime = d3.utcParse('%Y-%m-%dT%H:%M:%SZ')
     // only to show hours
     var xTime = d3.timeFormat('%M:%S')
 
-    // get data for `bps` on component call in handlebars
+    var flux = this.get('mod').tp
+    // get data for `pps` on component call in handlebars
     // parse time data using parser
-    var data = this.get('pps').stamp
+    var data = flux.stamp
     var dx = data.map((data) => parseTime(data.x))
     var dy = data.map((data) => (data.y))
     // console.log(dx)
-    var n = this.get('pps').meta.total
+    var n = flux.meta.total
 
     // get svg width and height from DOM
     var widget = d3.select('.' + this.get('classNames') + ' > .dash-widget')
@@ -146,7 +80,7 @@ export default Ember.Component.extend({
     // append the y axis
     g.append('g')
         .call(yAxis
-              .tickFormat(d3.formatPrefix('1.1', 1e3))
+              .tickFormat(d3.format('.2s'))
               .tickSize(2)
               .ticks(8))
       .append('text')

@@ -2,14 +2,14 @@ import Ember from 'ember'
 import * as d3 from 'd3'
 
 export default Ember.Component.extend({
-  classNames: ['top-10-bps-in'],
+  classNames: ['bps-in'],
   didInsertElement () {
     // time parser for influx timestamp
     var parseTime = d3.utcParse('%Y-%m-%dT%H:%M:%SZ')
     // only to show hours
-    var xTime = d3.timeFormat('%M:%S')
+    var xTime = d3.timeFormat('%H:%M')
 
-    var flux = this.get('mod').tb
+    var flux = this.get('mod').b
     // get data for `bps` on component call in handlebars
     // parse time data using parser
     var data = flux.stamp
@@ -34,7 +34,7 @@ export default Ember.Component.extend({
 
     // set widget title
     widget.append('p')
-      .text('top 10 bps (in)')
+      .text('bps (in)')
       .style('font-size', '.875rem')
       .style('font-weight', '100')
 
@@ -62,6 +62,7 @@ export default Ember.Component.extend({
     var brush = d3.brushX()
     .extent([[0, 0], [width, height2]])
     .on('brush end', brushed)
+
     var zoom = d3.zoom()
         .scaleExtent([1, Infinity])
         .translateExtent([[0, 0], [width, height]])
@@ -78,6 +79,7 @@ export default Ember.Component.extend({
     // append the y axis
     g.append('g')
         .call(yAxis
+              // .tickFormat(d3.formatPrefix('.0s', 1e6))
               .tickFormat(d3.format('.0s'))
               .tickSize(2)
               .ticks(8))
@@ -106,7 +108,7 @@ export default Ember.Component.extend({
       if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'zoom') return // ignore brush-by-zoom
       var s = d3.event.selection || x2.range()
       x.domain(s.map(x2.invert, x2))
-      focus.select('.bars').attr('d', area)
+      focus.select('rect').attr('d', area)
       focus.select('.axis--x').call(xAxis)
       svg.select('.zoom').call(zoom.transform, d3.zoomIdentity
           .scale(width / (s[1] - s[0]))
@@ -117,7 +119,7 @@ export default Ember.Component.extend({
       if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'brush') return // ignore zoom-by-brush
       var t = d3.event.transform
       x.domain(t.rescaleX(x2).domain())
-      focus.select('.bars').attr('d', area)
+      focus.select('rect').attr('d', area)
       focus.select('.axis--x').call(xAxis)
       context.select('.brush').call(brush.move, x.range().map(t.invertX, t))
     }
