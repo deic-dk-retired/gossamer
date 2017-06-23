@@ -4,12 +4,14 @@ import * as d3 from 'd3'
 export default Ember.Component.extend({
   classNames: ['bps-in'],
   didInsertElement () {
+    this._super(...arguments)
     // time parser for influx timestamp
     var parseTime = d3.utcParse('%Y-%m-%dT%H:%M:%SZ')
     // only to show hours
     var xTime = d3.timeFormat('%H:%M')
 
     var flux = this.get('mod').b
+    // setInterval(,200)
     // get data for `bps` on component call in handlebars
     // parse time data using parser
     var data = flux.stamp
@@ -21,8 +23,8 @@ export default Ember.Component.extend({
     // get svg width and height from DOM
     var widget = d3.select('.' + this.get('classNames') + ' > .dash-widget')
     var svg = d3.select('.' + this.get('classNames') + ' > .dash-widget' + ' > svg')
-    var svgW = svg['_groups'][0][0].clientWidth
-    var svgH = svg['_groups'][0][0].clientHeight
+    var svgW = this.$('.dash-widget svg').outerWidth()
+    var svgH = this.$('.dash-widget svg').outerHeight()
     // configure chart widget dimensions
     var margin = {top: 20, right: 0, bottom: 120, left: 32}
     var margin2 = {top: 200, right: 0, bottom: 20, left: 32}
@@ -86,23 +88,37 @@ export default Ember.Component.extend({
       .append('text')
         .attr('fill', '#448AFF')
         .attr('transform', 'rotate(-90)')
+        .attr('y', 6)
+        .attr('dy', '0.71em')
+        .attr('fill', '#90A4AE')
+        .text('bytes')
 
     // change y domain to plot
-    var yd = y.domain(d3.extent(dy)).rangeRound([5, height - 10])
+    var yd = y.domain(d3.extent(dy)).rangeRound([0, height])
     // console.log(d3.extent(dy))
 
     g.selectAll('rect')
       .data(data)
-      .enter()
-      .append('rect')
+      .enter().append('rect')
       .attr('class', 'bars')
       .attr('stroke', 'none')
-      .attr('fill', function (d, i) { return color(i) })
+      // .attr('fill', (d, i) => color(i))
+      .attr('fill', '#90CAF9')
       .attr('width', 2)
       .attr('height', (d) => yd(d.y))
       .attr('x', (d) => x(parseTime(d.x)) - 0.5)
       .attr('dx', (d) => x(parseTime(d.x)) * 1.2)
       .attr('y', (d) => height - yd(d.y))
+
+    var line = d3.line()
+    .x((d) => x(parseTime(d.x)) - 0.5)
+    .y((d) => height - yd(d.y))
+
+    g.append('g')
+    .data(data)
+    .enter().append('path')
+      .attr('class', 'lines')
+      .attr('d', function (d) { d.line = this; return line(d.y) })
 
     function brushed () {
       if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'zoom') return // ignore brush-by-zoom
