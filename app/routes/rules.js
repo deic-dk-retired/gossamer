@@ -11,6 +11,7 @@ export default Ember.Route.extend({
   },
   afterModel () {
     Ember.$('.planets').remove()
+    // return this.get('store').peekAll('rule')
   },
   setupController (controller, { rules, meta }) {
     this._super(controller, rules)
@@ -19,6 +20,7 @@ export default Ember.Route.extend({
   actions: {
     showMore () {
       console.log('more..')
+      // return this.get('model')
     }
   }
 })

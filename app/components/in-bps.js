@@ -3,22 +3,14 @@ import * as d3 from 'd3'
 
 export default Ember.Component.extend({
   classNames: ['bps-in'],
+  url: 'http://10.33.1.97:4242/api/series/qf-in-bps',
+  title: 'bps (in)',
+  gfill: '#AD1457',
   didInsertElement () {
     this._super(...arguments)
     // time parser for influx timestamp
-    var parseTime = d3.utcParse('%Y-%m-%dT%H:%M:%SZ')
-    // only to show hours
+    var parseTime = d3.timeParse('%Y-%m-%dT%H:%M:%SZ')
     var xTime = d3.timeFormat('%H:%M')
-
-    var flux = this.get('mod').b
-    // setInterval(,200)
-    // get data for `bps` on component call in handlebars
-    // parse time data using parser
-    var data = flux.stamp
-    var dx = data.map((data) => parseTime(data.x))
-    var dy = data.map((data) => (data.y))
-    // console.log(dx)
-    var n = flux.meta.total
 
     // get svg width and height from DOM
     var widget = d3.select('.' + this.get('classNames') + ' > .dash-widget')
@@ -36,108 +28,76 @@ export default Ember.Component.extend({
 
     // set widget title
     widget.append('p')
-      .text('bps (in)')
+      .text(this.get('title'))
       .style('font-size', '.875rem')
       .style('font-weight', '100')
 
-    // console.log(height)
-    // console.log(height2)
-
     // set x scale
-    var x = d3.scaleTime().domain(d3.extent(dx)).rangeRound([5, width])
-    var x2 = d3.scaleTime().range([5, width])
+    var x = d3.scaleTime()
+      .rangeRound([0, width])
+    // var x2 = d3.scaleTime().rangeRound([2, width])
+      // set y scale
+    var y = d3.scaleLinear()
+      .rangeRound([height, 0])
+    // var y2 = d3.scaleLinear().rangeRound([height2, 0])
+
     // x axis gen
     var xAxis = d3.axisBottom(x)
-    var xAxis2 = d3.axisBottom(x2)
 
-    // set y scale
-    var y = d3.scaleLinear().domain(d3.extent(dy)).rangeRound([height, 0])
-    var y2 = d3.scaleLinear().range([height2, 0])
     // y axis gen
     var yAxis = d3.axisLeft(y)
 
-    var color = d3.scaleOrdinal()
-    .domain(d3.range(n))
-    .range(d3.schemeCategory20c)
+    var line = d3.line()
+    .x((d) => x(d.x))
+    .y((d) => y(d.y))
 
-    // brush and zoom
-    var brush = d3.brushX()
-    .extent([[0, 0], [width, height2]])
-    .on('brush end', brushed)
+    // fetch data and render chart content
+    d3.json(this.get('url'), function (error, data) {
+      if (error) throw error
+      // format dates and values
+      var d = data.stamp.map(function (obj) {
+        var o = {}
+        o.x = parseTime(obj.x)
+        o.y = +obj.y
+        return o
+      })
 
-    var zoom = d3.zoom()
-        .scaleExtent([1, Infinity])
-        .translateExtent([[0, 0], [width, height]])
-        .extent([[0, 0], [width, height]])
-        .on('zoom', zoomed)
+      x.domain(d3.extent(d.map((d) => d.x)))
+      y.domain(d3.extent(d.map((d) => d.y))).rangeRound([height, 0])
 
-    // append the x axis
-    g.append('g')
+      // append the x axis
+      g.append('g')
         .attr('transform', 'translate(0,' + height + ')')
         .call(xAxis.tickSize(3)
-              .ticks(15)
-              .tickFormat(xTime))
+              .ticks(8)
+              .tickFormat(xTime)
+              )
+        .select('.domain')
+        .remove()
 
-    // append the y axis
-    g.append('g')
+      // append the y axis
+      g.append('g')
         .call(yAxis
-              // .tickFormat(d3.formatPrefix('.0s', 1e6))
-              .tickFormat(d3.format('.0s'))
-              .tickSize(2)
-              .ticks(8))
-      .append('text')
+          .tickFormat(d3.format('.0s'))
+          .tickSize(2)
+          .ticks(5))
+        .append('text')
         .attr('fill', '#448AFF')
         .attr('transform', 'rotate(-90)')
         .attr('y', 6)
         .attr('dy', '0.71em')
         .attr('fill', '#90A4AE')
-        .text('bytes')
+        .text('bits')
 
-    // change y domain to plot
-    var yd = y.domain(d3.extent(dy)).rangeRound([0, height])
-    // console.log(d3.extent(dy))
-
-    g.selectAll('rect')
-      .data(data)
-      .enter().append('rect')
-      .attr('class', 'bars')
-      .attr('stroke', 'none')
-      // .attr('fill', (d, i) => color(i))
-      .attr('fill', '#90CAF9')
-      .attr('width', 2)
-      .attr('height', (d) => yd(d.y))
-      .attr('x', (d) => x(parseTime(d.x)) - 0.5)
-      .attr('dx', (d) => x(parseTime(d.x)) * 1.2)
-      .attr('y', (d) => height - yd(d.y))
-
-    var line = d3.line()
-    .x((d) => x(parseTime(d.x)) - 0.5)
-    .y((d) => height - yd(d.y))
-
-    g.append('g')
-    .data(data)
-    .enter().append('path')
-      .attr('class', 'lines')
-      .attr('d', function (d) { d.line = this; return line(d.y) })
-
-    function brushed () {
-      if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'zoom') return // ignore brush-by-zoom
-      var s = d3.event.selection || x2.range()
-      x.domain(s.map(x2.invert, x2))
-      focus.select('rect').attr('d', area)
-      focus.select('.axis--x').call(xAxis)
-      svg.select('.zoom').call(zoom.transform, d3.zoomIdentity
-          .scale(width / (s[1] - s[0]))
-          .translate(-s[0], 0))
-    }
-
-    function zoomed () {
-      if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'brush') return // ignore zoom-by-brush
-      var t = d3.event.transform
-      x.domain(t.rescaleX(x2).domain())
-      focus.select('rect').attr('d', area)
-      focus.select('.axis--x').call(xAxis)
-      context.select('.brush').call(brush.move, x.range().map(t.invertX, t))
-    }
+      // append path with data
+      g.append('path')
+      .datum(d)
+      .attr('fill', 'none')
+      .attr('stroke', '#AD1457')
+      .attr('stroke-linejoin', 'round')
+      .attr('stroke-linecap', 'round')
+      .attr('stroke-width', 1)
+      .attr('d', line)
+    })
   }
 })
