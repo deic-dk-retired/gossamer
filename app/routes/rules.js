@@ -1,7 +1,16 @@
 import Ember from 'ember'
 
 export default Ember.Route.extend({
+  resultPromise: {},
   model () {
+    // var fetched = this.get('resultPromise') || this.get('store').findAll('rule').then((results) => {
+    //   return {
+    //     rules: results,
+    //     meta: results.get('meta')
+    //   }
+    // })
+    // this.set('resultPromise', fetched)
+    // return resultPromise
     return this.get('store').findAll('rule').then((results) => {
       return {
         rules: results,
@@ -11,7 +20,6 @@ export default Ember.Route.extend({
   },
   afterModel () {
     Ember.$('.planets').remove()
-    // return this.get('store').peekAll('rule')
   },
   setupController (controller, { rules, meta }) {
     this._super(controller, rules)

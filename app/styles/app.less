@@ -453,12 +453,23 @@ aside {
   padding-bottom: @xxlg*2;
   overflow:hidden;
   overflow-y: scroll;
-  .centered {
+  .justified {
     padding: @xxlg 0;
     overflow: hidden;
     overflow-y: scroll;
     width: 84vw;
     margin: 0 auto;
+    margin-left: @xxlg;
+  }
+  .centered {
+    padding: @xxlg 0;
+    overflow: hidden;
+    overflow-y: scroll;
+    width: 86vw;
+    margin: 0 auto;
+    .ui.cards{
+      margin-left:0
+    }
   }
 }
 .history-cards {
@@ -474,8 +485,8 @@ aside {
     border-radius: 3px;
     border: 1px solid @grey200;
     margin:0;
-    margin-right: @xxlg*2;
-    margin-bottom: @xxlg*1.8;
+    margin-right: @xlg*1.8;
+    margin-bottom: @xlg*1.8;
     p {
       margin:0;
       padding:0;
@@ -883,6 +894,7 @@ aside {
   p {
       color: @blue200;
       text-transform: uppercase;
+      margin-bottom: 0;
   }
   svg {
     min-height: @aside-width*2;

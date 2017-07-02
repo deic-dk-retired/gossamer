@@ -24,7 +24,9 @@
       <div class="divider"></div>
       {{#if (eq usrtype 'super')}}
         <div class="header">Super Settings</div>
-        <a class="item"><i class="users icon"></i>Edit Users</a>
+        {{#link-to "users" class="item"}}
+          <i class="users icon"></i>Edit Users
+        {{/link-to}}
         <a class="item"><i class="server icon"></i>Edit Networks</a>
         <a class="item"><i class="university icon"></i>Edit Customers</a>
         <div class="divider"></div>

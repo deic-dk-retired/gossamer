@@ -4,9 +4,10 @@
       <div class="default text">Select Type</div>
       <i class="dropdown icon"></i>
       <div class="menu">
-        {{#each model as |t|}}
-          <div class="item" data-value="{{t.id}}">
-            {{t.value}}
+        {{#each mod.icmptnc as |t|}}
+          <p>{{t}}</p>
+          <div class="item" data-value="{{t.typeid}}">
+            {{t.type}}
           </div>
         {{/each}}
       </div>
@@ -21,9 +22,9 @@
       {{!-- <div class="item" data-value="a">Code a</div>
       <div class="item" data-value="b">Code b</div>
       <div class="item" data-value="c">Code c</div> --}}
-      {{#each model as |icmpcode|}}
-          <div class="item" data-value="{{icmpcode.id}}">
-            {{icmpcode.value}}
+      {{#each mod as |c|}}
+          <div class="item" data-value="{{c.codeid}}">
+            {{c.value}}
           </div>
         {{/each}}
     </div>
