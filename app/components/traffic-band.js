@@ -2,10 +2,11 @@ import Ember from 'ember'
 import * as d3 from 'd3'
 
 export default Ember.Component.extend({
-  classNames: ['pps-in'],
-  url: 'http://10.33.1.97:4242/api/series/qf-in-pps',
-  title: 'pps (in)',
-  gfill: '#1565C0',
+  classNames: ['traffic-band'],
+  url: 'http://10.33.1.97:4242/api/series/qf-traffic',
+  title: 'traffic bandwidth',
+  gfill1: '#7CB342',
+  gfill2: '#FFB300',
   didInsertElement () {
     this._super(...arguments)
     // time parser for influx timestamp
@@ -93,7 +94,7 @@ export default Ember.Component.extend({
       focus.append('path')
       .datum(d)
       .attr('fill', 'none')
-      .attr('stroke', '#1565C0')
+      .attr('stroke', '#7CB342')
       .attr('stroke-linejoin', 'round')
       .attr('stroke-linecap', 'round')
       .attr('stroke-width', 1)
@@ -108,7 +109,7 @@ export default Ember.Component.extend({
       context.append('path')
         .datum(d)
         .attr('fill', 'none')
-        .attr('stroke', '#1565C0')
+        .attr('stroke', '#7CB342')
         .attr('stroke-linejoin', 'round')
         .attr('stroke-linecap', 'round')
         .attr('stroke-width', 1)
@@ -116,7 +117,7 @@ export default Ember.Component.extend({
     })
 
     graph.render = setInterval(function () {
-      d3.json('http://10.33.1.97:4242/api/series/qf-in-pps', function (error, data) {
+      d3.json('http://10.33.1.97:4242/api/series/qf-traffic', function (error, data) {
         if (error) throw error
       // remove old points
         focus.selectAll('path').remove()
@@ -155,7 +156,7 @@ export default Ember.Component.extend({
         focus.append('path')
       .datum(d)
       .attr('fill', 'none')
-      .attr('stroke', '#1565C0')
+      .attr('stroke', '#7CB342')
       .attr('stroke-linejoin', 'round')
       .attr('stroke-linecap', 'round')
       .attr('stroke-width', 1)
@@ -170,7 +171,7 @@ export default Ember.Component.extend({
         context.append('path')
         .datum(d)
         .attr('fill', 'none')
-        .attr('stroke', '#1565C0')
+        .attr('stroke', '#7CB342')
         .attr('stroke-linejoin', 'round')
         .attr('stroke-linecap', 'round')
         .attr('stroke-width', 1)

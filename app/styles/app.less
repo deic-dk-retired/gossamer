@@ -372,19 +372,10 @@ aside {
   height:100%;
   display:block;
   position:absolute;
-  top: 47px;
+  top: 42px;
   background:@aside-bg;
   border-right: 1px solid @bordercolor;
   .shadow(0,0,2px,0,rgba(0,0,0,1));
-  // .aside__top {
-  //   width:100%;
-  //   height:200px;
-  //   position:absolute;
-  //   display:block;
-  //   top:0;
-  //   left:0;
-  //   border-bottom:1px solid @bordercolor;
-  // }
   .aside__middle {
     position: inherit;
     width:100%;
@@ -467,7 +458,7 @@ aside {
     overflow-y: scroll;
     width: 86vw;
     margin: 0 auto;
-    .ui.cards{
+    .ui .cards{
       margin-left:0
     }
   }
@@ -900,12 +891,11 @@ aside {
     min-height: @aside-width*2;
     width: 100%;
   }
-  .lines {
+  .line {
     fill: none;
-    stroke: #448AFF;
     stroke-linejoin: round;
     stroke-linecap: round;
-    stroke-width: 1.5px;
+    stroke-width: 1px;
   }
   .zoom {
     cursor: move;

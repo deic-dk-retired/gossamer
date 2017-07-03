@@ -18,39 +18,23 @@ export default Ember.Component.extend({
     var svgW = this.$('.dash-widget svg').outerWidth()
     var svgH = this.$('.dash-widget svg').outerHeight()
     // configure chart widget dimensions
-    var margin = {top: 20, right: 0, bottom: 80, left: 32}
-    var margin2 = {top: 20, right: 0, bottom: 20, left: 32}
-    var width = svgW - margin.left - margin.right - 20
+    var margin = {top: 10, right: 0, bottom: 80, left: 32}
+    var margin2 = {top: 20, right: 0, bottom: 10, left: 32}
     var height = +svgH - margin.top - margin.bottom
     var height2 = +svgH - margin2.top - margin2.bottom
-    var g = svg.append('g')
-      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+    var width = svgW - margin.left - margin.right - 20
 
-    // console.log(height)
-    // console.log(height2)
     // set widget title
-    widget.select('.title')
-      .text(this.get('title'))
-      .style('font-size', '.875rem')
-      .style('font-weight', '100')
+    widget.select('.title').text(this.get('title'))
 
-    // set x scale
-    var x = d3.scaleTime()
-      .rangeRound([0, width])
-    // var x2 = d3.scaleTime().rangeRound([2, width])
-      // set y scale
-    var y = d3.scaleLinear()
-      .rangeRound([height, 0])
-    var y2 = d3.scaleLinear()
-    .rangeRound([height2, 0])
-    // var y2 = d3.scaleLinear().rangeRound([height2, 0])
+    // set x & y scales
+    var x = d3.scaleTime().rangeRound([0, width])
+    var y = d3.scaleLinear().rangeRound([height, 0])
+    var y2 = d3.scaleLinear().rangeRound([height2, 0])
 
-    // x axis gen
+    // x & y axes gen
     var xAxis = d3.axisBottom(x)
-
-    // y axis gen
     var yAxis = d3.axisLeft(y)
-    var yAxis2 = d3.axisLeft(y2)
 
     var line = d3.line()
     .x((d) => x(d.x))
@@ -60,10 +44,23 @@ export default Ember.Component.extend({
     .x((d) => x(d.x))
     .y((d) => y2(d.y))
 
+    var focus = svg.append('g')
+    .attr('class', 'focus')
+    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+
+    var context = svg.append('g')
+    .attr('class', 'context')
+    .attr('transform', 'translate(' + margin2.left + ',' + margin2.bottom + ')')
+
     var graph = {}
     // fetch data and render chart content
     graph.d3json = d3.json(this.get('url'), function (error, data) {
       if (error) throw error
+      // remove old points
+      focus.selectAll('path').remove()
+      focus.selectAll('g').remove()
+      context.selectAll('path').remove()
+      context.selectAll('g').remove()
       // format dates and values
       var d = data.stamp.map(function (obj) {
         var o = {}
@@ -74,69 +71,26 @@ export default Ember.Component.extend({
 
       x.domain(d3.extent(d.map((d) => d.x)))
       y.domain(d3.extent(d.map((d) => d.y))).rangeRound([height, 0])
-      y2.domain(d3.extent(d.map((d) => d.y))).rangeRound([height2, height + 2 * margin.top])
+      y2.domain(d3.extent(d.map((d) => d.y))).rangeRound([height2, height + 2 * margin2.top])
 
-      // append the x axis t-graph
-      g.append('g')
+      // append the x & y axis t-graph
+      focus.append('g')
         .attr('transform', 'translate(0,' + height + ')')
-        .call(xAxis.tickSize(3)
-              .ticks(8)
-              .tickFormat(xTime)
-              )
-        .select('.domain')
-        .remove()
+        .call(xAxis.tickSize(3).ticks(6).tickFormat(xTime))
+      focus.select('.domain').remove()
 
-      // append x axis to b-graph
-      g.append('g')
-        .attr('transform', 'translate(0,' + height2 + ')')
-        .call(xAxis.tickSize(3)
-              .ticks(8)
-              .tickFormat(xTime)
-              )
-        .select('.domain')
-        .remove()
-
-      // append the y axis to t-graph
-      g.append('g')
-        .call(yAxis
-          .tickFormat(d3.format('.0s'))
-          .tickSize(2)
-          .ticks(5))
+      focus.append('g')
+        .call(yAxis.tickFormat(d3.format('.0s')).tickSize(2).ticks(6))
         .append('text')
-        .attr('fill', '#448AFF')
         .attr('transform', 'rotate(-90)')
         .attr('y', 6)
         .attr('dy', '0.71em')
         .attr('fill', '#90A4AE')
-        .text('bits')
-      g.select('.domain').remove()
-
-      // append the y axis to b-graph
-      g.append('g')
-        .call(yAxis2
-          .tickFormat(d3.format('.0s'))
-          .tickSize(2)
-          .ticks(3))
-        .append('text')
-        .attr('fill', '#448AFF')
-        .attr('transform', 'rotate(-90)')
-        .attr('y', 6)
-        .attr('dy', '0.71em')
-        .attr('fill', '#90A4AE')
-        .text('bits')
-      g.select('.domain').remove()
-
-      g.append('path')
-      .datum(d)
-      .attr('fill', 'none')
-      .attr('stroke', '#EC407A')
-      .attr('stroke-linejoin', 'round')
-      .attr('stroke-linecap', 'round')
-      .attr('stroke-width', 1)
-      .attr('d', line2)
+        .text('packets/s')
+      focus.select('.domain').remove()
 
       // append path with data
-      g.append('path')
+      focus.append('path')
       .datum(d)
       .attr('fill', 'none')
       .attr('stroke', '#EC407A')
@@ -144,11 +98,31 @@ export default Ember.Component.extend({
       .attr('stroke-linecap', 'round')
       .attr('stroke-width', 1)
       .attr('d', line)
+
+      // append x axis to b-graph
+      context.append('g')
+        .attr('transform', 'translate(0,' + height2 + ')')
+        .call(xAxis.tickSize(3).ticks(8).tickFormat(xTime))
+      context.select('.domain').remove()
+
+      context.append('path')
+        .datum(d)
+        .attr('fill', 'none')
+        .attr('stroke', '#EC407A')
+        .attr('stroke-linejoin', 'round')
+        .attr('stroke-linecap', 'round')
+        .attr('stroke-width', 1)
+        .attr('d', line2)
     })
 
     graph.render = setInterval(function () {
       d3.json('http://10.33.1.97:4242/api/series/qf-top-10-in-bps', function (error, data) {
         if (error) throw error
+      // remove old points
+        focus.selectAll('path').remove()
+        focus.selectAll('g').remove()
+        context.selectAll('path').remove()
+        context.selectAll('g').remove()
       // format dates and values
         var d = data.stamp.map(function (obj) {
           var o = {}
@@ -159,75 +133,48 @@ export default Ember.Component.extend({
 
         x.domain(d3.extent(d.map((d) => d.x)))
         y.domain(d3.extent(d.map((d) => d.y))).rangeRound([height, 0])
-        y2.domain(d3.extent(d.map((d) => d.y))).rangeRound([height2, height + 2 * margin.top])
+        y2.domain(d3.extent(d.map((d) => d.y))).rangeRound([height2, height + 2 * margin2.top])
 
-        g.selectAll('g').remove()
-
-        // append the x axis
-        g.append('g')
+      // append the x & y axis t-graph
+        focus.append('g')
         .attr('transform', 'translate(0,' + height + ')')
-        .call(xAxis.tickSize(3)
-              .ticks(8)
-              .tickFormat(xTime)
-              )
-        .select('.domain').remove()
+        .call(xAxis.tickSize(3).ticks(6).tickFormat(xTime))
+        focus.select('.domain').remove()
 
-      // append x axis to b-graph
-        g.append('g')
-        .attr('transform', 'translate(0,' + height2 + ')')
-        .call(xAxis.tickSize(3)
-              .ticks(8)
-              .tickFormat(xTime))
-        .select('.domain').remove()
-
-      // append the y axis
-        g.append('g')
-        .call(yAxis
-          .tickFormat(d3.format('.0s'))
-          .tickSize(2)
-          .ticks(6))
+        focus.append('g')
+        .call(yAxis.tickFormat(d3.format('.0s')).tickSize(2).ticks(6))
         .append('text')
-        .attr('fill', '#448AFF')
         .attr('transform', 'rotate(-90)')
         .attr('y', 6)
         .attr('dy', '0.71em')
         .attr('fill', '#90A4AE')
-        .text('bits')
-        g.selectAll('path').remove()
-
-      // append the y axis to b-graph
-        g.append('g')
-        .call(yAxis2
-          .tickFormat(d3.format('.0s'))
-          .tickSize(2)
-          .ticks(3))
-        .append('text')
-        .attr('fill', '#448AFF')
-        .attr('transform', 'rotate(-90)')
-        .attr('y', 6)
-        .attr('dy', '0.71em')
-        .attr('fill', '#90A4AE')
-        .text('bits')
-        g.select('.domain').remove()
-
-        g.append('path')
-          .datum(d)
-          .attr('fill', 'none')
-          .attr('stroke', '#EC407A')
-          .attr('stroke-linejoin', 'round')
-          .attr('stroke-linecap', 'round')
-          .attr('stroke-width', 1)
-          .attr('d', line2)
+        .text('packets/s')
+        focus.select('.domain').remove()
 
       // append path with data
-        g.append('path')
-          .datum(d)
-          .attr('fill', 'none')
-          .attr('stroke', '#EC407A')
-          .attr('stroke-linejoin', 'round')
-          .attr('stroke-linecap', 'round')
-          .attr('stroke-width', 1)
-          .attr('d', line)
+        focus.append('path')
+      .datum(d)
+      .attr('fill', 'none')
+      .attr('stroke', '#EC407A')
+      .attr('stroke-linejoin', 'round')
+      .attr('stroke-linecap', 'round')
+      .attr('stroke-width', 1)
+      .attr('d', line)
+
+      // append x axis to b-graph
+        context.append('g')
+        .attr('transform', 'translate(0,' + height2 + ')')
+        .call(xAxis.tickSize(3).ticks(8).tickFormat(xTime))
+        context.select('.domain').remove()
+
+        context.append('path')
+        .datum(d)
+        .attr('fill', 'none')
+        .attr('stroke', '#EC407A')
+        .attr('stroke-linejoin', 'round')
+        .attr('stroke-linecap', 'round')
+        .attr('stroke-width', 1)
+        .attr('d', line2)
       })
     }, 5000)
   }

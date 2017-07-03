@@ -20,42 +20,21 @@ export default Ember.Component.extend({
     // configure chart widget dimensions
     var margin = {top: 10, right: 0, bottom: 80, left: 32}
     var margin2 = {top: 20, right: 0, bottom: 10, left: 32}
-    var width = svgW - margin.left - margin.right - 20
     var height = +svgH - margin.top - margin.bottom
     var height2 = +svgH - margin2.top - margin2.bottom
-    var g = svg.append('g')
-      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+    var width = svgW - margin.left - margin.right - 20
 
     // set widget title
-    widget.select('.title')
-      .text(this.get('title'))
-      .style('font-size', '.875rem')
-      .style('font-weight', '100')
+    widget.select('.title').text(this.get('title'))
 
-    // set x scale
-    var x = d3.scaleTime()
-      .rangeRound([0, width])
-      // set y scale
-    var y = d3.scaleLinear()
-      .rangeRound([height, 0])
-    var y2 = d3.scaleLinear()
-    .rangeRound([height2, 0])
+    // set x & y scales
+    var x = d3.scaleTime().rangeRound([0, width])
+    var y = d3.scaleLinear().rangeRound([height, 0])
+    var y2 = d3.scaleLinear().rangeRound([height2, 0])
 
-    // x axis gen
+    // x & y axes gen
     var xAxis = d3.axisBottom(x)
-    // y axis gen
     var yAxis = d3.axisLeft(y)
-    var yAxis2 = d3.axisLeft(y2)
-
-    var brush = d3.brushX()
-    .extent([[0, 0], [width, height2]])
-    .on('brush end', brushed)
-
-    var zoom = d3.zoom()
-    .scaleExtent([1, Infinity])
-    .translateExtent([[0, 0], [width, height]])
-    .extent([[0, 0], [width, height]])
-    .on('zoom', zoomed)
 
     var line = d3.line()
     .x((d) => x(d.x))
@@ -77,6 +56,11 @@ export default Ember.Component.extend({
     // fetch data and render chart content
     graph.d3json = d3.json(this.get('url'), function (error, data) {
       if (error) throw error
+      // remove old points
+      focus.selectAll('path').remove()
+      focus.selectAll('g').remove()
+      context.selectAll('path').remove()
+      context.selectAll('g').remove()
       // format dates and values
       var d = data.stamp.map(function (obj) {
         var o = {}
@@ -87,30 +71,22 @@ export default Ember.Component.extend({
 
       x.domain(d3.extent(d.map((d) => d.x)))
       y.domain(d3.extent(d.map((d) => d.y))).rangeRound([height, 0])
-      y2.domain(d3.extent(d.map((d) => d.y))).rangeRound([height2, height + 2 * margin.top])
+      y2.domain(d3.extent(d.map((d) => d.y))).rangeRound([height2, height + 2 * margin2.top])
 
-      // append the x axis t-graph
+      // append the x & y axis t-graph
       focus.append('g')
         .attr('transform', 'translate(0,' + height + ')')
-        .call(xAxis.tickSize(3)
-              .ticks(6)
-              .tickFormat(xTime)
-              )
+        .call(xAxis.tickSize(3).ticks(6).tickFormat(xTime))
       focus.select('.domain').remove()
 
-      // append the y axis to t-graph
       focus.append('g')
-        .call(yAxis
-          .tickFormat(d3.format('.0s'))
-          .tickSize(2)
-          .ticks(6))
+        .call(yAxis.tickFormat(d3.format('.0s')).tickSize(2).ticks(6))
         .append('text')
-        .attr('fill', '#448AFF')
         .attr('transform', 'rotate(-90)')
         .attr('y', 6)
         .attr('dy', '0.71em')
         .attr('fill', '#90A4AE')
-        .text('bits')
+        .text('bits/s')
       focus.select('.domain').remove()
 
       // append path with data
@@ -126,25 +102,7 @@ export default Ember.Component.extend({
       // append x axis to b-graph
       context.append('g')
         .attr('transform', 'translate(0,' + height2 + ')')
-        .call(xAxis.tickSize(3)
-              .ticks(8)
-              .tickFormat(xTime)
-              )
-      context.select('.domain').remove()
-
-      // append the y axis to b-graph
-      context.append('g')
-        .call(yAxis2
-          .tickFormat(d3.format('.0s'))
-          .tickSize(2)
-          .ticks(3))
-        .append('text')
-        .attr('fill', '#448AFF')
-        .attr('transform', 'rotate(-90)')
-        .attr('y', 6)
-        .attr('dy', '0.71em')
-        .attr('fill', '#90A4AE')
-        .text('bits')
+        .call(xAxis.tickSize(3).ticks(8).tickFormat(xTime))
       context.select('.domain').remove()
 
       context.append('path')
@@ -160,6 +118,11 @@ export default Ember.Component.extend({
     graph.render = setInterval(function () {
       d3.json('http://10.33.1.97:4242/api/series/qf-in-bps', function (error, data) {
         if (error) throw error
+      // remove old points
+        focus.selectAll('path').remove()
+        focus.selectAll('g').remove()
+        context.selectAll('path').remove()
+        context.selectAll('g').remove()
       // format dates and values
         var d = data.stamp.map(function (obj) {
           var o = {}
@@ -170,35 +133,22 @@ export default Ember.Component.extend({
 
         x.domain(d3.extent(d.map((d) => d.x)))
         y.domain(d3.extent(d.map((d) => d.y))).rangeRound([height, 0])
-        y2.domain(d3.extent(d.map((d) => d.y))).rangeRound([height2, height + 2 * margin.top])
+        y2.domain(d3.extent(d.map((d) => d.y))).rangeRound([height2, height + 2 * margin2.top])
 
-        focus.selectAll('path').remove()
-        focus.selectAll('g').remove()
-        context.selectAll('path').remove()
-        context.selectAll('g').remove()
-
-        // append the x axis t-graph
+      // append the x & y axis t-graph
         focus.append('g')
         .attr('transform', 'translate(0,' + height + ')')
-        .call(xAxis.tickSize(3)
-              .ticks(6)
-              .tickFormat(xTime)
-              )
+        .call(xAxis.tickSize(3).ticks(6).tickFormat(xTime))
         focus.select('.domain').remove()
 
-      // append the y axis to t-graph
         focus.append('g')
-        .call(yAxis
-          .tickFormat(d3.format('.0s'))
-          .tickSize(2)
-          .ticks(6))
+        .call(yAxis.tickFormat(d3.format('.0s')).tickSize(2).ticks(6))
         .append('text')
-        .attr('fill', '#448AFF')
         .attr('transform', 'rotate(-90)')
         .attr('y', 6)
         .attr('dy', '0.71em')
         .attr('fill', '#90A4AE')
-        .text('bits')
+        .text('bits/s')
         focus.select('.domain').remove()
 
       // append path with data
@@ -214,25 +164,7 @@ export default Ember.Component.extend({
       // append x axis to b-graph
         context.append('g')
         .attr('transform', 'translate(0,' + height2 + ')')
-        .call(xAxis.tickSize(3)
-              .ticks(8)
-              .tickFormat(xTime)
-              )
-        context.select('.domain').remove()
-
-      // append the y axis to b-graph
-        context.append('g')
-        .call(yAxis2
-          .tickFormat(d3.format('.0s'))
-          .tickSize(2)
-          .ticks(3))
-        .append('text')
-        .attr('fill', '#448AFF')
-        .attr('transform', 'rotate(-90)')
-        .attr('y', 6)
-        .attr('dy', '0.71em')
-        .attr('fill', '#90A4AE')
-        .text('bits')
+        .call(xAxis.tickSize(3).ticks(8).tickFormat(xTime))
         context.select('.domain').remove()
 
         context.append('path')
@@ -245,25 +177,5 @@ export default Ember.Component.extend({
         .attr('d', line2)
       })
     }, 5000)
-
-    function brushed () {
-      if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'zoom') return // ignore brush-by-zoom
-      var s = d3.event.selection || x2.range()
-      x.domain(s.map(x2.invert, x2))
-      focus.select('.area').attr('d', area)
-      focus.select('.axis--x').call(xAxis)
-      svg.select('.zoom').call(zoom.transform, d3.zoomIdentity
-          .scale(width / (s[1] - s[0]))
-          .translate(-s[0], 0))
-    }
-
-    function zoomed () {
-      if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'brush') return // ignore zoom-by-brush
-      var t = d3.event.transform
-      x.domain(t.rescaleX(x2).domain())
-      focus.select('.area').attr('d', area)
-      focus.select('.axis--x').call(xAxis)
-      context.select('.brush').call(brush.move, x.range().map(t.invertX, t))
-    }
   }
 })
