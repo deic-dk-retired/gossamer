@@ -4,8 +4,8 @@
       <div class="default text">Select Type</div>
       <i class="dropdown icon"></i>
       <div class="menu">
-        {{#each mod as |t|}}
-          <div class="item" data-value="{{t.typeid}}">
+        {{#each mod.icmptnc as |t|}}
+          <div class="item" data-value="{{map-value mapper t.typeid}}">
             {{t.type}}
           </div>
         {{/each}}

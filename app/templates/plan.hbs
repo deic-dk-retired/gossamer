@@ -31,7 +31,7 @@
           {{udp-fields}}
         {{else}}
           {{#if (eq protocol "icmp")}}
-            {{icmp-fields mod=model}}
+            {{icmp-fields model=model}}
           {{else}}
             Choose a protocol above
           {{/if}}

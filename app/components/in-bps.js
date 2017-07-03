@@ -28,22 +28,19 @@ export default Ember.Component.extend({
     widget.select('.title').text(this.get('title'))
 
     // set x & y scales
-    var x = d3.scaleTime().rangeRound([0, width])
-    var y = d3.scaleLinear().rangeRound([height, 0])
-    var y2 = d3.scaleLinear().rangeRound([height2, 0])
+    var x = d3.scaleTime().range([0, width])
+    var y = d3.scaleLinear().range([height, 0])
+    var y2 = d3.scaleLinear().range([height2, 0])
 
     // x & y axes gen
     var xAxis = d3.axisBottom(x)
     var yAxis = d3.axisLeft(y)
 
-    var line = d3.line()
-    .x((d) => x(d.x))
-    .y((d) => y(d.y))
+    // lines to append
+    var line = d3.line().x((d) => x(d.x)).y((d) => y(d.y))
+    var line2 = d3.line().x((d) => x(d.x)).y((d) => y2(d.y))
 
-    var line2 = d3.line()
-    .x((d) => x(d.x))
-    .y((d) => y2(d.y))
-
+    // focus and context groups for svg elements
     var focus = svg.append('g')
     .attr('class', 'focus')
     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
@@ -52,9 +49,9 @@ export default Ember.Component.extend({
     .attr('class', 'context')
     .attr('transform', 'translate(' + margin2.left + ',' + margin2.bottom + ')')
 
-    var graph = {}
-    // fetch data and render chart content
-    graph.d3json = d3.json(this.get('url'), function (error, data) {
+    // callback to handle fetched data
+    // also renders the chart
+    var render = function (error, data) {
       if (error) throw error
       // remove old points
       focus.selectAll('path').remove()
@@ -69,113 +66,59 @@ export default Ember.Component.extend({
         return o
       })
 
+      // set domains and ranges
       x.domain(d3.extent(d.map((d) => d.x)))
-      y.domain(d3.extent(d.map((d) => d.y))).rangeRound([height, 0])
-      y2.domain(d3.extent(d.map((d) => d.y))).rangeRound([height2, height + 2 * margin2.top])
+      y.domain(d3.extent(d.map((d) => d.y))).range([height, 0])
+      y2.domain(d3.extent(d.map((d) => d.y))).range([height2, height + 2 * margin2.top])
 
       // append the x & y axis t-graph
       focus.append('g')
         .attr('transform', 'translate(0,' + height + ')')
         .call(xAxis.tickSize(3).ticks(6).tickFormat(xTime))
-      focus.select('.domain').remove()
+      focus.select('.domain')
+        .attr('class', 'axes')
 
       focus.append('g')
         .call(yAxis.tickFormat(d3.format('.0s')).tickSize(2).ticks(6))
         .append('text')
-        .attr('transform', 'rotate(-90)')
-        .attr('y', 6)
-        .attr('dy', '0.71em')
-        .attr('fill', '#90A4AE')
-        .text('bits/s')
-      focus.select('.domain').remove()
+          .attr('transform', 'rotate(-90)')
+          .attr('y', 6)
+          .attr('dy', '0.71em')
+          .attr('fill', '#90A4AE')
+          .text('bits/s')
+      focus.select('.domain')
+        .attr('class', 'axes')
 
       // append path with data
-      focus.append('path')
-      .datum(d)
-      .attr('fill', 'none')
-      .attr('stroke', '#E91E63')
-      .attr('stroke-linejoin', 'round')
-      .attr('stroke-linecap', 'round')
-      .attr('stroke-width', 1)
-      .attr('d', line)
+      focus.append('path').datum(d)
+        .attr('fill', 'none')
+        .attr('stroke', '#E91E63')
+        .attr('stroke-linejoin', 'round')
+        .attr('stroke-linecap', 'round')
+        .attr('stroke-width', 1)
+        .attr('d', line)
 
       // append x axis to b-graph
       context.append('g')
         .attr('transform', 'translate(0,' + height2 + ')')
         .call(xAxis.tickSize(3).ticks(8).tickFormat(xTime))
-      context.select('.domain').remove()
+      context.select('.domain')
+        .attr('class', 'axes')
 
-      context.append('path')
-        .datum(d)
+      context.append('path').datum(d)
         .attr('fill', 'none')
         .attr('stroke', '#E91E63')
         .attr('stroke-linejoin', 'round')
         .attr('stroke-linecap', 'round')
         .attr('stroke-width', 1)
         .attr('d', line2)
-    })
+    }
 
-    graph.render = setInterval(function () {
-      d3.json('http://10.33.1.97:4242/api/series/qf-in-bps', function (error, data) {
-        if (error) throw error
-      // remove old points
-        focus.selectAll('path').remove()
-        focus.selectAll('g').remove()
-        context.selectAll('path').remove()
-        context.selectAll('g').remove()
-      // format dates and values
-        var d = data.stamp.map(function (obj) {
-          var o = {}
-          o.x = parseTime(obj.x)
-          o.y = +obj.y
-          return o
-        })
-
-        x.domain(d3.extent(d.map((d) => d.x)))
-        y.domain(d3.extent(d.map((d) => d.y))).rangeRound([height, 0])
-        y2.domain(d3.extent(d.map((d) => d.y))).rangeRound([height2, height + 2 * margin2.top])
-
-      // append the x & y axis t-graph
-        focus.append('g')
-        .attr('transform', 'translate(0,' + height + ')')
-        .call(xAxis.tickSize(3).ticks(6).tickFormat(xTime))
-        focus.select('.domain').remove()
-
-        focus.append('g')
-        .call(yAxis.tickFormat(d3.format('.0s')).tickSize(2).ticks(6))
-        .append('text')
-        .attr('transform', 'rotate(-90)')
-        .attr('y', 6)
-        .attr('dy', '0.71em')
-        .attr('fill', '#90A4AE')
-        .text('bits/s')
-        focus.select('.domain').remove()
-
-      // append path with data
-        focus.append('path')
-      .datum(d)
-      .attr('fill', 'none')
-      .attr('stroke', '#E91E63')
-      .attr('stroke-linejoin', 'round')
-      .attr('stroke-linecap', 'round')
-      .attr('stroke-width', 1)
-      .attr('d', line)
-
-      // append x axis to b-graph
-        context.append('g')
-        .attr('transform', 'translate(0,' + height2 + ')')
-        .call(xAxis.tickSize(3).ticks(8).tickFormat(xTime))
-        context.select('.domain').remove()
-
-        context.append('path')
-        .datum(d)
-        .attr('fill', 'none')
-        .attr('stroke', '#E91E63')
-        .attr('stroke-linejoin', 'round')
-        .attr('stroke-linecap', 'round')
-        .attr('stroke-width', 1)
-        .attr('d', line2)
-      })
-    }, 5000)
+    // fetch data and render chart content
+    d3.json(this.get('url'), render)
+    // update every 5sec
+    // setInterval(function (url) {
+    //   d3.json(url, render)
+    // }, 5000, this.get('url'))
   }
 })

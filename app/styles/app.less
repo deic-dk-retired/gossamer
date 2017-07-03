@@ -458,8 +458,8 @@ aside {
     overflow-y: scroll;
     width: 86vw;
     margin: 0 auto;
-    .ui .cards{
-      margin-left:0
+    .ui.grid{
+      margin-left:-.99rem;
     }
   }
 }
@@ -881,15 +881,27 @@ aside {
 }
 
 .dash-widget{
+  .shadow(-1px,2px,1px,1px,rgba(0,0,0,.1));
   text-align: center;
+  border: 1px solid @grey200;
+  border-radius: 4px;
   p {
-      color: @blue200;
+      color: @darker800;
       text-transform: uppercase;
+      font-weight: 400;
       margin-bottom: 0;
+      padding: @md 0;
   }
   svg {
-    min-height: @aside-width*2;
+    min-height: @aside-width*1.8;
     width: 100%;
+  }
+  .axes{
+    fill:none;
+    stroke:@grey200;
+  }
+  .tick{
+    opacity: .6;
   }
   .line {
     fill: none;
