@@ -4,7 +4,7 @@ import * as d3 from 'd3'
 export default Ember.Component.extend({
   classNames: ['traffic-band'],
   url: 'http://10.33.1.97:4242/api/series/qf-traffic',
-  title: 'traffic bandwidth',
+  title: 'traffic bandwidth (in)',
   gfill1: '#7CB342',
   gfill2: '#FFB300',
   didInsertElement () {
