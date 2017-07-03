@@ -4,8 +4,7 @@
       <div class="default text">Select Type</div>
       <i class="dropdown icon"></i>
       <div class="menu">
-        {{#each mod.icmptnc as |t|}}
-          <p>{{t}}</p>
+        {{#each mod as |t|}}
           <div class="item" data-value="{{t.typeid}}">
             {{t.type}}
           </div>

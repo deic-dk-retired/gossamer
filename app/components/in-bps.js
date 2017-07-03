@@ -18,7 +18,7 @@ export default Ember.Component.extend({
     var svgW = this.$('.dash-widget svg').outerWidth()
     var svgH = this.$('.dash-widget svg').outerHeight()
     // configure chart widget dimensions
-    var margin = {top: 10, right: 0, bottom: 100, left: 32}
+    var margin = {top: 10, right: 0, bottom: 80, left: 32}
     var margin2 = {top: 20, right: 0, bottom: 10, left: 32}
     var width = svgW - margin.left - margin.right - 20
     var height = +svgH - margin.top - margin.bottom
@@ -26,8 +26,6 @@ export default Ember.Component.extend({
     var g = svg.append('g')
       .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
-    // console.log(height)
-    // console.log(height2)
     // set widget title
     widget.select('.title')
       .text(this.get('title'))
@@ -37,20 +35,27 @@ export default Ember.Component.extend({
     // set x scale
     var x = d3.scaleTime()
       .rangeRound([0, width])
-    // var x2 = d3.scaleTime().rangeRound([2, width])
       // set y scale
     var y = d3.scaleLinear()
       .rangeRound([height, 0])
     var y2 = d3.scaleLinear()
     .rangeRound([height2, 0])
-    // var y2 = d3.scaleLinear().rangeRound([height2, 0])
 
     // x axis gen
     var xAxis = d3.axisBottom(x)
-
     // y axis gen
     var yAxis = d3.axisLeft(y)
     var yAxis2 = d3.axisLeft(y2)
+
+    var brush = d3.brushX()
+    .extent([[0, 0], [width, height2]])
+    .on('brush end', brushed)
+
+    var zoom = d3.zoom()
+    .scaleExtent([1, Infinity])
+    .translateExtent([[0, 0], [width, height]])
+    .extent([[0, 0], [width, height]])
+    .on('zoom', zoomed)
 
     var line = d3.line()
     .x((d) => x(d.x))
@@ -59,6 +64,14 @@ export default Ember.Component.extend({
     var line2 = d3.line()
     .x((d) => x(d.x))
     .y((d) => y2(d.y))
+
+    var focus = svg.append('g')
+    .attr('class', 'focus')
+    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+
+    var context = svg.append('g')
+    .attr('class', 'context')
+    .attr('transform', 'translate(' + margin2.left + ',' + margin2.bottom + ')')
 
     var graph = {}
     // fetch data and render chart content
@@ -77,27 +90,16 @@ export default Ember.Component.extend({
       y2.domain(d3.extent(d.map((d) => d.y))).rangeRound([height2, height + 2 * margin.top])
 
       // append the x axis t-graph
-      g.append('g')
+      focus.append('g')
         .attr('transform', 'translate(0,' + height + ')')
         .call(xAxis.tickSize(3)
               .ticks(6)
               .tickFormat(xTime)
               )
-        .select('.domain')
-        .remove()
-
-      // append x axis to b-graph
-      g.append('g')
-        .attr('transform', 'translate(0,' + height2 + ')')
-        .call(xAxis.tickSize(3)
-              .ticks(8)
-              .tickFormat(xTime)
-              )
-        .select('.domain')
-        .remove()
+      focus.select('.domain').remove()
 
       // append the y axis to t-graph
-      g.append('g')
+      focus.append('g')
         .call(yAxis
           .tickFormat(d3.format('.0s'))
           .tickSize(2)
@@ -109,10 +111,29 @@ export default Ember.Component.extend({
         .attr('dy', '0.71em')
         .attr('fill', '#90A4AE')
         .text('bits')
-      g.select('.domain').remove()
+      focus.select('.domain').remove()
+
+      // append path with data
+      focus.append('path')
+      .datum(d)
+      .attr('fill', 'none')
+      .attr('stroke', '#E91E63')
+      .attr('stroke-linejoin', 'round')
+      .attr('stroke-linecap', 'round')
+      .attr('stroke-width', 1)
+      .attr('d', line)
+
+      // append x axis to b-graph
+      context.append('g')
+        .attr('transform', 'translate(0,' + height2 + ')')
+        .call(xAxis.tickSize(3)
+              .ticks(8)
+              .tickFormat(xTime)
+              )
+      context.select('.domain').remove()
 
       // append the y axis to b-graph
-      g.append('g')
+      context.append('g')
         .call(yAxis2
           .tickFormat(d3.format('.0s'))
           .tickSize(2)
@@ -124,26 +145,16 @@ export default Ember.Component.extend({
         .attr('dy', '0.71em')
         .attr('fill', '#90A4AE')
         .text('bits')
-      g.select('.domain').remove()
+      context.select('.domain').remove()
 
-      g.append('path')
-      .datum(d)
-      .attr('fill', 'none')
-      .attr('stroke', '#E91E63')
-      .attr('stroke-linejoin', 'round')
-      .attr('stroke-linecap', 'round')
-      .attr('stroke-width', 1)
-      .attr('d', line2)
-
-      // append path with data
-      g.append('path')
-      .datum(d)
-      .attr('fill', 'none')
-      .attr('stroke', '#E91E63')
-      .attr('stroke-linejoin', 'round')
-      .attr('stroke-linecap', 'round')
-      .attr('stroke-width', 1)
-      .attr('d', line)
+      context.append('path')
+        .datum(d)
+        .attr('fill', 'none')
+        .attr('stroke', '#E91E63')
+        .attr('stroke-linejoin', 'round')
+        .attr('stroke-linecap', 'round')
+        .attr('stroke-width', 1)
+        .attr('d', line2)
     })
 
     graph.render = setInterval(function () {
@@ -161,28 +172,22 @@ export default Ember.Component.extend({
         y.domain(d3.extent(d.map((d) => d.y))).rangeRound([height, 0])
         y2.domain(d3.extent(d.map((d) => d.y))).rangeRound([height2, height + 2 * margin.top])
 
-        g.selectAll('g').remove()
+        focus.selectAll('path').remove()
+        focus.selectAll('g').remove()
+        context.selectAll('path').remove()
+        context.selectAll('g').remove()
 
-        // append the x axis
-        g.append('g')
+        // append the x axis t-graph
+        focus.append('g')
         .attr('transform', 'translate(0,' + height + ')')
         .call(xAxis.tickSize(3)
-              .ticks(8)
+              .ticks(6)
               .tickFormat(xTime)
               )
-        .select('.domain').remove()
+        focus.select('.domain').remove()
 
-      // append x axis to b-graph
-        g.append('g')
-        .attr('transform', 'translate(0,' + height2 + ')')
-        .call(xAxis.tickSize(3)
-              .ticks(8)
-              .tickFormat(xTime)
-              )
-        .select('.domain').remove()
-
-      // append the y axis
-        g.append('g')
+      // append the y axis to t-graph
+        focus.append('g')
         .call(yAxis
           .tickFormat(d3.format('.0s'))
           .tickSize(2)
@@ -194,10 +199,29 @@ export default Ember.Component.extend({
         .attr('dy', '0.71em')
         .attr('fill', '#90A4AE')
         .text('bits')
-        g.selectAll('path').remove()
+        focus.select('.domain').remove()
+
+      // append path with data
+        focus.append('path')
+      .datum(d)
+      .attr('fill', 'none')
+      .attr('stroke', '#E91E63')
+      .attr('stroke-linejoin', 'round')
+      .attr('stroke-linecap', 'round')
+      .attr('stroke-width', 1)
+      .attr('d', line)
+
+      // append x axis to b-graph
+        context.append('g')
+        .attr('transform', 'translate(0,' + height2 + ')')
+        .call(xAxis.tickSize(3)
+              .ticks(8)
+              .tickFormat(xTime)
+              )
+        context.select('.domain').remove()
 
       // append the y axis to b-graph
-        g.append('g')
+        context.append('g')
         .call(yAxis2
           .tickFormat(d3.format('.0s'))
           .tickSize(2)
@@ -209,27 +233,37 @@ export default Ember.Component.extend({
         .attr('dy', '0.71em')
         .attr('fill', '#90A4AE')
         .text('bits')
-        g.select('.domain').remove()
+        context.select('.domain').remove()
 
-        g.append('path')
-          .datum(d)
-          .attr('fill', 'none')
-          .attr('stroke', '#E91E63')
-          .attr('stroke-linejoin', 'round')
-          .attr('stroke-linecap', 'round')
-          .attr('stroke-width', 1)
-          .attr('d', line2)
-
-      // append path with data
-        g.append('path')
-          .datum(d)
-          .attr('fill', 'none')
-          .attr('stroke', '#E91E63')
-          .attr('stroke-linejoin', 'round')
-          .attr('stroke-linecap', 'round')
-          .attr('stroke-width', 1)
-          .attr('d', line)
+        context.append('path')
+        .datum(d)
+        .attr('fill', 'none')
+        .attr('stroke', '#E91E63')
+        .attr('stroke-linejoin', 'round')
+        .attr('stroke-linecap', 'round')
+        .attr('stroke-width', 1)
+        .attr('d', line2)
       })
     }, 5000)
+
+    function brushed () {
+      if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'zoom') return // ignore brush-by-zoom
+      var s = d3.event.selection || x2.range()
+      x.domain(s.map(x2.invert, x2))
+      focus.select('.area').attr('d', area)
+      focus.select('.axis--x').call(xAxis)
+      svg.select('.zoom').call(zoom.transform, d3.zoomIdentity
+          .scale(width / (s[1] - s[0]))
+          .translate(-s[0], 0))
+    }
+
+    function zoomed () {
+      if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'brush') return // ignore zoom-by-brush
+      var t = d3.event.transform
+      x.domain(t.rescaleX(x2).domain())
+      focus.select('.area').attr('d', area)
+      focus.select('.axis--x').call(xAxis)
+      context.select('.brush').call(brush.move, x.range().map(t.invertX, t))
+    }
   }
 })

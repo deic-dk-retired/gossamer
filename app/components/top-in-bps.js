@@ -18,7 +18,7 @@ export default Ember.Component.extend({
     var svgW = this.$('.dash-widget svg').outerWidth()
     var svgH = this.$('.dash-widget svg').outerHeight()
     // configure chart widget dimensions
-    var margin = {top: 20, right: 0, bottom: 100, left: 32}
+    var margin = {top: 20, right: 0, bottom: 80, left: 32}
     var margin2 = {top: 20, right: 0, bottom: 20, left: 32}
     var width = svgW - margin.left - margin.right - 20
     var height = +svgH - margin.top - margin.bottom
@@ -229,6 +229,6 @@ export default Ember.Component.extend({
           .attr('stroke-width', 1)
           .attr('d', line)
       })
-    }, 50000)
+    }, 5000)
   }
 })
