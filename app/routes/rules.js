@@ -1,7 +1,7 @@
 import Ember from 'ember'
 
 export default Ember.Route.extend({
-  resultPromise: {},
+  resultPromise: Ember.Object.create({}),
   model () {
     // var fetched = this.get('resultPromise') || this.get('store').findAll('rule').then((results) => {
     //   return {
@@ -10,7 +10,7 @@ export default Ember.Route.extend({
     //   }
     // })
     // this.set('resultPromise', fetched)
-    // return resultPromise
+    // return this.get('resultPromise')
     return this.get('store').findAll('rule').then((results) => {
       return {
         rules: results,
@@ -19,6 +19,7 @@ export default Ember.Route.extend({
     })
   },
   afterModel () {
+    console.info(this.get('resultPromise'))
     Ember.$('.planets').remove()
   },
   setupController (controller, { rules, meta }) {
@@ -28,7 +29,6 @@ export default Ember.Route.extend({
   actions: {
     showMore () {
       console.log('more..')
-      // return this.get('model')
     }
   }
 })

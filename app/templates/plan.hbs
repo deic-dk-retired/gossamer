@@ -25,15 +25,15 @@
 
       <h4 class="ui dividing header">Protocol Information</h4>
       {{#if (eq protocol "tcp")}}
-        {{tcp-fields}}
+        {{tcp-fields mod=model}}
       {{else}}
         {{#if (eq protocol "udp")}}
           {{udp-fields}}
         {{else}}
           {{#if (eq protocol "icmp")}}
-            {{icmp-fields model=model}}
+            {{icmp-fields mod=model}}
           {{else}}
-            Choose a protocol above
+            Select a protocol above to proceed
           {{/if}}
         {{/if}}
       {{/if}}
@@ -47,13 +47,13 @@
       <div class="required twelve wide field">
         <label>Fragment Encoding</label>
         {{#ui-dropdown class="search selection" allowAdditions=true selected=fragment_encode onChange=(action (mut fragment_encode)) as |execute mapper|}}
-          <div class="default text">Select Encoding</div>
+          <div class="default text">Select/Add encoding</div>
           <i class="dropdown icon"></i>
         {{/ui-dropdown}}
       </div>
 
       <div class="field">
-        <label>Short comment&hellip;</label>
+        <label>Short Comment&hellip;</label>
         <textarea rows="3"></textarea>
       </div>
 

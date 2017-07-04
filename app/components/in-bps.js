@@ -117,8 +117,8 @@ export default Ember.Component.extend({
     // fetch data and render chart content
     d3.json(this.get('url'), render)
     // update every 5sec
-    // setInterval(function (url) {
-    //   d3.json(url, render)
-    // }, 5000, this.get('url'))
+    setInterval(function (url) {
+      d3.json(url, render)
+    }, 5000, this.get('url'))
   }
 })
