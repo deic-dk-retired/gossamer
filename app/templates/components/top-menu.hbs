@@ -4,14 +4,14 @@
       <img src="assets/images/logo.png" alt="Logo">
     </div>
   </div>
+  <div class="item">
+    <i class="alarm outline icon"></i>
+  </div>
   {{!-- <div class="item"> --}}
   {{#link-to 'plan' class="blue item"}}
     <i class="checked calendar icon"></i>
   {{/link-to}}
   {{!-- </div> --}}
-  <div class="item">
-    <i class="alarm outline icon"></i>
-  </div>
   {{#ui-dropdown class="item"}}
     <span class="ui label mini red circular"><i class="lightning icon"></i> </span>&nbsp;
     <span class="username">{{username}}</span>
@@ -24,7 +24,9 @@
       <div class="divider"></div>
       {{#if (eq usrtype 'super')}}
         <div class="header">Super Settings</div>
-        <a class="item"><i class="users icon"></i>Edit Users</a>
+        {{#link-to "users" class="item"}}
+          <i class="users icon"></i>Edit Users
+        {{/link-to}}
         <a class="item"><i class="server icon"></i>Edit Networks</a>
         <a class="item"><i class="university icon"></i>Edit Customers</a>
         <div class="divider"></div>
@@ -34,4 +36,7 @@
        {{/link-to}}
     </div>
   {{/ui-dropdown}}
+  <div class="header item">
+    <span class="title">{{pagetitle}}</span>
+  </div>
 </div>

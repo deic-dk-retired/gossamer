@@ -2,6 +2,18 @@ import Ember from 'ember'
 
 export default Ember.Route.extend({
   model () {
-    return this.store.findAll('icmptype')
+    return Ember.RSVP.hash({
+      icmps: this.get('store').findAll('icmp'),
+      tcps: this.store.findAll('tcp')
+    })
+    // return this.get('store').findAll('icmp')
+  },
+  setupController (controller, model) {
+    this._super(...arguments)
+    Ember.set(controller, 'icmps', model.icmps)
+    Ember.set(controller, 'tcps', model.tcps)
+  },
+  afterModel () {
+    Ember.$('.planets').remove()
   }
 })

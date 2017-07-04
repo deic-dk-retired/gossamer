@@ -2,10 +2,10 @@ import Ember from 'ember'
 import * as d3 from 'd3'
 
 export default Ember.Component.extend({
-  classNames: ['top-10-pps-in'],
-  url: 'http://10.33.1.97:4242/api/series/qf-top-10-in-pps',
-  title: 'top 10 pps (in)',
-  gfill: '#1E88E5',
+  classNames: ['bps-in'],
+  url: 'http://10.33.1.97:4242/api/series/qf-in-bps',
+  title: 'bps (in)',
+  gfill: '#E91E63',
   didInsertElement () {
     this._super(...arguments)
     // time parser for influx timestamp
@@ -92,7 +92,7 @@ export default Ember.Component.extend({
       // append path with data
       focus.append('path').datum(d)
         .attr('fill', 'none')
-        .attr('stroke', '#1E88E5')
+        .attr('stroke', '#E91E63')
         .attr('stroke-linejoin', 'round')
         .attr('stroke-linecap', 'round')
         .attr('stroke-width', 1)
@@ -107,12 +107,13 @@ export default Ember.Component.extend({
 
       context.append('path').datum(d)
         .attr('fill', 'none')
-        .attr('stroke', '#1E88E5')
+        .attr('stroke', '#E91E63')
         .attr('stroke-linejoin', 'round')
         .attr('stroke-linecap', 'round')
         .attr('stroke-width', 1)
         .attr('d', line2)
     }
+
     // fetch data and render chart content
     d3.json(this.get('url'), render)
     // update every 5sec

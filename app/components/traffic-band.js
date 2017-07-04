@@ -2,10 +2,11 @@ import Ember from 'ember'
 import * as d3 from 'd3'
 
 export default Ember.Component.extend({
-  classNames: ['top-10-pps-in'],
-  url: 'http://10.33.1.97:4242/api/series/qf-top-10-in-pps',
-  title: 'top 10 pps (in)',
-  gfill: '#1E88E5',
+  classNames: ['traffic-band'],
+  url: 'http://10.33.1.97:4242/api/series/qf-traffic',
+  title: 'traffic bandwidth (in)',
+  gfill1: '#7CB342',
+  gfill2: '#FFB300',
   didInsertElement () {
     this._super(...arguments)
     // time parser for influx timestamp
@@ -92,7 +93,7 @@ export default Ember.Component.extend({
       // append path with data
       focus.append('path').datum(d)
         .attr('fill', 'none')
-        .attr('stroke', '#1E88E5')
+        .attr('stroke', '#7CB342')
         .attr('stroke-linejoin', 'round')
         .attr('stroke-linecap', 'round')
         .attr('stroke-width', 1)
@@ -107,7 +108,7 @@ export default Ember.Component.extend({
 
       context.append('path').datum(d)
         .attr('fill', 'none')
-        .attr('stroke', '#1E88E5')
+        .attr('stroke', '#7CB342')
         .attr('stroke-linejoin', 'round')
         .attr('stroke-linecap', 'round')
         .attr('stroke-width', 1)

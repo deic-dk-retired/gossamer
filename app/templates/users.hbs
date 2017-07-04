@@ -1,9 +1,32 @@
-{{#each model as |appUser|}}
-  <p>{{appUser.id}},
-    {{appUser.custid}},
-    {{appUser.accesstype}},
-    {{appUser.name}},
-    {{appUser.username}},
-    {{moment-format appUser.lastloggedin 'ddd, MMM Do, YY hh:mm:ss a'}},
-    {{moment-format appUser.pwdlastchangedon 'ddd, MMM Do, YY hh:mm:ss a'}} </p>
-{{/each}}
+<div class="ui grid">
+  <div class="eight wide column">
+    <h2>Users</h2>
+    <div class="ui three stackable cards">
+    {{#each model as |user|}}
+      <div class="card" {{action 'editUser'}}>
+        <div class="image">
+          <img src="assets/images/v.png">
+        </div>
+        <div class="content">
+          <span class="">{{user.name}}</span>
+          <div class="meta">
+            <span class="date">Last seen on
+            {{moment-format user.lastloggedin 'MMM Do, \'YY HH:MM:SS'}}
+            </span>
+          </div>
+          <div class="description">
+            is a {{user.accesstype}}
+          </div>
+        </div>
+        <div class="extra content">
+          <p><i class="users icon"></i>{{user.customer}}</p>
+        </div>
+      </div>
+    {{/each}}
+
+  </div>
+  </div>
+  <div class="eight wide column">
+    {{edit-user}}
+  </div>
+</div>

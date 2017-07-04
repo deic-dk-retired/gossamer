@@ -1,6 +1,6 @@
 import { moduleForModel, test } from 'ember-qunit';
 
-moduleForModel('icmptype', 'Unit | Model | icmptype', {
+moduleForModel('tcp', 'Unit | Model | tcp', {
   // Specify the other units that are required for this test.
   needs: []
 });
