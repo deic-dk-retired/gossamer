@@ -18,6 +18,7 @@
   <input type="text" name="dest-port" placeholder="e.g 8080">
 </div>
 <div class="required twelve wide field">
+  <label>TCP Flags</label>
   {{#ui-dropdown class="fluid search multiple selection" selected=flag onChange=(action (mut flag))}}
     <i class="dropdown icon"></i>
     <div class="default text">Flags</div>
