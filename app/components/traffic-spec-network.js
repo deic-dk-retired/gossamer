@@ -85,7 +85,7 @@ export default Ember.Component.extend({
           .attr('y', 6)
           .attr('dy', '0.71em')
           .attr('fill', '#90A4AE')
-          .text('packets/s')
+          .text('bits/s')
       focus.select('.domain')
         .attr('class', 'axes')
 
