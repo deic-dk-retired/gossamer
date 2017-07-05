@@ -14,5 +14,11 @@ export default Ember.Route.extend({
   },
   afterModel () {
     Ember.$('.planets').remove()
+  },
+  actions: {
+    // onSubmit () {
+    //   this._super(...arguments)
+    //   console.log(this.$('#fragment-encode').value)
+    // }
   }
 })

@@ -1,6 +1,6 @@
 <div class="required twelve wide field">
   <label>ICMP Type</label>
-    {{#ui-dropdown class="search selection" selected=icmptype onChange=(action (mut icmptype))}}
+    {{#ui-dropdown id="icmp-type" class="search selection" selected=icmptype onChange=(action (mut selected))}}
       <div class="default text">Select Type</div>
       <i class="dropdown icon"></i>
       <div class="menu">
@@ -14,7 +14,7 @@
 </div>
 <div class="required twelve wide field">
   <label>ICMP Code</label>
-  {{#ui-dropdown class="search selection" selected=icmpcode onChange=(action (mut icmpcode)) as |execute mapper|}}
+  {{#ui-dropdown id="icmp-code" class="search selection" selected=icmpcode onChange=(action (mut icmpcode)) as |execute mapper|}}
     <div class="default text">Select Code</div>
     <i class="dropdown icon"></i>
     <div class="menu">
