@@ -6,20 +6,23 @@ const DashWidgetComponent = Ember.Component.extend({
   class: Ember.computed('params.[]', function () {
     return this.get('params')[0]
   }),
-  url: Ember.computed('params.[]', function () {
+  ytext: Ember.computed('params.[]', function () {
     return this.get('params')[1]
   }),
-  title: Ember.computed('params.[]', function () {
+  url: Ember.computed('params.[]', function () {
     return this.get('params')[2]
   }),
-  gfill1: Ember.computed('params.[]', function () {
+  title: Ember.computed('params.[]', function () {
     return this.get('params')[3]
   }),
-  gfill2: Ember.computed('params.[]', function () {
+  gfill1: Ember.computed('params.[]', function () {
     return this.get('params')[4]
   }),
-  shape: Ember.computed('params.[]', function () {
+  gfill2: Ember.computed('params.[]', function () {
     return this.get('params')[5]
+  }),
+  shape: Ember.computed('params.[]', function () {
+    return this.get('params')[6]
   }),
   didInsertElement () {
     this._super(...arguments)
@@ -65,11 +68,11 @@ const DashWidgetComponent = Ember.Component.extend({
 
     var shape = ''
     var shape2 = ''
-    var css = '' // .area or .line
+    var css = 'd3shape ' // .area or .line
     var skin = '' // stroke or fill
 
     if (this.get('shape') === 'line') {
-      css = 'line'
+      css = css + 'line'
       skin = 'stroke'
         // lines to append
       shape = d3.line()
@@ -80,15 +83,15 @@ const DashWidgetComponent = Ember.Component.extend({
           .y((d) => y2(d.y))
     }
     if (this.get('shape') === 'area') {
-      css = 'area'
+      css = css + 'area'
       skin = 'fill'
         // areas to append
-      var shape = d3.area()
+      shape = d3.area()
           .curve(d3.curveMonotoneX)
           .x((d) => x(d.x))
           .y0(height)
           .y1((d) => y(d.y))
-      var shape2 = d3.area()
+      shape2 = d3.area()
           .curve(d3.curveMonotoneX)
           .x((d) => x2(d.x))
           .y0(height2)
@@ -157,7 +160,7 @@ const DashWidgetComponent = Ember.Component.extend({
           .attr('y', 6)
           .attr('dy', '0.71em')
           .attr('fill', '#90A4AE')
-          .text('bits/s')
+          .text(thisComponent.get('ytext'))
       focus.select('.domain')
         .attr('class', 'axes')
 
@@ -192,7 +195,7 @@ const DashWidgetComponent = Ember.Component.extend({
       if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'zoom') return // ignore brush-by-zoom
       var s = d3.event.selection || x2.range()
       x.domain(s.map(x2.invert, x2))
-      focus.select('.area').attr('d', shape)
+      focus.select('.d3shape').attr('d', shape)
       focus.select('.axis--x').call(xAxis)
       svg.select('.zoom').call(zoom.transform, d3.zoomIdentity
           .scale(width / (s[1] - s[0]))
@@ -203,14 +206,14 @@ const DashWidgetComponent = Ember.Component.extend({
       if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'brush') return // ignore zoom-by-brush
       var t = d3.event.transform
       x.domain(t.rescaleX(x2).domain())
-      focus.select('.area').attr('d', shape)
+      focus.select('.d3shape').attr('d', shape)
       focus.select('.axis--x').call(xAxis)
       context.select('.brush').call(brush.move, x.range().map(t.invertX, t))
     }
     // fetch data and render chart content
     d3.json(this.get('url'), render)
     // update every 5sec
-    setInterval(function (url) {
+    var refresh = setInterval(function (url) {
       d3.json(url, render)
     }, 5000, this.get('url'))
   }
