@@ -5,7 +5,7 @@ export default Ember.Component.extend({
   classNames: ['bps-out'],
   url: 'http://10.33.1.97:4242/api/series/qf-out-bps',
   title: 'bps (out)',
-  gfill: '#EC407A',
+  gfill: '#90CAF9',
   didInsertElement () {
     this._super(...arguments)
     // time parser for influx timestamp
@@ -18,27 +18,54 @@ export default Ember.Component.extend({
     var svgW = this.$('.dash-widget svg').outerWidth()
     var svgH = this.$('.dash-widget svg').outerHeight()
     // configure chart widget dimensions
-    var margin = {top: 10, right: 0, bottom: 80, left: 32}
-    var margin2 = {top: 20, right: 0, bottom: 10, left: 32}
+    var margin = {top: 10, right: 10, bottom: 80, left: 32}
+    var margin2 = {top: 310, right: 10, bottom: 20, left: 32}
+    var width = svgW - margin.left - margin.right - 20
     var height = +svgH - margin.top - margin.bottom
     var height2 = +svgH - margin2.top - margin2.bottom
-    var width = svgW - margin.left - margin.right - 20
 
     // set widget title
     widget.select('.title').text(this.get('title'))
 
     // set x & y scales
     var x = d3.scaleTime().range([0, width])
+    var x2 = d3.scaleTime().range([0, width])
     var y = d3.scaleLinear().range([height, 0])
     var y2 = d3.scaleLinear().range([height2, 0])
 
     // x & y axes gen
     var xAxis = d3.axisBottom(x)
+    var xAxis2 = d3.axisBottom(x2)
     var yAxis = d3.axisLeft(y)
 
-    // lines to append
-    var line = d3.line().x((d) => x(d.x)).y((d) => y(d.y))
-    var line2 = d3.line().x((d) => x(d.x)).y((d) => y2(d.y))
+    var brush = d3.brushX()
+      .extent([[0, 0], [width, height2]])
+      .on('brush end', brushed)
+
+    var zoom = d3.zoom()
+      .scaleExtent([1, Infinity])
+      .translateExtent([[0, 0], [width, height]])
+      .extent([[0, 0], [width, height]])
+      .on('zoom', zoomed)
+
+    // areas to append
+    var area = d3.area()
+      .curve(d3.curveMonotoneX)
+      .x((d) => x(d.x))
+      .y0(height)
+      .y1((d) => y(d.y))
+
+    var area2 = d3.area()
+      .curve(d3.curveMonotoneX)
+      .x((d) => x2(d.x))
+      .y0(height2)
+      .y1((d) => y2(d.y))
+
+    svg.append('defs').append('clipPath')
+        .attr('id', 'clip')
+      .append('rect')
+        .attr('width', width)
+        .attr('height', height)
 
     // focus and context groups for svg elements
     var focus = svg.append('g')
@@ -47,7 +74,7 @@ export default Ember.Component.extend({
 
     var context = svg.append('g')
     .attr('class', 'context')
-    .attr('transform', 'translate(' + margin2.left + ',' + margin2.bottom + ')')
+    .attr('transform', 'translate(' + margin2.left + ',' + margin2.top + ')')
 
     // callback to handle fetched data
     // also renders the chart
@@ -67,18 +94,27 @@ export default Ember.Component.extend({
       })
 
       // set domains and ranges
-      x.domain(d3.extent(d.map((d) => d.x)))
-      y.domain(d3.extent(d.map((d) => d.y))).range([height, 0])
-      y2.domain(d3.extent(d.map((d) => d.y))).range([height2, height + 2 * margin2.top])
+      x.domain(d3.extent(d, (d) => d.x))
+      y.domain([0, d3.max(d, (d) => d.y)])
+      x2.domain(x.domain())
+      y2.domain(y.domain())
 
-      // append the x & y axis t-graph
+      // append path with data
+      focus.append('path').datum(d)
+        .attr('class', 'area')
+        .attr('fill', '#90CAF9')
+        .attr('d', area)
+
+      // append the x & y axis focus
       focus.append('g')
+        .attr('class', 'axis axis--x')
         .attr('transform', 'translate(0,' + height + ')')
         .call(xAxis.tickSize(3).ticks(6).tickFormat(xTime))
       focus.select('.domain')
         .attr('class', 'axes')
 
       focus.append('g')
+        .attr('class', 'axis--y')
         .call(yAxis.tickFormat(d3.format('.0s')).tickSize(2).ticks(6))
         .append('text')
           .attr('transform', 'rotate(-90)')
@@ -89,29 +125,51 @@ export default Ember.Component.extend({
       focus.select('.domain')
         .attr('class', 'axes')
 
-      // append path with data
-      focus.append('path').datum(d)
-        .attr('fill', 'none')
-        .attr('stroke', '#EC407A')
-        .attr('stroke-linejoin', 'round')
-        .attr('stroke-linecap', 'round')
-        .attr('stroke-width', 1)
-        .attr('d', line)
+      // append path to context
+      context.append('path').datum(d)
+      .attr('class', 'area')
+      .attr('fill', '#90CAF9')
+      .attr('d', area2)
 
-      // append x axis to b-graph
+      // append x axis to context
       context.append('g')
+        .attr('class', 'axis--x')
         .attr('transform', 'translate(0,' + height2 + ')')
-        .call(xAxis.tickSize(3).ticks(8).tickFormat(xTime))
+        .call(xAxis2.tickSize(3).ticks(8).tickFormat(xTime))
       context.select('.domain')
         .attr('class', 'axes')
 
-      context.append('path').datum(d)
-        .attr('fill', 'none')
-        .attr('stroke', '#EC407A')
-        .attr('stroke-linejoin', 'round')
-        .attr('stroke-linecap', 'round')
-        .attr('stroke-width', 1)
-        .attr('d', line2)
+      context.append('g')
+        .attr('class', 'brush')
+        .call(brush)
+        .call(brush.move, x.range())
+
+      svg.append('rect')
+        .attr('class', 'zoom')
+        .attr('width', width)
+        .attr('height', height)
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+        .call(zoom)
+    }
+
+    function brushed () {
+      if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'zoom') return // ignore brush-by-zoom
+      var s = d3.event.selection || x2.range()
+      x.domain(s.map(x2.invert, x2))
+      focus.select('.area').attr('d', area)
+      focus.select('.axis--x').call(xAxis)
+      svg.select('.zoom').call(zoom.transform, d3.zoomIdentity
+          .scale(width / (s[1] - s[0]))
+          .translate(-s[0], 0))
+    }
+
+    function zoomed () {
+      if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'brush') return // ignore zoom-by-brush
+      var t = d3.event.transform
+      x.domain(t.rescaleX(x2).domain())
+      focus.select('.area').attr('d', area)
+      focus.select('.axis--x').call(xAxis)
+      context.select('.brush').call(brush.move, x.range().map(t.invertX, t))
     }
     // fetch data and render chart content
     d3.json(this.get('url'), render)

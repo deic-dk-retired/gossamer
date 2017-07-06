@@ -907,6 +907,13 @@ aside {
   }
   .tick{
     opacity: .6;
+    line{
+      stroke:@grey300;
+    }
+    text{
+      fill:@darker800;
+    }
+
   }
   .line {
     fill: none;
@@ -917,6 +924,11 @@ aside {
   .area {
     stroke: none;
     clip-path: url(#clip);
+    opacity: .7;
+  }
+  .selection{
+    fill:@blue800;
+    opacity: .2;
   }
   .zoom {
     cursor: move;

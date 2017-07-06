@@ -5,7 +5,7 @@ export default Ember.Component.extend({
   classNames: ['top-incoming'],
   url: 'http://10.33.1.97:4242/api/series/qf-top-incoming',
   title: 'top hosts (in)',
-  gfill: '#4CAF50',
+  gfill: '#FFCA28',
   didInsertElement () {
     this._super(...arguments)
     // time parser for influx timestamp
@@ -92,7 +92,7 @@ export default Ember.Component.extend({
       // append path with data
       focus.append('path').datum(d)
         .attr('fill', 'none')
-        .attr('stroke', '#4CAF50')
+        .attr('stroke', '#FFCA28')
         .attr('stroke-linejoin', 'round')
         .attr('stroke-linecap', 'round')
         .attr('stroke-width', 1)
@@ -107,7 +107,7 @@ export default Ember.Component.extend({
 
       context.append('path').datum(d)
         .attr('fill', 'none')
-        .attr('stroke', '#4CAF50')
+        .attr('stroke', '#FFCA28')
         .attr('stroke-linejoin', 'round')
         .attr('stroke-linecap', 'round')
         .attr('stroke-width', 1)
