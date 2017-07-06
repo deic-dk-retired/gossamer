@@ -18,6 +18,9 @@ const DashWidgetComponent = Ember.Component.extend({
   gfill2: Ember.computed('params.[]', function () {
     return this.get('params')[4]
   }),
+  shape: Ember.computed('params.[]', function () {
+    return this.get('params')[5]
+  }),
   didInsertElement () {
     this._super(...arguments)
     // time parser for influx timestamp
@@ -60,17 +63,37 @@ const DashWidgetComponent = Ember.Component.extend({
       .extent([[0, 0], [width, height]])
       .on('zoom', zoomed)
 
-    // areas to append
-    var area = d3.area()
-      .curve(d3.curveMonotoneX)
-      .x((d) => x(d.x))
-      .y0(height)
-      .y1((d) => y(d.y))
-    var area2 = d3.area()
-      .curve(d3.curveMonotoneX)
-      .x((d) => x2(d.x))
-      .y0(height2)
-      .y1((d) => y2(d.y))
+    var shape = ''
+    var shape2 = ''
+    var css = '' // .area or .line
+    var skin = '' // stroke or fill
+
+    if (this.get('shape') === 'line') {
+      css = 'line'
+      skin = 'stroke'
+        // lines to append
+      shape = d3.line()
+          .x((d) => x(d.x))
+          .y((d) => y(d.y))
+      shape2 = d3.line()
+          .x((d) => x2(d.x))
+          .y((d) => y2(d.y))
+    }
+    if (this.get('shape') === 'area') {
+      css = 'area'
+      skin = 'fill'
+        // areas to append
+      var shape = d3.area()
+          .curve(d3.curveMonotoneX)
+          .x((d) => x(d.x))
+          .y0(height)
+          .y1((d) => y(d.y))
+      var shape2 = d3.area()
+          .curve(d3.curveMonotoneX)
+          .x((d) => x2(d.x))
+          .y0(height2)
+          .y1((d) => y2(d.y))
+    }
 
     svg.append('defs').append('clipPath')
         .attr('id', 'clip')
@@ -114,9 +137,9 @@ const DashWidgetComponent = Ember.Component.extend({
 
       // append path with data
       focus.append('path').datum(d)
-        .attr('class', 'area')
-        .attr('fill', thisComponent.get('gfill1'))
-        .attr('d', area)
+        .attr('class', css)
+        .attr(skin, thisComponent.get('gfill1'))
+        .attr('d', shape)
 
       // append the x & y axis focus
       focus.append('g')
@@ -140,9 +163,9 @@ const DashWidgetComponent = Ember.Component.extend({
 
       // append path to context
       context.append('path').datum(d)
-      .attr('class', 'area')
-      .attr('fill', thisComponent.get('gfill1'))
-      .attr('d', area2)
+      .attr('class', css)
+      .attr(skin, thisComponent.get('gfill1'))
+      .attr('d', shape2)
 
       // append x axis to context
       context.append('g')
@@ -169,7 +192,7 @@ const DashWidgetComponent = Ember.Component.extend({
       if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'zoom') return // ignore brush-by-zoom
       var s = d3.event.selection || x2.range()
       x.domain(s.map(x2.invert, x2))
-      focus.select('.area').attr('d', area)
+      focus.select('.area').attr('d', shape)
       focus.select('.axis--x').call(xAxis)
       svg.select('.zoom').call(zoom.transform, d3.zoomIdentity
           .scale(width / (s[1] - s[0]))
@@ -180,7 +203,7 @@ const DashWidgetComponent = Ember.Component.extend({
       if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'brush') return // ignore zoom-by-brush
       var t = d3.event.transform
       x.domain(t.rescaleX(x2).domain())
-      focus.select('.area').attr('d', area)
+      focus.select('.area').attr('d', shape)
       focus.select('.axis--x').call(xAxis)
       context.select('.brush').call(brush.move, x.range().map(t.invertX, t))
     }
