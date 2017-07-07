@@ -1,8 +1,8 @@
 import Ember from 'ember'
 import * as d3 from 'd3'
-import {event} from 'd3-selection'
+import { event } from 'd3-selection'
 
-const DashWidgetComponent = Ember.Component.extend({
+const D3VisComponent = Ember.Component.extend({
   // tagName: '',
   class: Ember.computed('params.[]', function () {
     return this.get('params')[0]
@@ -32,10 +32,10 @@ const DashWidgetComponent = Ember.Component.extend({
     var xTime = d3.timeFormat('%H:%M')
 
     // get svg width and height from DOM
-    var widget = d3.select('.' + this.get('class') + ' .dash-widget')
-    var svg = d3.select('.' + this.get('class') + ' .dash-widget' + ' > svg')
-    var svgW = this.$('.dash-widget svg').outerWidth()
-    var svgH = this.$('.dash-widget svg').outerHeight()
+    var widget = d3.select('.' + this.get('class') + ' .d3-vis')
+    var svg = d3.select('.' + this.get('class') + ' .d3-vis' + ' > svg')
+    var svgW = this.$('.d3-vis svg').outerWidth()
+    var svgH = this.$('.d3-vis svg').outerHeight()
     // configure chart widget dimensions
     var margin = {top: 10, right: 10, bottom: 80, left: 32}
     var margin2 = {top: 310, right: 10, bottom: 20, left: 32}
@@ -197,9 +197,9 @@ const DashWidgetComponent = Ember.Component.extend({
     // fetch data and render chart content
     d3.json(this.get('url'), render)
     // update every 5sec
-    var refresh = setInterval(function (url) {
-      d3.json(url, render)
-    }, 5000, this.get('url'))
+    var refresh = setInterval(function (url, f1, f2) {
+      f1(url, f2)
+    }, 5000, this.get('url'), d3.json, render)
 
     function brushed () {
       console.log(d3)
@@ -226,8 +226,8 @@ const DashWidgetComponent = Ember.Component.extend({
 
 })
 
-DashWidgetComponent.reopenClass({
+D3VisComponent.reopenClass({
   positionalParams: 'params'
 })
 
-export default DashWidgetComponent
+export default D3VisComponent
