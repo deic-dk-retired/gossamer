@@ -1,5 +1,6 @@
 import Ember from 'ember'
 import * as d3 from 'd3'
+import {event} from 'd3-selection'
 
 const DashWidgetComponent = Ember.Component.extend({
   // tagName: '',
@@ -76,9 +77,11 @@ const DashWidgetComponent = Ember.Component.extend({
       skin = 'stroke'
         // lines to append
       shape = d3.line()
+          .curve(d3.curveMonotoneX)
           .x((d) => x(d.x))
           .y((d) => y(d.y))
       shape2 = d3.line()
+          .curve(d3.curveMonotoneX)
           .x((d) => x2(d.x))
           .y((d) => y2(d.y))
     }
@@ -192,6 +195,8 @@ const DashWidgetComponent = Ember.Component.extend({
     }
 
     function brushed () {
+      console.log(d3)
+      console.log(event)
       if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'zoom') return // ignore brush-by-zoom
       var s = d3.event.selection || x2.range()
       x.domain(s.map(x2.invert, x2))
@@ -213,9 +218,9 @@ const DashWidgetComponent = Ember.Component.extend({
     // fetch data and render chart content
     d3.json(this.get('url'), render)
     // update every 5sec
-    var refresh = setInterval(function (url) {
-      d3.json(url, render)
-    }, 5000, this.get('url'))
+    // var refresh = setInterval(function (url) {
+    //   d3.json(url, render)
+    // }, 5000, this.get('url'))
   }
 
 })
