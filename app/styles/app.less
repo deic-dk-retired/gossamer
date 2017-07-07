@@ -887,15 +887,18 @@ aside {
 
 .dash-widget, .d3-vis{
   .shadow(-1px,2px,1px,1px,rgba(0,0,0,.1));
-  text-align: center;
   border: 1px solid @grey200;
   border-radius: 4px;
   p {
       color: @darker800;
-      text-transform: uppercase;
+      background: @light-bg;
+      text-transform: capitalize;
       font-weight: 400;
+      font-size: @md;
       margin-bottom: 0;
-      padding: @md 0;
+      padding: @xs * .8;
+      border-radius: 4px 4px 0 0px;
+      border-bottom: 1px solid @grey200;
   }
   svg {
     min-height: @aside-width*1.8;

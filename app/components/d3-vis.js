@@ -194,13 +194,6 @@ const D3VisComponent = Ember.Component.extend({
         .call(zoom)
     }
 
-    // fetch data and render chart content
-    d3.json(this.get('url'), render)
-    // update every 5sec
-    var refresh = setInterval(function (url, f1, f2) {
-      f1(url, f2)
-    }, 5000, this.get('url'), d3.json, render)
-
     function brushed () {
       console.log(d3)
       console.log(event)
@@ -222,6 +215,13 @@ const D3VisComponent = Ember.Component.extend({
       focus.select('.axis--x').call(xAxis)
       context.select('.brush').call(brush.move, x.range().map(t.invertX, t))
     }
+
+    // fetch data and render chart content
+    d3.json(this.get('url'), render)
+    // update every 5sec
+    var refresh = setInterval(function (url, f1, f2) {
+      f1(url, f2)
+    }, 5000, this.get('url'), d3.json, render)
   }
 
 })
