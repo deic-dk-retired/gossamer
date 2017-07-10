@@ -172,7 +172,7 @@ const DashWidgetComponent = Ember.Component.extend({
       context.append('g')
         .attr('class', 'axis--x')
         .attr('transform', 'translate(0,' + height2 + ')')
-        .call(xAxis2.tickSize(3).tickFormat(xTime).ticks(8))
+        .call(xAxis2.tickSize(4).tickFormat(xTime).ticks(8))
       context.select('.domain')
         .attr('class', 'axes')
 
