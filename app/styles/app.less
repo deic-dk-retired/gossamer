@@ -906,13 +906,19 @@ aside {
   }
   .axes{
     fill:none;
-    stroke:@grey200;
+    stroke:@grey100;
+  }
+  .ytext{
+    fill: @grey200;
+    transform: rotate(-90deg) translate(-@sm,@xxlg);
+    font-size: @md;
   }
   .tick{
     .numberfont();
     opacity: .6;
     line{
-      stroke:@grey300;
+      stroke:@grey100;
+      opacity: .5;
     }
     text{
       fill:@darker800;
@@ -927,7 +933,7 @@ aside {
   .area {
     stroke: none;
     clip-path: url(#clip);
-    opacity: .7;
+    opacity: .6;
   }
   .selection{
     fill:@blue800;

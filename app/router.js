@@ -14,8 +14,8 @@ Router.map(function () {
   this.route('rules')
   this.route('not-found', {path: '/*path'})
   this.route('packets');
-  this.route('bits');
   this.route('measurements');
+  this.route('traffic');
 })
 
 export default Router

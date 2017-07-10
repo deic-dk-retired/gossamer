@@ -141,31 +141,26 @@ const DashWidgetComponent = Ember.Component.extend({
       x2.domain(x.domain())
       y2.domain(y.domain())
 
+      // append the x & y axis focus
+      focus.append('g')
+        .attr('class', 'axis axis--x')
+        .attr('transform', 'translate(0,' + height + ')')
+        .call(xAxis.tickSize(0 - height).tickFormat(xTime).ticks(8))
+      focus.select('.domain').remove()
+
+      focus.append('g')
+        .attr('class', 'axis--y')
+        .call(yAxis.tickFormat(d3.format('.0s')).tickSize(0 - width).ticks(8))
+        .append('text')
+          .attr('class', 'ytext')
+          .text(thisComponent.get('ytext'))
+      focus.select('.domain').remove()
+
       // append path with data
       focus.append('path').datum(d)
         .attr('class', css)
         .attr(skin, thisComponent.get('gfill1'))
         .attr('d', shape)
-
-      // append the x & y axis focus
-      focus.append('g')
-        .attr('class', 'axis axis--x')
-        .attr('transform', 'translate(0,' + height + ')')
-        .call(xAxis.tickSize(3).ticks(6).tickFormat(xTime))
-      focus.select('.domain')
-        .attr('class', 'axes')
-
-      focus.append('g')
-        .attr('class', 'axis--y')
-        .call(yAxis.tickFormat(d3.format('.0s')).tickSize(2).ticks(6))
-        .append('text')
-          .attr('transform', 'rotate(-90)')
-          .attr('y', 6)
-          .attr('dy', '0.71em')
-          .attr('fill', '#90A4AE')
-          .text(thisComponent.get('ytext'))
-      focus.select('.domain')
-        .attr('class', 'axes')
 
       // append path to context
       context.append('path').datum(d)
@@ -177,7 +172,7 @@ const DashWidgetComponent = Ember.Component.extend({
       context.append('g')
         .attr('class', 'axis--x')
         .attr('transform', 'translate(0,' + height2 + ')')
-        .call(xAxis2.tickSize(3).ticks(8).tickFormat(xTime))
+        .call(xAxis2.tickSize(3).tickFormat(xTime).ticks(8))
       context.select('.domain')
         .attr('class', 'axes')
 
@@ -202,8 +197,8 @@ const DashWidgetComponent = Ember.Component.extend({
     }, 5000, this.get('url'))
 
     function brushed () {
-      console.log(d3)
-      console.log(event)
+      // console.log(d3)
+      // console.log(event)
       if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'zoom') return // ignore brush-by-zoom
       var s = d3.event.selection || x2.range()
       x.domain(s.map(x2.invert, x2))
