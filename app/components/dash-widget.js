@@ -1,6 +1,6 @@
 import Ember from 'ember'
 import * as d3 from 'd3'
-import {event} from 'd3-selection'
+import { event } from 'd3-selection'
 
 const DashWidgetComponent = Ember.Component.extend({
   // tagName: '',
@@ -197,24 +197,24 @@ const DashWidgetComponent = Ember.Component.extend({
     }, 5000, this.get('url'))
 
     function brushed () {
-      // console.log(d3)
-      // console.log(event)
-      if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'zoom') return // ignore brush-by-zoom
-      var s = d3.event.selection || x2.range()
+      if (event.sourceEvent && event.sourceEvent.type === 'zoom') return // ignore brush-by-zoom
+      var s = event.selection || x2.range()
       x.domain(s.map(x2.invert, x2))
       focus.select('.d3shape').attr('d', shape)
       focus.select('.axis--x').call(xAxis)
+      focus.select('.domain').remove()
       svg.select('.zoom').call(zoom.transform, d3.zoomIdentity
-          .scale(width / (s[1] - s[0]))
-          .translate(-s[0], 0))
+    .scale(width / (s[1] - s[0]))
+    .translate(-s[0], 0))
     }
 
     function zoomed () {
-      if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'brush') return // ignore zoom-by-brush
-      var t = d3.event.transform
+      if (event.sourceEvent && event.sourceEvent.type === 'brush') return // ignore zoom-by-brush
+      var t = event.transform
       x.domain(t.rescaleX(x2).domain())
       focus.select('.d3shape').attr('d', shape)
       focus.select('.axis--x').call(xAxis)
+      focus.select('.domain').remove()
       context.select('.brush').call(brush.move, x.range().map(t.invertX, t))
     }
   }

@@ -119,7 +119,7 @@ const D3VisComponent = Ember.Component.extend({
     var thisComponent = this
     // callback to handle fetched data
     // also renders the chart
-    var render = function (error, data) {
+    var visualise = function (error, data) {
       // console.log(thisComponent.get('gfill1'))
       if (error) throw error
       // remove old points
@@ -190,31 +190,31 @@ const D3VisComponent = Ember.Component.extend({
     }
 
     // fetch data and render chart content
-    d3.json(this.get('url'), render)
+    d3.json(this.get('url'), visualise)
     // update every 5sec
-    // var refresh = setInterval(function (url) {
-    //   d3.json(url, render)
-    // }, 5000, this.get('url'))
+    var refresh = setInterval(function (url) {
+      d3.json(url, visualise)
+    }, 5000, this.get('url'))
 
     function brushed () {
-      // console.log(d3)
-      // console.log(event)
-      if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'zoom') return // ignore brush-by-zoom
-      var s = d3.event.selection || x2.range()
+      if (event.sourceEvent && event.sourceEvent.type === 'zoom') return // ignore brush-by-zoom
+      var s = event.selection || x2.range()
       x.domain(s.map(x2.invert, x2))
       focus.select('.d3shape').attr('d', shape)
       focus.select('.axis--x').call(xAxis)
+      focus.select('.domain').remove()
       svg.select('.zoom').call(zoom.transform, d3.zoomIdentity
-          .scale(width / (s[1] - s[0]))
-          .translate(-s[0], 0))
+    .scale(width / (s[1] - s[0]))
+    .translate(-s[0], 0))
     }
 
     function zoomed () {
-      if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'brush') return // ignore zoom-by-brush
-      var t = d3.event.transform
+      if (event.sourceEvent && event.sourceEvent.type === 'brush') return // ignore zoom-by-brush
+      var t = event.transform
       x.domain(t.rescaleX(x2).domain())
       focus.select('.d3shape').attr('d', shape)
       focus.select('.axis--x').call(xAxis)
+      focus.select('.domain').remove()
       context.select('.brush').call(brush.move, x.range().map(t.invertX, t))
     }
   }
