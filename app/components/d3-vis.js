@@ -2,7 +2,7 @@ import Ember from 'ember'
 import * as d3 from 'd3'
 import { event } from 'd3-selection'
 
-const DashWidgetComponent = Ember.Component.extend({
+const D3VisComponent = Ember.Component.extend({
   // tagName: '',
   class: Ember.computed('params.[]', function () {
     return this.get('params')[0]
@@ -30,22 +30,20 @@ const DashWidgetComponent = Ember.Component.extend({
     // time parser for influx timestamp
     var parseTime = d3.timeParse('%Y-%m-%dT%H:%M:%SZ')
     var xTime = d3.timeFormat('%H:%M')
-
+    var xTimeZoomed = d3.timeFormat()
     // get svg width and height from DOM
-    var widget = d3.select('.' + this.get('class') + ' .dash-widget')
-    var svg = d3.select('.' + this.get('class') + ' .dash-widget' + ' > svg')
-    var svgW = this.$('.dash-widget svg').outerWidth()
-    var svgH = this.$('.dash-widget svg').outerHeight()
+    var widget = d3.select('.' + this.get('class') + ' .d3-vis')
+    var svg = d3.select('.' + this.get('class') + ' .d3-vis' + ' > svg')
+    var svgW = this.$('.d3-vis svg').outerWidth()
+    var svgH = this.$('.d3-vis svg').outerHeight()
     // configure chart widget dimensions
     var margin = {top: 10, right: 10, bottom: 80, left: 32}
     var margin2 = {top: 310, right: 10, bottom: 20, left: 32}
     var width = svgW - margin.left - margin.right - 20
     var height = +svgH - margin.top - margin.bottom
     var height2 = +svgH - margin2.top - margin2.bottom
-
     // set widget title
     widget.select('.title p').text(this.get('title'))
-
     // set x & y scales
     var x = d3.scaleTime().range([0, width])
     var x2 = d3.scaleTime().range([0, width])
@@ -56,17 +54,19 @@ const DashWidgetComponent = Ember.Component.extend({
     var xAxis = d3.axisBottom(x)
     var xAxis2 = d3.axisBottom(x2)
     var yAxis = d3.axisLeft(y)
-
+    // brush
     var brush = d3.brushX()
       .extent([[0, 0], [width, height2]])
       .on('brush end', brushed)
-
+    // zoom
     var zoom = d3.zoom()
       .scaleExtent([1, Infinity])
       .translateExtent([[0, 0], [width, height]])
       .extent([[0, 0], [width, height]])
       .on('zoom', zoomed)
 
+    // shapes are either lines or areas
+    // passed as arguments on component call
     var shape = ''
     var shape2 = ''
     var css = 'd3shape ' // .area or .line
@@ -100,7 +100,7 @@ const DashWidgetComponent = Ember.Component.extend({
           .y0(height2)
           .y1((d) => y2(d.y))
     }
-
+    // add clipping area on context
     svg.append('defs').append('clipPath')
         .attr('id', 'clip')
       .append('rect')
@@ -119,7 +119,7 @@ const DashWidgetComponent = Ember.Component.extend({
     var thisComponent = this
     // callback to handle fetched data
     // also renders the chart
-    var render = function (error, data) {
+    var visualise = function (error, data) {
       // console.log(thisComponent.get('gfill1'))
       if (error) throw error
       // remove old points
@@ -172,7 +172,7 @@ const DashWidgetComponent = Ember.Component.extend({
       context.append('g')
         .attr('class', 'axis--x')
         .attr('transform', 'translate(0,' + height2 + ')')
-        .call(xAxis2.tickSize(4).tickFormat(xTime).ticks(8))
+        .call(xAxis2.tickSize(3).tickFormat(xTime).ticks(8))
       context.select('.domain')
         .attr('class', 'axes')
 
@@ -190,11 +190,11 @@ const DashWidgetComponent = Ember.Component.extend({
     }
 
     // fetch data and render chart content
-    d3.json(this.get('url'), render)
+    d3.json(this.get('url'), visualise)
     // update every 5sec
-    var refresh = setInterval(function (url) {
-      d3.json(url, render)
-    }, 5000, this.get('url'))
+    // var refresh = setInterval(function (url) {
+    //   d3.json(url, visualise)
+    // }, 5000, this.get('url'))
 
     function brushed () {
       if (event.sourceEvent && event.sourceEvent.type === 'zoom') return // ignore brush-by-zoom
@@ -203,9 +203,9 @@ const DashWidgetComponent = Ember.Component.extend({
       focus.select('.d3shape').attr('d', shape)
       focus.select('.axis--x').call(xAxis)
       focus.select('.domain').remove()
-      svg.select('.zoom').call(zoom.transform, d3.zoomIdentity
-    .scale(width / (s[1] - s[0]))
-    .translate(-s[0], 0))
+      svg.select('.zoom').call(zoom.transform,
+        d3.zoomIdentity.scale(width / (s[1] - s[0])).translate(-s[0], 0))
+      // clearInterval(refresh)
     }
 
     function zoomed () {
@@ -216,13 +216,14 @@ const DashWidgetComponent = Ember.Component.extend({
       focus.select('.axis--x').call(xAxis)
       focus.select('.domain').remove()
       context.select('.brush').call(brush.move, x.range().map(t.invertX, t))
+      // clearInterval(refresh)
     }
   }
 
 })
 
-DashWidgetComponent.reopenClass({
+D3VisComponent.reopenClass({
   positionalParams: 'params'
 })
 
-export default DashWidgetComponent
+export default D3VisComponent

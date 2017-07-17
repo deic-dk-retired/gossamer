@@ -470,6 +470,14 @@ aside {
     }
   }
 }
+.card{
+  &:hover{
+    .shortTran();
+      border: 1px solid @liblue500!important;
+      cursor: pointer;
+      transform: translate(0, -4px);
+  }
+}
 .history-cards {
   display: block;
   text-align: left;
@@ -492,9 +500,6 @@ aside {
       padding: @sm 0;
     }
     &:hover {
-      .shortTran();
-      cursor: pointer;
-      border: 1px solid @liblue500!important;
       .protocol {
         .shortTran();
         border-bottom: 1px solid @liblue500;
@@ -887,37 +892,82 @@ aside {
   }
 }
 
-.dash-widget{
+.dash-widget, .d3-vis{
   .shadow(-1px,2px,1px,1px,rgba(0,0,0,.1));
-  text-align: center;
   border: 1px solid @grey200;
   border-radius: 4px;
-  p {
-      color: @darker800;
-      text-transform: uppercase;
-      font-weight: 400;
+  .header{
+      background: @light-bg;
       margin-bottom: 0;
-      padding: @md 0;
+      padding: @xs * .5 @xs * .8;
+      border-radius: 4px 4px 0 0px;
+      border-bottom: 1px solid @grey200;
+      & div{
+        display: inline-block;
+      }
   }
+  .title{
+    width: 82%;
+      p {
+        color: @darker800;
+        text-transform: capitalize;
+        font-weight: 300;
+        font-size: @md;
+    }
+  }
+  .controls{
+    width: 15%;
+    height: 10px;
+    label{
+      font-size: @sm;
+    }
+  }
+
   svg {
     min-height: @aside-width*1.8;
     width: 100%;
   }
   .axes{
     fill:none;
-    stroke:@grey200;
+    stroke:@grey100;
+  }
+  .ytext{
+    fill: @grey200;
+    transform: rotate(-90deg) translate(-@sm,@xxlg);
+    font-size: @md;
   }
   .tick{
-    opacity: .6;
+    .numberfont();
+    opacity: .8;
+    line{
+      stroke:@grey200;
+      opacity: .4;
+    }
+    text{
+      fill:@darker800;
+    }
   }
   .line {
     fill: none;
+    clip-path: url(#clip);
     stroke-linejoin: round;
     stroke-linecap: round;
     stroke-width: 1px;
   }
+  .area {
+    stroke: none;
+    clip-path: url(#clip);
+    opacity: .6;
+  }
+  .circle{
+    opacity: .3;
+  }
+  .selection{
+    fill:@blue800;
+    opacity: .2;
+  }
   .zoom {
-    cursor: move;
+    cursor: crosshair;
     fill: none;
     pointer-events: all;
   }
