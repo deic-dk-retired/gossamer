@@ -1,5 +1,5 @@
 import Ember from 'ember'
 
 export default Ember.Component.extend({
-  classNames: ['pps-in']
+  classNames: ['top-10-bps-out']
 })
