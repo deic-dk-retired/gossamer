@@ -6,7 +6,6 @@ export default Ember.Route.extend({
       icmps: this.get('store').findAll('icmp'),
       tcps: this.store.findAll('tcp')
     })
-    // return this.get('store').findAll('icmp')
   },
   setupController (controller, model) {
     this._super(...arguments)
@@ -15,5 +14,11 @@ export default Ember.Route.extend({
   },
   afterModel () {
     Ember.$('.planets').remove()
+  },
+  actions: {
+    // onSubmit () {
+    //   this._super(...arguments)
+    //   console.log(this.$('#fragment-encode').value)
+    // }
   }
 })
