@@ -44,7 +44,7 @@ const DashWidgetComponent = Ember.Component.extend({
     var height2 = +svgH - margin2.top - margin2.bottom
 
     // set widget title
-    widget.select('.title').text(this.get('title'))
+    widget.select('.title p').text(this.get('title'))
 
     // set x & y scales
     var x = d3.scaleTime().range([0, width])

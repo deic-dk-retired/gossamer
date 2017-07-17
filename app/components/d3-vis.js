@@ -43,7 +43,7 @@ const D3VisComponent = Ember.Component.extend({
     var height = +svgH - margin.top - margin.bottom
     var height2 = +svgH - margin2.top - margin2.bottom
     // set widget title
-    widget.select('.title').text(this.get('title'))
+    widget.select('.title p').text(this.get('title'))
     // set x & y scales
     var x = d3.scaleTime().range([0, width])
     var x2 = d3.scaleTime().range([0, width])
@@ -192,9 +192,9 @@ const D3VisComponent = Ember.Component.extend({
     // fetch data and render chart content
     d3.json(this.get('url'), visualise)
     // update every 5sec
-    var refresh = setInterval(function (url) {
-      d3.json(url, visualise)
-    }, 5000, this.get('url'))
+    // var refresh = setInterval(function (url) {
+    //   d3.json(url, visualise)
+    // }, 5000, this.get('url'))
 
     function brushed () {
       if (event.sourceEvent && event.sourceEvent.type === 'zoom') return // ignore brush-by-zoom
