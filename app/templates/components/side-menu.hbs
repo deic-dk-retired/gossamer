@@ -7,9 +7,15 @@
       {{#link-to "rules"}}
         <li class="nav__archive"><i class="database icon"></i><span>all rules</span></li>
       {{/link-to}}
-      <li class="nav__plot"><i class="pie chart icon"></i><span>(in) pps</span></li>
-      <li class="nav__plot"><i class="pie chart icon"></i><span>(in) bps</span></li>
-      <li class="nav__plot"><i class="pie chart icon"></i><span>(in) flow</span></li>
+      {{#link-to "packets"}}
+      <li class="nav__plot"><i class="pie chart icon"></i><span>packets</span></li>
+      {{/link-to}}
+      {{#link-to "traffic"}}
+      <li class="nav__plot"><i class="pie chart icon"></i><span>traffic</span></li>
+      {{/link-to}}
+      {{#link-to "measurements"}}
+      <li class="nav__plot"><i class="server icon"></i><span>measurements</span></li>
+      {{/link-to}}
     </ul>
   </nav>
 </div>
