@@ -1,0 +1,37 @@
+<div class="card" {{action 'editUser' u.id}}>
+  <div class="image">
+    <img src="assets/images/v.png">
+  </div>
+  <div class="content">
+    <span class="header">{{u.name}}</span>
+    <div class="meta">
+      <span class="email">
+      {{u.email}}
+      </span>
+    </div>
+    <div class="description">
+      <div class="ui tiny horizontal list">
+        <div class="item">
+            {{#if (eq u.accesstype 'dbadmin')}}
+              <i class="database icon ui teal circular label mini"></i>
+            {{/if}}
+            {{#if (eq u.accesstype 'globaladmin')}}
+              <i class="lightning icon ui red circular label mini"></i>
+            {{/if}}
+            {{#if (eq u.accesstype 'netadmin')}}
+              <i class="server icon ui blue circular label mini"></i>
+            {{/if}}
+          <div class="content">{{u.accesstype}}</div>
+        </div>
+      </div>
+      {{!-- is a {{u.accesstype}} --}}
+    </div>
+  </div>
+  <div class="extra content">
+    <span class="right floated date">
+      {{moment-format u.lastloggedin 'MMM Do, \'YY HH:MM:SS'}}
+    </span>
+    <span><i class="users icon"></i>{{u.customer}}</span>
+  </div>
+</div>
+{{yield u}}
