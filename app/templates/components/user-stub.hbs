@@ -1,7 +1,19 @@
 <div class="card" {{action 'editUser' u.id}}>
-  <div class="image">
-    {{ember-initials/adorable email=u.email size=200}}
+  <div class="blurring dimmable image">
+    <div class="ui dimmer">
+      <div class="content">
+        <div class="center">
+          <div class="ui inverted button">Add Friend</div>
+        </div>
+      </div>
+    </div>
+    {{!-- <div class="image"> --}}
+      {{ember-initials/adorable email=u.email size=400}}
+    {{!-- </div> --}}
   </div>
+  {{!-- <div class="image">
+    {{ember-initials/adorable email=u.email size=400}}
+  </div> --}}
   <div class="content">
     <span class="header">{{u.name}}</span>
     <div class="meta">

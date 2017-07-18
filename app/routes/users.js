@@ -7,10 +7,6 @@ export default Ember.Route.extend({
   },
   afterModel () {
     Ember.$('.planets').remove()
-  },
-  actions: {
-    editUser (user) {
-      console.log('edit ' + user)
-    }
   }
+
 })
