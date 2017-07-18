@@ -470,10 +470,10 @@ aside {
 }
 .card{
   &:hover{
-    .shortTran();
+    .longTran();
       border: 1px solid @liblue500!important;
       cursor: pointer;
-      transform: translate(0, -4px);
+      transform: translate(0, -5px);
   }
 }
 .history-cards {
@@ -540,7 +540,7 @@ aside {
       color: @grey300;
       font-size: @sm;
       text-transform: uppercase;
-      line-height: 4em;
+      line-height: 3.8em;
       text-align: center;
       margin-right: @sm;
       &:nth-last-child(2){
@@ -664,8 +664,8 @@ aside {
     }
     .point {
       position: relative;
-      top: 38px;
-      right: 32px;
+      top: 40px;
+      right: 34px;
       content: '';
       display: block;
       width: 8px;
@@ -769,13 +769,17 @@ aside {
 
 .user{
   .card{
-    .header{
+    .header .content{
+      font-size: @xlg!important;
+      font-weight: 600!important;
+      text-transform: capitalize;
+    }
+    .item .content{
       font-size: @md!important;
       font-weight: 400!important;
     }
-    .meta, .description, .extra{
+    .extra div{
       font-size: @sm!important;
-      font-weight: bold!important;
     }
   }
 }

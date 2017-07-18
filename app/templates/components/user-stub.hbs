@@ -1,49 +1,51 @@
-<div class="card" {{action 'editUser' u.id}}>
-  <div class="blurring dimmable image">
-    <div class="ui dimmer">
-      <div class="content">
-        <div class="center">
-          <div class="ui inverted button">Add Friend</div>
+<div class="card" {{action 'editUser' u.id on="click"}}>
+  <div class="image">
+    {{ember-initials/adorable email=u.email size=400}}
+  </div>
+  <div class="content">
+
+    <div class="header">
+      <div class="ui tiny horizontal list">
+        <div class="item">
+          <i class="user outline icon ui basic grey mini"></i>
+          <div class="content">{{u.name}}</div>
         </div>
       </div>
     </div>
-    {{!-- <div class="image"> --}}
-      {{ember-initials/adorable email=u.email size=400}}
-    {{!-- </div> --}}
-  </div>
-  {{!-- <div class="image">
-    {{ember-initials/adorable email=u.email size=400}}
-  </div> --}}
-  <div class="content">
-    <span class="header">{{u.name}}</span>
     <div class="meta">
-      <span class="email">
-      {{u.email}}
-      </span>
+     <div class="ui tiny horizontal list">
+        <div class="item">
+          <i class="mail outline icon ui basic grey mini"></i>
+          <div class="content">{{u.email}}</div>
+        </div>
+      </div>
     </div>
     <div class="description">
       <div class="ui tiny horizontal list">
         <div class="item">
             {{#if (eq u.accesstype 'dbadmin')}}
-              <i class="database icon ui teal circular label mini"></i>
+              <i class="database icon ui basic teal mini"></i>
             {{/if}}
             {{#if (eq u.accesstype 'globaladmin')}}
-              <i class="lightning icon ui red circular label mini"></i>
+              <i class="lightning icon ui basic red mini"></i>
             {{/if}}
             {{#if (eq u.accesstype 'netadmin')}}
-              <i class="server icon ui blue circular label mini"></i>
+              <i class="server icon ui basic blue mini"></i>
             {{/if}}
           <div class="content">{{u.accesstype}}</div>
         </div>
       </div>
-      {{!-- is a {{u.accesstype}} --}}
     </div>
   </div>
   <div class="extra content">
-    <span class="right floated date">
-      {{moment-format u.lastloggedin 'MMM Do, \'YY HH:MM:SS'}}
-    </span>
-    <span><i class="users icon"></i>{{u.customer}}</span>
+    <div class="right floated date">
+      <i class="sign in icon basic grey mini"></i>
+      <span>{{moment-format u.lastloggedin 'Do MMM \'YY ~ HH:MM:SS'}}</span>
+    </div>
+    <div>
+      <i class="users icon  basic grey mini"></i>
+      <span>{{u.customer}}</span>
+    </div>
   </div>
 </div>
-{{yield u}}
+{{!-- {{yield u}} --}}

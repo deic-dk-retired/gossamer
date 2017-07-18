@@ -2,9 +2,23 @@ import Ember from 'ember'
 
 export default Ember.Component.extend({
   tagName: '',
+  init () {
+    this._super(...arguments)
+    this.errors = []
+  },
+
+  didUpdateAttrs () {
+    this._super(...arguments)
+    this.set('errors', [])
+  },
+
+  didRender () {
+    this._super(...arguments)
+  },
+
   actions: {
     editUser (user) {
-      console.log('edit ' + user)
+      console.log('editUser ' + user)
     }
   }
 })
