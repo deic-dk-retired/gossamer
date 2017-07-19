@@ -261,7 +261,7 @@
   border-radius: @rnd;
 }
 
-body,html {
+body, html {
   .textfont();
   -webkit-font-smoothing: subpixel-antialiased;
   font-weight:300;
@@ -470,7 +470,7 @@ aside {
 }
 .card{
   &:hover{
-    .longTran();
+    .shortTran();
       border: 1px solid @liblue500!important;
       cursor: pointer;
       transform: translate(0, -5px);
@@ -769,10 +769,11 @@ aside {
 
 .user{
   .card{
-    .header .content{
+    .header{
       font-size: @xlg!important;
       font-weight: 600!important;
       text-transform: capitalize;
+      padding-bottom: 10px;
     }
     .item .content{
       font-size: @md!important;

@@ -21,13 +21,13 @@
       <a class="item"><i class="empty heart icon"></i>Themes</a>
       <a class="item"><i class="alarm outline icon"></i>Notifications</a>
       <div class="divider"></div>
-      {{#if (eq usrtype 'super')}}
+      {{#if (eq usrtype 'globaladmin')}}
         <div class="header">Super Settings</div>
         {{#link-to "users" class="item"}}
-          <i class="users icon"></i>Edit Users
+          <i class="users icon"></i>Users
         {{/link-to}}
-        <a class="item"><i class="server icon"></i>Edit Networks</a>
-        <a class="item"><i class="university icon"></i>Edit Customers</a>
+        <a class="item"><i class="server icon"></i>Networks</a>
+        <a class="item"><i class="university icon"></i>Customers</a>
         <div class="divider"></div>
       {{/if}}
       {{#link-to "login" class="item"}}

@@ -1,39 +1,36 @@
-<div class="card" {{action 'editUser' u.id on="click"}}>
+<div class="card" {{action 'showUser' u.id on="click"}}>
   <div class="image">
-    {{ember-initials/adorable email=u.email size=400}}
+    {{ember-initials/adorable email=u.email size=380}}
   </div>
   <div class="content">
-
     <div class="header">
-      <div class="ui tiny horizontal list">
+      <div class="ui tiny relaxed list">
         <div class="item">
           <i class="user outline icon ui basic grey mini"></i>
           <div class="content">{{u.name}}</div>
         </div>
       </div>
     </div>
-    <div class="meta">
-     <div class="ui tiny horizontal list">
+    <div class="details">
+      <div class="ui tiny relaxed list">
         <div class="item">
           <i class="mail outline icon ui basic grey mini"></i>
           <div class="content">{{u.email}}</div>
         </div>
-      </div>
-    </div>
-    <div class="description">
-      <div class="ui tiny horizontal list">
+
         <div class="item">
-            {{#if (eq u.accesstype 'dbadmin')}}
-              <i class="database icon ui basic teal mini"></i>
-            {{/if}}
-            {{#if (eq u.accesstype 'globaladmin')}}
-              <i class="lightning icon ui basic red mini"></i>
-            {{/if}}
-            {{#if (eq u.accesstype 'netadmin')}}
-              <i class="server icon ui basic blue mini"></i>
-            {{/if}}
+          {{#if (eq u.accesstype 'dbadmin')}}
+            <i class="database icon ui basic teal mini"></i>
+          {{/if}}
+          {{#if (eq u.accesstype 'globaladmin')}}
+            <i class="lightning icon ui basic red mini"></i>
+          {{/if}}
+          {{#if (eq u.accesstype 'netadmin')}}
+            <i class="server icon ui basic blue mini"></i>
+          {{/if}}
           <div class="content">{{u.accesstype}}</div>
         </div>
+
       </div>
     </div>
   </div>
@@ -48,4 +45,3 @@
     </div>
   </div>
 </div>
-{{!-- {{yield u}} --}}

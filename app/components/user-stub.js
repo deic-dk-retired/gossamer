@@ -17,7 +17,7 @@ export default Ember.Component.extend({
   },
 
   actions: {
-    editUser (user) {
+    showUser (user) {
       console.log('editUser ' + user)
     }
   }
