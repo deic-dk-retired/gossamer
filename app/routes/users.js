@@ -5,12 +5,14 @@ export default Ember.Route.extend({
   model () {
     return this.get('store').findAll('user')
   },
+
   afterModel () {
     Ember.$('.planets').remove()
   },
-  actions: {
-    editUser () {
-      console.log('edit')
-    }
+
+  setupController (controller, users) {
+    this._super(controller, users)
+    controller.set('users', users)
   }
+
 })

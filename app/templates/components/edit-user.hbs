@@ -1,1 +1,49 @@
-{{yield}}
+<ul class="errors">
+  {{#each errors as |error|}}
+    <li>{{error.message}}</li>
+  {{/each}}
+</ul>
+<div class="ui grid edit-user">
+  <div class="sixteen wide column">
+    <h2>Edit</h2>
+    <form class="ui form mini">
+      <div class="required field">
+        <label>Access type</label>
+        <div class="inline fields">
+          <div class="field">
+            {{ui-radio name="access" label="Net" value="netadmin" current=value onChange=(action (mut value))}}
+          </div>
+          <div class="field">
+            {{ui-radio name="access" label="DB" value="dbadmin" current=value onChange=(action (mut value))}}
+          </div>
+          <div class="field">
+            {{ui-radio name="access" label="Global" value="globaladmin" current=value onChange=(action (mut value))}}
+          </div>
+        </div>
+      </div>
+      <div class="required field">
+        <label>Name</label>
+        {{input type="text" id="fullName" name="fullName" placeholder="John Doe" change=(action 'required')}}
+        {{!-- <input type="text" id="pktLength" name="pktLength" placeholder="e.g. 2048"> --}}
+        {{!-- \b\d{1,4}[.]\d{1,4}[.]\d{1,4}[.]\d{1,4}\b --}}
+      </div>
+      <div class="required field">
+        <label>Username</label>
+        {{input type="text" id="userName" name="userName" placeholder="jhndoe" change=(action 'required')}}
+      </div>
+      <div class="required field">
+        <label>Email</label>
+        {{input type="email" id="userEmail" name="userEmail" placeholder="jhndoe@deic.dk" change=(action 'required')}}
+      </div>
+      <div class="required field">
+        <label>Github</label>
+        {{input type="text" id="userGit" name="userGit" placeholder="github.com/johndoe" change=(action 'required')}}
+      </div>
+
+      <button class="ui mini animated fade button blue">
+        <div class="visible content">Edit</div>
+        <div class="hidden content"><i class="edit icon"></i></div>
+      </button>
+    </form>
+  </div>
+</div>
