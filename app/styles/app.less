@@ -261,7 +261,7 @@
   border-radius: @rnd;
 }
 
-body,html {
+body, html {
   .textfont();
   -webkit-font-smoothing: subpixel-antialiased;
   font-weight:300;
@@ -323,6 +323,8 @@ button{
     &:nth-child(2){
       font-size: @xxlg*3;
       font-family: 'Kanit', sans-serif;
+      font-style: italic;
+      font-weight:700;
     }
   }
 
@@ -473,7 +475,7 @@ aside {
     .shortTran();
       border: 1px solid @liblue500!important;
       cursor: pointer;
-      transform: translate(0, -4px);
+      transform: translate(0, -5px);
   }
 }
 .history-cards {
@@ -540,7 +542,7 @@ aside {
       color: @grey300;
       font-size: @sm;
       text-transform: uppercase;
-      line-height: 4em;
+      line-height: 3.8em;
       text-align: center;
       margin-right: @sm;
       &:nth-last-child(2){
@@ -664,8 +666,8 @@ aside {
     }
     .point {
       position: relative;
-      top: 38px;
-      right: 32px;
+      top: 40px;
+      right: 34px;
       content: '';
       display: block;
       width: 8px;
@@ -763,6 +765,24 @@ aside {
       .time{
         color: @liblue500;
       }
+    }
+  }
+}
+
+.user{
+  .card{
+    .header{
+      font-size: @xlg!important;
+      font-weight: 600!important;
+      text-transform: capitalize;
+      padding-bottom: 10px;
+    }
+    .item .content{
+      font-size: @md!important;
+      font-weight: 400!important;
+    }
+    .extra div{
+      font-size: @sm!important;
     }
   }
 }
