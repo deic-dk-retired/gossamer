@@ -1,4 +1,28 @@
 <div class="sign-in">
   <div><span>DeIC</span><span>Gossamer</span></div>
-  {{log-in}}
+  <div class="ui centered grid">
+    <div class="three wide column">
+      <form class="ui form mini four wide column" {{action "login" on="submit"}}>
+        <div class="field">
+          {{input type='text' id='username' placeholder='Type in your username' value=username}}
+          {{!-- \b\d{1,4}[.]\d{1,4}[.]\d{1,4}[.]\d{1,4}\b --}}
+        </div>
+        <div class="required field">
+          {{input type='password' id='password' placeholder='and password' value=password}}
+        </div>
+        <div class="field">
+           {{input class="ui mini fluid black button"
+              type="submit"
+              value="Log In"
+           }}
+        </div>
+      </form>
+      {{#if loginFailed}}
+        <div class="ui bottom attached warning message">
+          <i class="icon help"></i>
+          Login failed! Please try again.
+        </div>
+      {{/if}}
+    </div>
+  </div>
 </div>
