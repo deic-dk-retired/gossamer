@@ -1,32 +1,13 @@
 <div class="ui grid">
   <div class="eight wide column">
     <h2>Users</h2>
-    <div class="ui three stackable cards">
-    {{#each model as |user|}}
-      <div class="card" {{action 'editUser'}}>
-        <div class="image">
-          <img src="assets/images/v.png">
-        </div>
-        <div class="content">
-          <span class="">{{user.name}}</span>
-          <div class="meta">
-            <span class="date">Last seen on
-            {{moment-format user.lastloggedin 'MMM Do, \'YY HH:MM:SS'}}
-            </span>
-          </div>
-          <div class="description">
-            is a {{user.accesstype}}
-          </div>
-        </div>
-        <div class="extra content">
-          <p><i class="users icon"></i>{{user.customer}}</p>
-        </div>
-      </div>
-    {{/each}}
-
-  </div>
+    <div class="ui three stackable cards user">
+      {{#each model as |user|}}
+        {{user-stub u=user}}
+      {{/each}}
+    </div>
   </div>
   <div class="eight wide column">
-    {{edit-user}}
+    {{edit-user user=user}}
   </div>
 </div>
