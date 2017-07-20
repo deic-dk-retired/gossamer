@@ -16,6 +16,7 @@ export default DS.Model.extend({
   ipprotocol: DS.attr('string'),
   destport: DS.attr('string'),
   srcportt: DS.attr('string'),
-  pktlen: DS.attr('number'),
-  action: DS.attr('string')
+  pktlen: DS.attr('string'),
+  action: DS.attr('string'),
+  meta: DS.attr()
 })
