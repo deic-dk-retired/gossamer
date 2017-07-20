@@ -20,7 +20,8 @@
     <div class="stats">
       <div class="ports">
         <label>port</label>
-        {{#if (lte rule.destport 9)}}
+        <span class="low">{{rule.destport}}</span>
+        {{!-- {{#if (lte rule.destport 9)}}
         <span class="low">{{rule.destport}}</span>
         {{else}}
           {{#if (lte rule.destport 30)}}
@@ -30,11 +31,12 @@
             <span class="high">{{rule.destport}}</span>
             {{/if}}
           {{/if}}
-        {{/if}}
+        {{/if}} --}}
       </div>
       <div class="pktsize">
         <label>bits</label>
-        {{#if (lte rule.pktlen 20)}}
+        <span class="low">{{rule.pktlen}}</span>
+        {{!-- {{#if (lte rule.pktlen 20)}}
         <span class="low">{{rule.pktlen}}</span>
         {{else}}
           {{#if (lte rule.pktlen 100)}}
@@ -44,7 +46,7 @@
             <span class="high">{{rule.pktlen}}</span>
             {{/if}}
           {{/if}}
-        {{/if}}
+        {{/if}} --}}
       </div>
       <div class="action">
         <label>action</label>

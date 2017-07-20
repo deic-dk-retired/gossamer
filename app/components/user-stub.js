@@ -1,6 +1,7 @@
 import Ember from 'ember'
 
 export default Ember.Component.extend({
+  tagName: '',
   init () {
     this._super(...arguments)
     this.errors = []
@@ -12,13 +13,12 @@ export default Ember.Component.extend({
   },
 
   didRender () {
+    this._super(...arguments)
   },
 
   actions: {
-    required (event) {
-      if (!event.target.value) {
-        this.get('errors').pushObject({message: `${event.target.name} is required`})
-      }
+    showUser (user) {
+      console.log('editUser ' + user)
     }
   }
 })

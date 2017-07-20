@@ -13,9 +13,9 @@ Router.map(function () {
   this.route('users')
   this.route('rules')
   this.route('not-found', {path: '/*path'})
-  this.route('packets');
-  this.route('measurements');
-  this.route('traffic');
+  this.route('packets')
+  this.route('measurements')
+  this.route('traffic')
 })
 
 export default Router

@@ -6,6 +6,7 @@ export default DS.Model.extend({
   accesstype: DS.attr('string'),
   name: DS.attr('string'),
   username: DS.attr('string'),
+  email: DS.attr('string'),
   lastloggedin: DS.attr('date'),
   pwdlastchangedon: DS.attr('date')
 })
