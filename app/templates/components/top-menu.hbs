@@ -7,11 +7,11 @@
   <div class="item">
     <i class="alarm outline icon"></i>
   </div>
-  {{!-- <div class="item"> --}}
   {{#link-to 'plan' class="blue item"}}
-    <i class="checked calendar icon"></i>
+    {{#ui-popup content="Add rules" variation="mini"}}
+      <i class="checked calendar icon"></i>
+    {{/ui-popup}}
   {{/link-to}}
-  {{!-- </div> --}}
   {{#ui-dropdown class="item"}}
     <span class="username"><i class="ui mini red lightning icon"></i>{{username}}</span>
     <i class="dropdown icon"></i>
