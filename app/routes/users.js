@@ -2,17 +2,24 @@ import Ember from 'ember'
 
 export default Ember.Route.extend({
   tagName: '',
+  // model () {
+  //   return this.get('store').findAll('user')
+  // },
   model () {
-    return this.get('store').findAll('user')
+    return Ember.RSVP.hash({
+      users: this.get('store').findAll('user'),
+      customers: this.store.findAll('customer')
+    })
   },
 
   afterModel () {
-    Ember.$('.planets').remove()
+
   },
 
-  setupController (controller, users) {
-    this._super(controller, users)
-    controller.set('users', users)
+  setupController (controller, model) {
+    this._super(...arguments)
+    Ember.set(controller, 'users', model.users)
+    Ember.set(controller, 'customers', model.customers)
   }
 
 })

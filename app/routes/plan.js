@@ -13,7 +13,7 @@ export default Ember.Route.extend({
     Ember.set(controller, 'tcps', model.tcps)
   },
   afterModel () {
-    Ember.$('.planets').remove()
+
   },
   actions: {
     // onSubmit () {

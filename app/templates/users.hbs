@@ -2,12 +2,12 @@
   <div class="eight wide column">
     <h2>Users</h2>
     <div class="ui three stackable cards user">
-      {{#each model as |user|}}
+      {{#each model.users as |user|}}
         {{user-stub u=user}}
       {{/each}}
     </div>
   </div>
   <div class="eight wide column">
-    {{edit-user user=user}}
+    {{edit-user users=model.users customers=model.customers}}
   </div>
 </div>

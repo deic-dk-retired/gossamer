@@ -28,9 +28,9 @@
           <i class="dropdown icon"></i>
           <div class="default text">Flags</div>
           <div class="menu">
-            {{#each mod.customer as |c|}}
-              <div class="item" data-value="{{c.id}}">
-                {{tcp.name}}
+            {{#each customers as |c|}}
+              <div class="item" data-value="{{c.customerid}}">
+                {{c.companyname}}
               </div>
             {{/each}}
           </div>
