@@ -2,12 +2,132 @@
   <div class="eight wide column">
     <h2>Users</h2>
     <div class="ui three stackable cards user">
-      {{#each model.users as |user|}}
-        {{user-stub u=user}}
+      {{#each model.users as |u|}}
+        {{!-- {{user-stub u=user}} --}}
+          <div class="card" {{action 'showUser' u.id u.username u.custid u.accesstype u.name u.email u.phone}}>
+            <div class="image">
+              {{ember-initials/adorable email=u.email size=380}}
+            </div>
+            <div class="content">
+              <div class="header">
+                <div class="ui tiny relaxed list">
+                  <div class="item">
+                    <i class="user outline icon ui basic grey mini"></i>
+                    <div class="content">{{u.name}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="details">
+                <div class="ui tiny relaxed list">
+                  <div class="item">
+                    <i class="mail outline icon ui basic grey mini"></i>
+                    <div class="content">{{u.email}}</div>
+                  </div>
+
+                  <div class="item">
+                    {{#if (eq u.accesstype 'dbadmin')}}
+                      <i class="database icon ui basic teal mini"></i>
+                    {{/if}}
+                    {{#if (eq u.accesstype 'globaladmin')}}
+                      <i class="lightning icon ui basic red mini"></i>
+                    {{/if}}
+                    {{#if (eq u.accesstype 'netadmin')}}
+                      <i class="server icon ui basic blue mini"></i>
+                    {{/if}}
+                    <div class="content">{{u.accesstype}}</div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="extra content">
+              <div class="right floated date">
+                <i class="sign in icon basic grey mini"></i>
+                <span>{{moment-format u.lastloggedin 'Do MMM \'YY ~ HH:MM:SS'}}</span>
+              </div>
+              <div>
+                <i class="users icon  basic grey mini"></i>
+                <span>{{u.customer}}</span>
+              </div>
+            </div>
+          </div>
+
       {{/each}}
     </div>
   </div>
   <div class="eight wide column">
-    {{edit-user users=model.users customers=model.customers}}
+    {{!-- {{edit-user users=model.users customers=model.customers}} --}}
+
+    <ul class="errors ui list mini">
+      {{#each errors as |error|}}
+        <li>{{error.message}}</li>
+      {{/each}}
+    </ul>
+    <div class="ui grid edit-user">
+      <div class="sixteen wide column">
+        <h2>Edit</h2>
+        <form class="ui form mini" >
+          <div class="required field">
+            <label>Access Type</label>
+            <div class="inline fields">
+              <div class="field">
+                {{ui-radio name="access" label="Net" value="netadmin" current=value onChange=(action (mut access))}}
+              </div>
+              <div class="field">
+                {{ui-radio name="access" label="DB" value="dbadmin" current=value onChange=(action (mut access))}}
+              </div>
+              <div class="field">
+                {{ui-radio name="access" label="Global" value="globaladmin" current=value checked="checked" onChange=(action (mut access))}}
+              </div>
+            </div>
+            {{access}}
+          </div>
+          <div class="required field">
+            <label>Customer</label>
+            {{#ui-dropdown id="customer" class="fluid selection" selected='customer' onChange=(action (mut customer))}}
+              <i class="dropdown icon"></i>
+              <div class="default text">Flags</div>
+              <div class="menu">
+                {{#each customers as |c|}}
+                  <div class="item" data-value="{{c.customerid}}">
+                    {{c.companyname}}
+                  </div>
+                {{/each}}
+              </div>
+            {{/ui-dropdown}}
+            {{!-- {{input type="text" id="customer" name="customer" placeholder="DeIC" value=""  change=(action 'required')}} --}}
+          </div>
+          <div class="required field">
+            <label>Name</label>
+            {{input type="text" id="name" name="name" placeholder="John Doe" value=name change=(action 'required')}}
+          </div>
+          <div class="required field">
+            <label>Email</label>
+            {{input type="email" id="email" name="email" placeholder="jhndoe@deic.dk" value=email change=(action 'required')}}
+          </div>
+          <div class="required field">
+            <label>Phone</label>
+            {{input type="text" id="phone" name="phone" placeholder="88899900" value=phone  change=(action 'required')}}
+          </div>
+          <div class="required field">
+            <label>Username</label>
+            {{input type="text" id="username" name="username" placeholder="username" value=username disabled="disabled"}}
+          </div>
+          <div class="required field">
+            <label>Password</label>
+            {{input type="password" id="password" name="password" placeholder="new password" value=password change=(action 'required')}}
+          </div>
+          {{!-- <div class="required field">
+            <label>Github</label>
+            {{input type="text" id="userGit" name="userGit" placeholder="github.com/johndoe" change=(action 'required')}}
+          </div> --}}
+          <button class="ui mini animated fade button blue" {{action 'saveUser'}}>
+            <div class="visible content">Edit</div>
+            <div class="hidden content"><i class="edit icon"></i></div>
+          </button>
+        </form>
+      </div>
+    </div>
+
   </div>
 </div>

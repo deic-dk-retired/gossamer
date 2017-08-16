@@ -57,7 +57,7 @@
         <label>Github</label>
         {{input type="text" id="userGit" name="userGit" placeholder="github.com/johndoe" change=(action 'required')}}
       </div> --}}
-      <button class="ui mini animated fade button blue">
+      <button class="ui mini animated fade button blue" {{action 'saveUser'}}>
         <div class="visible content">Edit</div>
         <div class="hidden content"><i class="edit icon"></i></div>
       </button>
