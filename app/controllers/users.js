@@ -1,16 +1,27 @@
 import Ember from 'ember'
 
 export default Ember.Controller.extend({
-  kind: '',
-  customerid: null,
-  name: '',
-  username: '',
-  email: '',
-  phone: '',
-  password: '',
+  // userid: null,
+  // kind: '',
+  // customerid: null,
+  // customer: '',
+  // name: '',
+  // username: '',
+  // email: '',
+  // phone: '',
+  // password: '',
   init () {
     this._super(...arguments)
     this.errors = []
+    this.userid = null
+    this.kind = ''
+    this.customerid = null
+    this.customer = ''
+    this.name = ''
+    this.username = ''
+    this.email = ''
+    this.phone = ''
+    this.password = ''
   },
 
   // didUpdateAttrs () {
@@ -25,10 +36,16 @@ export default Ember.Controller.extend({
       }
     },
 
-    showUser (id, username, custid, accesstype, name, email, phone) {
+    setRadio () {
+
+    },
+
+    showUser (id, username, custid, customer, accesstype, name, email, phone) {
       this.setProperties({
+        userid: id,
         kind: accesstype,
         customerid: custid,
+        customer: customer,
         name: name,
         username: username,
         email: email,
@@ -36,14 +53,38 @@ export default Ember.Controller.extend({
       })
     },
 
-    saveUser (user) {
-      console.log(user)
+    updateUser () {
+      var userid = this.get('userid')
+      var kind = this.get('kind')
+      var customerid = this.get('customerid')
+      var name = this.get('name')
+      var email = this.get('email')
+      var phone = this.get('phone')
+      var password = this.get('password')
+      this.get('store').findRecord('user', userid)
+      .then(function (user) {
+        user.set('custid', customerid)
+        user.set('accesstype', kind)
+        user.set('name', name)
+        user.set('phone', phone)
+        user.set('email', email)
+        user.set('password', password)
+        user.save()
+      })
     },
 
     createUser () {
-      // store.createRecord('user', {
+      let user = this.get('store').createRecord('user', {
+        kind: this.get('kind'),
+        customerid: this.get('customerid'),
+        name: this.get('name'),
+        username: this.get('username'),
+        email: this.get('email'),
+        phone: this.get('phone'),
+        password: this.get('password')
+      })
 
-      // })
+      user.save()
     }
   }
 

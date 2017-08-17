@@ -4,7 +4,7 @@
     <div class="ui three stackable cards user">
       {{#each model.users as |u|}}
         {{!-- {{user-stub u=user}} --}}
-          <div class="card" {{action 'showUser' u.id u.username u.custid u.accesstype u.name u.email u.phone}}>
+          <div class="card" {{action 'showUser' u.id u.username u.custid u.customer u.accesstype u.name u.email u.phone}}>
             <div class="image">
               {{ember-initials/adorable email=u.email size=380}}
             </div>
@@ -66,7 +66,7 @@
     <div class="ui grid edit-user">
       <div class="sixteen wide column">
         <h2>Edit</h2>
-        <form class="ui form mini" >
+        <form class="ui form mini" {{action "updateUser" on="submit"}}>
           <div class="required field">
             <label>Access Type</label>
             <div class="inline fields">
@@ -77,14 +77,14 @@
                 {{ui-radio name="access" label="DB" value="dbadmin" current=value onChange=(action (mut access))}}
               </div>
               <div class="field">
-                {{ui-radio name="access" label="Global" value="globaladmin" current=value checked="checked" onChange=(action (mut access))}}
+                {{ui-radio name="access" label="Global" value="globaladmin" current=value onChange=(action (mut access))}}
               </div>
             </div>
             {{access}}
           </div>
           <div class="required field">
             <label>Customer</label>
-            {{#ui-dropdown id="customer" class="fluid selection" selected='customer' onChange=(action (mut customer))}}
+{{!--             {{#ui-dropdown id="customer"  class="fluid search selection" selected=customer onChange=(action (mut customer))}}
               <i class="dropdown icon"></i>
               <div class="default text">Flags</div>
               <div class="menu">
@@ -94,8 +94,8 @@
                   </div>
                 {{/each}}
               </div>
-            {{/ui-dropdown}}
-            {{!-- {{input type="text" id="customer" name="customer" placeholder="DeIC" value=""  change=(action 'required')}} --}}
+            {{/ui-dropdown}} --}}
+            {{input type="text" id="customer" name="customer" placeholder="DeIC" value=customer  change=(action 'required')}}
           </div>
           <div class="required field">
             <label>Name</label>
@@ -115,13 +115,13 @@
           </div>
           <div class="required field">
             <label>Password</label>
-            {{input type="password" id="password" name="password" placeholder="new password" value=password change=(action 'required')}}
+            {{input type="password" id="password" name="password" placeholder="new password" value=password}}
           </div>
           {{!-- <div class="required field">
             <label>Github</label>
             {{input type="text" id="userGit" name="userGit" placeholder="github.com/johndoe" change=(action 'required')}}
           </div> --}}
-          <button class="ui mini animated fade button blue" {{action 'saveUser'}}>
+          <button class="ui mini animated fade button blue" type="submit">
             <div class="visible content">Edit</div>
             <div class="hidden content"><i class="edit icon"></i></div>
           </button>
