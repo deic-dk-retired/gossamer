@@ -36,8 +36,8 @@ export default Ember.Controller.extend({
       }
     },
 
-    setRadio () {
-
+    setAccess (customerid) {
+      this.set('customerid', customerid)
     },
 
     showUser (id, username, custid, customer, accesstype, name, email, phone) {
@@ -83,7 +83,6 @@ export default Ember.Controller.extend({
         phone: this.get('phone'),
         password: this.get('password')
       })
-
       user.save()
     }
   }

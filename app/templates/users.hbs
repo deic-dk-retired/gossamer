@@ -84,9 +84,9 @@
           </div>
           <div class="required field">
             <label>Customer</label>
-{{!--             {{#ui-dropdown id="customer"  class="fluid search selection" selected=customer onChange=(action (mut customer))}}
+            {{#ui-dropdown id="customer" class="fluid search selection" selected=customer onChange=(action 'setAccess')}}
               <i class="dropdown icon"></i>
-              <div class="default text">Flags</div>
+              <div class="default text">Co. Inc.</div>
               <div class="menu">
                 {{#each customers as |c|}}
                   <div class="item" data-value="{{c.customerid}}">
@@ -94,8 +94,7 @@
                   </div>
                 {{/each}}
               </div>
-            {{/ui-dropdown}} --}}
-            {{input type="text" id="customer" name="customer" placeholder="DeIC" value=customer  change=(action 'required')}}
+            {{/ui-dropdown}}
           </div>
           <div class="required field">
             <label>Name</label>
