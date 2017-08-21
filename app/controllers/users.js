@@ -1,27 +1,30 @@
 import Ember from 'ember'
 
 export default Ember.Controller.extend({
-  // userid: null,
-  // kind: '',
-  // customerid: null,
-  // customer: '',
-  // name: '',
-  // username: '',
-  // email: '',
-  // phone: '',
-  // password: '',
+  userid: null,
+  kind: '',
+  customerid: null,
+  customer: '',
+  name: '',
+  username: '',
+  email: '',
+  phone: '',
+  password: '',
+  pre_checked: true,
+
   init () {
     this._super(...arguments)
+
     this.errors = []
-    this.userid = null
-    this.kind = ''
-    this.customerid = null
-    this.customer = ''
-    this.name = ''
-    this.username = ''
-    this.email = ''
-    this.phone = ''
-    this.password = ''
+    // this.userid = null
+    // this.kind = ''
+    // this.customerid = null
+    // this.customer = ''
+    // this.name = ''
+    // this.username = ''
+    // this.email = ''
+    // this.phone = ''
+    // this.password = ''
   },
 
   // didUpdateAttrs () {
@@ -36,9 +39,9 @@ export default Ember.Controller.extend({
       }
     },
 
-    setAccess (customerid) {
-      this.set('customerid', customerid)
-    },
+    // setAccess (cid) {
+    //   this.set('customerid', cid)
+    // },
 
     showUser (id, username, custid, customer, accesstype, name, email, phone) {
       this.setProperties({

@@ -71,20 +71,20 @@
             <label>Access Type</label>
             <div class="inline fields">
               <div class="field">
-                {{ui-radio name="access" label="Net" value="netadmin" current=value onChange=(action (mut access))}}
+                {{ui-radio name="kind" label="Net" value="netadmin" current=value onChange=(action (mut kind))}}
               </div>
               <div class="field">
-                {{ui-radio name="access" label="DB" value="dbadmin" current=value onChange=(action (mut access))}}
+                {{ui-radio name="kind" label="DB" value="dbadmin" current=value onChange=(action (mut kind))}}
               </div>
               <div class="field">
-                {{ui-radio name="access" label="Global" value="globaladmin" current=value onChange=(action (mut access))}}
+                {{ui-radio name="kind" label="Global" value="globaladmin" current=value onChange=(action (mut kind))}}
               </div>
             </div>
-            {{access}}
+            {{kind}}
           </div>
           <div class="required field">
             <label>Customer</label>
-            {{#ui-dropdown id="customer" class="fluid search selection" selected=customer onChange=(action 'setAccess')}}
+            {{#ui-dropdown id="customer" class="fluid search selection" selected=customer onChange=(action (mut customerid))}}
               <i class="dropdown icon"></i>
               <div class="default text">Co. Inc.</div>
               <div class="menu">
