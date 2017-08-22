@@ -25,15 +25,7 @@
                   </div>
 
                   <div class="item">
-                    {{#if (eq u.accesstype 'dbadmin')}}
-                      <i class="database icon ui basic teal mini"></i>
-                    {{/if}}
-                    {{#if (eq u.accesstype 'globaladmin')}}
-                      <i class="lightning icon ui basic red mini"></i>
-                    {{/if}}
-                    {{#if (eq u.accesstype 'netadmin')}}
-                      <i class="server icon ui basic blue mini"></i>
-                    {{/if}}
+                    {{user-icon accesstype=u.accesstype}}
                     <div class="content">{{u.accesstype}}</div>
                   </div>
 
@@ -68,19 +60,19 @@
         <h2>Edit</h2>
         <form class="ui form mini" {{action "updateUser" on="submit"}}>
           <div class="required field">
-            <label>Access Type</label>
+            <label>Admin Type</label>
             <div class="inline fields">
               <div class="field">
-                {{ui-radio name="kind" label="Net" value="netadmin" current=value onChange=(action (mut kind))}}
+                {{ui-radio name="kind" label="Network" value="netadmin" current=kind onChange=(action (mut kind))}}
               </div>
               <div class="field">
-                {{ui-radio name="kind" label="DB" value="dbadmin" current=value onChange=(action (mut kind))}}
+                {{ui-radio name="kind" label="Database" value="dbadmin" current=kind onChange=(action (mut kind))}}
               </div>
               <div class="field">
-                {{ui-radio name="kind" label="Global" value="globaladmin" current=value onChange=(action (mut kind))}}
+                {{ui-radio name="kind" label="Global" value="globaladmin" current=kind onChange=(action (mut kind))}}
               </div>
             </div>
-            {{kind}}
+            {{!-- {{kind}} --}}
           </div>
           <div class="required field">
             <label>Customer</label>
