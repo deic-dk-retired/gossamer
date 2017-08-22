@@ -1,16 +1,15 @@
 import Ember from 'ember'
 
 export default Ember.Controller.extend({
-  userid: null,
+  id: null,
   kind: '',
   customerid: null,
-  customer: '',
+  companyname: '',
   name: '',
   username: '',
   email: '',
   phone: '',
   password: '',
-  pre_checked: true,
 
   init () {
     this._super(...arguments)
@@ -43,12 +42,12 @@ export default Ember.Controller.extend({
     //   this.set('customerid', cid)
     // },
 
-    showUser (id, username, custid, customer, accesstype, name, email, phone) {
+    showUser (id, username, customerid, companyname, kind, name, email, phone) {
       this.setProperties({
-        userid: id,
-        kind: accesstype,
-        customerid: custid,
-        customer: customer,
+        id: id,
+        kind: kind,
+        customerid: customerid,
+        companyname: companyname,
         name: name,
         username: username,
         email: email,
@@ -57,22 +56,39 @@ export default Ember.Controller.extend({
     },
 
     updateUser () {
-      var userid = this.get('userid')
+      var id = this.get('id')
       var kind = this.get('kind')
       var customerid = this.get('customerid')
       var name = this.get('name')
       var email = this.get('email')
       var phone = this.get('phone')
+      var username = this.get('username')
       var password = this.get('password')
-      this.get('store').findRecord('user', userid)
+      this.get('store').findRecord('user', id)
       .then(function (user) {
-        user.set('custid', customerid)
-        user.set('accesstype', kind)
+        // console.log(user.get('customerid'))
+        // console.log(user.get('kind'))
+        // console.log(user.get('name'))
+        // console.log(user.get('phone'))
+        // console.log(user.get('email'))
+        // console.log(user.get('username'))
+        // console.log(user.get('password'))
+        user.set('customerid', customerid)
+        user.set('kind', kind)
         user.set('name', name)
         user.set('phone', phone)
         user.set('email', email)
+        user.set('username', username)
         user.set('password', password)
         user.save()
+        // console.log(id)
+        // console.log(kind)
+        // console.log(customerid)
+        // console.log(name)
+        // console.log(email)
+        // console.log(phone)
+        // console.log(username)
+        // console.log(password)
       })
     },
 
