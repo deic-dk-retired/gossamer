@@ -7,18 +7,14 @@ export default Ember.Route.extend({
       tcps: this.store.findAll('tcp')
     })
   },
+
+  afterModel () {
+
+  },
+
   setupController (controller, model) {
     this._super(...arguments)
     Ember.set(controller, 'icmps', model.icmps)
     Ember.set(controller, 'tcps', model.tcps)
-  },
-  afterModel () {
-
-  },
-  actions: {
-    // onSubmit () {
-    //   this._super(...arguments)
-    //   console.log(this.$('#fragment-encode').value)
-    // }
   }
 })
