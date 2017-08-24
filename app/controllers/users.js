@@ -5,7 +5,7 @@ export default Ember.Controller.extend({
   id: null,
   kind: '',
   customerid: null,
-  companyname: null,
+  companyname: '',
   name: '',
   username: '',
   email: '',
@@ -14,27 +14,14 @@ export default Ember.Controller.extend({
   act: 'Add',
   buttonico: 'add user',
   isDisabled: '',
+  changePass: '',
   isActive: false,
+  isData: true,
+  datavalue: 'data-value',
 
   init () {
     this._super(...arguments)
-
     this.errors = []
-    // this.setProperties({
-    //   id: null,
-    //   kind: '',
-    //   customerid: null,
-    //   companyname: null,
-    //   name: '',
-    //   username: '',
-    //   email: '',
-    //   phone: '',
-    //   password: '',
-    //   act: 'Add',
-    //   buttonico: 'add user',
-    //   isDisabled: '',
-    //   isActive: false
-    // })
   },
 
   actions: {
@@ -49,7 +36,7 @@ export default Ember.Controller.extend({
         id: null,
         kind: '',
         customerid: null,
-        companyname: null,
+        companyname: '',
         name: '',
         username: '',
         email: '',
@@ -58,24 +45,32 @@ export default Ember.Controller.extend({
         act: 'Add',
         buttonico: 'add user',
         isDisabled: '',
+        changePass: '',
         isActive: false
       })
       Ember.$('.card').removeClass('active')
     },
 
-    showUser (id, username, customerid, companyname, kind, name, email, phone) {
-      // console.log(this.get('username'))
-      // console.log(username)
-      if (this.get('username') !== username) {
+    toggleActive (set, toSet) {
+      if (set !== toSet) {
         Ember.$('.card').removeClass('active')
-        Ember.$('.usr-' + username).addClass('active')
+        Ember.$('.usr-' + toSet).addClass('active')
       }
-      if (this.get('username') === username) {
+      if (set === toSet) {
         Ember.$('.card').removeClass('active')
       }
+    },
+
+    toEdit () {
       this.set('isDisabled', 'disabled')
+      this.set('changePass', 'disabled')
       this.set('act', 'Edit')
       this.set('buttonico', 'edit')
+    },
+
+    showUser (id, username, customerid, companyname, kind, name, email, phone) {
+      this.send('toggleActive', this.get('username'), username)
+      this.send('toEdit')
       this.setProperties({
         id: id,
         kind: kind,
@@ -88,47 +83,17 @@ export default Ember.Controller.extend({
       })
     },
 
+    // called from template
     saveUser () {
+      // post to create
       if (this.get('act') === 'Add') {
         this.set('isDisabled', '')
         this.send('createUser')
       }
+      // patch to update
       if (this.get('act') === 'Edit') {
         this.send('updateUser')
       }
-    },
-
-    lookupCustomer (coname) {
-      // console.log(coname)
-      var co = [
-        {
-          id: 0,
-          name: 'DeiC'
-        },
-        {
-          id: 1,
-          name: 'Statens Arkiver'
-        },
-        {
-          id: 2,
-          name: 'It\'s learning'
-        },
-        {
-          id: 3,
-          name: 'CERT'
-        },
-        {
-          id: 5,
-          name: 'i2'
-        }
-      ]
-      var cid
-      co.map(function (e) {
-        if (e.name.toLowerCase() === coname.toLowerCase()) {
-          cid = e.id
-        }
-      })
-      return cid
     },
 
     updateUser () {
@@ -136,6 +101,7 @@ export default Ember.Controller.extend({
       var id = this.get('id')
       var kind = this.get('kind')
       var customerid = this.get('customerid')
+      var companyname = this.get('store').peekRecord('customer', customerid).get('companyname')
       var name = this.get('name')
       var email = this.get('email')
       var phone = this.get('phone')
@@ -147,28 +113,32 @@ export default Ember.Controller.extend({
         // console.log("user.get('customerid'): " + user.get('customerid'))
         // console.log(customerid)
         user.set('customerid', customerid)
+        user.set('companyname', companyname)
         user.set('kind', kind)
         user.set('name', name)
         user.set('phone', phone)
         user.set('email', email)
         user.set('username', username)
         user.set('password', password)
-        user.changedAttributes()
-        user.save()
+        console.log(user.changedAttributes())
+        // user.save()
       })
     },
 
     createUser () {
-      // console.log(this.get('kind'))
-      // console.log(this.send('lookupCustomer', this.get('customerid')))
-      // console.log(this.get('name'))
-      // console.log(this.get('phone'))
-      // console.log(this.get('email'))
-      // console.log(this.get('username'))
-      // console.log(this.get('password'))
+      console.log(this.get('kind'))
+      console.log(this.get('customerid'))
+      console.log(this.get('companyname'))
+      console.log(this.get('name'))
+      console.log(this.get('phone'))
+      console.log(this.get('email'))
+      console.log(this.get('username'))
+      console.log(this.get('password'))
       let user = this.get('store').createRecord('user', {
+        id: this.get('id'),
         kind: this.get('kind'),
         customerid: this.get('customerid'),
+        companyname: this.get('store').peekRecord('customer', customerid).get('companyname'),
         name: this.get('name'),
         username: this.get('username'),
         email: this.get('email'),

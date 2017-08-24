@@ -76,13 +76,13 @@
           </div>
           <div class="required field">
             <label>Customer</label>
-            {{#ui-dropdown id="companyname" class="fluid search selection" selected=companyname onChange=(action (mut customerid))}}
+            {{#ui-dropdown class="search selection" allowAdditions=false selected=companyname onChange=(action (mut customerid)) as |execute mapper|}}
               <i class="dropdown icon"></i>
               <div class="default text">Co. Inc.</div>
               <div class="menu">
-                {{#each customers as |c|}}
-                  <div class="item" data-value="{{c.customerid}}">
-                    {{c.companyname}}
+                {{#each customers as |customer|}}
+                  <div class="item" data-value="{{find-customer customer.companyname}}">
+                    {{customer.companyname}}
                   </div>
                 {{/each}}
               </div>
@@ -104,10 +104,15 @@
             <label>Username</label>
             {{input type="text" id="username" name="username" placeholder="username" value=username disabled=isDisabled }}
           </div>
-          <div class="required field">
+          {{#if (eq act 'Edit')}}
+            {{change-pass state='edit'}}
+          {{else}}
+            {{change-pass state='add'}}
+          {{/if}}
+          {{!-- <div class="required field">
             <label>Password</label>
-            {{input type="password" id="password" name="password" placeholder="new password" value=password}}
-          </div>
+            {{input type="password" id="password" name="password" placeholder="new password" value=password disabled=changePass}}
+          </div> --}}
           <button class="ui mini animated fade button blue" type="submit">
             <div class="visible content">{{act}} User</div>
             <div class="hidden content"><i class="{{buttonico}} icon"></i></div>
