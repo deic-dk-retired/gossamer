@@ -4,7 +4,7 @@
     <div class="ui three stackable cards user">
       {{#each model.users as |u|}}
         {{!-- {{user-stub u=user}} --}}
-          <div class="card" {{action 'showUser' u.id u.username u.customerid u.companyname u.kind u.name u.email u.phone}}>
+          <div class="card usr-{{u.username}}" {{action 'showUser' u.id u.username u.customerid u.companyname u.kind u.name u.email u.phone}}>
             <div class="image">
               {{ember-initials/adorable email=u.email size=380}}
             </div>
@@ -98,11 +98,11 @@
           </div>
           <div class="required field">
             <label>Phone</label>
-            {{input type="text" id="phone" name="phone" placeholder="88899900" value=phone  change=(action 'required')}}
+            {{input type="text" id="phone" name="phone" placeholder="88899900" value=phone change=(action 'required')}}
           </div>
           <div class="required field">
             <label>Username</label>
-            {{input type="text" id="username" name="username" placeholder="username" value=username disabled="disabled"}}
+            {{input type="text" id="username" name="username" placeholder="username" value=username disabled=isDisabled }}
           </div>
           <div class="required field">
             <label>Password</label>
@@ -112,7 +112,7 @@
             <div class="visible content">{{act}} User</div>
             <div class="hidden content"><i class="{{buttonico}} icon"></i></div>
           </button>
-          <button class="ui mini animated fade button blue" type="reset">
+          <button class="ui mini animated fade button blue" type="reset" {{action "resetForm" on="click"}}>
             <div class="visible content">Cancel</div>
             <div class="hidden content"><i class="cancel icon"></i></div>
           </button>

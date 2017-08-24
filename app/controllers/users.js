@@ -14,18 +14,28 @@ export default Ember.Controller.extend({
   act: 'Add',
   buttonico: 'add user',
   isDisabled: '',
-  // isActive: '',
+  isActive: false,
 
   init () {
     this._super(...arguments)
 
     this.errors = []
+    // this.setProperties({
+    //   id: null,
+    //   kind: '',
+    //   customerid: null,
+    //   companyname: null,
+    //   name: '',
+    //   username: '',
+    //   email: '',
+    //   phone: '',
+    //   password: '',
+    //   act: 'Add',
+    //   buttonico: 'add user',
+    //   isDisabled: '',
+    //   isActive: false
+    // })
   },
-
-  // didUpdateAttrs () {
-  //   this._super(...arguments)
-  //   this.set('errors', [])
-  // },
 
   actions: {
     required (event) {
@@ -34,25 +44,36 @@ export default Ember.Controller.extend({
       }
     },
 
-    reset () {
-      // this.setProperties({
-      //   id: null,
-      //   kind: '',
-      //   customerid: null,
-      //   companyname: null,
-      //   name: '',
-      //   username: '',
-      //   email: '',
-      //   phone: '',
-      //   password: '',
-      //   act: 'Add',
-      //   buttonico: 'add user',
-      //   isDisabled: ''
-      // })
+    resetForm () {
+      this.setProperties({
+        id: null,
+        kind: '',
+        customerid: null,
+        companyname: null,
+        name: '',
+        username: '',
+        email: '',
+        phone: '',
+        password: '',
+        act: 'Add',
+        buttonico: 'add user',
+        isDisabled: '',
+        isActive: false
+      })
+      Ember.$('.card').removeClass('active')
     },
 
     showUser (id, username, customerid, companyname, kind, name, email, phone) {
-      // this.set('isDisabled', 'disabled')
+      // console.log(this.get('username'))
+      // console.log(username)
+      if (this.get('username') !== username) {
+        Ember.$('.card').removeClass('active')
+        Ember.$('.usr-' + username).addClass('active')
+      }
+      if (this.get('username') === username) {
+        Ember.$('.card').removeClass('active')
+      }
+      this.set('isDisabled', 'disabled')
       this.set('act', 'Edit')
       this.set('buttonico', 'edit')
       this.setProperties({
@@ -77,6 +98,39 @@ export default Ember.Controller.extend({
       }
     },
 
+    lookupCustomer (coname) {
+      // console.log(coname)
+      var co = [
+        {
+          id: 0,
+          name: 'DeiC'
+        },
+        {
+          id: 1,
+          name: 'Statens Arkiver'
+        },
+        {
+          id: 2,
+          name: 'It\'s learning'
+        },
+        {
+          id: 3,
+          name: 'CERT'
+        },
+        {
+          id: 5,
+          name: 'i2'
+        }
+      ]
+      var cid
+      co.map(function (e) {
+        if (e.name.toLowerCase() === coname.toLowerCase()) {
+          cid = e.id
+        }
+      })
+      return cid
+    },
+
     updateUser () {
       // console.log('update')
       var id = this.get('id')
@@ -90,15 +144,8 @@ export default Ember.Controller.extend({
 
       this.get('store').findRecord('user', id)
       .then(function (user) {
-        console.log(user.get('id'))
-        console.log(user.get('kind'))
-        console.log(user.get('customerid'))
-        console.log(user.get('companyname'))
-        console.log(user.get('name'))
-        console.log(user.get('phone'))
-        console.log(user.get('email'))
-        console.log(user.get('username'))
-        console.log(user.get('password'))
+        // console.log("user.get('customerid'): " + user.get('customerid'))
+        // console.log(customerid)
         user.set('customerid', customerid)
         user.set('kind', kind)
         user.set('name', name)
@@ -106,26 +153,19 @@ export default Ember.Controller.extend({
         user.set('email', email)
         user.set('username', username)
         user.set('password', password)
+        user.changedAttributes()
         user.save()
-        console.log(id)
-        console.log(kind)
-        console.log(customerid)
-        console.log(name)
-        console.log(email)
-        console.log(phone)
-        console.log(username)
-        console.log(password)
       })
     },
 
     createUser () {
-      console.log(this.get('kind'))
-      console.log(this.get('customerid'))
-      console.log(this.get('name'))
-      console.log(this.get('phone'))
-      console.log(this.get('email'))
-      console.log(this.get('username'))
-      console.log(this.get('password'))
+      // console.log(this.get('kind'))
+      // console.log(this.send('lookupCustomer', this.get('customerid')))
+      // console.log(this.get('name'))
+      // console.log(this.get('phone'))
+      // console.log(this.get('email'))
+      // console.log(this.get('username'))
+      // console.log(this.get('password'))
       let user = this.get('store').createRecord('user', {
         kind: this.get('kind'),
         customerid: this.get('customerid'),

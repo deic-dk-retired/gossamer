@@ -86,6 +86,10 @@
         font-weight: 200;
 }
 
+[data-ember-action]:not(:disabled) {
+  cursor: pointer;
+}
+
 .numberfont() {
   font-family: 'Montserrat', sans-serif;
 }
@@ -994,6 +998,7 @@ aside {
   position: fixed;
   width: 42vw;
   .title{
-    .title()
+    .title();
+    color: @blue800;
   }
 }
