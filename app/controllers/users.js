@@ -110,8 +110,6 @@ export default Ember.Controller.extend({
 
       this.get('store').findRecord('user', id)
       .then(function (user) {
-        // console.log("user.get('customerid'): " + user.get('customerid'))
-        // console.log(customerid)
         user.set('customerid', customerid)
         user.set('companyname', companyname)
         user.set('kind', kind)
@@ -121,29 +119,47 @@ export default Ember.Controller.extend({
         user.set('username', username)
         user.set('password', password)
         console.log(user.changedAttributes())
-        // user.save()
+        user.save()
       })
     },
 
     createUser () {
-      console.log(this.get('kind'))
-      console.log(this.get('customerid'))
-      console.log(this.get('companyname'))
-      console.log(this.get('name'))
-      console.log(this.get('phone'))
-      console.log(this.get('email'))
-      console.log(this.get('username'))
-      console.log(this.get('password'))
+      var id = this.get('id')
+      var kind = this.get('kind')
+      var customerid = this.get('customerid')
+      var companyname = this.get('store').peekRecord('customer', customerid).get('companyname')
+      var name = this.get('name')
+      var email = this.get('email')
+      var phone = this.get('phone')
+      var username = this.get('username')
+      var password = this.get('password')
+
+      console.log(kind)
+      console.log(customerid)
+      console.log(companyname)
+      console.log(name)
+      console.log(phone)
+      console.log(email)
+      console.log(username)
+      console.log(password)
+
       let user = this.get('store').createRecord('user', {
-        id: this.get('id'),
-        kind: this.get('kind'),
-        customerid: this.get('customerid'),
-        companyname: this.get('store').peekRecord('customer', customerid).get('companyname'),
-        name: this.get('name'),
-        username: this.get('username'),
-        email: this.get('email'),
-        phone: this.get('phone'),
-        password: this.get('password')
+        id: id,
+        kind: kind,
+        customerid: customerid,
+        companyname: companyname,
+        name: name,
+        username: username,
+        email: email,
+        phone: phone,
+        password: password
+      })
+
+      user.validate()
+      .then(({ validations }) => {
+        if (validations.get('isValid')) {
+          user.save()
+        }
       })
       user.save()
     }
