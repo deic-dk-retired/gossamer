@@ -18,5 +18,6 @@ export default DS.Model.extend({
   cvr: DS.attr('string'),
   ean: DS.attr('string'),
   valid: DS.attr('boolean'),
-  description: DS.attr('string')
+  description: DS.attr('string'),
+  networks: DS.hasMany('network')
 })

@@ -6,8 +6,7 @@ export default Ember.Controller.extend({
   kind: '',
   customerid: null,
   companyname: '',
-  customernetworkid: null,
-  networkname: '',
+  netnames: '',
   name: '',
   // username: '',
   // email: '',
@@ -28,10 +27,6 @@ export default Ember.Controller.extend({
     this.buttonico = 'edit'
   },
 
-  getCustomer (customerid) {
-    return this.get('store').peekRecord('network', customerid).get('companyname')
-  },
-
   actions: {
     required (event) {
       if (!event.target.value) {
@@ -45,6 +40,7 @@ export default Ember.Controller.extend({
         kind: '',
         customerid: null,
         companyname: '',
+        netnames: '',
         name: '',
         // username: '',
         // email: '',
@@ -84,7 +80,7 @@ export default Ember.Controller.extend({
         kind: kind,
         customerid: customerid,
         companyname: this.get('store').peekRecord('customer', customerid).get('companyname'),
-        customernetworkid: this.get('store').peekRecord('customer', customerid).get('companyname'),
+        netnames: [24, 26],
         name: name
         // username: username,
         // email: email,
@@ -95,10 +91,7 @@ export default Ember.Controller.extend({
     // called from template
     saveUser () {
       // post to create
-      // if (this.get('act') === 'Add') {
-      //   this.set('isDisabled', '')
-      //   this.send('createUser')
-      // }
+
       // patch to update
       if (this.get('act') === 'Edit') {
         this.send('updateUser')
@@ -119,6 +112,8 @@ export default Ember.Controller.extend({
 
       this.get('store').findRecord('user', userid)
       .then(function (user) {
+        // console.log("user.get('customerid'): " + user.get('customerid'))
+        // console.log(customerid)
         user.set('customerid', customerid)
         user.set('companyname', companyname)
         user.set('kind', kind)
@@ -127,51 +122,11 @@ export default Ember.Controller.extend({
         // user.set('email', email)
         // user.set('username', username)
         user.set('password', password)
-        // console.log(user.changedAttributes())
-        // user.save()
+        console.log(user.changedAttributes())
+        user.save()
       })
     }
 
-    // createUser () {
-    //   var id = this.get('id')
-    //   var kind = this.get('kind')
-    //   var customerid = this.get('customerid')
-    //   var companyname = this.get('store').peekRecord('customer', customerid).get('companyname')
-    //   var name = this.get('name')
-    //   var email = this.get('email')
-    //   var phone = this.get('phone')
-    //   var username = this.get('username')
-    //   var password = this.get('password')
-
-    //   console.log(kind)
-    //   console.log(customerid)
-    //   console.log(companyname)
-    //   console.log(name)
-    //   console.log(phone)
-    //   console.log(email)
-    //   console.log(username)
-    //   console.log(password)
-
-    //   let user = this.get('store').createRecord('user', {
-    //     id: id,
-    //     kind: kind,
-    //     customerid: customerid,
-    //     companyname: companyname,
-    //     name: name,
-    //     username: username,
-    //     email: email,
-    //     phone: phone,
-    //     password: password
-    //   })
-
-    //   user.validate()
-    //   .then(({ validations }) => {
-    //     if (validations.get('isValid')) {
-    //       user.save()
-    //     }
-    //   })
-    //   user.save()
-    // }
   }
 
 })
