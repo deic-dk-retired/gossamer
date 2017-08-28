@@ -81,7 +81,7 @@
               <div class="default text">Co. Inc.</div>
               <div class="menu">
                 {{#each customers as |customer|}}
-                  <div class="item" data-value="{{find-customer customer.companyname}}">
+                  <div class="item" data-value="{{customer.id}}">
                     {{customer.companyname}}
                   </div>
                 {{/each}}
@@ -89,6 +89,20 @@
             {{/ui-dropdown}}
           </div>
           <div class="required field">
+            <label>Networks of {{companyname}}</label>
+            {{#ui-dropdown class="search multiple selection" allowAdditions=false selected=networkname onChange=(action (mut customernetworkid)) as |execute mapper|}}
+              <i class="dropdown icon"></i>
+              <div class="default text">Co. Inc.</div>
+              <div class="menu">
+                {{#each networks as |network|}}
+                  <div class="item" data-value="{{network.id}}">
+                    {{network.name}}
+                  </div>
+                {{/each}}
+              </div>
+            {{/ui-dropdown}}
+          </div>
+          {{!-- <div class="required field">
             <label>Name</label>
             {{input type="text" id="name" name="name" placeholder="John Doe" value=name change=(action 'required')}}
           </div>
@@ -103,7 +117,7 @@
           <div class="required field">
             <label>Username</label>
             {{input type="text" id="username" name="username" placeholder="username" value=username disabled=isDisabled }}
-          </div>
+          </div> --}}
           {{!-- {{#if (eq act 'Edit')}}
             {{change-pass state='edit'}}
           {{else}}
