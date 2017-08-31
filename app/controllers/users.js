@@ -8,14 +8,10 @@ export default Ember.Controller.extend({
   companyname: '',
   netnames: '',
   name: '',
-  // username: '',
-  // email: '',
-  // phone: '',
+  username: '',
   password: '',
-  // act: 'Add',
-  // buttonico: 'add user',
-  isDisabled: '',
-  changePass: '',
+  isDisabled: 'disabled',
+  changePass: 'disabled',
   isActive: false,
   isData: true,
   datavalue: 'data-value',
@@ -40,58 +36,59 @@ export default Ember.Controller.extend({
         kind: '',
         customerid: null,
         companyname: '',
+        networkid: null,
         netnames: '',
         name: '',
-        // username: '',
-        // email: '',
-        // phone: '',
+        username: '',
         password: '',
-        // act: 'Add',
-        // buttonico: 'add user',
-        isDisabled: '',
-        changePass: '',
+        isDisabled: 'disabled',
+        changePass: 'disabled',
         isActive: false
       })
       Ember.$('.card').removeClass('active')
+      Ember.$('.togDisabled').addClass('disabled')
     },
 
     toggleActive (set, toSet) {
+      console.log('set: ' + set)
+      console.log('toSet: ' + toSet)
       if (set !== toSet) {
         Ember.$('.card').removeClass('active')
         Ember.$('.usr-' + toSet).addClass('active')
+        Ember.$('.togDisabled').removeClass('disabled')
       }
       if (set === toSet) {
-        Ember.$('.card').removeClass('active')
+        // this.send('resetForm')
+        // Ember.$('.card').removeClass('active')
       }
     },
 
     toEdit () {
-      this.set('isDisabled', 'disabled')
-      this.set('changePass', 'disabled')
-      // this.set('act', 'Edit')
-      // this.set('buttonico', 'edit')
+      // this.set('isDisabled', '')
+      // this.set('changePass', 'disabled')
+    },
+
+    // list network ids and names based on customerid
+    findNetworks (netid, custid) {
+
     },
 
     showUser (id, username, customerid, companyname, kind, name, email, phone) {
       this.send('toggleActive', this.get('username'), username)
-      this.send('toEdit')
       this.setProperties({
         userid: id,
         kind: kind,
         customerid: customerid,
         companyname: this.get('store').peekRecord('customer', customerid).get('companyname'),
-        netnames: [24, 26],
-        name: name
-        // username: username,
-        // email: email,
-        // phone: phone
+        networkid: null,
+        netnames: '', // ['n1', 'n2', ...]
+        name: name,
+        username: username
       })
     },
 
     // called from template
     saveUser () {
-      // post to create
-
       // patch to update
       if (this.get('act') === 'Edit') {
         this.send('updateUser')
@@ -104,10 +101,6 @@ export default Ember.Controller.extend({
       var kind = this.get('kind')
       var customerid = this.get('customerid')
       var companyname = this.get('store').peekRecord('customer', customerid).get('companyname')
-      // var name = this.get('name')
-      // var email = this.get('email')
-      // var phone = this.get('phone')
-      // var username = this.get('username')
       var password = this.get('password')
 
       this.get('store').findRecord('user', userid)
@@ -117,10 +110,7 @@ export default Ember.Controller.extend({
         user.set('customerid', customerid)
         user.set('companyname', companyname)
         user.set('kind', kind)
-        // user.set('name', name)
-        // user.set('phone', phone)
-        // user.set('email', email)
-        // user.set('username', username)
+
         user.set('password', password)
         console.log(user.changedAttributes())
         user.save()
