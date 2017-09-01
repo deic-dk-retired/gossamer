@@ -19,8 +19,8 @@ export default Ember.Controller.extend({
   init () {
     this._super(...arguments)
     this.errors = []
-    this.act = 'Edit'
-    this.buttonico = 'edit'
+    this.act = 'Save'
+    this.buttonico = 'save'
   },
 
   actions: {
@@ -50,8 +50,6 @@ export default Ember.Controller.extend({
     },
 
     toggleActive (set, toSet) {
-      console.log('set: ' + set)
-      console.log('toSet: ' + toSet)
       if (set !== toSet) {
         Ember.$('.card').removeClass('active')
         Ember.$('.usr-' + toSet).addClass('active')
@@ -90,7 +88,7 @@ export default Ember.Controller.extend({
     // called from template
     saveUser () {
       // patch to update
-      if (this.get('act') === 'Edit') {
+      if (this.get('act') === 'Save') {
         this.send('updateUser')
       }
     },
