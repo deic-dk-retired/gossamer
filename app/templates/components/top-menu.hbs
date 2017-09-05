@@ -7,13 +7,13 @@
   <div class="item">
     <i class="alarm outline icon"></i>
   </div>
-  {{!-- <div class="item"> --}}
   {{#link-to 'plan' class="blue item"}}
-    <i class="checked calendar icon"></i>
+    {{#ui-popup content="Add rules" variation="mini"}}
+      <i class="checked calendar icon"></i>
+    {{/ui-popup}}
   {{/link-to}}
-  {{!-- </div> --}}
   {{#ui-dropdown class="item"}}
-    <span class="username"><i class="ui mini red lightning icon"></i>{{username}}</span>
+    <span class="username">{{user-icon kind=kind}}{{username}}</span>
     <i class="dropdown icon"></i>
     <div class="menu">
       <div class="header">Profile &amp; Themes</div>
@@ -21,7 +21,7 @@
       <a class="item"><i class="empty heart icon"></i>Themes</a>
       <a class="item"><i class="alarm outline icon"></i>Notifications</a>
       <div class="divider"></div>
-      {{#if (eq usrtype 'globaladmin')}}
+      {{#if (eq kind 'globaladmin')}}
         <div class="header">Super Settings</div>
         {{#link-to "users" class="item"}}
           <i class="users icon"></i>Users

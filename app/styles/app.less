@@ -86,6 +86,10 @@
         font-weight: 200;
 }
 
+[data-ember-action]:not(:disabled) {
+  cursor: pointer;
+}
+
 .numberfont() {
   font-family: 'Montserrat', sans-serif;
 }
@@ -183,12 +187,8 @@
 // static mixin
 .title() {
   .textfont();
-  position:absolute;
-  color:@dark;
-  left:20px;
-  top:@sm*.4;
+  color:@darker800;
   line-height: @xlg;
-  font-size:@xxlg*1.5;
   text-transform:capitalize;
 }
 
@@ -259,6 +259,9 @@
   color:@fcol;
   background: @bcol;
   border-radius: @rnd;
+  // &:placeholder-shown{
+  //   color: #000;
+  // }
 }
 
 body, html {
@@ -471,7 +474,7 @@ aside {
   }
 }
 .card{
-  &:hover{
+  &:hover, &.active{
     .shortTran();
       border: 1px solid @liblue500!important;
       cursor: pointer;
@@ -988,5 +991,14 @@ aside {
     cursor: crosshair;
     fill: none;
     pointer-events: all;
+  }
+}
+
+.edit-user{
+  position: fixed;
+  width: 42vw;
+  .title{
+    .title();
+    color: @blue800;
   }
 }

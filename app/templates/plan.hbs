@@ -11,25 +11,25 @@
         <label>Protocol</label>
         <div class="inline fields">
           <div class="field">
-            {{ui-radio name="protocol" label="TCP" value="tcp" current=value onChange=(action (mut value))}}
+            {{ui-radio name="protocol" label="TCP" value="tcp" current=value onChange=(action (mut protocol))}}
           </div>
           <div class="field">
-            {{ui-radio name="protocol" label="UDP" value="udp" current=value onChange=(action (mut value))}}
+            {{ui-radio name="protocol" label="UDP" value="udp" current=value onChange=(action (mut protocol))}}
           </div>
           <div class="field">
-            {{ui-radio name="protocol" label="ICMP" value="icmp" current=value onChange=(action (mut value))}}
+            {{ui-radio name="protocol" label="ICMP" value="icmp" current=value onChange=(action (mut protocol))}}
           </div>
         </div>
       </div>
 
       <h4 class="ui dividing header">Protocol Information</h4>
-      {{#if (eq value "tcp")}}
+      {{#if (eq protocol "tcp")}}
         {{tcp-fields mod=model}}
       {{else}}
-        {{#if (eq value "udp")}}
+        {{#if (eq protocol "udp")}}
           {{udp-fields}}
         {{else}}
-          {{#if (eq value "icmp")}}
+          {{#if (eq protocol "icmp")}}
             {{icmp-fields mod=model}}
           {{else}}
             <p>Select a protocol above to proceed</p>
