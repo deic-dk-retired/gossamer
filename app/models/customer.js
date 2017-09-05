@@ -19,5 +19,5 @@ export default DS.Model.extend({
   ean: DS.attr('string'),
   valid: DS.attr('boolean'),
   description: DS.attr('string'),
-  networks: DS.hasMany('network')
+  networks: DS.hasMany('network', {async: true})
 })
