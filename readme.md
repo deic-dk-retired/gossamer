@@ -93,7 +93,7 @@ For instance, a chart that shows the top ten IPs that report incoming packets/se
 
 Each report will have several intuitive filters that allow for fine tuning the report as a user sees fit.
 
-## Application Setup
+## Development Setup
 ### Prerequisites
 
 You will need the following things properly installed on your computer.
