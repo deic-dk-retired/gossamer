@@ -19,14 +19,12 @@
       <div class="header">Profile &amp; Themes</div>
       <a class="item"><i class="edit icon"></i>Settings</a>
       <a class="item"><i class="empty heart icon"></i>Themes</a>
-      <a class="item"><i class="alarm outline icon"></i>Notifications</a>
       <div class="divider"></div>
       {{#if (eq kind 'globaladmin')}}
         <div class="header">Super Settings</div>
         {{#link-to "users" class="item"}}
           <i class="users icon"></i>Users
         {{/link-to}}
-        <a class="item"><i class="server icon"></i>Networks</a>
         <a class="item"><i class="university icon"></i>Customers</a>
         <div class="divider"></div>
       {{/if}}

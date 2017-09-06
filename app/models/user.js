@@ -23,4 +23,5 @@ export default DS.Model.extend(Validations, {
   email: DS.attr('string', {readonly: true}),
   lastlogin: DS.attr('date', {readonly: true}),
   lastpasswordchange: DS.attr('date', {readonly: true})
+  // networks: DS.hasMany('network', {async: true})
 })
