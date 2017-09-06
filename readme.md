@@ -8,7 +8,7 @@ Let us now get on with the application’s front-end structure and design. Below
 ## Topbar
 Along with the app logo, this section displays notification counts, and a quick link for adding a /flowspec/ rule, denoted with a calendar icon. The logged in user’s first name is displayed along with an icon that denotes the user’s role or access rights to the app and database.
 
-![](Application%20Overview/user-menu.png)
+![](public/readme/user-menu.png)
 
 In the above screenshot, the user is a global admin and hence can see the /super settings/ section. 
 
@@ -34,13 +34,13 @@ Thus in short if you are logged in the client app you can only pick and choose y
 
 This section displays info about all kinds of users in the database. Also, their access rights and what customer and networks each of the users have been assigned. 
 
-![](Application%20Overview/users.png)
+![](public/readme/users.png)
 
 A global admin can edit a user’s access rights.  A db admin can only edit the user’s customer and networks a network admin is assigned with.
 
 Here you can see a user is selected, marked by a blue outline and vertical translation of the user card. The edit form shows the name of the selected user, admin rights, customer and networks assigned to him. A db admin could change the assigned networks to this admin as seen in the screenshot below.
 
-![](Application%20Overview/edit-user-network.png)
+![](public/readme/edit-user-network.png)
 
 ### Customers (only for global admins)
 
@@ -57,7 +57,7 @@ This section shows the most relevant network information. Metrics such as bandwi
 
 We are working on adding time range and other relevant filters to each chart. Also when a user clicks on a data point then a popup must display the rules that were created because of the anomaly and clicking on that popup must navigate the user to the specific rule in the /all rules/ section.
 
-![](Application%20Overview/dashboard.png)
+![](public/readme/dashboard.png)
 
 We are going to add a feature where a user can build her own chart and add it to her dashboard. 
 
@@ -65,7 +65,7 @@ We are going to add a feature where a user can build her own chart and add it to
 
 This section displays all *flowspec* rules that exist in the rules database. 
 
-![](Application%20Overview/all-rules.png)
+![](public/readme/all-rules.png)
 
 The top section shows 6 most recently active rules that were created by *fastnetmon* during a DDoS attack or an anomalous request; and each card corresponds to all attacks grouped by destination ip addresses, and a specific time range. 
 
@@ -73,11 +73,11 @@ Each of these rules are displayed as a /card/, with the range of affected ports 
 
 The second section shows earlier active attacks with a little lesser information than shown in a /card/ version of the the rule. Mouse over on the list item are indicated with subtle colour cues based on the severity of the attack that generated the rule. This is to help the user to take necessary steps according to priority of attack.
 
-![](Application%20Overview/rule-list.png)
+![](public/readme/rule-list.png)
 
 Since there are several thousand rules in the database, the archive view is lazy loaded and also allows for filtering of the list based on all the information points seen on screen. One can filter the rules based on a date range, protocol, ip address, packet length range or number of affected ports. Or one could combine all the available filters to narrow the list even further.
 
-![](Application%20Overview/more-rules.png)
+![](public/readme/more-rules.png)
 
 ### Plan Rules
 
