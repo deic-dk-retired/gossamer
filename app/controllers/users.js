@@ -8,6 +8,9 @@ export default Ember.Controller.extend({
   companyname: '',
   netnames: '',
   name: '',
+  firstname: Ember.computed('name', function () {
+    return this.get('name').split(' ')[0]
+  }),
   username: '',
   password: '',
   isDisabled: 'disabled',
