@@ -4,7 +4,7 @@
     <div class="ui three stackable cards user">
       {{#each model.users as |u|}}
         {{!-- {{user-stub u=user}} --}}
-          <div class="card usr-{{u.username}}" {{action 'showUser' u.id u.username u.customerid u.companyname u.kind u.name u.email u.phone}}>
+          <div class="card usr-{{u.username}}" {{action 'showUser' u.id u.username u.customerid u.companyname u.kind u.name}}>
             <div class="image">
               {{ember-initials/adorable email=u.email size=380}}
             </div>
@@ -90,16 +90,16 @@
           </div>
           <div class="required field">
             <label>Networks of {{companyname}}</label>
-            {{#ui-dropdown class="search multiple selection togDisabled disabled" allowAdditions=false selected=netnames onChange=(action (mut netnames)) as |execute mapper|}}
+            {{#ui-dropdown class="search multiple selection togDisabled disabled" allowAdditions=false selected=netids onChange=(action (mut netids)) as |execute mapper|}}
               <i class="dropdown icon"></i>
               <div class="default text" data-value="">Co. Inc.'s net1</div>
               <div class="menu">
                 {{#each networks as |network|}}
-                  {{#if (eq network.customerid customerid)}}
+                  {{!-- {{#if (eq network.customerid customerid)}} --}}
                     <div class="item" data-value="{{network.id}}">
                       {{network.name}}
                     </div>
-                  {{/if}}
+                  {{!-- {{/if}} --}}
                 {{/each}}
               </div>
             {{/ui-dropdown}}

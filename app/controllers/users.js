@@ -6,10 +6,21 @@ export default Ember.Controller.extend({
   kind: '',
   customerid: null,
   companyname: '',
-  netnames: '',
+  netnames: [],
+  netids: Ember.computed('netnames', function () {
+    var netarr = this.get('netnames')
+    var ids = []
+    if (netarr.length !== 0) {
+      ids = netarr.map((e) => { return parseInt(e.id) })
+    }
+    if (netarr.length === 0) {
+      ids = []
+    }
+    return ids
+  }),
   name: '',
   firstname: Ember.computed('name', function () {
-    return this.get('name').split(' ')[0]
+    return `${this.get('name').split(' ')[0]}`
   }),
   username: '',
   password: '',
@@ -18,6 +29,7 @@ export default Ember.Controller.extend({
   isActive: false,
   isData: true,
   datavalue: 'data-value',
+  responseMessage: '',
 
   init () {
     this._super(...arguments)
@@ -39,8 +51,7 @@ export default Ember.Controller.extend({
         kind: '',
         customerid: null,
         companyname: '',
-        networkid: null,
-        netnames: '',
+        netnames: [],
         name: '',
         username: '',
         password: '',
@@ -58,31 +69,16 @@ export default Ember.Controller.extend({
         Ember.$('.usr-' + toSet).addClass('active')
         Ember.$('.togDisabled').removeClass('disabled')
       }
-      if (set === toSet) {
-        // this.send('resetForm')
-        // Ember.$('.card').removeClass('active')
-      }
     },
 
-    toEdit () {
-      // this.set('isDisabled', '')
-      // this.set('changePass', 'disabled')
-    },
-
-    // list network ids and names based on customerid
-    findNetworks (netid, custid) {
-
-    },
-
-    showUser (id, username, customerid, companyname, kind, name, email, phone) {
+    showUser (uid, username, customerid, companyname, kind, name) {
       this.send('toggleActive', this.get('username'), username)
       this.setProperties({
-        userid: id,
+        userid: uid,
         kind: kind,
         customerid: customerid,
         companyname: this.get('store').peekRecord('customer', customerid).get('companyname'),
-        networkid: null,
-        netnames: '', // ['n1', 'n2', ...]
+        netnames: this.get('store').peekRecord('user', uid).get('networks').get('content.relationship.members.list'),
         name: name,
         username: username
       })
@@ -97,7 +93,6 @@ export default Ember.Controller.extend({
     },
 
     updateUser () {
-      // console.log('update')
       var userid = this.get('userid')
       var kind = this.get('kind')
       var customerid = this.get('customerid')
@@ -106,15 +101,22 @@ export default Ember.Controller.extend({
 
       this.get('store').findRecord('user', userid)
       .then(function (user) {
-        // console.log("user.get('customerid'): " + user.get('customerid'))
-        // console.log(customerid)
         user.set('customerid', customerid)
         user.set('companyname', companyname)
         user.set('kind', kind)
-
         user.set('password', password)
-        console.log(user.changedAttributes())
+        console.info(user.changedAttributes())
         user.save()
+        .then((response) => {
+          this.set('responseMessage', `User ${response.get('id').name} was updated`)
+        })
+        .catch((adapterError) => {
+          console.info(user.get('errors'))
+          console.info(user.get('errors.name'))
+          console.info(user.get('errors').toArray())
+          console.info(user.get('isValid'))
+          console.info(adapterError)
+        })
       })
     }
 

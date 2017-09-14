@@ -5,7 +5,7 @@ export default Ember.Route.extend({
 
   model () {
     return Ember.RSVP.hash({
-      users: this.get('store').findAll('user'),
+      users: this.get('store').findAll('user', {included: 'networks'}),
       customers: this.store.findAll('customer'),
       networks: this.store.findAll('network')
     })
