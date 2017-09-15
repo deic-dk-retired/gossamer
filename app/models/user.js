@@ -19,9 +19,9 @@ export default DS.Model.extend(Validations, {
   name: DS.attr('string', {readonly: true}),
   phone: DS.attr('string', {readonly: true}),
   username: DS.attr('string', {readonly: true}),
-  password: DS.attr('string'),
+  password: DS.attr('string', {readonly: true}),
   email: DS.attr('string', {readonly: true}),
   lastlogin: DS.attr('date', {readonly: true}),
   lastpasswordchange: DS.attr('date', {readonly: true}),
-  networks: DS.hasMany('network', {async: true, readonly: true})
+  networks: DS.hasMany('network', {async: true})
 })

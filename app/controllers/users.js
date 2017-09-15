@@ -8,15 +8,12 @@ export default Ember.Controller.extend({
   companyname: '',
   netnames: [],
   netids: Ember.computed('netnames', function () {
-    var netarr = this.get('netnames')
-    var ids = []
-    if (netarr.length !== 0) {
-      ids = netarr.map((e) => { return parseInt(e.id) })
+    if (this.get('netnames').length !== 0) {
+      return this.get('netnames').map((e) => { return parseInt(e.id) }).map((e) => { return parseInt(e) })
     }
-    if (netarr.length === 0) {
-      ids = []
+    if (this.get('netnames').length === 0) {
+      return []
     }
-    return ids
   }),
   name: '',
   firstname: Ember.computed('name', function () {
@@ -71,14 +68,15 @@ export default Ember.Controller.extend({
       }
     },
 
-    showUser (uid, username, customerid, companyname, kind, name) {
+    showUser (uid, username, cuid, coname, kind, name) {
       this.send('toggleActive', this.get('username'), username)
+      var uns = this.get('store').peekRecord('user', uid).get('networks')
       this.setProperties({
-        userid: uid,
+        userid: parseInt(uid),
         kind: kind,
-        customerid: customerid,
-        companyname: this.get('store').peekRecord('customer', customerid).get('companyname'),
-        netnames: this.get('store').peekRecord('user', uid).get('networks').get('content.relationship.members.list'),
+        customerid: parseInt(cuid),
+        companyname: coname,
+        netnames: uns.get('content.relationship.members.list'),
         name: name,
         username: username
       })
@@ -93,18 +91,18 @@ export default Ember.Controller.extend({
     },
 
     updateUser () {
-      var userid = this.get('userid')
+      var uid = this.get('userid')
       var kind = this.get('kind')
-      var customerid = this.get('customerid')
-      var companyname = this.get('store').peekRecord('customer', customerid).get('companyname')
-      var password = this.get('password')
+      var cuid = this.get('customerid')
+      var coname = this.get('store').peekRecord('customer', parseInt(cuid)).get('companyname')
+      var pwd = this.get('password')
 
-      this.get('store').findRecord('user', userid)
+      this.get('store').findRecord('user', parseInt(uid))
       .then(function (user) {
-        user.set('customerid', customerid)
-        user.set('companyname', companyname)
+        user.set('customerid', parseInt(cuid))
+        user.set('companyname', coname)
         user.set('kind', kind)
-        user.set('password', password)
+        user.set('password', pwd)
         console.info(user.changedAttributes())
         user.save()
         .then((response) => {
