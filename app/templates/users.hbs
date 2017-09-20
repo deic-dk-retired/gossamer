@@ -4,7 +4,7 @@
     <div class="ui three stackable cards user">
       {{#each model.users as |u|}}
         {{!-- {{user-stub u=user}} --}}
-          <div class="card usr-{{u.username}}" {{action 'showUser' u.id u.username u.customerid u.companyname u.kind u.name}}>
+          <div class="card usr-{{u.username}}" {{action 'showUser' u.id u.username}}>
             <div class="image">
               {{ember-initials/adorable email=u.email size=380}}
             </div>
@@ -25,8 +25,9 @@
                   </div>
 
                   <div class="item">
-                    {{user-icon kind=u.kind}}
-                    <div class="content">{{u.kind}}</div>
+                   {{!--  {{user-icon kind=u.kind}} --}}
+                    <i class="phone icon basic grey"></i>
+                    <div class="content">{{uphone}}</div>
                   </div>
 
                 </div>
@@ -38,8 +39,8 @@
                 <span>{{moment-from-now (moment-format u.lastlogin) hidePrefix=true interval=86400}}</span>
               </div>
               <div>
-                <i class="users icon basic grey"></i>
-                <span>{{u.companyname}}</span>
+                 {{user-icon kind=u.kind}}
+                <span>{{u.kind}}</span>
               </div>
             </div>
           </div>

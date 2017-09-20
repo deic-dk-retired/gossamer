@@ -14,7 +14,6 @@ const Validations = buildValidations({
 
 export default DS.Model.extend(Validations, {
   customerid: DS.attr('number'),
-  companyname: DS.attr('string', {readonly: true}),
   kind: DS.attr('string'),
   name: DS.attr('string', {readonly: true}),
   phone: DS.attr('string', {readonly: true}),

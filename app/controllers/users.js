@@ -19,6 +19,14 @@ export default Ember.Controller.extend({
   firstname: Ember.computed('name', function () {
     return `${this.get('name').split(' ')[0]}`
   }),
+  phone: '',
+  uphone: Ember.computed('phone', function () {
+    if (this.get('phone').length > 4) {
+      return `${this.get('phone').substr(0, 4) + '-' + this.get('phone').substr(4)}`
+    } else {
+      return `${this.get('phone')}`
+    }
+  }),
   username: '',
   password: '',
   isDisabled: 'disabled',
@@ -68,16 +76,18 @@ export default Ember.Controller.extend({
       }
     },
 
-    showUser (uid, username, cuid, coname, kind, name) {
+    showUser (uid, username) {
       this.send('toggleActive', this.get('username'), username)
-      var uns = this.get('store').peekRecord('user', uid).get('networks')
+      var user = this.get('store').peekRecord('user', uid)
+      var customer = this.get('store').peekRecord('customer', parseInt(user.get('customerid')))
       this.setProperties({
-        userid: parseInt(uid),
-        kind: kind,
-        customerid: parseInt(cuid),
-        companyname: coname,
-        netnames: uns.get('content.relationship.members.list'),
-        name: name,
+        userid: parseInt(user.get('id')),
+        kind: user.get('kind'),
+        customerid: parseInt(customer.get('id')),
+        companyname: customer.get('companyname'),
+        netnames: user.get('networks').get('content.relationship.members.list'),
+        name: user.get('name'),
+        phone: user.get('phone'),
         username: username
       })
     },
