@@ -25,9 +25,13 @@
                   </div>
 
                   <div class="item">
-                   {{!--  {{user-icon kind=u.kind}} --}}
-                    <i class="phone icon basic grey"></i>
-                    <div class="content">{{uphone}}</div>
+                    <i class="phone outline icon ui basic grey small"></i>
+                    <div class="content">{{format-phone u.phone}}</div>
+                  </div>
+
+                  <div class="item">
+                    {{user-icon kind=u.kind}}
+                    <div class="content">{{u.kind}}</div>
                   </div>
 
                 </div>
@@ -39,8 +43,8 @@
                 <span>{{moment-from-now (moment-format u.lastlogin) hidePrefix=true interval=86400}}</span>
               </div>
               <div>
-                 {{user-icon kind=u.kind}}
-                <span>{{u.kind}}</span>
+                <i class="users icon basic grey"></i>
+                <span>{{companyname}}</span>
               </div>
             </div>
           </div>

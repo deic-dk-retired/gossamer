@@ -77,9 +77,9 @@ export default Ember.Controller.extend({
     },
 
     showUser (uid, username) {
-      this.send('toggleActive', this.get('username'), username)
       var user = this.get('store').peekRecord('user', uid)
       var customer = this.get('store').peekRecord('customer', parseInt(user.get('customerid')))
+      this.send('toggleActive', this.get('username'), username)
       this.setProperties({
         userid: parseInt(user.get('id')),
         kind: user.get('kind'),
@@ -101,11 +101,11 @@ export default Ember.Controller.extend({
     },
 
     updateUser () {
-      var uid = this.get('userid')
-      var kind = this.get('kind')
-      var cuid = this.get('customerid')
-      var coname = this.get('store').peekRecord('customer', parseInt(cuid)).get('companyname')
-      var pwd = this.get('password')
+      let uid = this.get('userid')
+      let kind = this.get('kind')
+      let cuid = this.get('customerid')
+      let coname = this.get('store').peekRecord('customer', parseInt(cuid)).get('companyname')
+      let pwd = this.get('password')
 
       this.get('store').findRecord('user', parseInt(uid))
       .then(function (user) {
@@ -113,17 +113,17 @@ export default Ember.Controller.extend({
         user.set('companyname', coname)
         user.set('kind', kind)
         user.set('password', pwd)
-        console.info(user.changedAttributes())
+        Ember.Logger.info(user.changedAttributes())
         user.save()
         .then((response) => {
           this.set('responseMessage', `User ${response.get('id').name} was updated`)
         })
         .catch((adapterError) => {
-          console.info(user.get('errors'))
-          console.info(user.get('errors.name'))
-          console.info(user.get('errors').toArray())
-          console.info(user.get('isValid'))
-          console.info(adapterError)
+          Ember.Logger.info(user.get('errors'))
+          Ember.Logger.info(user.get('errors.name'))
+          Ember.Logger.info(user.get('errors').toArray())
+          Ember.Logger.info(user.get('isValid'))
+          Ember.Logger.info(adapterError)
         })
       })
     }

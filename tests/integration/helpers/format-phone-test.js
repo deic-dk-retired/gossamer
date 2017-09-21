@@ -2,7 +2,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('find-customer', 'helper:find-customer', {
+moduleForComponent('format-phone', 'helper:format-phone', {
   integration: true
 });
 
@@ -10,7 +10,7 @@ moduleForComponent('find-customer', 'helper:find-customer', {
 test('it renders', function(assert) {
   this.set('inputValue', '1234');
 
-  this.render(hbs`{{find-customer inputValue}}`);
+  this.render(hbs`{{format-phone inputValue}}`);
 
   assert.equal(this.$().text().trim(), '1234');
 });

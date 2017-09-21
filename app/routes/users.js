@@ -17,6 +17,7 @@ export default Ember.Route.extend({
 
   setupController (controller, model) {
     this._super(...arguments)
+
     Ember.set(controller, 'users', model.users)
     Ember.set(controller, 'customers', model.customers)
     Ember.set(controller, 'networks', model.networks)
