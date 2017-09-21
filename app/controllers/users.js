@@ -19,14 +19,6 @@ export default Ember.Controller.extend({
   firstname: Ember.computed('name', function () {
     return `${this.get('name').split(' ')[0]}`
   }),
-  phone: '',
-  uphone: Ember.computed('phone', function () {
-    if (this.get('phone').length > 4) {
-      return `${this.get('phone').substr(0, 4) + '-' + this.get('phone').substr(4)}`
-    } else {
-      return `${this.get('phone')}`
-    }
-  }),
   username: '',
   password: '',
   isDisabled: 'disabled',
@@ -77,8 +69,8 @@ export default Ember.Controller.extend({
     },
 
     showUser (uid, username) {
-      var user = this.get('store').peekRecord('user', uid)
-      var customer = this.get('store').peekRecord('customer', parseInt(user.get('customerid')))
+      let user = this.get('store').peekRecord('user', uid)
+      let customer = this.get('store').peekRecord('customer', parseInt(user.get('customerid')))
       this.send('toggleActive', this.get('username'), username)
       this.setProperties({
         userid: parseInt(user.get('id')),
@@ -87,14 +79,11 @@ export default Ember.Controller.extend({
         companyname: customer.get('companyname'),
         netnames: user.get('networks').get('content.relationship.members.list'),
         name: user.get('name'),
-        phone: user.get('phone'),
         username: username
       })
     },
 
-    // called from template
     saveUser () {
-      // patch to update
       if (this.get('act') === 'Save') {
         this.send('updateUser')
       }
@@ -105,14 +94,14 @@ export default Ember.Controller.extend({
       let kind = this.get('kind')
       let cuid = this.get('customerid')
       let coname = this.get('store').peekRecord('customer', parseInt(cuid)).get('companyname')
-      let pwd = this.get('password')
+      // let pwd = this.get('password')
 
       this.get('store').findRecord('user', parseInt(uid))
       .then(function (user) {
         user.set('customerid', parseInt(cuid))
         user.set('companyname', coname)
         user.set('kind', kind)
-        user.set('password', pwd)
+        // user.set('password', pwd)
         Ember.Logger.info(user.changedAttributes())
         user.save()
         .then((response) => {

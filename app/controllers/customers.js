@@ -29,8 +29,8 @@ export default Ember.Controller.extend({
   init () {
     this._super(...arguments)
     this.errors = []
-    this.act = 'Save'
-    this.buttonico = 'save'
+    this.act = 'Edit'
+    this.buttonico = 'edit'
   },
 
   actions: {
@@ -40,8 +40,50 @@ export default Ember.Controller.extend({
       }
     },
 
-    showCustomer (coid) {
-      var co = this.get('store').peekRecord('customer', coid)
+    resetForm () {
+      this.setProperties({
+        coid: null,
+        coname: '',
+        add1: '',
+        add2: '',
+        add3: '',
+        add4: '',
+        coemail: '',
+        cophone: '',
+        cocvr: '',
+        coean: '',
+        accname: '',
+        accemail: '',
+        accphone: '',
+        accrate: null,
+        fee: null,
+        discount: null,
+        isDisabled: 'disabled',
+        isActive: false
+      })
+      Ember.$('.item').removeClass('active')
+      Ember.$('.togDisabled').addClass('disabled')
+    },
+
+    saveCustomer () {
+      if (this.get('act') === 'Save') {
+        this.send('updateCustomer')
+      }
+    },
+
+    toggleActive (set, toSet) {
+      if (set !== toSet) {
+        Ember.$('.item').removeClass('active')
+        Ember.$('.co-' + toSet).addClass('active')
+        Ember.$('.togDisabled').removeClass('disabled')
+      }
+    },
+
+    showCustomer (coid, cvr) {
+      let co = this.get('store').peekRecord('customer', coid)
+
+      this.send('toggleActive', this.get('cvr'), cvr)
+
       this.setProperties({
         coname: co.get('companyname'),
         add1: co.get('companyadr1'),
@@ -59,6 +101,11 @@ export default Ember.Controller.extend({
         fee: co.get('subscriptionfeee'),
         discount: co.get('deductionpct')
       })
+    },
+
+    updateCustomer () {
+
     }
+
   }
 })
