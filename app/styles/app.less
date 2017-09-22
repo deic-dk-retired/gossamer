@@ -474,11 +474,14 @@ aside {
   }
 }
 .card{
+  cursor: pointer;
   &:hover, &.active{
-    .shortTran();
-      border: 1px solid @liblue500!important;
-      cursor: pointer;
+      border: 1px solid @blue200!important;
       transform: translate(0, -5px);
+  }
+  &:hover{
+    .shortTran();
+    border: 1px solid @liblue500!important;
   }
 }
 .history-cards {
@@ -994,9 +997,11 @@ aside {
   }
 }
 
-.edit-user{
+.edit-user, .edit-customer{
   position: fixed;
   width: 42vw;
+  height:80%;
+  overflow-y: scroll;
   .title{
     .title();
     color: @blue800;

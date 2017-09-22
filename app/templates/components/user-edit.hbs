@@ -1,0 +1,59 @@
+<div class="ui grid edit-user">
+  <div class="sixteen wide column">
+    <h2>Edit <span class="title">{{firstname}}</span> </h2>
+    <form class="ui form mini" {{action saveUser on='submit'}}>
+      <div class="required field">
+        <label>Admin Type</label>
+        <div class="inline fields togDisabled disabled">
+          <div class="field">
+            {{ui-radio name="kind" label="Network" value="netadmin" current=kind onChange=(action (mut kind))}}
+          </div>
+          <div class="field">
+            {{ui-radio name="kind" label="Database" value="dbadmin" current=kind onChange=(action (mut kind))}}
+          </div>
+          <div class="field">
+            {{ui-radio name="kind" label="Global" value="globaladmin" current=kind onChange=(action (mut kind))}}
+          </div>
+        </div>
+      </div>
+      <div class="required field">
+        <label>Customer</label>
+        {{#ui-dropdown class="search selection togDisabled disabled" allowAdditions=false selected=companyname onChange=(action (mut customerid)) as |execute mapper|}}
+          <i class="dropdown icon"></i>
+          <div class="default text" data-value="">Co. Inc.</div>
+          <div class="menu">
+            {{#each customers as |co|}}
+              <div class="item" data-value="{{co.id}}">
+                {{co.companyname}}
+              </div>
+            {{/each}}
+          </div>
+        {{/ui-dropdown}}
+      </div>
+      <div class="required field">
+        <label>Networks of {{companyname}}</label>
+        {{#ui-dropdown class="search multiple selection togDisabled disabled" allowAdditions=false selected=netids onChange=(action (mut netids)) as |execute mapper|}}
+          <i class="dropdown icon"></i>
+          <div class="default text" data-value="">Co. Inc.'s net1</div>
+          <div class="menu">
+            {{#each networks as |net|}}
+              {{!-- {{#if (eq net.customerid customerid)}} --}}
+                <div class="item" data-value="{{net.id}}">
+                  {{net.name}}
+                </div>
+              {{!-- {{/if}} --}}
+            {{/each}}
+          </div>
+        {{/ui-dropdown}}
+      </div>
+      <button class="ui mini animated fade button blue disabled togDisabled" type="submit">
+        <div class="visible content">{{act}}</div>
+        <div class="hidden content"><i class="{{buttonico}} icon"></i></div>
+      </button>
+      <button class="ui mini animated fade button grey" type="reset" {{action resetForm on='click'}}>
+        <div class="visible content">Cancel</div>
+        <div class="hidden content"><i class="cancel icon"></i></div>
+      </button>
+    </form>
+  </div>
+</div>

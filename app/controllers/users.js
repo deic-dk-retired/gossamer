@@ -6,15 +6,26 @@ export default Ember.Controller.extend({
   kind: '',
   customerid: null,
   companyname: '',
-  netnames: '',
+  netnames: [],
+  netids: Ember.computed('netnames', function () {
+    if (this.get('netnames').length !== 0) {
+      return this.get('netnames').map((e) => { return parseInt(e.id) }).map((e) => { return parseInt(e) })
+    }
+    if (this.get('netnames').length === 0) {
+      return []
+    }
+  }),
   name: '',
+  firstname: Ember.computed('name', function () {
+    return `${this.get('name').split(' ')[0]}`
+  }),
   username: '',
-  password: '',
   isDisabled: 'disabled',
   changePass: 'disabled',
   isActive: false,
   isData: true,
   datavalue: 'data-value',
+  responseMessage: '',
 
   init () {
     this._super(...arguments)
@@ -36,11 +47,9 @@ export default Ember.Controller.extend({
         kind: '',
         customerid: null,
         companyname: '',
-        networkid: null,
-        netnames: '',
+        netnames: [],
         name: '',
         username: '',
-        password: '',
         isDisabled: 'disabled',
         changePass: 'disabled',
         isActive: false
@@ -55,63 +64,52 @@ export default Ember.Controller.extend({
         Ember.$('.usr-' + toSet).addClass('active')
         Ember.$('.togDisabled').removeClass('disabled')
       }
-      if (set === toSet) {
-        // this.send('resetForm')
-        // Ember.$('.card').removeClass('active')
-      }
     },
 
-    toEdit () {
-      // this.set('isDisabled', '')
-      // this.set('changePass', 'disabled')
-    },
-
-    // list network ids and names based on customerid
-    findNetworks (netid, custid) {
-
-    },
-
-    showUser (id, username, customerid, companyname, kind, name, email, phone) {
+    showUser (uid, username) {
+      let user = this.get('store').peekRecord('user', uid)
+      let customer = this.get('store').peekRecord('customer', parseInt(user.get('customerid')))
       this.send('toggleActive', this.get('username'), username)
       this.setProperties({
-        userid: id,
-        kind: kind,
-        customerid: customerid,
-        companyname: this.get('store').peekRecord('customer', customerid).get('companyname'),
-        networkid: null,
-        netnames: '', // ['n1', 'n2', ...]
-        name: name,
+        userid: parseInt(user.get('id')),
+        kind: user.get('kind'),
+        customerid: parseInt(customer.get('id')),
+        companyname: customer.get('companyname'),
+        netnames: user.get('networks').get('content.relationship.members.list'),
+        name: user.get('name'),
         username: username
       })
     },
 
-    // called from template
     saveUser () {
-      // patch to update
       if (this.get('act') === 'Save') {
         this.send('updateUser')
       }
     },
 
     updateUser () {
-      // console.log('update')
-      var userid = this.get('userid')
-      var kind = this.get('kind')
-      var customerid = this.get('customerid')
-      var companyname = this.get('store').peekRecord('customer', customerid).get('companyname')
-      var password = this.get('password')
+      let uid = this.get('userid')
+      let kind = this.get('kind')
+      let cuid = this.get('customerid')
+      let coname = this.get('store').peekRecord('customer', parseInt(cuid)).get('companyname')
 
-      this.get('store').findRecord('user', userid)
+      this.get('store').findRecord('user', parseInt(uid))
       .then(function (user) {
-        // console.log("user.get('customerid'): " + user.get('customerid'))
-        // console.log(customerid)
-        user.set('customerid', customerid)
-        user.set('companyname', companyname)
+        user.set('customerid', parseInt(cuid))
+        user.set('companyname', coname)
         user.set('kind', kind)
-
-        user.set('password', password)
-        console.log(user.changedAttributes())
+        Ember.Logger.info(user.changedAttributes())
         user.save()
+        .then((response) => {
+          this.set('responseMessage', `User ${response.get('id').name} was updated`)
+        })
+        .catch((adapterError) => {
+          Ember.Logger.info(user.get('errors'))
+          Ember.Logger.info(user.get('errors.name'))
+          Ember.Logger.info(user.get('errors').toArray())
+          Ember.Logger.info(user.get('isValid'))
+          Ember.Logger.info(adapterError)
+        })
       })
     }
 
