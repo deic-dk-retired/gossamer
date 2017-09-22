@@ -46,6 +46,12 @@ Here you can see a user is selected, marked by a blue outline and vertical trans
 
 This section allows for creating new customers and their networks, as well as create new networks for an existing customer.
 
+![](public/readme/customers.png)
+
+The below screen shows the added network on a selected customer 'DeIC'. When a user clicks edit user, all the newly added networks would be added to the database in a single request.
+
+![](public/readme/selected-edited-customer.png)
+
 ## Sidebar
 This allows the user to access key views quickly. It is responsive and can be used over a small screen equally well. The intuitive icons allow for least cognitive load so that the user can navigate intuitively.
 
