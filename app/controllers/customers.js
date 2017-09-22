@@ -115,19 +115,7 @@ export default Ember.Controller.extend({
         kind: params[1],
         net: params[2],
         description: params[3]
-      })
-
-      let self = this
-
-      function transitionToPost (customer) {
-        self.transitionToRoute('customers')
-      }
-
-      function failure (reason) {
-        // handle the error
-      }
-
-      network.save().then(transitionToPost).catch(failure)
+      }).save()
 
       // Ember.Logger.info(co.get('companyname'))
       // Ember.Logger.info(params[0])
