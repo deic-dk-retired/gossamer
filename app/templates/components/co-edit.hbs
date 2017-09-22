@@ -90,8 +90,7 @@
       </div>
 
       <h4 class="ui dividing header">Networks of {{coname}}</h4>
-      <div class="ui three column grid">
-
+      <div class="ui five column grid">
         <div class="row">
           <div class=" field togDisabled disabled column">
             <label>Name</label>
@@ -105,6 +104,17 @@
             <label>Address format</label>
             {{input type="text" id="netformat" name="netformat" placeholder="255.255.255.255/32" value=netformat}}
           </div>
+          <div class=" field togDisabled disabled column">
+            <label>Description</label>
+            {{input type="text" id="netdesc" name="netdesc" placeholder="skynet is alive" value=netdesc}}
+          </div>
+          <div class="field disabled column center aligned togDisabled">
+            <label>&nbsp;</label>
+            <button class="ui mini animated fade button blue " {{action addNetwork coid netname netkind netformat netdesc on='click'}}>
+              <div class="visible content">Add Network</div>
+              <div class="hidden content"><i class="plus icon"></i></div>
+            </button>
+          </div>
         </div>
 
         <div class="row">
@@ -114,8 +124,8 @@
               <div class="item">
                 <i class="building outline icon"></i>
                 <div class="content">
-                  <a class="header">{{net.name}}</a>
-                  <div class="description">{{net.kind}}</div>
+                  <a class="header">{{net.name}}, {{net.kind}}</a>
+                  <div class="description">{{net.net}}</div>
                 </div>
               </div>
               {{/if}}

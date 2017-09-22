@@ -106,6 +106,33 @@ export default Ember.Controller.extend({
 
     updateCustomer () {
 
+    },
+
+    addNetwork (cid, ...params) {
+      this.get('store').createRecord('network', {
+        customerid: parseInt(cid),
+        name: params[0],
+        kind: params[1],
+        net: params[2],
+        description: params[3]
+      })
+
+      let self = this
+
+      function transitionToPost (customer) {
+        self.transitionToRoute('customers')
+      }
+
+      function failure (reason) {
+        // handle the error
+      }
+
+      network.save().then(transitionToPost).catch(failure)
+
+      // Ember.Logger.info(co.get('companyname'))
+      // Ember.Logger.info(params[0])
+      // Ember.Logger.info(params[1])
+      // Ember.Logger.info(params[2])
     }
 
   }
