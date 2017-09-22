@@ -61,7 +61,7 @@ export default Ember.Controller.extend({
         isDisabled: 'disabled',
         isActive: false
       })
-      Ember.$('.item').removeClass('active')
+      Ember.$('.card').removeClass('active')
       Ember.$('.togDisabled').addClass('disabled')
     },
 
@@ -73,18 +73,19 @@ export default Ember.Controller.extend({
 
     toggleActive (set, toSet) {
       if (set !== toSet) {
-        Ember.$('.item').removeClass('active')
+        Ember.$('.card').removeClass('active')
         Ember.$('.co-' + toSet).addClass('active')
         Ember.$('.togDisabled').removeClass('disabled')
       }
     },
 
-    showCustomer (coid, cvr) {
-      let co = this.get('store').peekRecord('customer', coid)
+    showCustomer (cid, cvr) {
+      let co = this.get('store').peekRecord('customer', cid)
 
       this.send('toggleActive', this.get('cvr'), cvr)
 
       this.setProperties({
+        coid: parseInt(cid),
         coname: co.get('companyname'),
         add1: co.get('companyadr1'),
         add2: co.get('companyadr2'),

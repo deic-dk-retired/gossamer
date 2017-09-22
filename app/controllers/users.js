@@ -20,7 +20,6 @@ export default Ember.Controller.extend({
     return `${this.get('name').split(' ')[0]}`
   }),
   username: '',
-  password: '',
   isDisabled: 'disabled',
   changePass: 'disabled',
   isActive: false,
@@ -51,7 +50,6 @@ export default Ember.Controller.extend({
         netnames: [],
         name: '',
         username: '',
-        password: '',
         isDisabled: 'disabled',
         changePass: 'disabled',
         isActive: false
@@ -94,14 +92,12 @@ export default Ember.Controller.extend({
       let kind = this.get('kind')
       let cuid = this.get('customerid')
       let coname = this.get('store').peekRecord('customer', parseInt(cuid)).get('companyname')
-      // let pwd = this.get('password')
 
       this.get('store').findRecord('user', parseInt(uid))
       .then(function (user) {
         user.set('customerid', parseInt(cuid))
         user.set('companyname', coname)
         user.set('kind', kind)
-        // user.set('password', pwd)
         Ember.Logger.info(user.changedAttributes())
         user.save()
         .then((response) => {

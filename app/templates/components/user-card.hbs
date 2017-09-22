@@ -1,0 +1,44 @@
+<div class="card usr-{{u.username}}" {{action showUser u.id u.username}}>
+  <div class="image">
+    {{ember-initials/adorable email=u.email size=380}}
+  </div>
+  <div class="content">
+    <div class="header">
+      <div class="ui tiny relaxed list">
+        <div class="item">
+          <i class="user outline icon ui basic grey small"></i>
+          <div class="content">{{u.name}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="details">
+      <div class="ui tiny relaxed list">
+        <div class="item">
+          <i class="mail outline icon ui basic grey small"></i>
+          <div class="content">{{u.email}}</div>
+        </div>
+
+        <div class="item">
+          <i class="phone outline icon ui basic grey small"></i>
+          <div class="content">{{format-phone u.phone}}</div>
+        </div>
+
+        <div class="item">
+          {{user-icon kind=u.kind}}
+          <div class="content">{{u.kind}}</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="extra content">
+    <div class="right floated date">
+      <i class="sign in icon basic grey"></i>
+      <span>{{moment-from-now (moment-format u.lastlogin) hidePrefix=true interval=86400}}</span>
+    </div>
+    <div>
+      <i class="users icon basic black"></i>
+      <span>{{u.companyname}}</span>
+    </div>
+  </div>
+</div>
