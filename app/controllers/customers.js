@@ -30,7 +30,7 @@ export default Ember.Controller.extend({
     this._super(...arguments)
     this.errors = []
     this.act = 'Edit'
-    this.buttonico = 'edit'
+    this.buttonico = 'save'
   },
 
   actions: {
