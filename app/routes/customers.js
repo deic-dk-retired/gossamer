@@ -5,7 +5,6 @@ export default Ember.Route.extend({
 
   model () {
     return Ember.RSVP.hash({
-      users: this.get('store').findAll('user', {include: 'networks'}),
       customers: this.store.findAll('customer'),
       networks: this.store.findAll('network')
     })
@@ -17,10 +16,7 @@ export default Ember.Route.extend({
 
   setupController (controller, model) {
     this._super(...arguments)
-
-    Ember.set(controller, 'users', model.users)
     Ember.set(controller, 'customers', model.customers)
     Ember.set(controller, 'networks', model.networks)
   }
-
 })

@@ -2,12 +2,31 @@
   <div class="eight wide column">
     <h2>Users</h2>
     <div class="ui three stackable cards user">
-      {{#each model as |user|}}
-        {{user-stub u=user}}
+      {{#each users as |u|}}
+        {{user-card
+          u=u
+          showUser=(action 'showUser')
+        }}
       {{/each}}
     </div>
   </div>
   <div class="eight wide column">
-    {{edit-user user=user}}
+    {{user-edit
+      userid=userid
+      kind=kind
+      customerid=customerid
+      companyname=companyname
+      netnames=netnames
+      netids=netids
+      name=name
+      firstname=firstname
+      username=username
+      customers=customers
+      networks=networks
+      act=act
+      buttonico=buttonico
+      saveUser=(action 'saveUser')
+      resetForm=(action 'resetForm')
+    }}
   </div>
 </div>

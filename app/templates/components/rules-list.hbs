@@ -19,8 +19,8 @@
     </div>
     <div class="stats">
       <div class="ports">
-        <label>port</label>
-        <span class="low">{{format-ports rule.destport}}</span>
+        <label>ports (range)</label>
+        <span class="low">{{rule.destport}}</span>
         {{!-- {{#if (lte rule.destport 9)}}
         <span class="low">{{rule.destport}}</span>
         {{else}}
@@ -34,7 +34,7 @@
         {{/if}} --}}
       </div>
       <div class="pktsize">
-        <label>bits</label>
+        <label>bits (range)</label>
 
         <span class="low">
           {{#if (eq rule.pktlen 'null')}}

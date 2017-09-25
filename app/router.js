@@ -16,6 +16,7 @@ Router.map(function () {
   this.route('packets')
   this.route('measurements')
   this.route('traffic')
+  this.route('customers')
 })
 
 export default Router

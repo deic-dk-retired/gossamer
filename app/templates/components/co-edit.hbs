@@ -1,0 +1,148 @@
+<div class="ui grid edit-customer">
+  <div class="sixteen wide column">
+    <h2>{{act}} <span class="title">{{coname}}</span> </h2>
+    <form class="ui form mini" {{action saveCustomer on='submit'}}>
+      <h4 class="ui dividing header">Customer Info</h4>
+      <div class="required field togDisabled disabled">
+        <label>Co. Name</label>
+        {{input type="text" id="name" name="name" placeholder="Co. Inc" value=coname change=(action required) }}
+      </div>
+      <div class="ui four column grid">
+        <div class="row">
+          <div class="column">
+            <div class="required field togDisabled disabled">
+              <label>Address 1</label>
+              {{input type="text" id="add1" name="add1" placeholder="Norregade 10" value=add1}}
+            </div>
+          </div>
+          <div class="column">
+            <div class=" field togDisabled disabled">
+              <label>Address 2</label>
+              {{input type="text" id="add2" name="add2" placeholder="Sal 4, St Th." value=add2}}
+            </div>
+          </div>
+          <div class="column">
+            <div class=" field togDisabled disabled">
+              <label>Address 3</label>
+              {{input type="text" id="add3" name="add3" placeholder="Kgs. Lyngby" value=add3}}
+            </div>
+          </div>
+          <div class="column">
+            <div class=" field togDisabled disabled">
+              <label>Address 4</label>
+              {{input type="text" id="add4" name="add4" placeholder="DK 2800" value=add4}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui four column grid">
+        <div class="row">
+          <div class="field togDisabled disabled column">
+            <label>Co. email</label>
+            {{input type="email" id="coemail" name="coemail" placeholder="ceo@coname.com" value=coemail}}
+          </div>
+          <div class="field togDisabled disabled column">
+            <label>Co. Phone</label>
+            {{input type="text" id="cophone" name="cophone" placeholder="9050-9050" value=cophone}}
+          </div>
+          <div class="field togDisabled disabled column">
+            <label>CVR</label>
+            {{input type="text" id="cocvr" name="cocvr" placeholder="4000 2040 7020 8080" value=cocvr}}
+          </div>
+          <div class="field togDisabled disabled column">
+            <label>EAN</label>
+            {{input type="text" id="coean" name="coean" placeholder="8070 7020 2040 4000" value=coean}}
+          </div>
+        </div>
+      </div>
+
+      <h4 class="ui dividing header basic">Accountant Info</h4>
+      <div class="ui three column grid">
+        <div class="row">
+          <div class=" field togDisabled disabled column">
+            <label>Accountant's Name</label>
+            {{input type="text" id="accname" name="accname" placeholder="John Doe" value=accname}}
+          </div>
+          <div class=" field togDisabled disabled column">
+            <label>Accountant's Email</label>
+            {{input type="email" id="accemail" name="accemail" placeholder="accounts@coname.com" value=accemail}}
+          </div>
+          <div class=" field togDisabled disabled column">
+            <label>Accountant's Phone</label>
+            {{input type="text" id="accphone" name="accphone" placeholder="8080-8080" value=accphone}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="field togDisabled disabled column">
+            <label>Acc.'s Hourly Rate</label>
+            {{input type="text" id="accrate" name="accrate" placeholder="1500,00" value=accrate}}
+          </div>
+          <div class="field togDisabled disabled column">
+            <label>Subscription Fee</label>
+            {{input type="text" id="fee" name="fee" placeholder="250,50" value=fee}}
+          </div>
+          <div class="field togDisabled disabled column">
+            <label>Discount %age</label>
+            {{input type="text" id="discount" name="discount" placeholder="12" value=discount}}
+          </div>
+        </div>
+      </div>
+
+      <h4 class="ui dividing header">Networks of {{coname}}</h4>
+      <div class="ui five column grid">
+        <div class="row">
+          <div class=" field togDisabled disabled column">
+            <label>Name</label>
+            {{input type="text" id="netname" name="netname" placeholder="Skynet" value=netname}}
+          </div>
+          <div class=" field togDisabled disabled column">
+            <label>Type</label>
+            {{input type="text" id="netkind" name="netkind" placeholder="ipv4" value=netkind}}
+          </div>
+          <div class=" field togDisabled disabled column">
+            <label>Address format</label>
+            {{input type="text" id="netformat" name="netformat" placeholder="255.255.255.255/32" value=netformat}}
+          </div>
+          <div class=" field togDisabled disabled column">
+            <label>Description</label>
+            {{input type="text" id="netdesc" name="netdesc" placeholder="skynet is alive" value=netdesc}}
+          </div>
+          <div class="field disabled column center aligned togDisabled">
+            <label>&nbsp;</label>
+            <button class="ui mini animated fade button blue " {{action addNetwork coid netname netkind netformat netdesc on='click'}}>
+              <div class="visible content">Add Network</div>
+              <div class="hidden content"><i class="plus icon"></i></div>
+            </button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="ui list column">
+            {{#each networks as |net|}}
+              {{#if (eq net.customerid coid)}}
+              <div class="item">
+                <i class="building outline icon"></i>
+                <div class="content">
+                  <a class="header">{{net.name}}, {{net.kind}}</a>
+                  <div class="description">{{net.net}}</div>
+                </div>
+              </div>
+              {{/if}}
+            {{/each}}
+          </div>
+        </div>
+      </div>
+
+      <button class="ui mini animated fade button blue disabled togDisabled" type="submit">
+        <div class="visible content">Save</div>
+        <div class="hidden content"><i class="{{buttonico}} icon"></i></div>
+      </button>
+      <button class="ui mini animated fade button grey" type="reset" {{action resetForm on='click'}}>
+        <div class="visible content">Cancel</div>
+        <div class="hidden content"><i class="cancel icon"></i></div>
+      </button>
+
+    </form>
+  </div>
+</div>
