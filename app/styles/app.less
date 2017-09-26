@@ -281,6 +281,11 @@ body, html {
   margin:0;
 }
 
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
 .button(){
   padding: 8px 12px;
   cursor: pointer;
@@ -1002,10 +1007,18 @@ aside {
   }
 }
 
-.edit-user, .edit-customer{
+.edit-rule{
+  position: fixed;
+  height:90%;
+  overflow-y: scroll;
+  width: 33vw;
+}
+
+.edit-user,
+.edit-customer {
   position: fixed;
   width: 42vw;
-  height:80%;
+  height:90%;
   overflow-y: scroll;
   .title{
     .title();

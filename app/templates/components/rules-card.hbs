@@ -1,4 +1,4 @@
-<div {{action 'toggleDetail'}} class="card {{if showMore "detail"}}">
+<div class="card rule-{{rule.id}}" {{action showRule rule.id rule.name}}>
   <div class="protocol content">
     <span class="u{{rule.ipprotocol}}">udp</span>
     <span class="t{{rule.ipprotocol}}">tcp</span>
@@ -9,11 +9,10 @@
   <div class="ruleinfo content">
     <div class="time">
       <p><i class="icon calendar"></i> {{moment-format rule.validfrom 'ddd, DD MMM'}} &#126; {{moment-format rule.validfrom 'hh:mm:ss a'}}</p>
-      {{!-- <p><i class="icon clock"></i> </p> --}}
     </div>
     <div class="duration">
       <p>
-        <i class="icon circle notched end"></i>
+        <i class="icon clock notched end"></i>
         <span> <span class="emph">Active</span> for </span>
         <span>{{moment-duration rule.duration}}</span>
       </p>

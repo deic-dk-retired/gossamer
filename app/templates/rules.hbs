@@ -1,33 +1,49 @@
 <div class="ui grid">
   <div class="ten wide column">
-    <p>Active recently</p>
-      <div class="history-cards">
-        {{#each rules as |r i|}}
-          {{#if (lte i 5)}}
-            {{rules-card rule=r}}
-          {{/if}}
-        {{/each}}
+    <h4>Active recently</h4>
+    <div class="history-cards">
+      {{#each rules as |rule i|}}
+        {{#if (lte i 7)}}
+          {{rules-card
+            rule=rule
+            showRule=(action 'showRule')
+          }}
+        {{/if}}
+      {{/each}}
+    </div>
+    <h4>Active earlier</h4>
+    <div class="history-thumbs">
+      <ul class="timeline">
+      {{#each rules as |rule j|}}
+        {{#if (and (gt j 7) (lte j 15))}}
+          {{rules-list
+            rule=rule
+            showRule=(action 'showRule')
+          }}
+        {{/if}}
+      {{/each}}
+      </ul>
+      <div class="sec-load center">
+        <button class="ui mini animated fade button blue">
+          <div class="visible content">More</div>
+          <div class="hidden content"><i class="arrow down icon"></i></div>
+        </button>
       </div>
-      <p>Active earlier</p>
-      <div class="history-thumbs">
-        <ul class="timeline">
-        {{#each rules as |r j|}}
-          {{#if (and (gt j 5) (lte j 15))}}
-            {{rules-list rule=r}}
-          {{/if}}
-        {{/each}}
-        </ul>
-        <div class="sec-load center">
-
-          <button class="ui mini animated fade button blue">
-            <div class="visible content">More</div>
-            <div class="hidden content"><i class="arrow down icon"></i></div>
-          </button>
-        </div>
-      </div>
+    </div>
   </div>
   <div class="six wide column">
-    {{!-- {{in-bps}} --}}
+    {{rule-edit
+      rid=rid
+      coid=coid
+      rname=rname
+      uid=uid
+      way=way
+      active=active
+      expired=expired
+      proto =proto
+      action=action
+      required=(action 'required')
+    }}
   </div>
 </div>
 
