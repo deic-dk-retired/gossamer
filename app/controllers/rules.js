@@ -1,6 +1,20 @@
 import Ember from 'ember'
 
 export default Ember.Controller.extend({
+  queryParams: ['page'],
+  page: 1,
+
+  pagedRules: Ember.computed('page', 'model', function () {
+    let page = this.get('page')
+    let rules = this.get('model')
+
+    if (page) {
+      return rules.pageBy('page', page)
+    } else {
+      return rules
+    }
+  }),
+
   rid: null,
   fnm: null,
   coid: null,
@@ -11,7 +25,6 @@ export default Ember.Controller.extend({
   expired: null,
   proto: '',
   action: '',
-  page: 0,
 
   init () {
     this._super(...arguments)
@@ -22,8 +35,9 @@ export default Ember.Controller.extend({
   },
 
   actions: {
-    fetchMore (next) {
-      this.get('store').findAll('rule', {page: next})
+    fetchMore () {
+      this.set('page', this.get('page') + 1)
+      // this.get('store').findAll('rule', {page: this.get('page')})
     },
 
     required (event) {

@@ -1,10 +1,15 @@
 import Ember from 'ember'
 
 export default Ember.Route.extend({
-  resultPromise: {},
-  model () {
+  queryParams: {
+    page: {
+      refreshModel: true
+    }
+  },
+
+  model (params) {
     return Ember.RSVP.hash({
-      rules: this.get('store').findAll('rule', {page: 1})
+      rules: this.get('store').query('rule', params)
     })
   },
 
