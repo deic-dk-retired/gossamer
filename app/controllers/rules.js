@@ -11,15 +11,21 @@ export default Ember.Controller.extend({
   expired: null,
   proto: '',
   action: '',
+  page: 0,
 
   init () {
     this._super(...arguments)
     this.errors = []
     this.act = 'Save'
     this.buttonico = 'save'
+    this.page = 1
   },
 
   actions: {
+    fetchMore (next) {
+      this.get('store').findAll('rule', {page: next})
+    },
+
     required (event) {
       if (!event.target.value) {
         this.get('errors').pushObject({message: `${event.target.name} is required`})

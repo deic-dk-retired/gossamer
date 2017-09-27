@@ -4,7 +4,7 @@ export default Ember.Route.extend({
   resultPromise: {},
   model () {
     return Ember.RSVP.hash({
-      rules: this.get('store').findAll('rule')
+      rules: this.get('store').findAll('rule', {page: 1})
     })
   },
 
