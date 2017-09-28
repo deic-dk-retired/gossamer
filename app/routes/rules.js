@@ -26,11 +26,15 @@ export default Ember.Route.extend({
 
   actions: {
     loading (transition, originRoute) {
-      Ember.Logger.info('loading rules...')
+      Ember.$('.sec-load button').addClass('disabled')
+      Ember.$('.sec-load .loader').removeClass('disabled')
+      Ember.$('.sec-load .loader').addClass('active')
     },
 
     didTransition () {
-      Ember.Logger.info('all models loaded for rules route')
+      Ember.$('.sec-load button').removeClass('disabled')
+      Ember.$('.sec-load .loader').addClass('disabled')
+      Ember.$('.sec-load .loader').removeClass('active')
     }
   }
 })
