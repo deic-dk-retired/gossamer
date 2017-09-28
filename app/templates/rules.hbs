@@ -1,6 +1,6 @@
 <div class="ui grid">
   <div class="ten wide column">
-    <h4>Active recently</h4>
+    <h4>Recently Active</h4>
     <div class="history-cards">
       {{#each rules as |rule i|}}
         {{#if (lte i 7)}}
@@ -11,11 +11,11 @@
         {{/if}}
       {{/each}}
     </div>
-    <h4>Active earlier</h4>
+    <h4>Earlier Rules&hellip;</h4>
     <div class="history-thumbs">
       <ul class="timeline">
       {{#each rules as |rule j|}}
-        {{#if (gte j 8)}}
+        {{#if (gt j 8)}}
           {{rules-list
             rule=rule
             showRule=(action 'showRule')

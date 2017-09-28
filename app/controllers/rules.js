@@ -1,9 +1,8 @@
 import Ember from 'ember'
 
 export default Ember.Controller.extend({
-  queryParams: ['filter', 'page'],
+  queryParams: ['page'],
   page: 1,
-  filter: 8,
 
   rid: null,
   fnm: null,

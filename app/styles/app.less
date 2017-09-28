@@ -46,9 +46,9 @@
 @darker900: #263238;
 @darker800: #37474F;
 @dark: #455A64;
-@grey100: #CFD8DC;
-@grey200: #B0BEC5;
-@grey300: #90A4AE;
+@grey500: #CFD8DC;
+@grey500: #B0BEC5;
+@grey500: #90A4AE;
 @grey500: #607D8B;
 @light: #FFFFFF;
 @light-bg: #FAFAFA;
@@ -505,7 +505,7 @@ aside {
     cursor: pointer;
     display: inline-block;
     border-radius: 3px;
-    border: 1px solid @grey200;
+    border: 1px solid @grey500;
     margin:0;
     margin-right: @xlg*1.8;
     margin-bottom: @xlg*1.8;
@@ -548,14 +548,14 @@ aside {
     text-align: center;
     padding: @sm 0;
     margin: auto;
-    border-bottom: 1px solid @grey100;
+    border-bottom: 1px solid @grey500;
     > span {
       display: inline-block;
       width: 50px;
       height: 50px;
       border-radius: 50%;
-      border: 1px solid @grey200;
-      color: @grey300;
+      border: 1px solid @grey500;
+      color: @grey500;
       font-size: @sm;
       text-transform: uppercase;
       line-height: 3.8em;
@@ -565,8 +565,8 @@ aside {
         margin-right: 0;
       }
       &.ttcp, &.uudp, &.iicmp, &.oother {
-        color: @grey300;
-        border: 2px solid @grey200;
+        color: @grey500;
+        border: 2px solid @grey500;
         font-weight: 500;
       }
       &.counter {
@@ -581,8 +581,8 @@ aside {
   .ruleinfo {
     padding: 0 @sm;
     margin: auto;
-    color:@grey300;
-    border-bottom: 1px solid @grey100;
+    color:@grey500;
+    border-bottom: 1px solid @grey500;
     p {
       font-size: @md;
     }
@@ -600,7 +600,7 @@ aside {
     text-align: center;
     height: @xxlg*3;
     min-width: 300px;
-    color:@grey300;
+    color:@grey500;
     .numberfont();
     > div {
       width: 130px;
@@ -668,7 +668,7 @@ aside {
       width: 2px;
       height: 100%;
       margin-left: -8px;
-      background: @grey100;
+      background: @grey500;
       z-index: 5;
     }
   }
@@ -691,14 +691,14 @@ aside {
       margin-top: 0px;
       background: @light;
       border-radius: 50%;
-      border: 2px solid @grey200;
+      border: 2px solid @grey500;
       z-index: 10;
     }
     .protocol > span {
       &:extend(.history-cards .protocol > span);
       border-width: 2px;
-      border-color: @grey300;
-      color: @grey300;
+      border-color: @grey500;
+      color: @grey500;
       font-weight: 500;
     }
     .ip-add, .stats {
@@ -714,15 +714,15 @@ aside {
         &.srcip span, &.destip span, &.span {
           &:extend(.history-cards .ip-add > div.destip span);
           font-size: @md;
-          color: @grey300;
+          color: @grey500;
         }
         &.srcip span {
-          color: @grey300;
+          color: @grey500;
         }
         span {
           &:extend(.history-cards .ip-add > div span:first-child);
           font-size: @md;
-          color: @grey300;
+          color: @grey500;
         }
         &:first-child {
           &:extend(.history-cards .ip-add > div:first-child);
@@ -739,7 +739,7 @@ aside {
     }
     .pktlen, .count, .time {
       font-size: @sm;
-      color: @grey300;
+      color: @grey500;
     }
     .time {
       margin-right: 0;
@@ -928,14 +928,14 @@ aside {
 
 .dash-widget, .d3-vis{
   .shadow(0px,2px,1px,1px,rgba(0,0,0,.1));
-  border: 1px solid @grey200;
+  border: 1px solid @grey500;
   border-radius: 4px;
   .header{
       background: @light-bg;
       margin-bottom: 0;
       padding: @xs * .5 @xs * .8;
       border-radius: 4px 4px 0 0px;
-      border-bottom: 1px solid @grey200;
+      border-bottom: 1px solid @grey500;
       & div{
         display: inline-block;
       }
@@ -963,10 +963,10 @@ aside {
   }
   .axes{
     fill:none;
-    stroke:@grey100;
+    stroke:@grey500;
   }
   .ytext{
-    fill: @grey200;
+    fill: @grey500;
     transform: rotate(-90deg) translate(-@sm,@xxlg);
     font-size: @md;
   }
@@ -974,7 +974,7 @@ aside {
     .numberfont();
     opacity: .8;
     line{
-      stroke:@grey200;
+      stroke:@grey500;
       opacity: .4;
     }
     text{

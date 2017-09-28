@@ -2,12 +2,13 @@ import Ember from 'ember'
 
 export default Ember.Route.extend({
   queryParams: {
-    filter: {
-      refreshModel: true
-    },
     page: {
       refreshModel: true
     }
+  },
+
+  beforeModel () {
+    Ember.Logger.info('before model is loaded...')
   },
 
   model (params) {
@@ -24,13 +25,12 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    loading (transition, route) {
-      let controller = this.controllerFor('rules')
-      controller.set('currentlyLoading', true)
+    loading (transition, originRoute) {
+      Ember.Logger.info('loading rules...')
+    },
 
-      transition.finally(function () {
-        controller.set('currentlyLoading', false)
-      })
+    didTransition () {
+      Ember.Logger.info('all models loaded for rules route')
     }
   }
 })
