@@ -1,5 +1,6 @@
 @charset "UTF-8";
 @import url('https://fonts.googleapis.com/css?family=Montserrat:200:300|Kanit:700i');
+@import url('http://tawian.io/text-spinners/spinners.css');
 
 @liblue500: #03A9F4;
 @liblue600: #039BE5;
@@ -282,8 +283,7 @@ body, html {
 }
 
 .invisi {
-  display: none;
-  visibility: hidden;
+  display: none!important;
 }
 
 .button(){
@@ -532,6 +532,7 @@ aside {
       }
       .ruleinfo{
         color:@liblue500;
+        border-bottom: 1px solid @liblue500;
       }
       .destip span {
         color: @liblue500;
@@ -575,6 +576,9 @@ aside {
         border: 0;
         margin-top: -85px;
         margin-left: 275px;
+        .label{
+          border-color:@grey500
+        }
       }
     }
   }

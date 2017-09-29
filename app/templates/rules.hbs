@@ -1,21 +1,26 @@
-<div class="ui grid">
+<div class="ui blurring grid">
   <div class="ten wide column">
     <h4>Recently Active</h4>
     <div class="history-cards">
       {{#each rules as |rule i|}}
-        {{#if (lte i 7)}}
-          {{rules-card
-            rule=rule
-            showRule=(action 'showRule')
-          }}
+        {{#if rule.isactive}}
+          {{#if (lte i 7)}}
+            {{rules-card
+              rule=rule
+              showRule=(action 'showRule')
+            }}
+          {{/if}}
         {{/if}}
       {{/each}}
     </div>
     <h4>Earlier Rules&hellip;</h4>
     <div class="history-thumbs">
+      <div class="ui inverted dimmer">
+        <div class="ui text loader">Fetching&hellip;</div>
+      </div>
       <ul class="timeline">
       {{#each rules as |rule j|}}
-        {{#if (gt j 8)}}
+        {{#if rule.isexpired}}
           {{rules-list
             rule=rule
             showRule=(action 'showRule')
@@ -25,10 +30,12 @@
       {{/each}}
       </ul>
       <div class="sec-load center">
-        <button class="ui mini animated fade button blue" {{action 'fetchMore'}}>
+        <button class="ui mini animated vertical button blue" {{action 'fetchMore'}}>
           <div class="visible content">More</div>
-          <div class="ui mini disabled inverted loader"></div>
-          <div class="hidden content"><i class="arrow down icon"></i></div>
+          <div class="hidden content">
+            <i class="arrow down icon"></i>
+            <i class="loading dots2 invisi" aria-hidden=true></i>
+          </div>
         </button>
       </div>
     </div>
