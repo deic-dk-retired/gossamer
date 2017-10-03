@@ -14,8 +14,14 @@ export default Ember.Route.extend({
 
   model (params) {
     // Ember.Logger.info(params)
-    return Ember.RSVP.hash({
-      rules: this.get('store').query('rule', params)
+    // return Ember.RSVP.hash({
+    //   rules: this.get('store').query('rule', params)
+    // })
+    return this.get('store').query('rule', params).then((d) => {
+      return {
+        rules: d,
+        meta: d.get('meta')
+      }
     })
   },
 
@@ -27,6 +33,7 @@ export default Ember.Route.extend({
     this._super(...arguments)
 
     Ember.set(controller, 'rules', model.rules)
+    Ember.set(controller, 'meta', model.meta)
   },
 
   actions: {

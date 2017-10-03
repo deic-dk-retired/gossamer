@@ -2,7 +2,13 @@ import DS from 'ember-data'
 
 export default DS.JSONAPIAdapter.extend({
   host: 'http://10.33.1.97:4242',
-  namespace: 'api'
+  namespace: 'api',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+    // 'Access-Control-Allow-Methods': 'GET, POST, PATCH, DELETE'
+    // 'Access-Control-Allow-Headers': 'X-Requested-With, X-HTTP-Method-Override'
+  }
 
   // serialize (snapshot) {
   //   const json = this._super(...arguments)

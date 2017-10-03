@@ -1,33 +1,39 @@
 <div class="ui blurring grid">
   <div class="ten wide column">
-    <h4>Recently Active</h4>
+    <h4><span class="emph">Active</span> currently</h4>
     <div class="history-cards">
-      {{#each rules as |rule i|}}
-        {{#if rule.isactive}}
-          {{#if (lte i 7)}}
+      {{#if (gt rules.meta.recent 0)}}
+        {{#each rules as |rule i|}}
+          {{#if rule.isactive}}
             {{rules-card
               rule=rule
               showRule=(action 'showRule')
             }}
           {{/if}}
-        {{/if}}
-      {{/each}}
+        {{/each}}
+      {{else}}
+        &#8942;
+      {{/if}}
     </div>
-    <h4>Earlier Rules&hellip;</h4>
+    <h4><span class="emph">Expired</span> earlier&hellip;</h4>
     <div class="history-thumbs">
       <div class="ui inverted dimmer">
         <div class="ui text loader">Fetching&hellip;</div>
       </div>
       <ul class="timeline">
-      {{#each rules as |rule j|}}
-        {{#if rule.isexpired}}
-          {{rules-list
-            rule=rule
-            showRule=(action 'showRule')
-            fetchMore=(action 'fetchMore')
-          }}
-        {{/if}}
-      {{/each}}
+       {{#if (gt rules.meta.older 0)}}
+        {{#each rules as |rule j|}}
+          {{#if rule.isexpired}}
+            {{rules-list
+              rule=rule
+              showRule=(action 'showRule')
+              fetchMore=(action 'fetchMore')
+            }}
+          {{/if}}
+        {{/each}}
+      {{else}}
+        &hellip;
+      {{/if}}
       </ul>
       <div class="sec-load center">
         <button class="ui mini animated vertical button blue" {{action 'fetchMore'}}>

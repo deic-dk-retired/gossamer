@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import url('https://fonts.googleapis.com/css?family=Montserrat:200:300|Kanit:700i');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:200:400|Kanit:700i');
 @import url('http://tawian.io/text-spinners/spinners.css');
 
 @liblue500: #03A9F4;
@@ -269,6 +269,11 @@ input:focus:-ms-input-placeholder { color:transparent; } /* oldIE ;) */
   //   color: #000;
   // }
 }
+
+.emph {
+    color: @liblue500!important;
+    font-weight: normal;
+  }
 
 body, html {
   .textfont();
@@ -540,9 +545,6 @@ aside {
       .atck-arrow {
         background: 105px 0px url(@arr-ico-hover) no-repeat;
       }
-      .emph {
-        color: @liblue500;
-      }
     }
   }
   .protocol {
@@ -657,7 +659,7 @@ aside {
         visibility: hidden;
       }
       &:first-child {
-        padding-top: @lg*2.5;
+        padding-top: @lg*0;
       }
       &:last-child {
         padding-bottom: @lg;
