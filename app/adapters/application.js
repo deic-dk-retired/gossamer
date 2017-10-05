@@ -5,6 +5,6 @@ export default DS.JSONAPIAdapter.extend({
   namespace: 'api',
   headers: {
     'Accept': 'application/vnd.api+json',
-    'Content-Type': 'application/x-www-form-urlencoded'
+    'Content-Type': 'application/json'
   }
 })
