@@ -66,7 +66,7 @@ export default Ember.Controller.extend({
     },
 
     saveCustomer () {
-      if (this.get('act') === 'Save') {
+      if (this.get('act') === 'Edit') {
         this.send('updateCustomer')
       }
     },
@@ -105,10 +105,16 @@ export default Ember.Controller.extend({
     },
 
     updateCustomer () {
-
+      Ember.Logger.info('update customer ' + this.get('coname'))
     },
 
     addNetwork (cid, ...params) {
+      Ember.Logger.info(cid)
+      Ember.Logger.info(params[0])
+      Ember.Logger.info(params[1])
+      Ember.Logger.info(params[2])
+      Ember.Logger.info(params[3])
+
       this.get('store').createRecord('network', {
         customerid: parseInt(cid),
         name: params[0],
@@ -116,10 +122,6 @@ export default Ember.Controller.extend({
         net: params[2],
         description: params[3]
       }).save()
-      // Ember.Logger.info(co.get('companyname'))
-      // Ember.Logger.info(params[0])
-      // Ember.Logger.info(params[1])
-      // Ember.Logger.info(params[2])
     },
 
     removeNetwork (netid) {
