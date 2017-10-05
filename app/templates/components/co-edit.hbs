@@ -117,16 +117,17 @@
                 </button>
               </div>
             </div>
-
+          </div>
+          <div class="ui two column grid">
             <div class="row">
               <div class="ui list column">
                 {{#each networks as |net|}}
                   {{#if (eq net.customerid coid)}}
                   <div class="item">
-                    <i class="building outline icon"></i>
-                    <div class="content">
-                      <a class="header">{{net.name}}, {{net.kind}}</a>
-                      <div class="description">{{net.net}}</div>
+                    <div class="ui image tiny basic grey label">
+                      <img src="/assets/images/net.png">
+                      {{net.name}}, {{net.net}}
+                      <i class="delete icon black" {{action removeNetwork net.id}}></i>
                     </div>
                   </div>
                   {{/if}}

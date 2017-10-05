@@ -4,10 +4,8 @@ export default DS.JSONAPIAdapter.extend({
   host: 'http://10.33.1.97:4242',
   namespace: 'api',
   headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-    // 'Access-Control-Allow-Methods': 'GET, POST, PATCH, DELETE'
-    // 'Access-Control-Allow-Headers': 'X-Requested-With, X-HTTP-Method-Override'
+    'Accept': 'application/vnd.api+json',
+    'Content-Type': 'application/vnd.api+json'
   }
 
   // serialize (snapshot) {

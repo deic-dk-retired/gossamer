@@ -116,11 +116,16 @@ export default Ember.Controller.extend({
         net: params[2],
         description: params[3]
       }).save()
-
       // Ember.Logger.info(co.get('companyname'))
       // Ember.Logger.info(params[0])
       // Ember.Logger.info(params[1])
       // Ember.Logger.info(params[2])
+    },
+
+    removeNetwork (netid) {
+      this.get('store').findRecord('network', netid, { backgroundReload: false }).then(function (network) {
+        network.destroyRecord()
+      })
     }
 
   }
