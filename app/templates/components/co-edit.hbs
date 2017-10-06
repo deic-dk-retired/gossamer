@@ -90,22 +90,22 @@
             </div>
           </div>
 
-          <h5 class="ui dividing header">Networks of {{coname}}</h5>
+          <h5 class="ui dividing header">Networks of <span class="title">{{coname}}</span></h5>
           <div class="ui five column grid">
             <div class="row">
-              <div class=" field togDisabled disabled column">
+              <div class="required field togDisabled disabled column">
                 <label>Name</label>
                 {{input type="text" id="netname" name="netname" placeholder="Skynet" value=netname}}
               </div>
-              <div class=" field togDisabled disabled column">
+              <div class="required field togDisabled disabled column">
                 <label>Type</label>
                 {{input type="text" id="netkind" name="netkind" placeholder="ipv4" value=netkind}}
               </div>
-              <div class=" field togDisabled disabled column">
+              <div class="required field togDisabled disabled column">
                 <label>Address format</label>
                 {{input type="text" id="netformat" name="netformat" placeholder="255.255.255.255/32" value=netformat}}
               </div>
-              <div class=" field togDisabled disabled column">
+              <div class="field togDisabled disabled column">
                 <label>Description</label>
                 {{input type="text" id="netdesc" name="netdesc" placeholder="skynet is alive" value=netdesc}}
               </div>

@@ -109,19 +109,15 @@ export default Ember.Controller.extend({
     },
 
     addNetwork (cid, ...params) {
-      Ember.Logger.info(cid)
-      Ember.Logger.info(params[0])
-      Ember.Logger.info(params[1])
-      Ember.Logger.info(params[2])
-      Ember.Logger.info(params[3])
-
-      this.get('store').createRecord('network', {
+      let network = this.get('store').createRecord('network', {
         customerid: parseInt(cid),
         name: params[0],
         kind: params[1],
         net: params[2],
         description: params[3]
-      }).save()
+      })
+
+      network.save()
     },
 
     removeNetwork (netid) {
