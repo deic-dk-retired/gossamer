@@ -5,10 +5,10 @@ export default DS.JSONAPISerializer.extend({
     let json = this._super(...arguments)
     json = {
       coid: json.data.attributes.customerid,
-      coname: json.data.attributes.name,
-      cokind: json.data.attributes.kind,
-      conet: json.data.attributes.net,
-      codesc: json.data.attributes.description
+      netname: json.data.attributes.name,
+      netkind: json.data.attributes.kind,
+      netaddr: json.data.attributes.net,
+      netdesc: json.data.attributes.description
     }
     return json
   }
