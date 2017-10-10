@@ -1,9 +1,11 @@
-import DS from 'ember-data'
+import ApplicationSerializer from './application'
 
-export default DS.JSONAPISerializer.extend({
+export default ApplicationSerializer.extend({
   serialize (snapshot, options) {
     let json = this._super(...arguments)
     json = {
+      netuuid: json.data.attributes.netuuid,
+      couuid: json.data.attributes.couuid,
       coid: json.data.attributes.customerid,
       netname: json.data.attributes.name,
       netkind: json.data.attributes.kind,

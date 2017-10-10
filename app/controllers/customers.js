@@ -1,7 +1,9 @@
 import Ember from 'ember'
+import uuid from 'npm:uuid'
 
 export default Ember.Controller.extend({
   coid: null,
+  couuid: null,
   coname: '',
   add1: '',
   add2: '',
@@ -43,6 +45,7 @@ export default Ember.Controller.extend({
     resetForm () {
       this.setProperties({
         coid: null,
+        couuid: null,
         coname: '',
         add1: '',
         add2: '',
@@ -86,6 +89,7 @@ export default Ember.Controller.extend({
 
       this.setProperties({
         coid: parseInt(cid),
+        couuid: co.get('couuid'),
         coname: co.get('companyname'),
         add1: co.get('companyadr1'),
         add2: co.get('companyadr2'),
@@ -110,6 +114,8 @@ export default Ember.Controller.extend({
 
     addNetwork (cid, ...params) {
       let network = this.get('store').createRecord('network', {
+        netuuid: uuid.v4(),
+        couuid: this.get('couuid'),
         customerid: parseInt(cid),
         name: params[0],
         kind: params[1],

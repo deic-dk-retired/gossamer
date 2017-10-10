@@ -13,6 +13,8 @@ const Validations = buildValidations({
 })
 
 export default DS.Model.extend(Validations, {
+  useruuid: DS.attr('string'),
+  couuid: DS.attr('string'),
   customerid: DS.attr('number'),
   companyname: DS.attr('string', {readonly: true}),
   kind: DS.attr('string'),
