@@ -459,7 +459,7 @@ aside {
 }
 .appcontent {
   color: #777;
-  background: @light;
+  background: #efefef;
   top:47px;
   left:@aside-width;
   position:absolute;
@@ -933,26 +933,28 @@ aside {
 }
 
 .dash-widget, .d3-vis{
-  .shadow(0px,2px,1px,1px,rgba(0,0,0,.1));
-  border: 1px solid @grey500;
-  border-radius: 4px;
+  .shadow(0px,2px,2px,0px,rgba(0,0,0,.1));
+  background: @light;
+  border:0;
+  border-radius: 0;
   .header{
-      background: @light-bg;
+      background: @light;
       margin-bottom: 0;
       padding: @xs * .5 @xs * .8;
-      border-radius: 4px 4px 0 0px;
-      border-bottom: 1px solid @grey500;
       & div{
         display: inline-block;
       }
   }
   .title{
-    width: 82%;
+    width: 100%;
+     padding: @xs @lg @xs * .8;
       p {
         color: @darker800;
         text-transform: capitalize;
-        font-weight: 300;
-        font-size: @md;
+        font-weight: 400;
+        font-size: @lg;
+        padding: 0 0 @lg;
+        border-bottom: 1px solid rgba(0,0,0,.2);
     }
   }
   .controls{
@@ -981,7 +983,7 @@ aside {
     opacity: .8;
     line{
       stroke:@grey500;
-      opacity: .4;
+      opacity: .2;
     }
     text{
       fill:@darker800;

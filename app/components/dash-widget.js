@@ -37,8 +37,8 @@ const DashWidgetComponent = Ember.Component.extend({
     var svgW = this.$('.dash-widget svg').outerWidth()
     var svgH = this.$('.dash-widget svg').outerHeight()
     // configure chart widget dimensions
-    var margin = {top: 10, right: 10, bottom: 80, left: 32}
-    var margin2 = {top: 310, right: 10, bottom: 20, left: 32}
+    var margin = {top: 10, right: 40, bottom: 120, left: 62}
+    var margin2 = {top: 280, right: 40, bottom: 50, left: 62}
     var width = svgW - margin.left - margin.right - 20
     var height = +svgH - margin.top - margin.bottom
     var height2 = +svgH - margin2.top - margin2.bottom
@@ -145,7 +145,6 @@ const DashWidgetComponent = Ember.Component.extend({
       focus.append('g')
         .attr('class', 'axis axis--x')
         .attr('transform', 'translate(0,' + height + ')')
-        .call(xAxis.tickSize(0 - height).tickFormat(xTime).ticks(8))
       focus.select('.domain').remove()
 
       focus.append('g')
