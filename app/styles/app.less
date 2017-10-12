@@ -73,7 +73,7 @@
 // @imgurl: '/assets/images/poly.png';
 @imgurl: '/assets/images/p2.png';
 @arr-ico: '/assets/images/arr-g.svg';
-@arr-ico-hover: '/assets/images/arr.svg';
+@arr-ico-hover: '/assets/images/arr-w.svg';
 
 //common border colors and shadows
 @bordercolor: @liblue600;
@@ -265,14 +265,11 @@ input:focus:-ms-input-placeholder { color:transparent; } /* oldIE ;) */
   color:@fcol;
   background: @bcol;
   border-radius: @rnd;
-  // &:placeholder-shown{
-  //   color: #000;
-  // }
 }
 
 .emph {
-    color: @liblue500!important;
-    font-weight: normal;
+    color: inherit;
+    font-weight: bold;
   }
 
 body, html {
@@ -491,26 +488,27 @@ aside {
 .card{
   cursor: pointer;
   &:hover, &.active{
-      border: 1px solid @blue200!important;
+      border: 0!important;
       transform: translate(0, -5px);
   }
   &:hover{
     .shortTran();
-    border: 1px solid @liblue500!important;
+    border: 0px!important;
   }
 }
 .history-cards {
   display: block;
   text-align: left;
   .card {
-    .shadow(0px, 2px, 1px, 1px, rgba(0,0,0,.1));
+    .shadow(0px, 2px, 2px, 0px, rgba(0,0,0,.1));
+    color: @grey500;
     background: @light;
     text-align: left;
     min-width: @aside-width;
     cursor: pointer;
     display: inline-block;
-    border-radius: 3px;
-    border: 1px solid @grey500;
+    border-radius: 0;
+    border: 0px;
     margin:0;
     margin-right: @xlg*1.8;
     margin-bottom: @xlg*1.8;
@@ -521,26 +519,28 @@ aside {
       padding: @sm 0;
     }
     &:hover {
+      color: @light;
+      background: @liblue500;
       .protocol {
-        .shortTran();
-        border-bottom: 1px solid @liblue500;
+        border-bottom: 1px solid @light;
         > span {
+          border: 1px solid @light;
           &.ttcp, &.uudp, &.iicmp, &.oother {
-            color: @liblue500;
-            border: 2px solid @liblue500;
+            color: inherit;
+            border: 2px solid @light;
           }
         }
         .counter {
-          color: @liblue500;
-          border-color:@liblue500;
+          color: inherit;
+          border-color: @light;
         }
       }
       .ruleinfo{
-        color:@liblue500;
-        border-bottom: 1px solid @liblue500;
+        color:inherit;
+        border-bottom: 1px solid @light;
       }
-      .destip span {
-        color: @liblue500;
+      .srcip span {
+        color: inherit;
       }
       .atck-arrow {
         background: 105px 0px url(@arr-ico-hover) no-repeat;
@@ -549,16 +549,16 @@ aside {
   }
   .protocol {
     text-align: center;
-    padding: @sm 0;
+    padding: @xlg 0;
     margin: auto;
-    border-bottom: 1px solid @grey500;
+    border-bottom: 1px solid #eee;
     > span {
       display: inline-block;
       width: 50px;
       height: 50px;
       border-radius: 50%;
       border: 1px solid @grey500;
-      color: @grey500;
+      color: inherit;
       font-size: @sm;
       text-transform: uppercase;
       line-height: 3.8em;
@@ -568,7 +568,7 @@ aside {
         margin-right: 0;
       }
       &.ttcp, &.uudp, &.iicmp, &.oother {
-        color: @grey500;
+        color: inherit;
         border: 2px solid @grey500;
         font-weight: 500;
       }
@@ -579,16 +579,16 @@ aside {
         margin-top: -85px;
         margin-left: 275px;
         .label{
-          border-color:@grey500
+          border-color:@grey500;
         }
       }
     }
   }
   .ruleinfo {
-    padding: 0 @sm;
+    padding: @xlg * 1.5;
     margin: auto;
-    color:@grey500;
-    border-bottom: 1px solid @grey500;
+    color:inherit;
+    border-bottom: 1px solid #eee;
     p {
       font-size: @md;
     }
@@ -606,7 +606,7 @@ aside {
     text-align: center;
     height: @xxlg*3;
     min-width: 300px;
-    color:@grey500;
+    color:inherit;
     .numberfont();
     > div {
       width: 130px;
@@ -615,15 +615,16 @@ aside {
         display: block;
         font-size: @sm*.8;
         font-weight: 500;
-        // color: @grey500;
         text-transform: uppercase;
       }
       &.srcip,&.destip{
         span {
           font-size: @sm*1.2;
+          color: inherit;
         }
       }
-      &.destip {
+      &.srcip {
+        color: @darker800;
         position: relative;
       }
       &:first-child {
