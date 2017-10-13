@@ -17,11 +17,11 @@
     </div>
     <div class="stats">
       <div class="ports">
-        <label>ports (range)</label>
+        <label><i class="icon resize horizontal"></i> ports (range)</label>
         <span class="low">{{rule.destport}}</span>
       </div>
       <div class="pktsize">
-        <label>bits (range)</label>
+        <label><i class="icon bug"></i> bits (range)</label>
         <span class="low">
           {{#if (eq rule.pktlen 'null')}}
             &hellip;
@@ -31,12 +31,13 @@
         </span>
       </div>
       <div class="action">
-        <label>action</label>
+        <label><i class="icon warning sign"></i> action</label>
         <span>{{rule.action}}</span>
       </div>
     </div>
     <div class="time">
-      <span>{{moment-from-now rule.validfrom hidePrefix=true interval=86400}}</span>
+      <label><i class="icon clock notched"></i> {{moment-from-now rule.validfrom hidePrefix=true interval=86400}}</label>
+      {{!-- <span>{{moment-from-now rule.validfrom hidePrefix=true interval=86400}}</span> --}}
       <span>{{moment-format rule.validfrom 'DD MMM, YYYY'}} at {{moment-format rule.validfrom 'hh:mm:ss a'}}</span>
     </div>
   </div>

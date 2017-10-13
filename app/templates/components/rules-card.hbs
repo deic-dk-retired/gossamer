@@ -1,9 +1,6 @@
 <div class="card rule-{{rule.id}}" {{action showRule rule.id rule.name}}>
   <div class="protocol content">
-    <span class="u{{rule.ipprotocol}}">udp</span>
-    <span class="t{{rule.ipprotocol}}">tcp</span>
-    <span class="i{{rule.ipprotocol}}">icmp</span>
-    <span class="o{{rule.ipprotocol}}">other</span>
+    <span class="name">{{rule.ipprotocol}}</span>
     <span class="counter"><a class="counter ui basic circular label tiny">{{rule.destport}}</a></span>
   </div>
   <div class="ruleinfo content">
@@ -18,7 +15,7 @@
       </p>
     </div>
     <div class="pktlen">
-      <p><i class="icon bomb"></i>
+      <p><i class="icon bug"></i>
         {{#if (eq rule.pktlen 'null')}}
           &hellip;
         {{else}}
@@ -27,10 +24,10 @@
       </p>
     </div>
     <div class="name">
-      <p><i class="icon barcode outline"></i> {{rule.rname}}</p>
+      <p><i class="icon pin"></i> {{rule.rname}}</p>
     </div>
     <div class="action">
-      <p><i class="icon fire"></i> {{rule.action}}</p>
+      <p><i class="icon warning sign"></i> {{rule.action}}</p>
     </div>
   </div>
   <div class="ip-add content">

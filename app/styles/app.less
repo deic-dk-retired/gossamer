@@ -455,7 +455,7 @@ aside {
   }
 }
 .appcontent {
-  color: #777;
+  color: @darker900;
   background: #efefef;
   top:47px;
   left:@aside-width;
@@ -509,6 +509,7 @@ aside {
   text-align: left;
   .card {
     .shadow(0px, 2px, 2px, 0px, rgba(0,0,0,.1));
+    padding: @xxlg;
     color: @grey500;
     background: @light;
     text-align: left;
@@ -530,12 +531,11 @@ aside {
       color: @light;
       background: @liblue500;
       .protocol {
-        border-bottom: 1px solid @light;
+        border-bottom: 1px dotted @light;
         > span {
-          border: 1px solid @light;
-          &.ttcp, &.uudp, &.iicmp, &.oother {
+          // border: 1px solid @light;
+          &.name {
             color: inherit;
-            border: 2px solid @light;
           }
         }
         .counter {
@@ -548,7 +548,7 @@ aside {
       }
       .ruleinfo{
         color:inherit;
-        border-bottom: 1px solid @light;
+        border-bottom: 1px dotted @light;
       }
       .srcip span {
         color: inherit;
@@ -559,21 +559,15 @@ aside {
     }
   }
   .protocol {
-    text-align: center;
-    padding: @xlg 0;
+    padding: 0 0 @xlg 0;
     margin: auto;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px dotted #bbb;
     > span {
       display: inline-block;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      border: 1px solid @grey500;
       color: inherit;
-      font-size: @sm;
+      font-size: @xxlg*2;
       text-transform: uppercase;
-      line-height: 3.8em;
-      text-align: center;
+      line-height: 1em;
       margin-right: @sm;
       &:nth-last-child(2){
         margin-right: 0;
@@ -587,8 +581,8 @@ aside {
         position: absolute;
         display: block;
         border: 0!important;
-        margin-top: -85px;
-        margin-left: 275px;
+        margin-top: -82px;
+        margin-left: 300px;
         .label{
           border-color:@grey500;
         }
@@ -596,10 +590,9 @@ aside {
     }
   }
   .ruleinfo {
-    padding: @xlg * 1.5;
     margin: auto;
     color:inherit;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px dotted #bbb;
     p {
       font-size: @md;
     }
@@ -612,7 +605,6 @@ aside {
   .ip-add {
     padding: 0;
     padding-top: @xs*.6;
-    padding-bottom: @xxlg*3.6;
     margin: auto;
     text-align: center;
     height: @xxlg*3;
@@ -681,11 +673,18 @@ aside {
     }
     .protocol > span {
       &:extend(.history-cards .protocol > span);
+      font-size: @lg;
+      line-height: 2.9em;
+      text-align: center;
+      border: 2px solid;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
       margin-right: 0;
       border-width: 2px;
       border-color: inherit;
       color: inherit;
-      font-weight: 500;
+      font-weight: 900;
     }
     .ip-add, .stats {
       &:extend(.history-cards .ip-add);
@@ -744,7 +743,7 @@ aside {
         color: inherit;
       }
       .ip-add, .stats {
-        .destip{
+        .srcip{
           color: @darker900;
         }
         span {
