@@ -36,8 +36,9 @@
       </div>
     </div>
     <div class="time">
-      <label><i class="icon clock notched"></i> {{moment-from-now rule.validfrom hidePrefix=true interval=86400}}</label>
-      {{!-- <span>{{moment-from-now rule.validfrom hidePrefix=true interval=86400}}</span> --}}
+      <label><i class="icon clock notched"></i>
+        {{moment-from-now rule.validfrom hidePrefix=true interval=86400}}
+      </label>
       <span>{{moment-format rule.validfrom 'DD MMM, YYYY'}} at {{moment-format rule.validfrom 'hh:mm:ss a'}}</span>
     </div>
   </div>

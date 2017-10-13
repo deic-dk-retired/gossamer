@@ -376,6 +376,14 @@ header {
       padding: 0 6px;
     }
   }
+  .contra {
+    .shortTran();
+    background: @liblue500!important;
+    color: @light!important;
+    &:hover{
+      background: @darker900!important;
+    }
+  }
   .ui.menu .item > .label,
   .ui.label > .icon,
   .i.icon{
@@ -486,15 +494,17 @@ aside {
   }
 }
 .card {
-  border-radius: 0!important;
   cursor: pointer;
-  &:hover, &.active{
-      border: 0!important;
-      transform: translate(0, -5px);
+  &:hover, &.active {
+    .shortTran();
+    transform: translate(0, -5px);
+  }
+  &.active{
+    border-top: 2px solid @liblue500!important;
   }
   &:hover{
-    .shortTran();
     border: 0px!important;
+    border-top: 2px solid @liblue500!important;
   }
 }
 .thumb {

@@ -5,14 +5,17 @@
     </div>
   </div>
   <div class="item">
-    <i class="alarm outline icon"></i>
+    <i class="alarm outline blue icon"></i>
   </div>
-  {{#link-to 'plan' class="blue item"}}
+  {{#link-to 'plan' class="item contra"}}
     {{#ui-popup content="Add rules" variation="mini"}}
-      <i class="wizard blue icon"></i>
+      <i class="add icon"></i> Add Rule
     {{/ui-popup}}
   {{/link-to}}
-  {{#ui-dropdown class="item"}}
+  <div class="header item">
+    <span class="title">{{pagetitle}}</span>
+  </div>
+  {{#ui-dropdown class="right floated item"}}
     <span class="username">{{user-icon kind=kind}}{{username}}</span>
     <i class="dropdown icon"></i>
     <div class="menu">
@@ -32,7 +35,5 @@
        {{/link-to}}
     </div>
   {{/ui-dropdown}}
-  <div class="header item">
-    <span class="title">{{pagetitle}}</span>
-  </div>
+
 </div>
