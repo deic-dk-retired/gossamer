@@ -268,7 +268,7 @@ input:focus:-ms-input-placeholder { color:transparent; } /* oldIE ;) */
 }
 
 .emph {
-    color: inherit;
+    color: @liblue500;
     font-weight: bold;
   }
 
@@ -485,7 +485,8 @@ aside {
     }
   }
 }
-.card{
+.card {
+  border-radius: 0!important;
   cursor: pointer;
   &:hover, &.active{
       border: 0!important;
@@ -496,6 +497,13 @@ aside {
     border: 0px!important;
   }
 }
+.thumb {
+  cursor: pointer;
+  &:hover, &.active {
+      .shortTran();
+  }
+}
+
 .history-cards {
   display: block;
   text-align: left;
@@ -533,6 +541,9 @@ aside {
         .counter {
           color: inherit;
           border-color: @light;
+          a{
+            background: @liblue500;
+          }
         }
       }
       .ruleinfo{
@@ -575,7 +586,7 @@ aside {
       &.counter {
         position: absolute;
         display: block;
-        border: 0;
+        border: 0!important;
         margin-top: -85px;
         margin-left: 275px;
         .label{
@@ -646,66 +657,34 @@ aside {
   .timeline {
     position: relative;
     margin: 0 auto;
-    margin-top: 0px;
+    margin: 0 0 @xlg 0;
     padding: 0;
     list-style-type: none;
     li {
-      padding: 0;
-      margin-bottom: @lg*2;
-      &:after {
-        content: "";
-        display: block;
-        height: 0;
-        clear: both;
-        visibility: hidden;
-      }
-      &:first-child {
-        padding-top: @lg*0;
-      }
-      &:last-child {
-        padding-bottom: @lg;
-      }
-    }
-    &:before {
-      position: absolute;
-      left: 11px;
-      top: 0;
-      content: "";
-      display: block;
-      width: 2px;
-      height: 100%;
-      margin-left: -8px;
-      background: @grey500;
-      z-index: 5;
+      margin-bottom: 2px;
     }
   }
   .thumb {
+    .shadow(0px, 2px, 2px, 0px, rgba(0,0,0,.1));
+    min-width: 1010px;
     display: block;
-    margin-left: @lg*2;
-    padding-bottom: @sm*.9;
+    margin-bottom: 0;
+    background: @light;
+    padding: @md @md @sm * .6 @md;
     > div {
-      display: inline-block;
-      margin-right: @lg;
+      display: inline;
+      margin-right: @xlg;
     }
-    .point {
+    .protocol{
       position: relative;
-      top: 40px;
-      right: 34px;
-      content: '';
-      display: block;
-      width: 8px;
-      height: 8px;
-      margin-top: 0px;
-      background: @light;
-      border-radius: 50%;
-      border: 2px solid @grey500;
-      z-index: 10;
+      top: 0 - @sm * .7;
     }
     .protocol > span {
       &:extend(.history-cards .protocol > span);
+      margin-right: 0;
       border-width: 2px;
-      border-color: @grey500;
-      color: @grey500;
+      border-color: inherit;
+      color: inherit;
       font-weight: 500;
     }
     .ip-add, .stats {
@@ -721,15 +700,15 @@ aside {
         &.srcip span, &.destip span, &.span {
           &:extend(.history-cards .ip-add > div.destip span);
           font-size: @md;
-          color: @grey500;
+          color: inherit;
         }
         &.srcip span {
-          color: @grey500;
+          color: inherit;
         }
         span {
           &:extend(.history-cards .ip-add > div span:first-child);
           font-size: @md;
-          color: @grey500;
+          color: inherit;
         }
         &:first-child {
           &:extend(.history-cards .ip-add > div:first-child);
@@ -746,11 +725,11 @@ aside {
     }
     .pktlen, .count, .time {
       font-size: @sm;
-      color: @grey500;
+      color: inherit;
     }
     .time {
       margin-right: 0;
-      position: absolute;
+      float: right;
       right:0;
       span {
         display: block;
@@ -758,35 +737,25 @@ aside {
       }
     }
     &:hover {
-      cursor: pointer;
-      .point {
-        border: 2px solid @liblue500;
-      }
+      color: @light;
+      background: @liblue500;
       .protocol > span {
-        border-color: @bordercolor;
-        color: @liblue600;
+        border-color: @light;
+        color: inherit;
       }
       .ip-add, .stats {
-        .destip span, span {
-          color: @liblue500;
+        .destip{
+          color: @darker900;
         }
         span {
-          &.high {
-            color: @red800;
-          }
-          &.med {
-            color: @green600;
-          }
-          &.low {
-            color: @liblue500;
-          }
+          color: inherit;
         }
         .atck-arrow {
           background: url(@arr-ico-hover) no-repeat;
         }
       }
       .time{
-        color: @liblue500;
+        color: inherit;
       }
     }
   }
@@ -922,13 +891,6 @@ aside {
     left: 57px;
     .centered {
       width: 75vw;
-    }
-  }
-  .history-thumbs {
-    .thumb {
-      .point {
-        right: 39px;
-      }
     }
   }
 }

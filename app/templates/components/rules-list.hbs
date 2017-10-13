@@ -1,6 +1,5 @@
 <li>
   <div  class="thumb rule-{{rule.id}}" {{action showRule rule.id rule.name}}>
-    <div class="point"></div>
     <div class="protocol">
       <span class="u{{rule.ipprotocol}}">{{rule.ipprotocol}}</span>
     </div>
@@ -15,7 +14,6 @@
         </span>
       </div>
       <div class="destip"><label>dst. ip</label> <span>{{rule.destprefix}}</span></div>
-      <div class="atck-arrow"></div>
     </div>
     <div class="stats">
       <div class="ports">
