@@ -1,4 +1,4 @@
-<li>
+{{!-- <li>
   <div  class="thumb rule-{{rule.id}}" {{action showRule rule.id rule.name}}>
     <div class="protocol">
       <span class="u{{rule.ipprotocol}}">{{rule.ipprotocol}}</span>
@@ -42,4 +42,27 @@
       <span>{{moment-format rule.validfrom 'DD MMM, YYYY'}} at {{moment-format rule.validfrom 'hh:mm:ss a'}}</span>
     </div>
   </div>
-</li>
+</li> --}}
+
+{{!-- <div class="ui feed"> --}}
+<div class="event rule-{{rule.id}}" {{action showRule rule.id rule.name}}>
+  <div class="label">
+    <i class="icon protect"></i>
+  </div>
+  <div class="content">
+    <div class="summary">
+      <a class="user">
+        Elliot Fu
+      </a> added you as a friend
+      <div class="date">
+        1 Hour Ago
+      </div>
+    </div>
+    <div class="meta">
+      <a class="like">
+        <i class="like icon"></i> 4 Likes
+      </a>
+    </div>
+  </div>
+</div>
+{{!-- </div> --}}

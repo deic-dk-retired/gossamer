@@ -1,20 +1,46 @@
-<div class="ui stackable four column grid">
-    <h4><span class="emph">Active</span> currently</h4>
-    <div class="history-cards ui raised link cards">
-      {{#if (gt rules.meta.recent 0)}}
-        {{#each rules as |rule i|}}
-          {{#if rule.isactive}}
-            {{rules-card
-              rule=rule
-              showRule=(action 'showRule')
-            }}
-          {{/if}}
-        {{/each}}
-      {{else}}
-        &#8942;
+<h3 class="ui header">Active currently</h3>
+<div class="ui link cards">
+  {{#if (gt rules.meta.recent 0)}}
+    {{#each rules as |rule i|}}
+      {{#if rule.isactive}}
+        {{rules-card
+          rule=rule
+          showRule=(action 'showRule')
+        }}
       {{/if}}
-    </div>
+    {{/each}}
+  {{else}}
+    &#8942;
+  {{/if}}
 </div>
+{{!-- </div> --}}
+
+<h3 class="ui header">Expired earlier</h3>
+<div class="ui feed">
+  {{#if (gt rules.meta.older 0)}}
+    {{#each rules as |rule j|}}
+      {{#if rule.isexpired}}
+        {{rules-list
+          rule=rule
+          showRule=(action 'showRule')
+          fetchMore=(action 'fetchMore')
+        }}
+      {{/if}}
+    {{/each}}
+  {{else}}
+    &#8942;
+  {{/if}}
+  <div class="sec-load center">
+    <button class="ui mini animated vertical button black" {{action 'fetchMore'}}>
+      <div class="visible content">More</div>
+      <div class="hidden content">
+        <i class="arrow down icon"></i>
+        <i class="loading dots2 invisi" aria-hidden=true></i>
+      </div>
+    </button>
+  </div>
+</div>
+
 
 {{!-- <div class="ui stackable two column grid">
   <div>

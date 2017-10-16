@@ -1,11 +1,13 @@
 {{#if (not-eq currentRouteName "login")}}
   {{top-menu pagetitle=currentRouteName username='Ashokaditya' kind='globaladmin'}}
   {{side-menu}}
-  <div class="appcontent">
-    <div class="centered">
-      {{outlet}}
-    </div>
-  </div>
+  {{!-- <div class="ui grid"> --}}
+    {{!-- <div class="appcontent"> --}}
+      {{!-- <div class="sixteen wide column"> --}}
+        {{outlet}}
+      {{!-- </div> --}}
+    {{!-- </div> --}}
+  {{!-- </div> --}}
 {{else}}
   {{#if (eq currentRouteName "login")}}
     {{login}}
