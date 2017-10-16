@@ -1,46 +1,71 @@
-<div class="card rule-{{rule.id}}" {{action showRule rule.id rule.name}}>
-  <div class="protocol content">
-    <span class="name">{{rule.ipprotocol}}</span>
-    <span class="counter"><a class="counter ui basic circular label tiny">{{rule.destport}}</a></span>
-  </div>
-  <div class="ruleinfo content">
-    <div class="time">
-      <p><i class="icon calendar"></i> {{moment-format rule.validfrom 'ddd, DD MMM'}} &#126; {{moment-format rule.validfrom 'hh:mm:ss a'}}</p>
+
+  {{!-- <div class="ui card rule-{{rule.id}}" {{action showRule rule.id rule.name}}>
+    <div class="protocol content">
+      <span class="name">{{rule.ipprotocol}}</span>
+      <span class="counter"><a class="counter ui basic circular label tiny">{{rule.destport}}</a></span>
     </div>
-    <div class="duration">
-      <p>
-        <i class="icon clock notched end"></i>
-        <span>Running for </span>
-        <span>{{moment-to-now rule.validfrom hideSuffix=true interval=5000}}</span>
-      </p>
+    <div class="ruleinfo content">
+      <div class="time">
+        <p><i class="icon calendar"></i> {{moment-format rule.validfrom 'ddd, DD MMM'}} &#126; {{moment-format rule.validfrom 'hh:mm:ss a'}}</p>
+      </div>
+      <div class="duration">
+        <p>
+          <i class="icon clock notched end"></i>
+          <span>Running for </span>
+          <span>{{moment-to-now rule.validfrom hideSuffix=true interval=5000}}</span>
+        </p>
+      </div>
+      <div class="pktlen">
+        <p><i class="icon bug"></i>
+          {{#if (eq rule.pktlen 'null')}}
+            &hellip;
+          {{else}}
+            {{rule.pktlen}}<span> bits (range)</span>
+          {{/if}}
+        </p>
+      </div>
+      <div class="name">
+        <p><i class="icon pin"></i> {{rule.rname}}</p>
+      </div>
+      <div class="action">
+        <p><i class="icon warning sign"></i> {{rule.action}}</p>
+      </div>
     </div>
-    <div class="pktlen">
-      <p><i class="icon bug"></i>
-        {{#if (eq rule.pktlen 'null')}}
-          &hellip;
-        {{else}}
-          {{rule.pktlen}}<span> bits (range)</span>
-        {{/if}}
-      </p>
+    <div class="ip-add content">
+      <div class="srcip"><label>src. ip</label>
+        <span>
+          {{#if (eq rule.srcprefix null)}}
+           &hellip;:&hellip;:&hellip;:&hellip;
+          {{else}}
+            {{rule.srcprefix}}
+          {{/if}}
+        </span>
+      </div>
+      <div class="destip"><label>dst. ip</label> <span>{{rule.destprefix}}</span></div>
+      <div class="atck-arrow"></div>
     </div>
-    <div class="name">
-      <p><i class="icon pin"></i> {{rule.rname}}</p>
+  </div> --}}
+<div class="card">
+    <div class="image">
+      {{!-- <img src="/images/avatar2/large/matthew.png"> --}}
+      {{ember-initials/adorable email=0910 size=380}}
     </div>
-    <div class="action">
-      <p><i class="icon warning sign"></i> {{rule.action}}</p>
+    <div class="content">
+      <div class="header">Matt Giampietro</div>
+      <div class="meta">
+        <a>Friends</a>
+      </div>
+      <div class="description">
+        Matthew is an interior designer living in New York.
+      </div>
     </div>
-  </div>
-  <div class="ip-add content">
-    <div class="srcip"><label>src. ip</label>
+    <div class="extra content">
+      <span class="right floated">
+        Joined in 2013
+      </span>
       <span>
-        {{#if (eq rule.srcprefix null)}}
-         &hellip;:&hellip;:&hellip;:&hellip;
-        {{else}}
-          {{rule.srcprefix}}
-        {{/if}}
+        <i class="user icon"></i>
+        75 Friends
       </span>
     </div>
-    <div class="destip"><label>dst. ip</label> <span>{{rule.destprefix}}</span></div>
-    <div class="atck-arrow"></div>
   </div>
-</div>

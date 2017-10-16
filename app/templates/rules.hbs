@@ -1,7 +1,6 @@
-<div class="ui grid">
-  <div class="sixteen wide column">
+<div class="ui stackable four column grid">
     <h4><span class="emph">Active</span> currently</h4>
-    <div class="history-cards">
+    <div class="history-cards ui raised link cards">
       {{#if (gt rules.meta.recent 0)}}
         {{#each rules as |rule i|}}
           {{#if rule.isactive}}
@@ -15,6 +14,10 @@
         &#8942;
       {{/if}}
     </div>
+</div>
+
+{{!-- <div class="ui stackable two column grid">
+  <div>
     <h4><span class="emph">Expired</span> earlier&hellip;</h4>
     <div class="history-thumbs">
       <div class="ui inverted dimmer">
@@ -46,19 +49,5 @@
       </div>
     </div>
   </div>
-  <div class="six wide column">
-    {{rule-edit
-      rid=rid
-      coid=coid
-      rname=rname
-      uid=uid
-      way=way
-      active=active
-      expired=expired
-      proto =proto
-      action=action
-      required=(action 'required')
-    }}
-  </div>
-</div>
+</div> --}}
 
