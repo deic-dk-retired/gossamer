@@ -1,32 +1,30 @@
-<div class="ui grid">
-  <div class="eight wide column">
-    <h4>Users</h4>
-    <div class="ui three link stackable cards user">
-      {{#each users as |u|}}
-        {{user-card
-          u=u
-          showUser=(action 'showUser')
-        }}
-      {{/each}}
-    </div>
+<div class="eight wide column">
+  {{!-- <h4>Users</h4> --}}
+  <div class="ui three link stackable cards user">
+    {{#each users as |u|}}
+      {{user-card
+        u=u
+        showUser=(action 'showUser')
+      }}
+    {{/each}}
   </div>
-  <div class="eight wide column">
-    {{user-edit
-      userid=userid
-      kind=kind
-      customerid=customerid
-      companyname=companyname
-      netnames=netnames
-      netids=netids
-      name=name
-      firstname=firstname
-      username=username
-      customers=customers
-      networks=networks
-      act=act
-      buttonico=buttonico
-      saveUser=(action 'saveUser')
-      resetForm=(action 'resetForm')
-    }}
-  </div>
+</div>
+<div class="eight wide column">
+  {{user-edit
+    userid=userid
+    kind=kind
+    customerid=customerid
+    companyname=companyname
+    netnames=netnames
+    netids=netids
+    name=name
+    firstname=firstname
+    username=username
+    customers=customers
+    networks=networks
+    act=act
+    buttonico=buttonico
+    saveUser=(action 'saveUser')
+    resetForm=(action 'resetForm')
+  }}
 </div>

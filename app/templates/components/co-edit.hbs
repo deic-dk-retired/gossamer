@@ -1,7 +1,7 @@
 <div class="ui grid edit-customer">
   <div class="sixteen wide column">
     <h4>{{act}} <span class="title">{{coname}}</span> </h4>
-      <form class="ui form mini" {{action saveCustomer on='submit'}}>
+      <form class="ui form" {{action saveCustomer on='submit'}}>
         <div class="ui tiny padded segment">
           <h5 class="ui dividing header">Customer Info</h5>
           <div class="required field togDisabled disabled">
@@ -111,9 +111,9 @@
               </div>
               <div class="field disabled column center aligned togDisabled">
                 <label>&nbsp;</label>
-                <button class="ui mini animated fade button blue " {{action addNetwork coid netname netkind netformat netdesc on='click'}}>
-                  <div class="visible content">Add Network</div>
-                  <div class="hidden content"><i class="plus icon"></i></div>
+                <button class="ui animated fade button blue " {{action addNetwork coid netname netkind netformat netdesc on='click'}}>
+                  <div class="visible content"><i class="plus icon"></i> Network</div>
+                  <div class="hidden content"><i class="save icon"></i></div>
                 </button>
               </div>
             </div>
@@ -136,11 +136,11 @@
             </div>
           </div>
         </div>
-        <button class="ui mini animated fade button blue disabled togDisabled" type="submit" {{action saveCustomer}}>
+        <button class="ui animated fade button blue disabled togDisabled" type="submit" {{action saveCustomer}}>
           <div class="visible content">Save</div>
           <div class="hidden content"><i class="{{buttonico}} icon"></i></div>
         </button>
-        <button class="ui mini animated fade button grey" type="reset" {{action resetForm on='click'}}>
+        <button class="ui animated fade button grey" type="reset" {{action resetForm on='click'}}>
           <div class="visible content">Cancel</div>
           <div class="hidden content"><i class="cancel icon"></i></div>
         </button>

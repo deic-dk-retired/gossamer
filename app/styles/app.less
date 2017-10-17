@@ -1,6 +1,9 @@
 @charset "UTF-8";
 @import url('https://fonts.googleapis.com/css?family=Montserrat:200:400|Kanit:700i');
 @import url('http://tawian.io/text-spinners/spinners.css');
+// @import url('src/semantic');
+
+@blue: #4FC3F7;
 
 * {
   font-weight: 200;
@@ -43,9 +46,12 @@ body.pushable {
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
     min-width: 0px;
-    padding: 30px;
+    padding: 40px 30px;
     .ui.top.fixed.menu {
       padding-left: 210px!important;
+      .title {
+        text-transform: capitalize;
+      }
     }
   }
 }
@@ -54,7 +60,7 @@ body.pushable {
   > .toc {
     position: relative;
     z-index: 102;
-    background-color: #4FC3F7;
+    background-color: @blue;
     width: 210px;
     -webkit-box-flex: 0;
     -webkit-flex: 0 0 auto;
@@ -70,8 +76,27 @@ aside {
       padding-right: 30px;
     }
   }
+  .user {
+    min-height: 200px;
+  }
 }
 
+.card.rule {
+  .header {
+    text-transform: uppercase;
+  }
+  .title {
+    font-size: 2.3em!important;
+    margin-top:0!important;
+  }
+  .network .header {
+    text-align: center;
+  }
+}
+
+.enhance {
+  color: @blue!important;
+}
 
 // @liblue500: #03A9F4;
 // @liblue600: #039BE5;

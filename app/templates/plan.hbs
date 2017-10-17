@@ -1,80 +1,76 @@
-<div class="ui grid">
-  <div class="six wide column">
-    <h2>Schedule a rule</h2>
-    <form class="ui form mini four wide column">
-      <div class="three wide field">
-        <label>Source</label>
-        {{input placeholder="Any" readonly="" type="text" value="Any"}}
-        {{input id="source" value="Any" type="hidden"}}
-      </div>
-      <div class="required field">
-        <label>Protocol</label>
-        <div class="inline fields">
-          <div class="field">
-            {{ui-radio name="protocol" label="TCP" value="tcp" current=value onChange=(action (mut protocol))}}
-          </div>
-          <div class="field">
-            {{ui-radio name="protocol" label="UDP" value="udp" current=value onChange=(action (mut protocol))}}
-          </div>
-          <div class="field">
-            {{ui-radio name="protocol" label="ICMP" value="icmp" current=value onChange=(action (mut protocol))}}
-          </div>
+<div class="sixteen wide mobile ten wide tablet six wide computer column">
+
+  <form class="ui form four wide column">
+    <div class="three wide field">
+      <label>Source</label>
+      {{input placeholder="Any" readonly="" type="text" value="Any"}}
+      {{input id="source" value="Any" type="hidden"}}
+    </div>
+    <div class="required field">
+      <label>Protocol</label>
+      <div class="inline fields">
+        <div class="field">
+          {{ui-radio name="protocol" label="TCP" value="tcp" current=value onChange=(action (mut protocol))}}
+        </div>
+        <div class="field">
+          {{ui-radio name="protocol" label="UDP" value="udp" current=value onChange=(action (mut protocol))}}
+        </div>
+        <div class="field">
+          {{ui-radio name="protocol" label="ICMP" value="icmp" current=value onChange=(action (mut protocol))}}
         </div>
       </div>
+    </div>
 
-      <h4 class="ui dividing header">Protocol Information</h4>
-      {{#if (eq protocol "tcp")}}
-        {{tcp-fields mod=model}}
+    <h4 class="ui dividing header">Protocol Information</h4>
+    {{#if (eq protocol "tcp")}}
+      {{tcp-fields mod=model}}
+    {{else}}
+      {{#if (eq protocol "udp")}}
+        {{udp-fields}}
       {{else}}
-        {{#if (eq protocol "udp")}}
-          {{udp-fields}}
+        {{#if (eq protocol "icmp")}}
+          {{icmp-fields mod=model}}
         {{else}}
-          {{#if (eq protocol "icmp")}}
-            {{icmp-fields mod=model}}
-          {{else}}
-            <p>Select a protocol above to proceed</p>
-          {{/if}}
+          <p>Select a protocol above to proceed</p>
         {{/if}}
       {{/if}}
+    {{/if}}
 
-      <h4 class="ui dividing header">Necessary Information</h4>
-      <div class="twelve wide field">
-        <label>Packet Length</label>
-        {{input type="text" id="pktLength" name="pktLength" placeholder="e.g. 2048"}}
-        {{!-- <input type="text" id="pktLength" name="pktLength" placeholder="e.g. 2048"> --}}
-        {{!-- \b\d{1,4}[.]\d{1,4}[.]\d{1,4}[.]\d{1,4}\b --}}
-      </div>
-      <div class="required twelve wide field">
-        <label>Fragment Encoding</label>
-        {{#ui-dropdown id="fragEncode" name="fragEncode" class="search selection" allowAdditions=true selected=fragEncode onChange=(action (mut fragEncode))}}
-          <div class="default text">Select/Add encoding</div>
-          <i class="dropdown icon"></i>
-        {{/ui-dropdown}}
-      </div>
+    <h4 class="ui dividing header">Necessary Information</h4>
+    <div class="twelve wide field">
+      <label>Packet Length</label>
+      {{input type="text" id="pktLength" name="pktLength" placeholder="e.g. 2048"}}
+      {{!-- <input type="text" id="pktLength" name="pktLength" placeholder="e.g. 2048"> --}}
+      {{!-- \b\d{1,4}[.]\d{1,4}[.]\d{1,4}[.]\d{1,4}\b --}}
+    </div>
+    <div class="required twelve wide field">
+      <label>Fragment Encoding</label>
+      {{#ui-dropdown id="fragEncode" name="fragEncode" class="search selection" allowAdditions=true selected=fragEncode onChange=(action (mut fragEncode))}}
+        <div class="default text">Select/Add encoding</div>
+        <i class="dropdown icon"></i>
+      {{/ui-dropdown}}
+    </div>
 
-      <div class="field">
-        <label>Short Comment&hellip;</label>
-        <textarea id="shortComment" name="shortComment" rows="5"></textarea>
-      </div>
+    <div class="field">
+      <label>Short Comment&hellip;</label>
+      <textarea id="shortComment" name="shortComment" rows="5"></textarea>
+    </div>
 
-      <div class="required field">
-        <label>Action</label>
-        <div class="inline fields">
-          <div class="field">
-            {{ui-radio name="rule-action" label="Rate Limit" value="rlimit"}}
-          </div>
-          <div class="field">
-            {{ui-radio name="rule-action" label="Block" value="block"}}
-          </div>
+    <div class="required field">
+      <label>Action</label>
+      <div class="inline fields">
+        <div class="field">
+          {{ui-radio name="rule-action" label="Rate Limit" value="rlimit"}}
+        </div>
+        <div class="field">
+          {{ui-radio name="rule-action" label="Block" value="block"}}
         </div>
       </div>
-      <button class="ui mini animated fade button blue">
-        <div class="visible content">Add</div>
-        <div class="hidden content"><i class="add arrow icon"></i></div>
-      </button>
-    </form>
-  </div>
-  <div class="eight wide column">
-  {{!-- {{preview-rule}} --}}
-  </div>
+    </div>
+    <button class="ui animated fade button blue">
+      <div class="visible content">Add</div>
+      <div class="hidden content"><i class="add arrow icon"></i></div>
+    </button>
+  </form>
+
 </div>

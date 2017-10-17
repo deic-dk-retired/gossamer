@@ -1,34 +1,50 @@
 <div class="ui top fixed medium menu">
 
-  <div class="item">
-    <i class="alarm outline blue icon"></i>
-  </div>
-  {{#link-to 'plan' class="item contra"}}
-    {{#ui-popup content="Add rules" variation="mini"}}
-      <i class="add icon"></i> Add Rule
-    {{/ui-popup}}
-  {{/link-to}}
   <div class="header item">
     <span class="title">{{pagetitle}}</span>
   </div>
-  {{#ui-dropdown class="right floated item"}}
-    <span class="username">{{user-icon kind=kind}}{{username}}</span>
-    <i class="dropdown icon"></i>
-    <div class="menu">
-      {{#if (eq kind 'globaladmin')}}
-        <div class="header">Super Settings</div>
-        {{#link-to "users" class="item"}}
-          <i class="users icon"></i>Users
-        {{/link-to}}
-        {{#link-to "customers" class="item"}}
-          <i class="university icon"></i>Customers
-        {{/link-to}}
-        <div class="divider"></div>
-      {{/if}}
-      {{#link-to "login" class="item"}}
-        <i class="sign out icon"></i>Sign Out
-       {{/link-to}}
+   <div class="item">
+    {{!-- <div class="ui category search item">
+      <div class="ui transparent icon input">
+        <input class="prompt" type="text" placeholder="Search...">
+        <i class="search link icon"></i>
+      </div>
+      <div class="results"></div>
+    </div> --}}
+    {{#ui-search source=someList onSearchQuery=(action (mut query)) onSelect=(action (mut selected))}}
+      <div class="ui transparent icon input">
+        <input class="prompt" type="text" placeholder="Search...">
+        <i class="search link icon"></i>
+      </div>
+      <div class="results"></div>
+    {{/ui-search}}
+  </div>
+
+  <div class="right menu">
+    {{#link-to 'plan' class="item enhance"}}
+      <i class="add blue icon"></i> Add Rule
+    {{/link-to}}
+    <div class="item">
+      <i class="alarm outline icon"></i>
     </div>
-  {{/ui-dropdown}}
+    {{#ui-dropdown class="item"}}
+      <i class="icon setting"></i>
+      <div class="menu">
+        {{#if (eq kind 'globaladmin')}}
+          <div class="header">Super Settings</div>
+          {{#link-to "users" class="item"}}
+            <i class="users outline icon"></i>Users
+          {{/link-to}}
+          {{#link-to "customers" class="item"}}
+            <i class="hand peace icon"></i>Customers
+          {{/link-to}}
+          <div class="divider"></div>
+        {{/if}}
+        {{#link-to "login" class="item"}}
+          <i class="sign out icon"></i>Sign Out
+         {{/link-to}}
+      </div>
+    {{/ui-dropdown}}
+  </div>
 
 </div>

@@ -1,9 +1,9 @@
-<div class="ui raised card rule-{{rule.id}}">
+<div class="ui raised card rule rule-{{rule.id}}">
   <div class="content">
     <div class="right floated meta">
       <a class="ui circular blue label">{{rule.destport}}</a>
     </div>
-    <div class="header">{{rule.ipprotocol}}</div>
+    <div class="header title">{{rule.ipprotocol}}</div>
   </div>
   <div class="content">
     <div class="description">
@@ -17,7 +17,7 @@
         <div class="item">
           <i class="icon clock notched end"></i>
           <div class="content">
-            Running for {{moment-from-now rule.validfrom hideSuffix=true interval=5000}}
+            Active for {{moment-from-now rule.validfrom hideSuffix=true interval=5000}}
           </div>
         </div>
         <div class="item">
@@ -41,7 +41,7 @@
       </div>
     </div>
   </div>
-  <div class="content">
+  <div class="content network">
     <div class="right floated item">
       <div class="header"><i class="icon radio selected"></i>Src. IP.</div>
       <div class="meta">{{rule.destprefix}}</div>
