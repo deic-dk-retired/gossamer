@@ -1,21 +1,26 @@
-<div class="ui vertical sticky menu">
-  <nav>
-    <ul>
-      {{#link-to "dashboard"}}
-        <li class="nav__dashboard"><i class="hand spock icon"></i><span>dashboard</span></li>
-      {{/link-to}}
-      {{#link-to "rules"}}
-        <li class="nav__archive"><i class="database icon"></i><span>all rules</span></li>
-      {{/link-to}}
-      {{#link-to "packets"}}
-      <li class="nav__plot"><i class="pie chart icon"></i><span>packets</span></li>
-      {{/link-to}}
-      {{#link-to "traffic"}}
-      <li class="nav__plot"><i class="pie chart icon"></i><span>traffic</span></li>
-      {{/link-to}}
-      {{#link-to "measurements"}}
-      <li class="nav__plot"><i class="server icon"></i><span>measurements</span></li>
-      {{/link-to}}
-    </ul>
-  </nav>
+<div class="ui vertical fixed sticky blue inverted menu">
+  <div class="item">
+    <div class="logo">
+      <img src="assets/images/logo.png" alt="Logo">
+    </div>
+  </div>
+  {{#link-to "dashboard" class="item"}}
+    <div class="content">
+      <i class="icon hand spock"></i><span>dashboard</span>
+    </div>
+  {{/link-to}}
+  {{#link-to "rules" class="item"}}
+    <div class="content"><i class="icon database"></i><span>all rules</span></div>
+  {{/link-to}}
+  {{#link-to "packets" class="item"}}
+    <div class="content"><i class="icon cube"></i><span>packets</span></div>
+  {{/link-to}}
+  {{#link-to "traffic" class="item"}}
+    <div class="content"><i class="icon exchange"></i><span>traffic</span></div>
+  {{/link-to}}
+  {{#link-to "measurements" class="item"}}
+    <div class="content"><i class="server icon"></i><span>measurements</span></div>
+  {{/link-to}}
+
+  <span class="item"></span>
 </div>

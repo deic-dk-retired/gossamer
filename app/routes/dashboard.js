@@ -4,6 +4,5 @@ export default Ember.Route.extend({
 
   },
   afterModel () {
-    Ember.$('.planets').remove()
   }
 })

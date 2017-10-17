@@ -1,9 +1,5 @@
-<div class="ui tiny fixed menu">
-  <div class="header item">
-    <div class="logo">
-      <img src="assets/images/logo.png" alt="Logo">
-    </div>
-  </div>
+<div class="ui top fixed medium menu">
+
   <div class="item">
     <i class="alarm outline blue icon"></i>
   </div>
@@ -19,7 +15,6 @@
     <span class="username">{{user-icon kind=kind}}{{username}}</span>
     <i class="dropdown icon"></i>
     <div class="menu">
-      <div class="divider"></div>
       {{#if (eq kind 'globaladmin')}}
         <div class="header">Super Settings</div>
         {{#link-to "users" class="item"}}
