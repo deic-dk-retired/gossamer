@@ -1,31 +1,26 @@
 <div class="ui top fixed medium menu">
-
   <div class="header item">
-    <span class="title">{{pagetitle}}</span>
-  </div>
-   <div class="item">
-    {{!-- <div class="ui category search item">
-      <div class="ui transparent icon input">
-        <input class="prompt" type="text" placeholder="Search...">
-        <i class="search link icon"></i>
-      </div>
-      <div class="results"></div>
-    </div> --}}
-    {{#ui-search source=someList onSearchQuery=(action (mut query)) onSelect=(action (mut selected))}}
-      <div class="ui transparent icon input">
-        <input class="prompt" type="text" placeholder="Search...">
-        <i class="search link icon"></i>
-      </div>
-      <div class="results"></div>
-    {{/ui-search}}
+    <span class="title">{{routename}}</span>
   </div>
 
   <div class="right menu">
+    <div class="item">
+      {{#ui-search source=someList onSearchQuery=(action (mut query)) onSelect=(action (mut selected))}}
+        <div class="ui transparent icon input">
+          <input class="prompt" type="text" placeholder="Search...">
+          <i class="search link icon"></i>
+        </div>
+        <div class="results"></div>
+      {{/ui-search}}
+    </div>
+
     {{#link-to 'plan' class="item enhance"}}
       <i class="add blue icon"></i> Add Rule
     {{/link-to}}
+
     <div class="item">
       <i class="alarm outline icon"></i>
+      <div class="ui circular blue label">13</div>
     </div>
     {{#ui-dropdown class="item"}}
       <i class="icon setting"></i>

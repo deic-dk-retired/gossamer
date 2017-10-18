@@ -3,7 +3,7 @@
 @import url('http://tawian.io/text-spinners/spinners.css');
 // @import url('src/semantic');
 
-@blue: #4FC3F7;
+@blue: #1E88E5;
 
 * {
   font-weight: 200;
@@ -81,15 +81,19 @@ aside {
   }
 }
 
-.card.rule {
-  .header {
+.table th{
+  text-transform: uppercase!important;
+}
+
+.rule {
+  .header, .label {
     text-transform: uppercase;
   }
   .title {
     font-size: 2.3em!important;
     margin-top:0!important;
   }
-  .network .header {
+  .network .item {
     text-align: center;
   }
 }
@@ -97,6 +101,91 @@ aside {
 .enhance {
   color: @blue!important;
 }
+
+
+
+// .dash-widget, .d3-vis{
+//   .shadow(0px,2px,2px,0px,rgba(0,0,0,.1));
+//   background: @light;
+//   border:0;
+//   border-radius: 0;
+//   .header{
+//       background: @light;
+//       margin-bottom: 0;
+//       padding: @xs * .5 @xs * .8;
+//       & div{
+//         display: inline-block;
+//       }
+//   }
+//   .title{
+//     width: 100%;
+//      padding: @xs @lg @xs * .8;
+//       p {
+//         color: @darker800;
+//         text-transform: capitalize;
+//         font-weight: 400;
+//         font-size: @lg;
+//         padding: 0 0 @lg;
+//         border-bottom: 1px solid rgba(0,0,0,.2);
+//     }
+//   }
+//   .controls{
+//     width: 15%;
+//     height: 10px;
+//     label{
+//       font-size: @sm;
+//     }
+//   }
+
+//   svg {
+//     min-height: @aside-width*1.8;
+//     width: 100%;
+//   }
+//   .axes{
+//     fill:none;
+//     stroke:@grey500;
+//   }
+//   .ytext{
+//     fill: @grey500;
+//     transform: rotate(-90deg) translate(-@sm,@xxlg);
+//     font-size: @md;
+//   }
+//   .tick{
+//     .numberfont();
+//     opacity: .8;
+//     line{
+//       stroke:@grey500;
+//       opacity: .2;
+//     }
+//     text{
+//       fill:@darker800;
+//     }
+//   }
+//   .line {
+//     fill: none;
+//     clip-path: url(#clip);
+//     stroke-linejoin: round;
+//     stroke-linecap: round;
+//     stroke-width: 1px;
+//   }
+//   .area {
+//     stroke: none;
+//     clip-path: url(#clip);
+//     opacity: .6;
+//   }
+//   .circle{
+//     opacity: .3;
+//   }
+//   .selection{
+//     fill:@blue800;
+//     opacity: .2;
+//   }
+//   .zoom {
+//     cursor: crosshair;
+//     fill: none;
+//     pointer-events: all;
+//   }
+// }
 
 // @liblue500: #03A9F4;
 // @liblue600: #039BE5;
@@ -1000,88 +1089,7 @@ aside {
 //   }
 // }
 
-// .dash-widget, .d3-vis{
-//   .shadow(0px,2px,2px,0px,rgba(0,0,0,.1));
-//   background: @light;
-//   border:0;
-//   border-radius: 0;
-//   .header{
-//       background: @light;
-//       margin-bottom: 0;
-//       padding: @xs * .5 @xs * .8;
-//       & div{
-//         display: inline-block;
-//       }
-//   }
-//   .title{
-//     width: 100%;
-//      padding: @xs @lg @xs * .8;
-//       p {
-//         color: @darker800;
-//         text-transform: capitalize;
-//         font-weight: 400;
-//         font-size: @lg;
-//         padding: 0 0 @lg;
-//         border-bottom: 1px solid rgba(0,0,0,.2);
-//     }
-//   }
-//   .controls{
-//     width: 15%;
-//     height: 10px;
-//     label{
-//       font-size: @sm;
-//     }
-//   }
 
-//   svg {
-//     min-height: @aside-width*1.8;
-//     width: 100%;
-//   }
-//   .axes{
-//     fill:none;
-//     stroke:@grey500;
-//   }
-//   .ytext{
-//     fill: @grey500;
-//     transform: rotate(-90deg) translate(-@sm,@xxlg);
-//     font-size: @md;
-//   }
-//   .tick{
-//     .numberfont();
-//     opacity: .8;
-//     line{
-//       stroke:@grey500;
-//       opacity: .2;
-//     }
-//     text{
-//       fill:@darker800;
-//     }
-//   }
-//   .line {
-//     fill: none;
-//     clip-path: url(#clip);
-//     stroke-linejoin: round;
-//     stroke-linecap: round;
-//     stroke-width: 1px;
-//   }
-//   .area {
-//     stroke: none;
-//     clip-path: url(#clip);
-//     opacity: .6;
-//   }
-//   .circle{
-//     opacity: .3;
-//   }
-//   .selection{
-//     fill:@blue800;
-//     opacity: .2;
-//   }
-//   .zoom {
-//     cursor: crosshair;
-//     fill: none;
-//     pointer-events: all;
-//   }
-// }
 
 // .edit-rule{
 //   position: fixed;

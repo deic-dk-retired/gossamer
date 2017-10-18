@@ -1,68 +1,9 @@
-{{!-- <li>
-  <div  class="thumb rule-{{rule.id}}" {{action showRule rule.id rule.name}}>
-    <div class="protocol">
-      <span class="u{{rule.ipprotocol}}">{{rule.ipprotocol}}</span>
-    </div>
-    <div class="ip-add">
-      <div class="srcip"><label>src. ip</label>
-        <span>
-        {{#if (eq rule.srcprefix null)}}
-          &hellip;:&hellip;:&hellip;:&hellip;
-        {{else}}
-          {{rule.srcprefix}}
-        {{/if}}
-        </span>
-      </div>
-      <div class="destip"><label>dst. ip</label> <span>{{rule.destprefix}}</span></div>
-    </div>
-    <div class="stats">
-      <div class="ports">
-        <label><i class="icon resize horizontal"></i> ports (range)</label>
-        <span class="low">{{rule.destport}}</span>
-      </div>
-      <div class="pktsize">
-        <label><i class="icon bug"></i> bits (range)</label>
-        <span class="low">
-          {{#if (eq rule.pktlen 'null')}}
-            &hellip;
-          {{else}}
-            {{rule.pktlen}}<span> b</span>
-          {{/if}}
-        </span>
-      </div>
-      <div class="action">
-        <label><i class="icon warning sign"></i> action</label>
-        <span>{{rule.action}}</span>
-      </div>
-    </div>
-    <div class="time">
-      <label><i class="icon clock notched"></i>
-        {{moment-from-now rule.validfrom hidePrefix=true interval=86400}}
-      </label>
-      <span>{{moment-format rule.validfrom 'DD MMM, YYYY'}} at {{moment-format rule.validfrom 'hh:mm:ss a'}}</span>
-    </div>
-  </div>
-</li> --}}
-
-{{!-- <div class="ui feed"> --}}
-<div class="event rule-{{rule.id}}" {{action showRule rule.id rule.name}}>
-  <div class="label">
-    <i class="icon protect"></i>
-  </div>
-  <div class="content">
-    <div class="summary">
-      <a class="user">
-        Elliot Fu
-      </a> added you as a friend
-      <div class="date">
-        1 Hour Ago
-      </div>
-    </div>
-    <div class="meta">
-      <a class="like">
-        <i class="like icon"></i> 4 Likes
-      </a>
-    </div>
-  </div>
-</div>
-{{!-- </div> --}}
+<tr class="rule rule-{{rule.id}}" {{action showRule rule.id rule.name}}>
+  <td> <a class="ui blue label">{{rule.ipprotocol}}</a> </td>
+  <td> {{rule.srcprefix}}</td>
+  <td> {{rule.destprefix}}</td>
+  <td> {{rule.destport}}</td>
+  <td> {{rule.pktlen}}</td>
+  <td> {{rule.action}}</td>
+  <td class="right aligned"> {{moment-from-now rule.validfrom hidePrefix=true interval=86400}}</td>
+</tr>

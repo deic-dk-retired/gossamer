@@ -1,7 +1,13 @@
 <div class="ui raised card rule rule-{{rule.id}}">
   <div class="content">
     <div class="right floated meta">
-      <a class="ui circular blue label">{{rule.destport}}</a>
+      {{#if (eq (null-replace rule.destport) '...')}}
+        {{#ui-popup content="no destination port assigned" variation="mini" position="top center"}}
+          <a class="ui circular empty blue label"></a>
+        {{/ui-popup}}
+      {{else}}
+        <a class="ui circular blue label">{{rule.destport}}</a>
+      {{/if}}
     </div>
     <div class="header title">{{rule.ipprotocol}}</div>
   </div>
@@ -23,7 +29,7 @@
         <div class="item">
           <i class="icon bug"></i>
           <div class="content">
-            {{rule.pktlen}} <span> bits (range)</span>
+            {{null-replace rule.pktlen}} <span> bits (range)</span>
           </div>
         </div>
         <div class="item">
@@ -43,13 +49,13 @@
   </div>
   <div class="content network">
     <div class="right floated item">
-      <div class="header"><i class="icon radio selected"></i>Src. IP.</div>
-      <div class="meta">{{rule.destprefix}}</div>
+      <div class="header"><i class="icon radio selected"></i>Src.</div>
+      <div class="meta">{{null-replace rule.destprefix}}</div>
     </div>
     <div class="item">
-      <div class="header"><i class="icon long arrow right"></i>Dest. IP.</div>
+      <div class="header"><i class="icon long arrow right"></i>Dst.</div>
       <div class="meta">
-        {{rule.srcprefix}}
+        {{null-replace rule.srcprefix}}
       </div>
     </div>
   </div>
