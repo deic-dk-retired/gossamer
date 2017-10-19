@@ -1,32 +1,57 @@
-<div class="ui left fixed vertical inverted menu blue">
+<div class="ui left fixed vertical inverted menu huge blue">
+  <div class="item logo">
+    <span>Gs</span>
+  </div>
+  {{#ui-popup content=username variation="small inverted" position="right center"}}
+    <div class="item user">
+      <div class="ui list">
 
-  <div class="item">
-    <div class="logo">
-      <img src="assets/images/logo.png" alt="Logo">
+          <div class="header avatar">
+            {{ember-initials/gravatar email='ashokaditya.design@gmail.com' size=30}}
+          </div>
+        <div class="item">
+          <div class="content">
+            {{user-icon kind=kind class="mini"}}
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="item user">
-    <div class="content">
-      <span class="username">{{user-icon kind=kind}}{{username}}</span>
-    </div>
-  </div>
-  {{#link-to "dashboard" class="item"}}
-    <div class="content">
-      <i class="icon bar chart"></i><span>dashboard</span>
-    </div>
-  {{/link-to}}
-  {{#link-to "rules" class="item"}}
-    <div class="content"><i class="icon database"></i><span>all rules</span></div>
-  {{/link-to}}
-  {{#link-to "packets" class="item"}}
-    <div class="content"><i class="icon cube"></i><span>packets</span></div>
-  {{/link-to}}
-  {{#link-to "traffic" class="item"}}
-    <div class="content"><i class="icon exchange"></i><span>traffic</span></div>
-  {{/link-to}}
-  {{#link-to "measurements" class="item"}}
-    <div class="content"><i class="server icon"></i><span>measurements</span></div>
-  {{/link-to}}
+  {{/ui-popup}}
+  {{#ui-popup content="Dashboard" variation="small inverted" position="right center"}}
+    {{#link-to "dashboard" class="item"}}
+      <div class="content">
+        <i class="icon bar chart"></i>
+      </div>
+    {{/link-to}}
+  {{/ui-popup}}
+  {{#ui-popup content="Rules" variation="small inverted" position="right center"}}
+    {{#link-to "rules" class="item"}}
+      <div class="content">
+        <i class="icon database"></i>
+      </div>
+    {{/link-to}}
+  {{/ui-popup}}
+  {{#ui-popup content="Packet stats" variation="small inverted" position="right center"}}
+    {{#link-to "packets" class="item"}}
+      <div class="content">
+        <i class="icon cube"></i>
+      </div>
+    {{/link-to}}
+  {{/ui-popup}}
+  {{#ui-popup content="Traffic stats" variation="small inverted" position="right center"}}
+    {{#link-to "traffic" class="item"}}
+      <div class="content">
+        <i class="icon exchange"></i>
+      </div>
+    {{/link-to}}
+  {{/ui-popup}}
+  {{#ui-popup content="Measurement stats" variation="small inverted" position="right center"}}
+    {{#link-to "measurements" class="item"}}
+      <div class="content">
+        <i class="server icon"></i>
+      </div>
+    {{/link-to}}
+  {{/ui-popup}}
 
   <span class="item"></span>
 

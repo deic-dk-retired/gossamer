@@ -2,11 +2,13 @@
   <div class="content">
     <div class="right floated meta">
       {{#if (eq (null-replace rule.destport) '...')}}
-        {{#ui-popup content="no destination port assigned" variation="mini" position="top center"}}
+        {{#ui-popup content="no dst. ports assigned" variation="mini inverted" position="top center"}}
           <a class="ui circular empty blue label"></a>
         {{/ui-popup}}
       {{else}}
-        <a class="ui circular blue label">{{rule.destport}}</a>
+        {{#ui-popup content="affected ports" variation="mini inverted" position="top center"}}
+          <a class="ui circular blue label">{{rule.destport}}</a>
+        {{/ui-popup}}
       {{/if}}
     </div>
     <div class="header title">{{rule.ipprotocol}}</div>

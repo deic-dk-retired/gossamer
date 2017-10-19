@@ -7,25 +7,32 @@ const DashWidgetComponent = Ember.Component.extend({
   class: Ember.computed('params.[]', function () {
     return this.get('params')[0]
   }),
+
   ytext: Ember.computed('params.[]', function () {
     return this.get('params')[1]
   }),
+
   url: Ember.computed('params.[]', function () {
     return this.get('params')[2]
   }),
+
   title: Ember.computed('params.[]', function () {
     return this.get('params')[3]
   }),
+
   gfill1: Ember.computed('params.[]', function () {
     return this.get('params')[4]
   }),
+
   gfill2: Ember.computed('params.[]', function () {
     return this.get('params')[5]
   }),
+
   shape: Ember.computed('params.[]', function () {
     return this.get('params')[6]
   }),
-  didInsertElement () {
+
+  renderD3 () {
     this._super(...arguments)
     // time parser for influx timestamp
     var parseTime = d3.timeParse('%Y-%m-%dT%H:%M:%SZ')
@@ -37,8 +44,8 @@ const DashWidgetComponent = Ember.Component.extend({
     var svgW = this.$('.dash-widget svg').outerWidth()
     var svgH = this.$('.dash-widget svg').outerHeight()
     // configure chart widget dimensions
-    var margin = {top: 10, right: 40, bottom: 120, left: 62}
-    var margin2 = {top: 280, right: 40, bottom: 50, left: 62}
+    var margin = {top: 20, right: 0, bottom: 100, left: 32}
+    var margin2 = {top: 310, right: 0, bottom: 20, left: 32}
     var width = svgW - margin.left - margin.right - 20
     var height = +svgH - margin.top - margin.bottom
     var height2 = +svgH - margin2.top - margin2.bottom
@@ -216,8 +223,15 @@ const DashWidgetComponent = Ember.Component.extend({
       focus.select('.domain').remove()
       context.select('.brush').call(brush.move, x.range().map(t.invertX, t))
     }
-  }
+  },
 
+  didInsertElement () {
+    this.renderD3()
+  },
+
+  didRender () {
+    // Ember.Logger.info('render')
+  }
 })
 
 DashWidgetComponent.reopenClass({

@@ -18,15 +18,18 @@
       <i class="add blue icon"></i> Add Rule
     {{/link-to}}
 
-    <div class="item">
+    {{#ui-dropdown class="item"}}
       <i class="alarm outline icon"></i>
-      <div class="ui circular blue label">13</div>
-    </div>
+      <span class="ui circular blue label">4</span>
+      {{alerts-menu}}
+    {{/ui-dropdown}}
+
     {{#ui-dropdown class="item"}}
       <i class="icon setting"></i>
       <div class="menu">
         {{#if (eq kind 'globaladmin')}}
           <div class="header">Super Settings</div>
+          <div class="divider"></div>
           {{#link-to "users" class="item"}}
             <i class="users outline icon"></i>Users
           {{/link-to}}
