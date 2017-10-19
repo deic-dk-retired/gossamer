@@ -1,3 +1,4 @@
+import Ember from 'ember'
 import DS from 'ember-data'
 import { validator, buildValidations } from 'ember-cp-validations'
 
@@ -24,5 +25,9 @@ export default DS.Model.extend(Validations, {
   email: DS.attr('string', {readonly: true}),
   lastlogin: DS.attr('date', {readonly: true}),
   lastpasswordchange: DS.attr('date', {readonly: true}),
-  networks: DS.hasMany('network', {async: true})
+  networks: DS.hasMany('network', {async: true}),
+
+  firstname: Ember.computed('name', function () {
+    return `${this.get('name').split(' ')[0]}`
+  })
 })

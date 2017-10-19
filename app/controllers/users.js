@@ -15,10 +15,6 @@ export default Ember.Controller.extend({
       return []
     }
   }),
-  name: '',
-  firstname: Ember.computed('name', function () {
-    return `${this.get('name').split(' ')[0]}`
-  }),
   username: '',
   isDisabled: 'disabled',
   changePass: 'disabled',
@@ -54,15 +50,31 @@ export default Ember.Controller.extend({
         changePass: 'disabled',
         isActive: false
       })
-      Ember.$('.card').removeClass('active')
+      Ember.$('.card').removeClass('blue')
       Ember.$('.togDisabled').addClass('disabled')
+      // remove edit screen
+      // if (Ember.$('.editcard').length > 0) {
+      //   Ember.$('.editcard').remove()
+      // }
     },
 
     toggleActive (set, toSet) {
       if (set !== toSet) {
-        Ember.$('.card').removeClass('active')
-        Ember.$('.usr-' + toSet).addClass('active')
+        Ember.$('.card').removeClass('blue')
+        Ember.$('.usr-' + toSet).addClass('blue')
         Ember.$('.togDisabled').removeClass('disabled')
+        // enter edit screen
+        // if (Ember.$('.editcard').length === 0) {
+        //   Ember.$('.pusher')
+        //     .parent()
+        //     .prepend('<div class="editcard"></div>')
+        //   Ember.$('.editcard')
+        //    .append(`<button class="ui animated fade button grey" type="reset" {{action resetForm}}>
+        //   <div class="visible content">Cancel</div>
+        //   <div class="hidden content"><i class="cancel icon"></i></div>
+        // </button>`)
+        //   Ember.$('.editcard').addClass('show')
+        // }
       }
     },
 

@@ -28,6 +28,23 @@ body.pushable {
   background: #f4f4f4!important;
 }
 
+.editcard {
+  position: absolute;
+  height: 100%;
+  right: -45%;
+  padding: 20px;
+  background: #fff;
+  min-width: 45%;
+  box-shadow: -1px 0px 2px 1px rgba(150,150,150,.1);
+  z-index: 1;
+  max-width: 100%;
+  transition: translate 10s ease;
+ &.show {
+   right: 0;
+
+ }
+}
+
 .pushable {
   height: 100%;
   overflow-x: hidden;
@@ -109,12 +126,14 @@ body.pushable {
 aside {
   .vertical.menu {
     width: 55px!important;
+    .item:first-child {
+      border-bottom: 1px solid rgba(255,255,255,.1);
+    }
   }
   .content {
     text-transform: uppercase;
   }
   .logo {
-    border-bottom: 1px solid rgba(255,255,255,.2);
      span {
         font-family: 'Kanit'!important;
         font-weight: 700;
@@ -124,7 +143,6 @@ aside {
       }
   }
   .user {
-    border-bottom: 1px solid rgba(255,255,255,.2);
     .avatar img {
       margin-left: -5px;
       border-radius: 50%;
