@@ -1,7 +1,9 @@
-<div class="raised card usr-{{u.username}}" >
+<div class="raised {{if (eq u.valid 'inactive') 'inactive pink'}} card usr-{{u.username}}" >
   <div class="content">
     <div class="right floated meta">
-      <i class="edit blue icon" {{action showUser u.id u.username}}></i>
+      {{#if (eq u.valid 'active')}}
+        <i class="edit blue icon" {{action showUser u.id u.username}}></i>
+      {{/if}}
     </div>
     <div class="header title">
       {{ember-initials/adorable email=u.email size=150 class="ui avatar image"}}
@@ -32,7 +34,11 @@
   </div>
   <div class="content">
     <div class="right floated item">
-      <i class="remove grey icon"></i>
+      {{#if (eq u.valid 'inactive')}}
+        <i class="add grey icon" {{action activateUser u.id}}></i>
+      {{else}}
+        <i class="remove grey icon" {{action deactivateUser u.id}}></i>
+      {{/if}}
     </div>
     <div class="item">
       <i class="users icon black"></i>

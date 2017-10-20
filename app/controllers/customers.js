@@ -64,7 +64,7 @@ export default Ember.Controller.extend({
         isDisabled: 'disabled',
         isActive: false
       })
-      Ember.$('.card').removeClass('active')
+      Ember.$('.card').removeClass('blue')
       Ember.$('.togDisabled').addClass('disabled')
     },
 
@@ -76,8 +76,8 @@ export default Ember.Controller.extend({
 
     toggleActive (set, toSet) {
       if (set !== toSet) {
-        Ember.$('.card').removeClass('active')
-        Ember.$('.co-' + toSet).addClass('active')
+        Ember.$('.card').removeClass('blue')
+        Ember.$('.co-' + toSet).addClass('blue')
         Ember.$('.togDisabled').removeClass('disabled')
       }
     },
@@ -110,6 +110,12 @@ export default Ember.Controller.extend({
 
     updateCustomer () {
       Ember.Logger.info('update customer ' + this.get('coname'))
+    },
+
+    removeCustomer (coid) {
+      this.get('store').findRecord('customer', coid, { backgroundReload: false }).then(function (co) {
+        co.destroyRecord()
+      })
     },
 
     addNetwork (cid, ...params) {

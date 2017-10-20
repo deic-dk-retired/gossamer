@@ -40,7 +40,6 @@ export default Ember.Controller.extend({
         Ember.$('.card').removeClass('active')
         Ember.$('.rule-' + toSet).addClass('active')
         Ember.$('.togDisabled').removeClass('disabled')
-        // Ember.$('.segment').removeClass('invisi')
       }
     },
 

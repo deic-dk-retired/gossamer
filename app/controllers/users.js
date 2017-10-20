@@ -78,6 +78,10 @@ export default Ember.Controller.extend({
       }
     },
 
+    openModal (name) {
+      Ember.$('.ui.' + name + '.modal').modal('show')
+    },
+
     showUser (uid, username) {
       let user = this.get('store').peekRecord('user', uid)
       let customer = this.get('store').peekRecord('customer', parseInt(user.get('customerid')))
@@ -89,6 +93,7 @@ export default Ember.Controller.extend({
         companyname: customer.get('companyname'),
         netnames: user.get('networks').get('content.relationship.members.list'),
         name: user.get('name'),
+        firstname: user.get('firstname'),
         username: username
       })
     },
@@ -97,6 +102,14 @@ export default Ember.Controller.extend({
       if (this.get('act') === 'Save') {
         this.send('updateUser')
       }
+    },
+
+    deactivateUser (uid) {
+      Ember.Logger.info('deactivate: ' + this.get('store').peekRecord('user', uid).get('firstname'))
+    },
+
+    activateUser (uid) {
+      Ember.Logger.info('activate: ' + this.get('store').peekRecord('user', uid).get('firstname'))
     },
 
     updateUser () {

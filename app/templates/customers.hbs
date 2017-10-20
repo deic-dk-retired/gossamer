@@ -1,14 +1,15 @@
-<div class="four wide mobile column four wide tablet column eight wide computer column">
-  <div class="ui three stackable cards">
+<div class="sixteen wide column">
+  <div class="ui link fluid stackable cards cards">
     {{#each model.customers as |co|}}
       {{co-stub
         co=co
         showCustomer=(action 'showCustomer')
+        removeCustomer=(action 'removeCustomer')
       }}
     {{/each}}
   </div>
 </div>
-<div class="twelve wide mobile column twelve wide tablet column eight wide computer column">
+<div class="sixteen wide mobile sixteen wide tablet six wide computer column">
   {{co-edit
     coid=coid
     coname=coname

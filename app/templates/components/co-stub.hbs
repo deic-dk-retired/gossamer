@@ -1,6 +1,9 @@
-<div class="card co-{{co.cvr}}" {{action showCustomer co.id co.cvr}}>
+<div class="card co-{{co.cvr}}">
   <div class="content">
-    <div class="header">{{co.companyname}}</div>
+    <div class="right floated meta">
+      <i class="edit blue icon" {{action showCustomer co.id co.cvr}}></i>
+    </div>
+    <div class="header title">{{co.companyname}}</div>
   </div>
   <div class="content">
     <div class="details">
@@ -25,7 +28,10 @@
     </div>
   </div>
   <div class="extra content">
-    <div>
+    <div class="right floated item">
+      <i class="remove grey icon" {{action removeCustomer co.id}}></i>
+    </div>
+    <div class="item">
       <i class="id card outline icon basic black"></i>
       <span>{{co.cvr}}</span>
     </div>

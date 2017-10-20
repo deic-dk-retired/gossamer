@@ -25,9 +25,12 @@ export default DS.Model.extend(Validations, {
   email: DS.attr('string', {readonly: true}),
   lastlogin: DS.attr('date', {readonly: true}),
   lastpasswordchange: DS.attr('date', {readonly: true}),
+  valid: DS.attr('string'),
   networks: DS.hasMany('network', {async: true}),
 
   firstname: Ember.computed('name', function () {
-    return `${this.get('name').split(' ')[0]}`
+    let fn = this.get('name').split(' ')[0]
+    fn = fn.replace(fn.charAt(0), fn.charAt(0).toUpperCase())
+    return `${fn}`
   })
 })

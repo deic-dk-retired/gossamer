@@ -1,8 +1,9 @@
 <div class="sixteen wide mobile ten wide tablet six wide computer column">
 
   <div class="ui padded segment">
-    <form class="ui form four wide column">
-      <div class="three wide field">
+    <div class="ui header large">Create rule</div>
+    <form class="ui form">
+      <div class="field">
         <label>Source</label>
         {{input placeholder="Any" readonly="" type="text" value="Any"}}
         {{input id="source" value="Any" type="hidden"}}
@@ -22,14 +23,14 @@
         </div>
       </div>
 
-      <h4 class="ui dividing header">Protocol Information</h4>
-      {{#if (eq protocol "tcp")}}
+      <h4 class="ui dividing medium header">Protocol Information</h4>
+      {{#if (eq protocol 'tcp')}}
         {{tcp-fields mod=model}}
       {{else}}
-        {{#if (eq protocol "udp")}}
+        {{#if (eq protocol 'udp')}}
           {{udp-fields}}
         {{else}}
-          {{#if (eq protocol "icmp")}}
+          {{#if (eq protocol 'icmp')}}
             {{icmp-fields mod=model}}
           {{else}}
             <p>Select a protocol above to proceed</p>
@@ -37,14 +38,14 @@
         {{/if}}
       {{/if}}
 
-      <h4 class="ui dividing header">Necessary Information</h4>
-      <div class="twelve wide field">
+      <h4 class="ui dividing medium header">Necessary Information</h4>
+      <div class="field">
         <label>Packet Length</label>
         {{input type="text" id="pktLength" name="pktLength" placeholder="e.g. 2048"}}
         {{!-- <input type="text" id="pktLength" name="pktLength" placeholder="e.g. 2048"> --}}
         {{!-- \b\d{1,4}[.]\d{1,4}[.]\d{1,4}[.]\d{1,4}\b --}}
       </div>
-      <div class="required twelve wide field">
+      <div class="required field">
         <label>Fragment Encoding</label>
         {{#ui-dropdown id="fragEncode" name="fragEncode" class="search selection" allowAdditions=true selected=fragEncode onChange=(action (mut fragEncode))}}
           <div class="default text">Select/Add encoding</div>
@@ -57,19 +58,119 @@
         <textarea id="shortComment" name="shortComment" rows="5"></textarea>
       </div>
 
+      <div class="ui grid">
+        <div class="required field eight wide column">
+          <label>From:</label>
+          {{ember-flatpickr
+            allowInput=false
+            altFormat='D, d M Y  (H:i)'
+            altInput=true
+            altInputClass='my-alt-input'
+
+            clickOpens=true
+            date=(readonly defaultDate)
+            dateFormat='M/D/Y'
+            defaultDate=defaultDate
+            defaultHour=12
+            defaultMinute=0
+            disableMobile=false
+
+            enableSeconds=false
+            enableTime=true
+
+            flatpickrRef=flatpickrRef
+            hourIncrement=1
+            inline=false
+            locale='uk'
+
+            maxDate=maxDate
+            minDate=minDate
+            minuteIncrement=5
+            mode='single'
+
+            nextArrow='<i class="icon angle right"></i>'
+            noCalendar=false
+            onChange=(action (mut dateValues))
+            parseDate=false
+
+            placeholder='Choose a Date'
+            prevArrow='<i class="icon angle left"></i>'
+            shorthandCurrentMonth=false
+            static=false
+            time_24hr=true
+            weekNumbers=false
+            wrap=false
+          }}
+        </div>
+        <div class="required field eight wide column">
+          <label>To:</label>
+          {{ember-flatpickr
+            allowInput=false
+            altFormat='D, d M Y  (H:i)'
+            altInput=true
+            altInputClass='my-alt-input'
+
+            clickOpens=true
+            date=(readonly defaultDate)
+            dateFormat='M/D/Y'
+            defaultDate=defaultDate
+            defaultHour=12
+            defaultMinute=0
+            disableMobile=false
+
+            enableSeconds=false
+            enableTime=true
+
+            flatpickrRef=flatpickrRef
+            hourIncrement=1
+            inline=false
+            locale='uk'
+
+            maxDate=maxDate
+            minDate=minDate
+            minuteIncrement=5
+            mode='single'
+
+            nextArrow='<i class="icon angle right"></i>'
+            noCalendar=false
+            onChange=(action (mut dateValues))
+            parseDate=false
+
+            placeholder='Choose a Date'
+            prevArrow='<i class="icon angle left"></i>'
+            shorthandCurrentMonth=false
+            static=false
+            time_24hr=true
+            weekNumbers=false
+            wrap=false
+          }}
+        </div>
+
+      </div>
+
+
       <div class="required field">
         <label>Action</label>
         <div class="inline fields">
           <div class="field">
-            {{ui-radio name="rule-action" label="Rate Limit" value="rlimit"}}
+            {{ui-radio name="ruleact" label="Rate Limit" value="limit" current=value onChange=(action (mut ruleact))}}
           </div>
           <div class="field">
-            {{ui-radio name="rule-action" label="Block" value="block"}}
+            {{ui-radio name="ruleact" label="Block" value="block" current=value onChange=(action (mut ruleact))}}
           </div>
         </div>
       </div>
-      <button class="ui animated fade button blue">
-        <div class="visible content">Add</div>
+
+      {{#if (eq ruleact 'limit')}}
+        <div class="required field">
+          <label>Packets/sec > 0</label>
+          {{input type="text" id="pktspsec" name="pktspsec" placeholder="e.g. 2550"}}
+        </div>
+
+      {{/if}}
+
+      <button class="ui animated fade black button">
+        <div class="visible content">Create</div>
         <div class="hidden content"><i class="add arrow icon"></i></div>
       </button>
     </form>

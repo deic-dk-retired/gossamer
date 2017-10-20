@@ -1,14 +1,14 @@
 import DS from 'ember-data'
 
 export default DS.Model.extend({
-  custid: DS.attr('number'),
+  custid: DS.attr('string'),
+  adminid: DS.attr('string'),
+  fmnid: DS.attr('string'),
   rname: DS.attr('string'),
-  adminid: DS.attr('number'),
   direct: DS.attr('string'),
   validfrom: DS.attr('date'),
   validto: DS.attr('date'),
   duration: DS.attr(),
-  fmnid: DS.attr('number'),
   isactive: DS.attr(),
   isexpired: DS.attr(),
   destprefix: DS.attr('string'),
