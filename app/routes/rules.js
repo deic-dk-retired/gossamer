@@ -8,8 +8,7 @@ export default Ember.Route.extend({
   },
 
   beforeModel () {
-    Ember.Logger.info('before model is loaded...')
-    Ember.$('.dimmer').addClass('active')
+    Ember.Logger.info(`before rules is loaded...`)
   },
 
   model (params) {
@@ -26,7 +25,7 @@ export default Ember.Route.extend({
   },
 
   afterModel () {
-    Ember.$('.dimmer').removeClass('active')
+    Ember.Logger.info(`after rules is loaded...`)
   },
 
   setupController (controller, model) {

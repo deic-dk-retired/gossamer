@@ -2,7 +2,7 @@
 
   <div class="ui padded segment">
     <div class="ui header large">Create rule</div>
-    <form class="ui form">
+    <form class="ui form" {{action 'addRule' on='submit'}}>
       <div class="field">
         <label>Source</label>
         {{input placeholder="Any" readonly="" type="text" value="Any"}}
@@ -169,7 +169,7 @@
 
       {{/if}}
 
-      <button class="ui animated fade black button">
+      <button class="ui animated fade black button" type="submit">
         <div class="visible content">Create</div>
         <div class="hidden content"><i class="add arrow icon"></i></div>
       </button>

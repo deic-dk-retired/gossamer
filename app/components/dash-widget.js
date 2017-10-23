@@ -33,51 +33,49 @@ const DashWidgetComponent = Ember.Component.extend({
   }),
 
   renderD3 () {
-    this._super(...arguments)
-    // time parser for influx timestamp
-    var parseTime = d3.timeParse('%Y-%m-%dT%H:%M:%SZ')
-    var xTime = d3.timeFormat('%H:%M')
+    let parseTime = d3.timeParse('%Y-%m-%dT%H:%M:%SZ')
+    let xTime = d3.timeFormat('%H:%M')
 
     // get svg width and height from DOM
-    var widget = d3.select('.' + this.get('class') + ' .dash-widget')
-    var svg = d3.select('.' + this.get('class') + ' .dash-widget' + ' > svg')
-    var svgW = this.$('.dash-widget svg').outerWidth()
-    var svgH = this.$('.dash-widget svg').outerHeight()
+    let widget = d3.select('.' + this.get('class') + ' .dash-widget')
+    let svg = d3.select('.' + this.get('class') + ' .dash-widget' + ' > svg')
+    let svgW = this.$('.dash-widget svg').outerWidth()
+    let svgH = this.$('.dash-widget svg').outerHeight()
     // configure chart widget dimensions
-    var margin = {top: 20, right: 0, bottom: 100, left: 32}
-    var margin2 = {top: 310, right: 0, bottom: 20, left: 32}
-    var width = svgW - margin.left - margin.right - 20
-    var height = +svgH - margin.top - margin.bottom
-    var height2 = +svgH - margin2.top - margin2.bottom
+    let margin = {top: 20, right: 0, bottom: 100, left: 32}
+    let margin2 = {top: 310, right: 0, bottom: 20, left: 32}
+    let width = svgW - margin.left - margin.right - 20
+    let height = +svgH - margin.top - margin.bottom
+    let height2 = +svgH - margin2.top - margin2.bottom
 
     // set widget title
     widget.select('.title p').text(this.get('title'))
 
     // set x & y scales
-    var x = d3.scaleTime().range([0, width])
-    var x2 = d3.scaleTime().range([0, width])
-    var y = d3.scaleLinear().range([height, 0])
-    var y2 = d3.scaleLinear().range([height2, 0])
+    let x = d3.scaleTime().range([0, width])
+    let x2 = d3.scaleTime().range([0, width])
+    let y = d3.scaleLinear().range([height, 0])
+    let y2 = d3.scaleLinear().range([height2, 0])
 
     // x & y axes gen
-    var xAxis = d3.axisBottom(x)
-    var xAxis2 = d3.axisBottom(x2)
-    var yAxis = d3.axisLeft(y)
+    let xAxis = d3.axisBottom(x)
+    let xAxis2 = d3.axisBottom(x2)
+    let yAxis = d3.axisLeft(y)
 
-    var brush = d3.brushX()
+    let brush = d3.brushX()
       .extent([[0, 0], [width, height2]])
       .on('brush end', brushed)
 
-    var zoom = d3.zoom()
+    let zoom = d3.zoom()
       .scaleExtent([1, Infinity])
       .translateExtent([[0, 0], [width, height]])
       .extent([[0, 0], [width, height]])
       .on('zoom', zoomed)
 
-    var shape = ''
-    var shape2 = ''
-    var css = 'd3shape ' // .area or .line
-    var skin = '' // stroke or fill
+    let shape = ''
+    let shape2 = ''
+    let css = 'd3shape ' // .area or .line
+    let skin = '' // stroke or fill
 
     if (this.get('shape') === 'line') {
       css = css + 'line'
@@ -115,28 +113,32 @@ const DashWidgetComponent = Ember.Component.extend({
         .attr('height', height)
 
     // focus and context groups for svg elements
-    var focus = svg.append('g')
+    let focus = svg.append('g')
     .attr('class', 'focus')
     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
-    var context = svg.append('g')
+    let context = svg.append('g')
     .attr('class', 'context')
     .attr('transform', 'translate(' + margin2.left + ',' + margin2.top + ')')
 
-    var thisComponent = this
+    let thisComponent = this
     // callback to handle fetched data
     // also renders the chart
-    var render = function (error, data) {
+    let render = function (error, data) {
       // console.log(thisComponent.get('gfill1'))
       if (error) throw error
+
+      setTimeout(function () {
+        thisComponent.$('.dimmer').remove()
+      }, 1000)
       // remove old points
       focus.selectAll('path').remove()
       focus.selectAll('g').remove()
       context.selectAll('path').remove()
       context.selectAll('g').remove()
       // format dates and values
-      var d = data.stamp.map(function (obj) {
-        var o = {}
+      let d = data.stamp.map(function (obj) {
+        let o = {}
         o.x = parseTime(obj.x)
         o.y = +obj.y
         return o
@@ -198,13 +200,13 @@ const DashWidgetComponent = Ember.Component.extend({
     // fetch data and render chart content
     d3.json(this.get('url'), render)
     // update every 5sec
-    var refresh = setInterval(function (url) {
+    let refresh = setInterval(function (url) {
       d3.json(url, render)
     }, 5000, this.get('url'))
 
     function brushed () {
       if (event.sourceEvent && event.sourceEvent.type === 'zoom') return // ignore brush-by-zoom
-      var s = event.selection || x2.range()
+      let s = event.selection || x2.range()
       x.domain(s.map(x2.invert, x2))
       focus.select('.d3shape').attr('d', shape)
       focus.select('.axis--x').call(xAxis)
@@ -216,7 +218,7 @@ const DashWidgetComponent = Ember.Component.extend({
 
     function zoomed () {
       if (event.sourceEvent && event.sourceEvent.type === 'brush') return // ignore zoom-by-brush
-      var t = event.transform
+      let t = event.transform
       x.domain(t.rescaleX(x2).domain())
       focus.select('.d3shape').attr('d', shape)
       focus.select('.axis--x').call(xAxis)
@@ -225,8 +227,17 @@ const DashWidgetComponent = Ember.Component.extend({
     }
   },
 
+  didRender () {
+    this._super(...arguments)
+    Ember.$('.segment').append(`<div class="ui active inverted dimmer">
+    <div class="ui mini text loader">Loading&hellip;</div>
+  </div>`)
+  },
+
   didInsertElement () {
+    this._super(...arguments)
     this.renderD3()
+    // time parser for influx timestamp
   },
 
   didRender () {

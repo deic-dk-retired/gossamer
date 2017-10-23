@@ -170,6 +170,41 @@ aside {
   }
 }
 
+[class*="progress-"]  {
+  margin: 0px auto;
+  width: 150px;
+  position: relative;
+  .centsign{
+    font-size: 1rem;
+    position: relative;
+    bottom:0px;
+    left:-5px;
+  }
+}
+
+[class*="progress-"].circle  {
+  margin: 0px auto;
+  width: 100px;
+  height: 100px;
+  position: relative;
+  .centsign{
+    font-size: .4rem;
+    position: relative;
+    left:-5px;
+  }
+}
+
+
+
+.centered {
+  text-align: center;
+}
+
+.tabpager {
+  position: relative;
+  margin: 20px 0;
+}
+
 .enhance {
   color: @blue!important;
 }
@@ -188,7 +223,7 @@ aside {
   .header{
       background: @light;
       margin-bottom: 0;
-      padding: @xs * .5 @xs * .8;
+      // padding: @xs * .5 @xs * .8;
       & div{
         display: inline-block;
       }
@@ -199,10 +234,9 @@ aside {
       color: @darker800;
       text-transform: capitalize;
       font-weight: 400;
-      font-size: @lg;
+      font-size: @xxlg;
       padding: 0 0 @lg;
-      border-bottom: 1px solid rgba(0,0,0,.2);
-  }
+    }
   }
   .controls{
     width: 15%;
