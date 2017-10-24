@@ -230,19 +230,16 @@ const DashWidgetComponent = Ember.Component.extend({
   didRender () {
     this._super(...arguments)
     Ember.$('.segment').append(`<div class="ui active inverted dimmer">
-    <div class="ui mini text loader">Loading&hellip;</div>
-  </div>`)
+      <div class="ui mini text loader">Loading&hellip;</div>
+    </div>`)
   },
 
   didInsertElement () {
     this._super(...arguments)
     this.renderD3()
     // time parser for influx timestamp
-  },
-
-  didRender () {
-    // Ember.Logger.info('render')
   }
+
 })
 
 DashWidgetComponent.reopenClass({

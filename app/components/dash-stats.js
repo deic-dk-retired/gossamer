@@ -1,5 +1,4 @@
 import Ember from 'ember'
-import fetch from 'fetch'
 import * as d3 from 'd3'
 import ProgressBar from 'npm:progressbar.js'
 
@@ -11,6 +10,10 @@ const DashStatsComponent = Ember.Component.extend({
 
   userid: Ember.computed('params.[]', function () {
     return this.get('params')[1]
+  }),
+
+  stats: Ember.computed('params.[]', function () {
+    return this.get('params')[2]
   }),
 
   didRender () {
@@ -27,96 +30,95 @@ const DashStatsComponent = Ember.Component.extend({
     let wl = this.$('.label')
     let tocolor = this.$('.ui')
     let f = d3.formatPrefix(',.1', 1e3)
+    let stats = this.get('stats')
+    let where = '.progress-' + this.get('class')
+    let percent = 0.0
 
-    fetch('http://10.33.1.97:4242/api/stats/' + this.get('userid'))
-    .then(function (d) {
-      return d.json()
-    })
-    .then((d) => {
-      setTimeout(function () {
-        this.$('.dimmer').remove()
-      }, 1000)
+    setTimeout(function () {
+      this.$('.dimmer').remove()
+    }, 1000)
 
-      let v = 0
-      let l = '...'
-      let c = 'black'
-      switch (this.get('class').split('-')[0]) {
-        case 'act':
-          v = d.data.active
-          l = 'active'
-          c = 'red'
-          break
-        case 'exp':
-          v = d.data.expired
-          l = 'expired'
-          c = 'blue'
-          break
-        case 'tcp':
-          v = d.data.tcp
-          l = 'tcp'
-          break
-        case 'icmp':
-          v = d.data.icmp
-          l = 'icmp'
-          break
-        case 'udp':
-          v = d.data.udp
-          l = 'udp'
-          break
-        case 'oth':
-          v = d.data.other
-          l = 'others'
-          break
-        case 'tot':
-          v = d.data.total
-          l = 'total'
-          break
-        case 'net':
-          v = d.data.networks
-          l = 'networks'
-          break
-      }
+    let v = 0
+    let l = '...'
+    let c = 'grey'
+    switch (this.get('class').split('-')[0]) {
+      case 'act':
+        v = stats.active
+        l = 'active'
+        c = 'red'
+        break
+      case 'exp':
+        v = stats.expired
+        l = 'expired'
+        c = 'blue'
+        break
+      case 'tcp':
+        v = stats.tcp
+        l = 'tcp'
+        c = 'orange'
+        break
+      case 'icmp':
+        v = stats.icmp
+        l = 'icmp'
+        c = 'yellow'
+        break
+      case 'udp':
+        v = stats.udp
+        l = 'udp'
+        break
+      case 'oth':
+        v = stats.other
+        l = 'others'
+        break
+      case 'tot':
+        v = stats.total
+        l = 'total'
+        c = 'teal'
+        break
+      case 'net':
+        v = stats.networks
+        l = 'networks'
+        c = 'olive'
+        break
+    }
 
-      let where = '.progress-' + this.get('class')
-      let percent = (v / d.data.total)
+    percent = (v / stats.total)
 
-      if (v >= 1000) {
-        v = f(v)
-      }
-      wv.text(v)
-      wl.text(l)
-      tocolor.addClass(c)
+    if (v >= 1000) {
+      v = f(v)
+    }
+    wv.text(v)
+    wl.text(l)
+    tocolor.addClass(c)
 
-      let bar = new ProgressBar.Circle(where, {
-        strokeWidth: 6,
-        color: '#90A4AE',
-        trailColor: '#f4f4f4',
-        trailWidth: 1,
-        easing: 'easeInOut',
-        duration: 1400,
-        svgStyle: null,
-        text: {
-          value: '',
-          alignToBottom: true
-        },
-        from: {color: '#90A4AE'},
-        to: {color: '#4CAF50'},
+    let bar = new ProgressBar.Circle(where, {
+      strokeWidth: 5,
+      trailColor: '#f0f0f0',
+      trailWidth: 1,
+      easing: 'easeInOut',
+      duration: 1400,
+      svgStyle: null,
+      text: {
+        value: '',
+        alignToBottom: true
+      },
+      from: {color: '#90A4AE'},
+      to: {color: '#0288D1'},
         // Set default step function for all animate calls
-        step: (state, bar) => {
-          bar.path.setAttribute('stroke', state.color)
-          let value = Math.round(bar.value() * 100)
-          if (value === 0) {
-            bar.setText('')
-          } else {
-            bar.setText(value + ' <span class="centsign">%</span>')
-          }
-
-          bar.text.style.color = state.color
+      step: (state, bar) => {
+        bar.path.setAttribute('stroke', state.color)
+        let value = (bar.value() * 100).toFixed(1)
+        if (value === 0) {
+          bar.setText('')
+        } else {
+          bar.setText(v + ' <div class="statslabel">' + l.toUpperCase() + '</div>')
         }
-      })
-      bar.text.style.fontSize = '1.5rem'
-      bar.animate(percent)
+
+        bar.text.style.color = state.color
+      }
     })
+    bar.text.style.fontSize = '2rem'
+    bar.animate(percent)
   }
 })
 

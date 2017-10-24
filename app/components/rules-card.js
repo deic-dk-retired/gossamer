@@ -6,6 +6,7 @@ export default Ember.Component.extend({
   rid: Ember.computed('rid', function () {
     return this.get('rid')
   }),
+
   prcnt: Ember.computed('rule', function () {
     return this.get('rule').get('actprogress')
   }),
@@ -33,7 +34,7 @@ export default Ember.Component.extend({
       // Set default step function for all animate calls
       step: (state, bar) => {
         bar.path.setAttribute('stroke', state.color)
-        let value = Math.round(bar.value() * 100)
+        let value = (bar.value() * 100).toFixed(1)
         if (value === 0) {
           bar.setText('')
         } else {
