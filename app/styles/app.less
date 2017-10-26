@@ -80,6 +80,7 @@ body.pushable {
     .ui.top.fixed.menu {
       padding-left: 55px!important;
       z-index: 1001;
+      background:rgba(255,255,255, .98);
       .title {
         text-transform: capitalize;
       }
@@ -115,7 +116,7 @@ body.pushable {
 .full.height {
   > .toc {
     position: relative;
-    z-index: 102;
+    z-index: 1002;
     background-color: @blue;
     width: 55px;
     -webkit-box-flex: 0;
@@ -142,7 +143,7 @@ aside {
         font-weight: 700;
         font-style: italic;
         margin-left: -5.2px;
-        font-size: 1.28em;
+        font-size: 1.24em;
       }
   }
   .user {
@@ -176,7 +177,7 @@ aside {
   width: 150px;
   position: relative;
   .centsign{
-    font-size: 1rem;
+    font-size: .5rem;
     position: relative;
     bottom:0px;
     left:-5px;
@@ -193,10 +194,11 @@ aside {
   text-align: center;
   .progressbar-text {
     color: @black!important;
+    font-size: 2rem!important;
   }
   .statslabel{
-    margin-top: 5px;
-    font-size: 1rem;
+    margin-top: 5px!important;
+    font-size: 1rem!important;
   }
 }
 
@@ -299,5 +301,21 @@ aside {
     cursor: crosshair;
     fill: none;
     pointer-events: all;
+  }
+}
+
+@media screen
+and (min-width: 240px)
+and (max-width: 1200px)
+and (orientation:landscape) {
+  [class*="progress-"].circle  {
+    .progressbar-text {
+      color: @black!important;
+      font-size: 1.1rem!important;
+    }
+    .statslabel{
+      margin-top: -5px!important;
+      font-size: .2rem!important;
+    }
   }
 }

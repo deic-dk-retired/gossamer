@@ -8,12 +8,8 @@ const DashStatsComponent = Ember.Component.extend({
     return this.get('params')[0]
   }),
 
-  userid: Ember.computed('params.[]', function () {
-    return this.get('params')[1]
-  }),
-
   stats: Ember.computed('params.[]', function () {
-    return this.get('params')[2]
+    return this.get('params')[1]
   }),
 
   didRender () {
@@ -40,27 +36,33 @@ const DashStatsComponent = Ember.Component.extend({
 
     let v = 0
     let l = '...'
-    let c = 'grey'
+    let c = '#ffffff'
+    let h = '#37474F'
+
     switch (this.get('class').split('-')[0]) {
       case 'act':
         v = stats.active
         l = 'active'
         c = 'red'
+        h = '#ef5350'
         break
       case 'exp':
         v = stats.expired
         l = 'expired'
         c = 'blue'
+        h = '#0288D1'
         break
       case 'tcp':
         v = stats.tcp
         l = 'tcp'
         c = 'orange'
+        h = '#FFB74D'
         break
       case 'icmp':
         v = stats.icmp
         l = 'icmp'
         c = 'yellow'
+        h = '#FFEB3B'
         break
       case 'udp':
         v = stats.udp
@@ -74,11 +76,13 @@ const DashStatsComponent = Ember.Component.extend({
         v = stats.total
         l = 'total'
         c = 'teal'
+        h = '#00B5AD'
         break
       case 'net':
         v = stats.networks
         l = 'networks'
         c = 'olive'
+        h = '#B5CC18'
         break
     }
 
@@ -103,7 +107,7 @@ const DashStatsComponent = Ember.Component.extend({
         alignToBottom: true
       },
       from: {color: '#90A4AE'},
-      to: {color: '#0288D1'},
+      to: {color: h},
         // Set default step function for all animate calls
       step: (state, bar) => {
         bar.path.setAttribute('stroke', state.color)
@@ -117,7 +121,6 @@ const DashStatsComponent = Ember.Component.extend({
         bar.text.style.color = state.color
       }
     })
-    bar.text.style.fontSize = '2rem'
     bar.animate(percent)
   }
 })

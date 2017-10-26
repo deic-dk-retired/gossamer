@@ -28,8 +28,10 @@
             Active for {{moment-from-now rule.validfrom hideSuffix=true interval=120000}}
           </div>
         </div>
-        <div class="progress-{{rule.id}} prog" >
-        </div>
+        {{#ui-popup content="(time / duration) %" variation="mini inverted" position="top center"}}
+          <div class="progress-{{rule.id}} prog" >
+          </div>
+        {{/ui-popup}}
         <div class="item">
           <i class="icon bug"></i>
           <div class="content">

@@ -1,6 +1,4 @@
 import DS from 'ember-data'
-import moment from 'moment'
-import Ember from 'ember'
 
 export default DS.Model.extend({
   custid: DS.attr('string'),
@@ -19,13 +17,5 @@ export default DS.Model.extend({
   destport: DS.attr('string'),
   srcportt: DS.attr('string'),
   pktlen: DS.attr('string'),
-  action: DS.attr('string'),
-
-  actprogress: Ember.computed('validfrom', 'validto', function () {
-    let b = parseInt(moment(this.get('validfrom')).format('x'))
-    let a = parseInt(moment(this.get('validto')).format('x'))
-    let tot = moment(a).diff(b)
-    let percent = (moment(moment.now()).diff(b) / tot)
-    return `${percent}`
-  })
+  action: DS.attr('string')
 })

@@ -128,9 +128,11 @@ const DashWidgetComponent = Ember.Component.extend({
       // console.log(thisComponent.get('gfill1'))
       if (error) throw error
 
-      setTimeout(function () {
-        thisComponent.$('.dimmer').remove()
-      }, 1000)
+      if (thisComponent.$('.dimmer').length !== 0) {
+        setTimeout(function () {
+          thisComponent.$('.dimmer').remove()
+        }, 1000)
+      }
       // remove old points
       focus.selectAll('path').remove()
       focus.selectAll('g').remove()
