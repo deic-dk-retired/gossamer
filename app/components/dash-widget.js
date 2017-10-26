@@ -204,22 +204,24 @@ const DashWidgetComponent = Ember.Component.extend({
     // update every 5sec
     let refresh = setInterval(function (url) {
       d3.json(url, render)
-    }, 5000, this.get('url'))
+    }, 10000, this.get('url'))
+
+    function pauseRefresh () {
+      clearInterval(refresh)
+    }
 
     function brushed () {
-      if (event.sourceEvent && event.sourceEvent.type === 'zoom') return // ignore brush-by-zoom
+      if (event.sourceEvent && event.sourceEvent.type === 'zoom') { return } // ignore brush-by-zoom
       let s = event.selection || x2.range()
       x.domain(s.map(x2.invert, x2))
       focus.select('.d3shape').attr('d', shape)
       focus.select('.axis--x').call(xAxis)
       focus.select('.domain').remove()
-      svg.select('.zoom').call(zoom.transform, d3.zoomIdentity
-    .scale(width / (s[1] - s[0]))
-    .translate(-s[0], 0))
+      svg.select('.zoom').call(zoom.transform, d3.zoomIdentity.scale(width / (s[1] - s[0])).translate(-s[0], 0))
     }
 
     function zoomed () {
-      if (event.sourceEvent && event.sourceEvent.type === 'brush') return // ignore zoom-by-brush
+      if (event.sourceEvent && event.sourceEvent.type === 'brush') { return } // ignore zoom-by-brush
       let t = event.transform
       x.domain(t.rescaleX(x2).domain())
       focus.select('.d3shape').attr('d', shape)

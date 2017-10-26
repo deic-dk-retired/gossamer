@@ -1,4 +1,6 @@
+import Ember from 'ember'
 import DS from 'ember-data'
+import moment from 'moment'
 
 export default DS.Model.extend({
   custid: DS.attr('string'),
@@ -17,5 +19,12 @@ export default DS.Model.extend({
   destport: DS.attr('string'),
   srcportt: DS.attr('string'),
   pktlen: DS.attr('string'),
-  action: DS.attr('string')
+  action: DS.attr('string'),
+
+  totdur: Ember.computed('validfrom', 'validto', function () {
+    let b = parseInt(moment(this.get('validfrom')).format('x'))
+    let a = parseInt(moment(this.get('validto')).format('x'))
+    let tot = moment(a).diff(b)
+    return `${tot}`
+  })
 })

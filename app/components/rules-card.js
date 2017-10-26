@@ -21,6 +21,16 @@ export default Ember.Component.extend({
     return `${vto}`
   }),
 
+  dur: Ember.computed('rule', function () {
+    let dur = this.get('rule').get('totdur')
+    return `${dur}`
+  }),
+
+  frequency: Ember.computed('dur', function () {
+    let f = Math.ceil(this.get('dur') / 60)
+    return `${f}`
+  }),
+
   actprogress: Ember.computed('validfrom', 'validto', 'now', function () {
     let b = parseInt(moment(this.get('validfrom')).format('x'))
     let a = parseInt(moment(this.get('validto')).format('x'))
@@ -34,18 +44,19 @@ export default Ember.Component.extend({
 
   init () {
     this._super(...arguments)
-    this.updateTime()
+    this.updateNow()
   },
 
   actprogressDidChange: Ember.on('init', Ember.observer('actprogress', function () {
     this.set('prcnt', this.get('actprogress'))
   })),
 
-  updateTime () {
+  updateNow () {
     let self = this
+    let f = this.get('frequency')
     setInterval(function () {
       self.set('now', moment.now())
-    }, 5000, self)
+    }, f, self)
   },
 
   didInsertElement () {
@@ -85,9 +96,10 @@ export default Ember.Component.extend({
 
     bar.animate(percent)
     let self = this
+    let f = this.get('frequency')
     setInterval(function () {
       bar.animate(self.get('prcnt'))
-    }, 10000, self)
+    }, f, self)
   }
 
 })
