@@ -106,10 +106,44 @@ export default Ember.Controller.extend({
 
     deactivateUser (uid) {
       Ember.Logger.info('deactivate: ' + this.get('store').peekRecord('user', uid).get('firstname'))
+
+      this.get('store').findRecord('user', parseInt(uid))
+      .then(function (user) {
+        user.set('valid', 'inactive')
+        Ember.Logger.info(user.changedAttributes())
+        user.save()
+        .then((response) => {
+          this.set('responseMessage', `User ${response.get('id').name} was deactivated`)
+        })
+        .catch((adapterError) => {
+          Ember.Logger.info(user.get('errors'))
+          Ember.Logger.info(user.get('errors.name'))
+          Ember.Logger.info(user.get('errors').toArray())
+          Ember.Logger.info(user.get('isValid'))
+          Ember.Logger.info(adapterError)
+        })
+      })
     },
 
     activateUser (uid) {
       Ember.Logger.info('activate: ' + this.get('store').peekRecord('user', uid).get('firstname'))
+
+      this.get('store').findRecord('user', parseInt(uid))
+      .then(function (user) {
+        user.set('valid', 'active')
+        Ember.Logger.info(user.changedAttributes())
+        user.save()
+        .then((response) => {
+          this.set('responseMessage', `User ${response.get('id').name} was deactivated`)
+        })
+        .catch((adapterError) => {
+          Ember.Logger.info(user.get('errors'))
+          Ember.Logger.info(user.get('errors.name'))
+          Ember.Logger.info(user.get('errors').toArray())
+          Ember.Logger.info(user.get('isValid'))
+          Ember.Logger.info(adapterError)
+        })
+      })
     },
 
     updateUser () {

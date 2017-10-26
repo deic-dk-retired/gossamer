@@ -35,9 +35,9 @@
   <div class="content">
     <div class="right floated item">
       {{#if (eq u.valid 'inactive')}}
-        <i class="add grey icon" {{action activateUser u.id}}></i>
+        <i class="check grey icon" {{action activateUser u.id}}></i>
       {{else}}
-        <i class="remove grey icon" {{action deactivateUser u.id}}></i>
+        <i class="minus grey icon" {{action deactivateUser u.id}}></i>
       {{/if}}
     </div>
     <div class="item">

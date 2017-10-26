@@ -32,7 +32,15 @@ const DashWidgetComponent = Ember.Component.extend({
     return this.get('params')[6]
   }),
 
-  renderD3 () {
+  didRender () {
+    this._super(...arguments)
+    Ember.$('.segment').append(`<div class="ui active inverted dimmer">
+      <div class="ui mini text loader">Loading&hellip;</div>
+    </div>`)
+  },
+
+  didInsertElement () {
+    this._super(...arguments)
     let parseTime = d3.timeParse('%Y-%m-%dT%H:%M:%SZ')
     let xTime = d3.timeFormat('%H:%M')
 
@@ -211,7 +219,7 @@ const DashWidgetComponent = Ember.Component.extend({
     }
 
     function brushed () {
-      if (event.sourceEvent && event.sourceEvent.type === 'zoom') { return } // ignore brush-by-zoom
+      if (event.sourceEvent && event.sourceEvent.type === 'zoom') return // ignore brush-by-zoom
       let s = event.selection || x2.range()
       x.domain(s.map(x2.invert, x2))
       focus.select('.d3shape').attr('d', shape)
@@ -221,7 +229,7 @@ const DashWidgetComponent = Ember.Component.extend({
     }
 
     function zoomed () {
-      if (event.sourceEvent && event.sourceEvent.type === 'brush') { return } // ignore zoom-by-brush
+      if (event.sourceEvent && event.sourceEvent.type === 'brush') return // ignore zoom-by-brush
       let t = event.transform
       x.domain(t.rescaleX(x2).domain())
       focus.select('.d3shape').attr('d', shape)
@@ -229,18 +237,6 @@ const DashWidgetComponent = Ember.Component.extend({
       focus.select('.domain').remove()
       context.select('.brush').call(brush.move, x.range().map(t.invertX, t))
     }
-  },
-
-  didRender () {
-    this._super(...arguments)
-    Ember.$('.segment').append(`<div class="ui active inverted dimmer">
-      <div class="ui mini text loader">Loading&hellip;</div>
-    </div>`)
-  },
-
-  didInsertElement () {
-    this._super(...arguments)
-    this.renderD3()
     // time parser for influx timestamp
   }
 
