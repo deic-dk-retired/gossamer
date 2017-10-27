@@ -26,7 +26,8 @@ export default DS.Model.extend(Validations, {
   lastlogin: DS.attr('date', {readonly: true}),
   lastpasswordchange: DS.attr('date', {readonly: true}),
   valid: DS.attr('string'),
-  networks: DS.hasMany('network', {async: true}),
+  nets: DS.attr(),
+  networks: DS.hasMany('network', {async: true, readonly: true}),
 
   firstname: Ember.computed('name', function () {
     let fn = this.get('name').split(' ')[0]

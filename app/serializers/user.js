@@ -8,7 +8,8 @@ export default ApplicationSerializer.extend({
       couuid: json.data.attributes.couuid,
       coid: json.data.attributes.customerid,
       kind: json.data.attributes.kind,
-      valid: json.data.attributes.valid
+      valid: json.data.attributes.valid,
+      netids: json.data.attributes.nets
     }
     return json
   }

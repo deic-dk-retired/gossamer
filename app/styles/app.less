@@ -76,7 +76,8 @@ body.pushable {
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
     min-width: 0px;
-    padding: 40px 30px;
+    padding: 40px 30px 500px;
+    overflow-y: scroll;
     .ui.top.fixed.menu {
       padding-left: 55px!important;
       z-index: 1001;
@@ -176,11 +177,16 @@ aside {
   margin: 0px auto;
   width: 150px;
   position: relative;
+  text-align: center;
   .centsign{
     font-size: .5rem;
     position: relative;
     bottom:0px;
-    left:-5px;
+    left:-2px;
+  }
+  .proglabel {
+    font-size: .8rem;
+    text-transform: uppercase;
   }
 }
 

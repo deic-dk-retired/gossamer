@@ -1,5 +1,5 @@
-{{#if (not-eq currentRouteName "login")}}
-
+{{#if (not-eq currentRouteName 'login')}}
+  {{!-- {{outlet}} --}}
   <div class="pusher">
     <div class="full height">
       <div class="toc">
@@ -16,8 +16,8 @@
 
 {{else}}
   {{#if (eq currentRouteName "login")}}
-    {{login}}
-  {{else}}
-    {{not-found}}
+    {{render "login"}}
+  {{!-- {{else}}
+    {{render "not-found"}} --}}
   {{/if}}
 {{/if}}

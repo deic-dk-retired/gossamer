@@ -36,7 +36,8 @@ export default Ember.Component.extend({
     let a = parseInt(moment(this.get('validto')).format('x'))
     let tot = moment(a).diff(b)
     let now = this.get('now')
-    let percent = (moment(now).diff(b) / tot).toFixed(3)
+    let percent = (moment(now).diff(b) / tot).toFixed(2)
+    Ember.Logger.info(percent)
     return `${percent}`
   }),
 
@@ -82,23 +83,27 @@ export default Ember.Component.extend({
       // Set default step function for all animate calls
       step: (state, bar) => {
         bar.path.setAttribute('stroke', state.color)
-        let value = (bar.value() * 100).toFixed(1)
+        let value = Math.floor(bar.value() * 100).toFixed(1)
         if (value === 0) {
           bar.setText('')
         } else {
-          bar.setText(value + ' <span class="centsign">%</span>')
+          bar.setText(value + ' <span class="centsign">%</span><div class="proglabel">complete</div>')
         }
 
         bar.text.style.color = '#37474F'
       }
     })
-    bar.text.style.fontSize = '1.5rem'
+    bar.text.style.fontSize = '1.2rem'
 
     bar.animate(percent)
     let self = this
     let f = this.get('frequency')
     setInterval(function () {
       bar.animate(self.get('prcnt'))
+      // Ember.Logger.info(self.get('prcnt'))
+      // if (self.get('prcnt') >= 1.0) {
+      //   self.transitionTo('rules')
+      // }
     }, f, self)
   }
 

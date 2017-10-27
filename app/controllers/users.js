@@ -105,15 +105,15 @@ export default Ember.Controller.extend({
     },
 
     deactivateUser (uid) {
-      Ember.Logger.info('deactivate: ' + this.get('store').peekRecord('user', uid).get('firstname'))
-
+      let self = this
       this.get('store').findRecord('user', parseInt(uid))
       .then(function (user) {
         user.set('valid', 'inactive')
         Ember.Logger.info(user.changedAttributes())
         user.save()
         .then((response) => {
-          this.set('responseMessage', `User ${response.get('id').name} was deactivated`)
+          self.set('responseMessage', `User ${response.get('store').peekRecord('user', response.get('id')).get('firstname')} was deactivated`)
+          Ember.Logger.info(self.get('responseMessage'))
         })
         .catch((adapterError) => {
           Ember.Logger.info(user.get('errors'))
@@ -126,15 +126,15 @@ export default Ember.Controller.extend({
     },
 
     activateUser (uid) {
-      Ember.Logger.info('activate: ' + this.get('store').peekRecord('user', uid).get('firstname'))
-
+      let self = this
       this.get('store').findRecord('user', parseInt(uid))
       .then(function (user) {
         user.set('valid', 'active')
         Ember.Logger.info(user.changedAttributes())
         user.save()
         .then((response) => {
-          this.set('responseMessage', `User ${response.get('id').name} was deactivated`)
+          self.set('responseMessage', `User ${response.get('store').peekRecord('user', response.get('id')).get('firstname')} was activated`)
+          Ember.Logger.info(self.get('responseMessage'))
         })
         .catch((adapterError) => {
           Ember.Logger.info(user.get('errors'))
@@ -150,17 +150,25 @@ export default Ember.Controller.extend({
       let uid = this.get('userid')
       let kind = this.get('kind')
       let cuid = this.get('customerid')
-      let coname = this.get('store').peekRecord('customer', parseInt(cuid)).get('companyname')
+      let couuid = this.get('store').peekRecord('customer', parseInt(cuid)).get('couuid')
+      let nets = this.get('netids')
+
+      Ember.Logger.info(nets)
+
+      let self = this
 
       this.get('store').findRecord('user', parseInt(uid))
       .then(function (user) {
         user.set('customerid', parseInt(cuid))
-        user.set('companyname', coname)
+        user.set('couuid', couuid)
         user.set('kind', kind)
+
+        user.set('nets', nets)
+
         Ember.Logger.info(user.changedAttributes())
         user.save()
         .then((response) => {
-          this.set('responseMessage', `User ${response.get('id').name} was updated`)
+          self.set('responseMessage', `User ${response.get('store').peekRecord('user', response.get('id')).get('firstname')} was updated`)
         })
         .catch((adapterError) => {
           Ember.Logger.info(user.get('errors'))
@@ -170,6 +178,9 @@ export default Ember.Controller.extend({
           Ember.Logger.info(adapterError)
         })
       })
+
+      // delete all networks for this user and
+      // create nnew etwork records using netids
     }
 
   }
