@@ -10,7 +10,7 @@ export default DS.Model.extend({
   direct: DS.attr('string'),
   validfrom: DS.attr('date'),
   validto: DS.attr('date'),
-  duration: DS.attr(),
+  duration: DS.attr({readonly: true}),
   isactive: DS.attr(),
   isexpired: DS.attr(),
   destprefix: DS.attr('string'),

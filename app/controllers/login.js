@@ -1,4 +1,5 @@
 import Ember from 'ember'
+import fetch from 'fetch'
 
 export default Ember.Controller.extend({
   loginFailed: false,
@@ -11,10 +12,21 @@ export default Ember.Controller.extend({
         isProcessing: true
       })
 
-      Ember.$.get(this.url + this.get('username') + '/' + this.get('password'))
-      .then(function (data) {
-        // console.log(data.users.hasAccess)
-        if (data.users.hasAccess) {
+      fetch(this.url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: this.get('username'),
+          password: this.get('password')
+        })
+      })
+      .then(function (d) {
+        return d.json()
+      })
+      .then(function (d) {
+        if (d.data.attributes.hasAccess) {
           this.set('isProcessing', false)
           document.location = '/dashboard'
         } else {
