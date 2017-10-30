@@ -8,7 +8,7 @@ export default Ember.Controller.extend({
   isProcessing: false,
   url: 'http://10.33.1.97:4242/api/login/',
   errorMessage: null,
-  identification: null,
+  username: null,
   password: null,
 
   actions: {

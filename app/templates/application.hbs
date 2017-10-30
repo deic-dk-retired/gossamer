@@ -1,4 +1,4 @@
-{{!-- {{#if (not-eq currentRouteName 'login')}}
+{{#if (not-eq currentRouteName 'login')}}
   <div class="pusher">
     <div class="full height">
       <div class="toc">
@@ -17,9 +17,9 @@
   {{#if (eq currentRouteName "login")}}
     {{render "login"}}
   {{/if}}
-{{/if}} --}}
+{{/if}}
 
-{{#if session.isAuthenticated}}
+{{!-- {{#if session.isAuthenticated}}
   <div class="pusher">
     <div class="full height">
       <div class="toc">
@@ -35,4 +35,4 @@
   </div>
 {{else}}
   {{render "login"}}
-{{/if}}
+{{/if}} --}}
