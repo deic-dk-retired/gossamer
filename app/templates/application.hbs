@@ -1,5 +1,4 @@
-{{#if (not-eq currentRouteName 'login')}}
-  {{!-- {{outlet}} --}}
+{{!-- {{#if (not-eq currentRouteName 'login')}}
   <div class="pusher">
     <div class="full height">
       <div class="toc">
@@ -17,7 +16,23 @@
 {{else}}
   {{#if (eq currentRouteName "login")}}
     {{render "login"}}
-  {{!-- {{else}}
-    {{render "not-found"}} --}}
   {{/if}}
+{{/if}} --}}
+
+{{#if session.isAuthenticated}}
+  <div class="pusher">
+    <div class="full height">
+      <div class="toc">
+        {{side-menu username='Ashokaditya' kind='globaladmin'}}
+      </div>
+      <div class="article">
+        {{top-menu routename=currentRouteName kind='globaladmin'}}
+        <div class="ui grid">
+          {{outlet}}
+        </div>
+      </div>
+    </div>
+  </div>
+{{else}}
+  {{render "login"}}
 {{/if}}

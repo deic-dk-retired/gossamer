@@ -1,6 +1,7 @@
 import DS from 'ember-data'
 
 export default DS.JSONAPISerializer.extend({
+
   // serialize (snapshot) {
   //   const json = this._super(...arguments)
   //   const changedAttributes = snapshot.changedAttributes()
@@ -27,4 +28,5 @@ export default DS.JSONAPISerializer.extend({
 
   //   return json
   // }
+
 })

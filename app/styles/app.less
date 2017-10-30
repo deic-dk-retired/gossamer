@@ -25,7 +25,21 @@
 }
 
 body.pushable {
-  background: #f4f4f4!important;
+  background: #ffffff!important;
+}
+
+body .bg {
+  background: url('/assets/images/pbg.jpg') 50% 50% repeat #f4f4f4;
+  opacity: 1;
+  // background: -webkit-linear-gradient(top left, #f4f4f4, #B3E5FC);
+  // background: -o-linear-gradient(top left, #f4f4f4,#B3E5FC);
+  // background: -moz-linear-gradient(top left, #f4f4f4,#B3E5FC);
+  // background: linear-gradient(top left, #f4f4f4, #B3E5FC);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top:0;
+  left: 0;
 }
 
 .editcard {
@@ -44,11 +58,17 @@ body.pushable {
    }
 }
 
+.pushable .begin {
+  position: relative;
+  top: 30vh;
+}
+
 .pushable {
   height: 100%;
   overflow-x: hidden;
   padding: 0!important;
   .pusher {
+    background: #f4f4f4!important;
     position: relative;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
@@ -69,7 +89,6 @@ body.pushable {
       flex-direction: row;
     }
   }
-
   .article {
     -webkit-box-flex: 1;
     -webkit-flex: 1 1 auto;
@@ -124,6 +143,24 @@ body.pushable {
     -webkit-flex: 0 0 auto;
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
+  }
+}
+
+.logsign{
+  color:#fff;
+  font-size: 2rem;
+}
+.welcome {
+  padding-bottom: @xxlg;
+  font-family: 'Kanit'!important;
+  color: @blue;
+  .welcome {
+    font-size: 1.5em;
+  }
+  .logo {
+    font-weight: 700;
+    font-style: italic;
+    font-size: 3.5em;
   }
 }
 

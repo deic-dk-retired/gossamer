@@ -6,11 +6,18 @@ export default Ember.Route.extend({
 
   model () {
     return fetch('http://10.33.1.97:4242/api/stats/' + this.get('userid'))
-    .then(function (d) {
-      return d.json()
+    .then((response) => {
+      if (response.status !== 200) {
+        Ember.Logger.info('Looks like there was a problem. Status Code: ' + response.status)
+        return
+      }
+      return response.json()
+      .then((d) => {
+        return d.data
+      })
     })
-    .then((d) => {
-      return d.data
+    .catch((err) => {
+      Ember.Logger.info('dashboard stats error: ' + err)
     })
   }
 

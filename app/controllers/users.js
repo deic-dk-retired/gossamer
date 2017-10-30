@@ -108,8 +108,8 @@ export default Ember.Controller.extend({
       let self = this
       this.get('store').findRecord('user', parseInt(uid))
       .then(function (user) {
-        user.set('valid', 'inactive')
         Ember.Logger.info(user.changedAttributes())
+        user.set('valid', 'inactive')
         user.save()
         .then((response) => {
           self.set('responseMessage', `User ${response.get('store').peekRecord('user', response.get('id')).get('firstname')} was deactivated`)
@@ -129,8 +129,8 @@ export default Ember.Controller.extend({
       let self = this
       this.get('store').findRecord('user', parseInt(uid))
       .then(function (user) {
-        user.set('valid', 'active')
         Ember.Logger.info(user.changedAttributes())
+        user.set('valid', 'active')
         user.save()
         .then((response) => {
           self.set('responseMessage', `User ${response.get('store').peekRecord('user', response.get('id')).get('firstname')} was activated`)

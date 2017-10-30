@@ -1,55 +1,36 @@
-{{!-- <div class="sign-in">
-  <div><span>DeIC</span><span>Gossamer</span></div>
-  <div class="ui centered grid">
-    <div class="three wide column">
-      <form class="ui form mini four wide column" {{action "login" on="submit"}}>
-        <div class="field">
-          {{input type='text' id='username' placeholder='Type in your username' value=username}}
-        </div>
-        <div class="required field">
-          {{input type='password' id='password' placeholder='and password' value=password}}
-        </div>
-        <div class="field">
-           {{input class="ui mini fluid black button"
-              type="submit"
-              value="Log In"
-           }}
-        </div>
-      </form>
-
-    </div>
-  </div>
-</div> --}}
-
-
-<div class="ui middle aligned centered grid">
-  <div class="three wide column">
-    <h3 class="ui blue header">
-      <div class="ui logo label"><span>DeIC</span><span>Gossamer</span></div>
-      <div class="content">
-       Login to your account
-      </div>
-    </h3>
+<div class="bg"></div>
+<div class="ui centered grid begin">
+  <div class=" sixteen wide mobile six wide tablet three wide computer column">
     <form class="ui large form" {{action "login" on="submit"}}>
-      <div class="ui stacked segment">
+      <div class="ui stacked blue padded segment">
+        <div class="welcome">
+          <span class="deic">
+            DeIC
+          </span>
+          <span class="logo">
+            Gssmr
+          </span>
+        </div>
         <div class="field">
           <div class="ui left icon input">
-            <i class="user icon"></i>
-            {{input type='text' id='username' placeholder='Type in your username' value=username}}
+            <i class="user blue icon"></i>
+            {{input type='text' placeholder='Type in your username' value=username}}
           </div>
         </div>
         <div class="field">
           <div class="ui left icon input">
-            <i class="lock icon"></i>
-            {{input type='password' id='password' placeholder='and password' value=password}}
+            <i class="lock blue icon"></i>
+            {{input type='password' placeholder='and password' value=password}}
           </div>
         </div>
-        {{!-- <div class="ui fluid large blue submit button">Login</div> --}}
-        {{input class="ui fluid large blue submit button" type="submit" value="Login" }}
+        <button class="ui fluid large blue submit labeled icon button" type="submit" value="Login">
+          <i class="sign in icon"></i>
+          Login
+        </button>
       </div>
 
       {{#if loginFailed}}
-        <div class="ui error message"></div>
+        <div class="ui error message">{{errorMsg}}</div>
         <div class="ui bottom attached warning message">
           <i class="icon help"></i>
           Login failed! Please try again.
@@ -57,8 +38,8 @@
       {{/if}}
     </form>
 
-    <div class="ui message">
+    {{!-- <div class="ui message">
       New to us? <a href="#">Sign Up</a>
-    </div>
+    </div> --}}
   </div>
 </div>
