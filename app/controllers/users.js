@@ -3,18 +3,12 @@ import Ember from 'ember'
 
 export default Ember.Controller.extend({
   userid: null,
+  firstname: '',
   kind: '',
   customerid: null,
+  couuid: null,
   companyname: '',
-  netnames: [],
-  netids: Ember.computed('netnames', function () {
-    if (this.get('netnames').length !== 0) {
-      return this.get('netnames').map((e) => { return parseInt(e.id) }).map((e) => { return parseInt(e) })
-    }
-    if (this.get('netnames').length === 0) {
-      return []
-    }
-  }),
+  netids: [],
   username: '',
   isDisabled: 'disabled',
   changePass: 'disabled',
@@ -40,10 +34,12 @@ export default Ember.Controller.extend({
     resetForm () {
       this.setProperties({
         userid: null,
+        firstname: '',
         kind: '',
         customerid: null,
+        couuid: null,
         companyname: '',
-        netnames: [],
+        netids: [],
         name: '',
         username: '',
         isDisabled: 'disabled',
@@ -91,7 +87,7 @@ export default Ember.Controller.extend({
         kind: user.get('kind'),
         customerid: parseInt(customer.get('id')),
         companyname: customer.get('companyname'),
-        netnames: user.get('networks').get('content.relationship.members.list'),
+        netids: user.get('usrnets'),
         name: user.get('name'),
         firstname: user.get('firstname'),
         username: username
@@ -105,45 +101,48 @@ export default Ember.Controller.extend({
     },
 
     deactivateUser (uid) {
-      let self = this
       this.get('store').findRecord('user', parseInt(uid))
       .then(function (user) {
-        Ember.Logger.info(user.changedAttributes())
         user.set('valid', 'inactive')
-        user.save()
-        .then((response) => {
-          self.set('responseMessage', `User ${response.get('store').peekRecord('user', response.get('id')).get('firstname')} was deactivated`)
-          Ember.Logger.info(self.get('responseMessage'))
-        })
-        .catch((adapterError) => {
-          Ember.Logger.info(user.get('errors'))
-          Ember.Logger.info(user.get('errors.name'))
-          Ember.Logger.info(user.get('errors').toArray())
-          Ember.Logger.info(user.get('isValid'))
-          Ember.Logger.info(adapterError)
-        })
-      })
+        if (user.get('hasDirtyAttributes')) {
+          Ember.Logger.info(user.changedAttributes())
+          user.save()
+          .then((response) => {
+            this.set('responseMessage', `User ${response.get('store').peekRecord('user', response.get('id')).get('firstname')} was deactivated`)
+            Ember.Logger.info(this.get('responseMessage'))
+          })
+          .catch((adapterError) => {
+            Ember.Logger.info(user.get('errors'))
+            Ember.Logger.info(user.get('errors.name'))
+            Ember.Logger.info(user.get('errors').toArray())
+            Ember.Logger.info(user.get('isValid'))
+            Ember.Logger.info(adapterError)
+          })
+        }
+      }.bind(this))
+      this.send('resetForm')
     },
 
     activateUser (uid) {
-      let self = this
       this.get('store').findRecord('user', parseInt(uid))
       .then(function (user) {
-        Ember.Logger.info(user.changedAttributes())
         user.set('valid', 'active')
-        user.save()
-        .then((response) => {
-          self.set('responseMessage', `User ${response.get('store').peekRecord('user', response.get('id')).get('firstname')} was activated`)
-          Ember.Logger.info(self.get('responseMessage'))
-        })
-        .catch((adapterError) => {
-          Ember.Logger.info(user.get('errors'))
-          Ember.Logger.info(user.get('errors.name'))
-          Ember.Logger.info(user.get('errors').toArray())
-          Ember.Logger.info(user.get('isValid'))
-          Ember.Logger.info(adapterError)
-        })
-      })
+        if (user.get('hasDirtyAttributes')) {
+          Ember.Logger.info(user.changedAttributes())
+          user.save()
+          .then((response) => {
+            this.set('responseMessage', `User ${response.get('store').peekRecord('user', response.get('id')).get('firstname')} was activated`)
+            Ember.Logger.info(this.get('responseMessage'))
+          })
+          .catch((adapterError) => {
+            Ember.Logger.info(user.get('errors'))
+            Ember.Logger.info(user.get('errors.name'))
+            Ember.Logger.info(user.get('errors').toArray())
+            Ember.Logger.info(user.get('isValid'))
+            Ember.Logger.info(adapterError)
+          })
+        }
+      }.bind(this))
     },
 
     updateUser () {
@@ -153,34 +152,27 @@ export default Ember.Controller.extend({
       let couuid = this.get('store').peekRecord('customer', parseInt(cuid)).get('couuid')
       let nets = this.get('netids')
 
-      Ember.Logger.info(nets)
-
-      let self = this
-
       this.get('store').findRecord('user', parseInt(uid))
       .then(function (user) {
         user.set('customerid', parseInt(cuid))
         user.set('couuid', couuid)
         user.set('kind', kind)
-
-        user.set('nets', nets)
-
-        Ember.Logger.info(user.changedAttributes())
-        user.save()
-        .then((response) => {
-          self.set('responseMessage', `User ${response.get('store').peekRecord('user', response.get('id')).get('firstname')} was updated`)
-        })
-        .catch((adapterError) => {
-          Ember.Logger.info(user.get('errors'))
-          Ember.Logger.info(user.get('errors.name'))
-          Ember.Logger.info(user.get('errors').toArray())
-          Ember.Logger.info(user.get('isValid'))
-          Ember.Logger.info(adapterError)
-        })
-      })
-
-      // delete all networks for this user and
-      // create nnew etwork records using netids
+        user.set('usrnets', nets)
+        if (user.get('hasDirtyAttributes')) {
+          Ember.Logger.info(user.changedAttributes())
+          user.save()
+          .then((response) => {
+            this.set('responseMessage', `User ${response.get('store').peekRecord('user', response.get('id')).get('firstname')} was updated`)
+          })
+          .catch((adapterError) => {
+            Ember.Logger.info(user.get('errors'))
+            Ember.Logger.info(user.get('errors.name'))
+            Ember.Logger.info(user.get('errors').toArray())
+            Ember.Logger.info(user.get('isValid'))
+            Ember.Logger.info(adapterError)
+          })
+        }
+      }.bind(this))
     }
 
   }

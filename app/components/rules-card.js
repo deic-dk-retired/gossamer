@@ -37,7 +37,6 @@ export default Ember.Component.extend({
     let tot = moment(a).diff(b)
     let now = this.get('now')
     let percent = (moment(now).diff(b) / tot).toFixed(2)
-    Ember.Logger.info(percent)
     return `${percent}`
   }),
 
