@@ -31,10 +31,6 @@ body.pushable {
 body .bg {
   background: url('/assets/images/pbg.jpg') 50% 50% repeat #f4f4f4;
   opacity: 1;
-  // background: -webkit-linear-gradient(top left, #f4f4f4, #B3E5FC);
-  // background: -o-linear-gradient(top left, #f4f4f4,#B3E5FC);
-  // background: -moz-linear-gradient(top left, #f4f4f4,#B3E5FC);
-  // background: linear-gradient(top left, #f4f4f4, #B3E5FC);
   width: 100%;
   height: 100%;
   position: fixed;
@@ -43,14 +39,15 @@ body .bg {
 }
 
 .editcard {
-  position: absolute;
+  position: fixed;
   height: 100%;
-  right: -45%;
+  right: -40vw;
+  top:0;
   padding: 20px;
-  background: #fff;
-  min-width: 45%;
+  background: rgba(255,255,255,.98);
+  min-width: 40vw;
   box-shadow: -1px 0px 2px 1px rgba(150,150,150,.1);
-  z-index: 1;
+  z-index: 110;
   max-width: 100%;
   transition: .5s all ease-in;
    &.show {

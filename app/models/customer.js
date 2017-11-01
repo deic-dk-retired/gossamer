@@ -20,5 +20,5 @@ export default DS.Model.extend({
   ean: DS.attr('string'),
   valid: DS.attr('boolean'),
   description: DS.attr('string'),
-  networks: DS.hasMany('network', {readonly: true, async: true})
+  conets: DS.attr()
 })

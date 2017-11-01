@@ -19,6 +19,11 @@ export default Ember.Route.extend({
     .catch((err) => {
       Ember.Logger.info('dashboard stats error: ' + err)
     })
+  },
+
+  setupController (controller, model) {
+    this._super(...arguments)
+    Ember.set(controller, 'stats', model)
   }
 
 })

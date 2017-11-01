@@ -52,11 +52,15 @@ export default Ember.Component.extend({
   })),
 
   updateNow () {
-    let self = this
     let f = this.get('frequency')
     setInterval(function () {
-      self.set('now', moment.now())
-    }, f, self)
+      this.set('now', moment.now())
+    }.bind(this), f)
+  },
+
+  removeCard (timer) {
+    Ember.$('.card.rule-' + this.get('rid')).remove()
+    clearInterval(timer)
   },
 
   didInsertElement () {
@@ -65,45 +69,49 @@ export default Ember.Component.extend({
     let where = '.progress-' + this.get('rid')
     let percent = this.get('prcnt')
 
-    let bar = new ProgressBar.SemiCircle(where, {
-      strokeWidth: 6,
-      color: '#90A4AE',
-      trailColor: '#f4f4f4',
-      trailWidth: 1,
-      easing: 'easeInOut',
-      duration: 1400,
-      svgStyle: null,
-      text: {
-        value: '',
-        alignToBottom: true
-      },
-      from: {color: '#ECEFF1'},
-      to: {color: '#0288D1'},
-      // Set default step function for all animate calls
-      step: (state, bar) => {
-        bar.path.setAttribute('stroke', state.color)
-        let value = Math.floor(bar.value() * 100).toFixed(1)
-        if (value === 0) {
-          bar.setText('')
-        } else {
-          bar.setText(value + ' <span class="centsign">%</span><div class="proglabel">complete</div>')
+    if (where.length !== null) {
+      let bar = new ProgressBar.SemiCircle(where, {
+        strokeWidth: 6,
+        color: '#90A4AE',
+        trailColor: '#f4f4f4',
+        trailWidth: 1,
+        easing: 'easeInOut',
+        duration: 1400,
+        svgStyle: null,
+        text: {
+          value: '',
+          alignToBottom: true
+        },
+        from: {color: '#ECEFF1'},
+        to: {color: '#0288D1'},
+        // Set default step function for all animate calls
+        step: (state, bar) => {
+          bar.path.setAttribute('stroke', state.color)
+          let value = Math.floor(bar.value() * 100).toFixed(1)
+          if (value === 0) {
+            bar.setText('')
+          } else {
+            bar.setText(value + ' <span class="centsign">%</span><div class="proglabel">complete</div>')
+          }
+
+          bar.text.style.color = '#37474F'
         }
+      })
+      bar.text.style.fontSize = '1.2rem'
 
-        bar.text.style.color = '#37474F'
-      }
-    })
-    bar.text.style.fontSize = '1.2rem'
+      bar.animate(percent)
+      let f = this.get('frequency')
+      let reanimate = setInterval(function () {
+        bar.animate(this.get('prcnt'))
+        if (this.get('prcnt') > 0.99) {
+          this.removeCard(reanimate)
+        }
+      }.bind(this), f)
+    }
+  },
 
-    bar.animate(percent)
-    let self = this
-    let f = this.get('frequency')
-    setInterval(function () {
-      bar.animate(self.get('prcnt'))
-      // Ember.Logger.info(self.get('prcnt'))
-      // if (self.get('prcnt') >= 1.0) {
-      //   self.transitionTo('rules')
-      // }
-    }, f, self)
+  didDestroyElement () {
+    this._super(...arguments)
   }
 
 })

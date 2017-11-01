@@ -15,6 +15,5 @@ export default DS.Model.extend(Validations, {
   name: DS.attr('string'),
   kind: DS.attr('string'),
   net: DS.attr(),
-  description: DS.attr('string'),
-  customer: DS.belongsTo('customer', {readonly: true, async: true})
+  description: DS.attr('string')
 })

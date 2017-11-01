@@ -11,13 +11,13 @@
   </div>
 </div>
   {{ rem-user }}
-<div class="six wide column">
+<div class="sixteen wide mobile ten wide tablet six wide computer column">
   {{user-edit
     userid=userid
     kind=kind
     customerid=customerid
     companyname=companyname
-    netnames=netnames
+    conetworks=conetworks
     netids=netids
     name=name
     firstname=firstname
@@ -28,5 +28,6 @@
     buttonico=buttonico
     saveUser=(action 'saveUser')
     resetForm=(action 'resetForm')
+    setCoNetworks=(action 'setCoNetworks')
   }}
 </div>

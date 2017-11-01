@@ -22,7 +22,7 @@
         <div class="default text" data-value="">Co. Inc.</div>
         <div class="menu">
           {{#each customers as |co|}}
-            <div class="item" data-value="{{co.id}}">
+            <div class="item" data-value="{{co.id}}" data-text="{{co.companyname}}">
               {{co.companyname}}
             </div>
           {{/each}}
@@ -37,8 +37,8 @@
         <div class="menu">
           {{#each networks as |net|}}
             {{!-- {{#if (eq net.customerid customerid)}} --}}
-              <div class="item" data-value="{{net.id}}">
-                {{net.name}}
+              <div class="item" data-value="{{net.id}}" data-text="{{net.name}}">
+                {{net.name}} <span class="ui label small">{{net.net}}</span>
               </div>
             {{!-- {{/if}} --}}
           {{/each}}

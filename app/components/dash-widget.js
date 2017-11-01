@@ -133,12 +133,11 @@ const DashWidgetComponent = Ember.Component.extend({
     // callback to handle fetched data
     // also renders the chart
     let render = function (error, data) {
-      // console.log(thisComponent.get('gfill1'))
       if (error) throw error
 
-      if (thisComponent.$('.dimmer').length !== 0) {
+      if (this.$('.dimmer').length !== 0) {
         setTimeout(function () {
-          thisComponent.$('.dimmer').remove()
+          this.$('.dimmer').remove()
         }, 1000)
       }
       // remove old points
@@ -171,19 +170,19 @@ const DashWidgetComponent = Ember.Component.extend({
         .call(yAxis.tickFormat(d3.format('.0s')).tickSize(0 - width).ticks(8))
         .append('text')
           .attr('class', 'ytext')
-          .text(thisComponent.get('ytext'))
+          .text(this.get('ytext'))
       focus.select('.domain').remove()
 
       // append path with data
       focus.append('path').datum(d)
         .attr('class', css)
-        .attr(skin, thisComponent.get('gfill1'))
+        .attr(skin, this.get('gfill1'))
         .attr('d', shape)
 
       // append path to context
       context.append('path').datum(d)
       .attr('class', css)
-      .attr(skin, thisComponent.get('gfill1'))
+      .attr(skin, this.get('gfill1'))
       .attr('d', shape2)
 
       // append x axis to context
@@ -205,7 +204,7 @@ const DashWidgetComponent = Ember.Component.extend({
         .attr('height', height)
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
         .call(zoom)
-    }
+    }.bind(this)
 
     // fetch data and render chart content
     d3.json(this.get('url'), render)
