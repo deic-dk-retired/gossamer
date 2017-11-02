@@ -35,8 +35,8 @@
         <i class="dropdown icon"></i>
         <div class="default text" data-value="">Co. Inc.'s net1</div>
         <div class="menu">
-          {{#each networks as |net|}}
-            {{!-- {{#if (eq net.customerid customerid)}} --}}
+          {{#each conetworks._result.networks as |net|}}
+            {{!-- {{#if (eq customerid net.coid)}} --}}
               <div class="item" data-value="{{net.id}}" data-text="{{net.name}}">
                 {{net.name}} <span class="ui label small">{{net.net}}</span>
               </div>
@@ -44,6 +44,7 @@
           {{/each}}
         </div>
       {{/ui-dropdown}}
+
     </div>
 
   <button class="ui animated fade button blue disabled togDisabled" type="submit">

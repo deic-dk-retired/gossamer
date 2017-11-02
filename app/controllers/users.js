@@ -2,38 +2,69 @@ import Ember from 'ember'
 // import Cryptojs from '/node_modules/crypto-js'
 
 export default Ember.Controller.extend({
-  userid: null,
+  userid: '',
   firstname: '',
   kind: '',
   customerid: '',
-  couuid: null,
-  // conets: null,
+  couuid: '',
+
   conetworks: Ember.computed('customerid', function () {
+    let netobjlist = []
     let netlist = []
-    Ember.Logger.info(this.get('customerid'))
     if (this.get('customerid') !== '') {
-      let cust = this.get('store').peekRecord('customer', parseInt(this.get('customerid')))
-      let custnets = cust.get('conets')
-      Ember.Logger.info('show networks for: ' + this.get('customerid'))
-      Ember.Logger.info(custnets)
-      // this.set('conetworks', custnets)
-      netlist = cust.get('conets')
+      let co = this.get('store').peekRecord('customer', parseInt(this.get('customerid')))
+      netlist = co.get('conets')
+
+      if (netlist.length === 1) {
+        let network = this.get('store').peekRecord('network', netlist[0])
+        netobjlist.push({
+          id: network.get('id'),
+          coid: network.get('customerid'),
+          name: network.get('name'),
+          net: network.get('net')
+        })
+        return Ember.RSVP.hash({
+          networks: netobjlist
+        })
+      }
+      if (netlist.length > 1) {
+        netlist.map((e) => {
+          let network = this.get('store').peekRecord('network', e)
+          netobjlist.push({
+            id: network.get('id'),
+            coid: network.get('customerid'),
+            name: network.get('name'),
+            net: network.get('net')
+          })
+        })
+        return Ember.RSVP.hash({
+          networks: netobjlist
+        })
+      }
+      if (netlist.length === 0) {
+        return Ember.RSVP.hash({
+          networks: netobjlist
+        })
+      }
     }
-    return `${netlist}`
   }),
 
-  // customeridDidChange: Ember.on('render', Ember.observer('customerid', function () {
-  //   if (parseInt(this.get('customerid')) !== null) {
-  //     Ember.Logger.info('show networks for: ' + this.get('customerid'))
-  //     let cust = this.get('store').peekRecord('customer', parseInt(this.get('customerid')))
-  //     let custnets = cust.get('conets')
-  //     Ember.Logger.info(custnets)
-  //     this.set('conetworks', custnets)
-  //   }
-  // })),
+  coname: Ember.computed('customerid', function () {
+
+  }),
 
   companyname: '',
   netids: [],
+
+  usernetlist: Ember.computed('userid', function () {
+    let usernetwors = []
+    if (this.get('userid') !== '') {
+      usernetwors = this.get('store').peekRecord('user', this.get('userid')).get('usrnets')
+    }
+    Ember.Logger.info(usernetwors)
+    return `${usernetwors}`
+  }),
+
   name: '',
   username: '',
   isDisabled: 'disabled',
@@ -57,12 +88,11 @@ export default Ember.Controller.extend({
 
     resetForm () {
       this.setProperties({
-        userid: null,
+        userid: '',
         firstname: '',
         kind: '',
-        customerid: null,
-        couuid: null,
-        conetworks: [],
+        customerid: '',
+        couuid: '',
         companyname: '',
         netids: [],
         name: '',
@@ -99,7 +129,6 @@ export default Ember.Controller.extend({
     },
 
     setCoNetworks () {
-      // Ember.Logger.info(this.get(''))
       Ember.Logger.info(this.get('conetworks'))
     },
 
@@ -116,13 +145,12 @@ export default Ember.Controller.extend({
         kind: user.get('kind'),
         customerid: parseInt(customer.get('id')),
         couuid: customer.get('couuid'),
-        // conets: customer.get('conets'),
         companyname: customer.get('companyname'),
-        netids: user.get('usrnets'),
         name: user.get('name'),
         firstname: user.get('firstname'),
         username: username
       })
+      this.set('netids', user.get('usrnets'))
     },
 
     saveUser () {

@@ -14,11 +14,12 @@ export default Ember.Controller.extend({
   actions: {
 
     authenticate () {
-      let { identification, password } = this.getProperties('username', 'password')
+      let { username, password } = this.getProperties('username', 'password')
       this.get('session').authenticate('authenticator:oauth2',
-        identification,
+        username,
         password
-      ).catch((error) => {
+      )
+      .catch((error) => {
         this.set('errorMessage', error.reason)
       })
     },
@@ -39,7 +40,6 @@ export default Ember.Controller.extend({
           password: this.get('password')
         })
       })
-
       .then((response) => {
         if (response.status !== 200) {
           Ember.Logger.info('Looks like there was a problem. Status Code: ' + response.status)
