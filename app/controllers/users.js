@@ -2,6 +2,8 @@ import Ember from 'ember'
 // import Cryptojs from '/node_modules/crypto-js'
 
 export default Ember.Controller.extend({
+  notifications: Ember.inject.service('notification-messages'),
+
   userid: '',
   firstname: '',
   username: '',
@@ -142,6 +144,7 @@ export default Ember.Controller.extend({
     },
 
     deactivateUser (uid) {
+      let emuser = this.get('store').peekRecord('user', uid).get('firstname')
       this.get('store').findRecord('user', parseInt(uid))
       .then(function (user) {
         user.set('valid', 'inactive')
@@ -151,6 +154,12 @@ export default Ember.Controller.extend({
           .then((response) => {
             this.set('responseMessage', `User ${response.get('store').peekRecord('user', response.get('id')).get('firstname')} was deactivated`)
             Ember.Logger.info(this.get('responseMessage'))
+
+            this.get('notifications')
+            .warning(emuser + ' was deactivated!', {
+              autoClear: true,
+              clearDuration: 5000
+            })
           })
           .catch((adapterError) => {
             Ember.Logger.info(user.get('errors'))
@@ -165,6 +174,7 @@ export default Ember.Controller.extend({
     },
 
     activateUser (uid) {
+      let emuser = this.get('store').peekRecord('user', uid).get('firstname')
       this.get('store').findRecord('user', parseInt(uid))
       .then(function (user) {
         user.set('valid', 'active')
@@ -174,6 +184,12 @@ export default Ember.Controller.extend({
           .then((response) => {
             this.set('responseMessage', `User ${response.get('store').peekRecord('user', response.get('id')).get('firstname')} was activated`)
             Ember.Logger.info(this.get('responseMessage'))
+
+            this.get('notifications')
+            .success(emuser + ' is activated!', {
+              autoClear: true,
+              clearDuration: 5000
+            })
           })
           .catch((adapterError) => {
             Ember.Logger.info(user.get('errors'))
@@ -204,6 +220,12 @@ export default Ember.Controller.extend({
           user.save()
           .then((response) => {
             this.set('responseMessage', `User ${response.get('store').peekRecord('user', response.get('id')).get('firstname')} was updated`)
+
+            this.get('notifications')
+            .success('Successfully updated!', {
+              autoClear: true,
+              clearDuration: 5000
+            })
           })
           .catch((adapterError) => {
             Ember.Logger.info(user.get('errors'))
@@ -211,6 +233,12 @@ export default Ember.Controller.extend({
             Ember.Logger.info(user.get('errors').toArray())
             Ember.Logger.info(user.get('isValid'))
             Ember.Logger.info(adapterError)
+
+            this.get('notifications')
+            .error('Something went wrong!', {
+              autoClear: true,
+              clearDuration: 10000
+            })
           })
         }
       }.bind(this))
