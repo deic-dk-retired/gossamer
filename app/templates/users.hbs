@@ -10,20 +10,20 @@
     {{/each}}
   </div>
 </div>
-  {{ rem-user }}
 <div class="sixteen wide mobile ten wide tablet six wide computer column">
   {{user-edit
     userid=userid
+    firstname=firstname
+    username=username
     kind=kind
     customerid=customerid
     couuid=couuid
     companyname=companyname
-    conetworks=conetworks
     netids=netids
+    conetlist=conetlist
+    conetworks=conetworks
     usernetlist=usernetlist
-    name=name
-    firstname=firstname
-    username=username
+
     users=users
     customers=customers
     networks=networks
@@ -31,6 +31,5 @@
     buttonico=buttonico
     saveUser=(action 'saveUser')
     resetForm=(action 'resetForm')
-    setCoNetworks=(action 'setCoNetworks')
   }}
 </div>

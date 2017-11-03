@@ -4,10 +4,22 @@ import Ember from 'ember'
 export default Ember.Controller.extend({
   userid: '',
   firstname: '',
+  username: '',
   kind: '',
   customerid: '',
   couuid: '',
+  companyname: '',
+  netids: [],
 
+  // customer network list [id,...]
+  conetlist: Ember.computed('customerid', function () {
+    if (this.get('customerid') !== '') {
+      let co = this.get('store').peekRecord('customer', parseInt(this.get('customerid')))
+      return `${co.get('conets')}`
+    }
+  }),
+
+  // customer network objects {id, name, net}
   conetworks: Ember.computed('customerid', function () {
     let netobjlist = []
     let netlist = []
@@ -49,27 +61,18 @@ export default Ember.Controller.extend({
     }
   }),
 
-  coname: Ember.computed('customerid', function () {
-
-  }),
-
-  companyname: '',
-  netids: [],
-
+  // user network ids [id,...]
   usernetlist: Ember.computed('userid', function () {
-    let usernetwors = []
+    let usernetworks = []
     if (this.get('userid') !== '') {
-      usernetwors = this.get('store').peekRecord('user', this.get('userid')).get('usrnets')
+      usernetworks = this.get('store').peekRecord('user', this.get('userid')).get('usrnets')
     }
-    Ember.Logger.info(usernetwors)
-    return `${usernetwors}`
+    Ember.Logger.info(usernetworks)
+    return `${usernetworks}`
   }),
 
-  name: '',
-  username: '',
   isDisabled: 'disabled',
   changePass: 'disabled',
-  datavalue: 'data-value',
   responseMessage: '',
 
   init () {
@@ -90,22 +93,18 @@ export default Ember.Controller.extend({
       this.setProperties({
         userid: '',
         firstname: '',
+        username: '',
         kind: '',
         customerid: '',
         couuid: '',
         companyname: '',
         netids: [],
-        name: '',
-        username: '',
+
         isDisabled: 'disabled',
         changePass: 'disabled'
       })
       Ember.$('.card').removeClass('blue')
       Ember.$('.togDisabled').addClass('disabled')
-      // // remove edit screen
-      // if (Ember.$('.editcard').length > 0) {
-      //   Ember.$('.editcard').remove()
-      // }
     },
 
     toggleActive (set, toSet) {
@@ -113,23 +112,7 @@ export default Ember.Controller.extend({
         Ember.$('.card').removeClass('blue')
         Ember.$('.usr-' + toSet).addClass('blue')
         Ember.$('.togDisabled').removeClass('disabled')
-        // // enter edit screen
-        // if (Ember.$('.editcard').length === 0) {
-        //   Ember.$('.pusher')
-        //     .parent()
-        //     .prepend('<div class="editcard"></div>')
-        //   Ember.$('.editcard')
-        //    .append(`<button class="ui animated fade button grey" type="reset">
-        //   <div class="visible content" >Cancel</div>
-        //   <div class="hidden content"><i class="cancel icon"></i></div>
-        // </button>`)
-        //   Ember.$('.editcard').addClass('show')
-        // }
       }
-    },
-
-    setCoNetworks () {
-      Ember.Logger.info(this.get('conetworks'))
     },
 
     openModal (name) {
@@ -146,9 +129,8 @@ export default Ember.Controller.extend({
         customerid: parseInt(customer.get('id')),
         couuid: customer.get('couuid'),
         companyname: customer.get('companyname'),
-        name: user.get('name'),
-        firstname: user.get('firstname'),
-        username: username
+        firstname: user.get('firstname')
+        // username: username
       })
       this.set('netids', user.get('usrnets'))
     },

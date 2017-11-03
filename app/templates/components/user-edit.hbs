@@ -1,59 +1,87 @@
 <div class="ui padded segment">
-<h2>Edit <span class="enhance">{{firstname}}</span></h2>
-<form class="ui form" {{action saveUser on='submit'}}>
-    <div class="required field">
-      <label>Admin Type</label>
-      <div class="inline fields togDisabled disabled">
-        <div class="field">
-          {{ui-radio name="kind" label="Network" value="netadmin" current=kind onChange=(action (mut kind))}}
-        </div>
-        <div class="field">
-          {{ui-radio name="kind" label="Database" value="dbadmin" current=kind onChange=(action (mut kind))}}
-        </div>
-        <div class="field">
-          {{ui-radio name="kind" label="Global" value="globaladmin" current=kind onChange=(action (mut kind))}}
+  <h2>Edit <span class="enhance">{{firstname}}</span></h2>
+  <form class="ui form" {{action saveUser on='submit'}}>
+      <div class="required field">
+        <label>Admin Type</label>
+        <div class="inline fields togDisabled disabled">
+          <div class="field">
+            {{ui-radio
+              name="kind"
+              label="Network"
+              value="netadmin"
+              current=kind
+              onChange=(action (mut kind))
+            }}
+          </div>
+          <div class="field">
+            {{ui-radio
+              name="kind"
+              label="Database"
+              value="dbadmin"
+              current=kind
+              onChange=(action (mut kind))
+            }}
+          </div>
+          <div class="field">
+            {{ui-radio
+              name="kind"
+              label="Global"
+              value="globaladmin"
+              current=kind
+              onChange=(action (mut kind))
+            }}
+          </div>
         </div>
       </div>
-    </div>
-    <div class="required field">
-      <label>Customer</label>
-      {{#ui-dropdown class="search selection togDisabled disabled" allowAdditions=false selected=companyname onChange=(action (mut customerid)) as |execute mapper|}}
-        <i class="dropdown icon"></i>
-        <div class="default text" data-value="">Co. Inc.</div>
-        <div class="menu">
-          {{#each customers as |co|}}
-            <div class="item" data-value="{{co.id}}" data-text="{{co.companyname}}">
-              {{co.companyname}}
-            </div>
-          {{/each}}
-        </div>
-      {{/ui-dropdown}}
-    </div>
-    <div class="required field">
-      <label>Networks of {{companyname}}</label>
-      {{#ui-dropdown class="search multiple selection togDisabled disabled" allowAdditions=false selected=netids onChange=(action (mut netids)) as |execute mapper|}}
-        <i class="dropdown icon"></i>
-        <div class="default text" data-value="">Co. Inc.'s net1</div>
-        <div class="menu">
-          {{#each conetworks._result.networks as |net|}}
-            {{!-- {{#if (eq customerid net.coid)}} --}}
-              <div class="item" data-value="{{net.id}}" data-text="{{net.name}}">
-                {{net.name}} <span class="ui label small">{{net.net}}</span>
+      <div class="required field">
+        <label>Customer</label>
+        {{#ui-dropdown
+          class="search selection togDisabled disabled"
+          allowAdditions=false
+          selected=companyname
+          onChange=(action (mut customerid))
+        }}
+          <i class="dropdown icon"></i>
+          <div class="default text" data-value="">Co. Inc.</div>
+          <div class="menu">
+            {{#each customers as |co|}}
+              <div class="item" data-value="{{co.id}}" data-text="{{co.companyname}}">
+                {{co.companyname}}
               </div>
-            {{!-- {{/if}} --}}
-          {{/each}}
-        </div>
-      {{/ui-dropdown}}
+            {{/each}}
+          </div>
+        {{/ui-dropdown}}
+      </div>
+      <div class="required field">
+        <label>Networks of {{companyname}}</label>
+        {{#ui-dropdown
+          class="search multiple selection togDisabled disabled"
+          allowAdditions=false
+          selected=netids
+          onChange=(action (mut netids))
+        }}
+          <i class="dropdown icon"></i>
+          <div class="default text" data-value="">Networks</div>
+          <div class="menu">
+            {{#each conetworks._result.networks as |net|}}
+              {{!-- {{#if (eq customerid net.coid)}} --}}
+                <div class="item" data-value="{{net.id}}" data-text="{{net.id}}, {{net.name}}">
+                  {{net.id}}, {{net.name}} <span class="ui label small">{{net.net}}</span>
+                </div>
+              {{!-- {{/if}} --}}
+            {{/each}}
+          </div>
+        {{/ui-dropdown}}
 
-    </div>
+      </div>
 
-  <button class="ui animated fade button blue disabled togDisabled" type="submit">
-    <div class="visible content">{{act}}</div>
-    <div class="hidden content"><i class="{{buttonico}} icon"></i></div>
-  </button>
-  <button class="ui animated fade button grey" type="reset" {{action resetForm on='click'}}>
-    <div class="visible content">Cancel</div>
-    <div class="hidden content"><i class="cancel icon"></i></div>
-  </button>
-</form>
+    <button class="ui animated fade button blue disabled togDisabled" type="submit">
+      <div class="visible content">{{act}}</div>
+      <div class="hidden content"><i class="{{buttonico}} icon"></i></div>
+    </button>
+    <button class="ui animated fade button grey" type="reset" {{action resetForm on='click'}}>
+      <div class="visible content">Cancel</div>
+      <div class="hidden content"><i class="cancel icon"></i></div>
+    </button>
+  </form>
 </div>

@@ -38,23 +38,6 @@ body .bg {
   left: 0;
 }
 
-.editcard {
-  position: fixed;
-  height: 100%;
-  right: -40vw;
-  top:0;
-  padding: 20px;
-  background: rgba(255,255,255,.98);
-  min-width: 40vw;
-  box-shadow: -1px 0px 2px 1px rgba(150,150,150,.1);
-  z-index: 110;
-  max-width: 100%;
-  transition: .5s all ease-in;
-   &.show {
-     right: 0;
-   }
-}
-
 .pushable .begin {
   position: relative;
   top: 30vh;
@@ -151,9 +134,6 @@ body .bg {
   padding-bottom: @xxlg;
   font-family: 'Kanit'!important;
   color: @blue;
-  // span {
-  //   display: block;
-  // }
   .welcome {
     font-size: 1.5em;
   }
@@ -193,7 +173,13 @@ aside {
   }
 }
 
-.table th{
+.toRemove {
+  transform: translate(0px,-1000px)!important;
+  opacity: .2;
+  transition: .3s ease-in all!important;
+}
+
+.table th {
   text-transform: uppercase!important;
 }
 
@@ -210,12 +196,12 @@ aside {
   }
 }
 
-[class*="progress-"]  {
+[class*="progress-"] {
   margin: 0px auto;
   width: 150px;
   position: relative;
   text-align: center;
-  .centsign{
+  .centsign {
     font-size: .5rem;
     position: relative;
     bottom:0px;
@@ -227,7 +213,7 @@ aside {
   }
 }
 
-[class*="progress-"].circle  {
+[class*="progress-"].circle {
   margin: 0px auto;
   width: 100%;
   height: 100%;
@@ -261,25 +247,25 @@ aside {
 }
 
 .inactive.card {
-  .content, .black{
+  .content, .black {
     color: #f0f0f0!important;
   }
 }
 
 // dashboard
-.dash-widget, .d3-vis{
+.dash-widget, .d3-vis {
   background: @light;
   border:0;
   border-radius: 0;
-  .header{
+  .header {
       background: @light;
       margin-bottom: 0;
       // padding: @xs * .5 @xs * .8;
-      & div{
+      & div {
         display: inline-block;
       }
   }
-  .title{
+  .title {
     width: 100%;
     p {
       color: @darker800;
@@ -289,10 +275,10 @@ aside {
       padding: 0 0 @lg;
     }
   }
-  .controls{
+  .controls {
     width: 15%;
     height: 10px;
-    label{
+    label {
       font-size: @sm;
     }
   }
@@ -301,23 +287,23 @@ aside {
     min-height: 200px *1.8;
     width: 100%;
   }
-  .axes{
+  .axes {
     fill:none;
     stroke:@black + 111;
   }
-  .ytext{
+  .ytext {
     fill: @black;
     transform: rotate(-90deg) translate(-@sm,@xxlg);
     font-size: @md;
   }
-  .tick{
+  .tick {
     font-family: 'Montserrat', monospace, sans-serif;
     opacity: .8;
-    line{
+    line {
       stroke:@black;
       opacity: .2;
     }
-    text{
+    text {
       fill:@black;
     }
   }
@@ -333,10 +319,10 @@ aside {
     clip-path: url(#clip);
     opacity: .6;
   }
-  .circle{
+  .circle {
     opacity: .3;
   }
-  .selection{
+  .selection {
     fill:@blue;
     opacity: .2;
   }
@@ -356,7 +342,7 @@ and (orientation:landscape) {
       color: @black!important;
       font-size: 1.1rem!important;
     }
-    .statslabel{
+    .statslabel {
       margin-top: -5px!important;
       font-size: .2rem!important;
     }

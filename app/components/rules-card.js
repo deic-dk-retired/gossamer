@@ -59,7 +59,10 @@ export default Ember.Component.extend({
   },
 
   removeCard (timer) {
-    Ember.$('.card.rule-' + this.get('rid')).remove()
+    Ember.$('.card.rule-' + this.get('rid')).addClass('toRemove')
+    setTimeout(function () {
+      Ember.$('.card.rule-' + this.get('rid')).remove()
+    }.bind(this), 300)
     clearInterval(timer)
   },
 
