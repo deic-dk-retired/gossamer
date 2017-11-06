@@ -6,17 +6,17 @@ export default Ember.Controller.extend({
 
   userid: '',
   firstname: '',
-  username: '',
   kind: '',
   customerid: '',
   couuid: '',
   companyname: '',
-  netids: [],
+  // netids: [],
 
   // customer network list [id,...]
   conetlist: Ember.computed('customerid', function () {
     if (this.get('customerid') !== '') {
       let co = this.get('store').peekRecord('customer', parseInt(this.get('customerid')))
+      Ember.Logger.info(co.get('conets'))
       return `${co.get('conets')}`
     }
   }),
@@ -95,7 +95,6 @@ export default Ember.Controller.extend({
       this.setProperties({
         userid: '',
         firstname: '',
-        username: '',
         kind: '',
         customerid: '',
         couuid: '',
@@ -109,22 +108,20 @@ export default Ember.Controller.extend({
       Ember.$('.togDisabled').addClass('disabled')
     },
 
-    toggleActive (set, toSet) {
-      if (set !== toSet) {
-        Ember.$('.card').removeClass('blue')
-        Ember.$('.usr-' + toSet).addClass('blue')
-        Ember.$('.togDisabled').removeClass('disabled')
-      }
+    toggleActive (toSet) {
+      Ember.$('.card').removeClass('blue')
+      Ember.$('.usr-' + toSet).addClass('blue')
+      Ember.$('.togDisabled').removeClass('disabled')
     },
 
     openModal (name) {
       Ember.$('.ui.' + name + '.modal').modal('show')
     },
 
-    showUser (uid, username) {
+    showUser (uid) {
       let user = this.get('store').peekRecord('user', uid)
       let customer = this.get('store').peekRecord('customer', parseInt(user.get('customerid')))
-      this.send('toggleActive', this.get('username'), username)
+      this.send('toggleActive', user.get('username'))
       this.setProperties({
         userid: parseInt(user.get('id')),
         kind: user.get('kind'),
@@ -132,7 +129,6 @@ export default Ember.Controller.extend({
         couuid: customer.get('couuid'),
         companyname: customer.get('companyname'),
         firstname: user.get('firstname')
-        // username: username
       })
       this.set('netids', user.get('usrnets'))
     },
@@ -155,8 +151,8 @@ export default Ember.Controller.extend({
             this.set('responseMessage', `User ${response.get('store').peekRecord('user', response.get('id')).get('firstname')} was deactivated`)
             Ember.Logger.info(this.get('responseMessage'))
 
-            this.get('notifications')
-            .warning(emuser + ' was deactivated!', {
+            this.get('notifications').clearAll()
+            this.get('notifications').info(emuser + ' was deactivated!', {
               autoClear: true,
               clearDuration: 5000
             })
@@ -185,8 +181,8 @@ export default Ember.Controller.extend({
             this.set('responseMessage', `User ${response.get('store').peekRecord('user', response.get('id')).get('firstname')} was activated`)
             Ember.Logger.info(this.get('responseMessage'))
 
-            this.get('notifications')
-            .success(emuser + ' is activated!', {
+            this.get('notifications').clearAll()
+            this.get('notifications').success(emuser + ' is activated!', {
               autoClear: true,
               clearDuration: 5000
             })
@@ -221,8 +217,8 @@ export default Ember.Controller.extend({
           .then((response) => {
             this.set('responseMessage', `User ${response.get('store').peekRecord('user', response.get('id')).get('firstname')} was updated`)
 
-            this.get('notifications')
-            .success('Successfully updated!', {
+            this.get('notifications').clearAll()
+            this.get('notifications').success('Successfully updated!', {
               autoClear: true,
               clearDuration: 5000
             })
@@ -234,8 +230,8 @@ export default Ember.Controller.extend({
             Ember.Logger.info(user.get('isValid'))
             Ember.Logger.info(adapterError)
 
-            this.get('notifications')
-            .error('Something went wrong!', {
+            this.get('notifications').clearAll()
+            this.get('notifications').error('Something went wrong!', {
               autoClear: true,
               clearDuration: 10000
             })

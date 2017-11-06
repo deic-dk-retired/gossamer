@@ -1,4 +1,5 @@
 {{#if (not-eq currentRouteName 'login')}}
+  {{notification-container position="top-right"}}
   <div class="pusher">
     <div class="full height">
       <div class="toc">
@@ -12,7 +13,6 @@
       </div>
     </div>
   </div>
-  {{notification-container position="top-right"}}
 {{else}}
   {{#if (eq currentRouteName "login")}}
     {{render "login"}}

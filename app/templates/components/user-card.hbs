@@ -3,7 +3,7 @@
     <div class="right floated meta">
       {{#if (eq u.valid 'active')}}
         {{#ui-popup content="edit" variation="small inverted" position="right center"}}
-          <i class="edit blue icon" {{action showUser u.id u.username}}></i>
+          <i class="edit blue icon" {{action showUser u.id}}></i>
         {{/ui-popup}}
       {{/if}}
     </div>
