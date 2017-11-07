@@ -4,9 +4,10 @@ export default ApplicationSerializer.extend({
   serialize (snapshot, options) {
     let json = this._super(...arguments)
     json = {
-      custid: json.data.attributes.custid,
-      adminid: json.data.attributes.adminid,
-      fmnid: json.data.attributes.fmnid,
+      ruleuuid: json.data.attributes.ruleuuid,
+      couuid: json.data.attributes.couuid,
+      useruuid: json.data.attributes.useruuid,
+      fmnuuid: json.data.attributes.fmnuuid,
       rname: json.data.attributes.rname,
       direct: json.data.attributes.direct,
       validfrom: json.data.attributes.validfrom,

@@ -1,6 +1,8 @@
 import Ember from 'ember'
 
 export default Ember.Controller.extend({
+  notifications: Ember.inject.service('notification-messages'),
+
   queryParams: ['page'],
   page: 1,
 
@@ -59,6 +61,36 @@ export default Ember.Controller.extend({
         proto: rule.get('ipprotocol'),
         action: rule.get('action')
       })
+    },
+
+    updateRule (rid) {
+      let ruleuuid = this.get('store').peekRecord('rule', parseInt(rid)).get('ruleuuid')
+      this.get('store').findRecord('rule', parseInt(rid))
+      .then(function (rule) {
+        rule.set('isexpired', true)
+        rule.set('isactive', false)
+        if (rule.get('hasDirtyAttributes')) {
+          Ember.Logger.info(rule.changedAttributes())
+          rule.save()
+          .then((response) => {
+            this.set('responseMessage', `Rule ${response.get('store').peekRecord('rule', response.get('id')).get('ruleuuid')} was cleared`)
+            Ember.Logger.info(this.get('responseMessage'))
+
+            this.get('notifications').clearAll()
+            this.get('notifications').info(ruleuuid + ' was cleared!', {
+              autoClear: true,
+              clearDuration: 5000
+            })
+          })
+          .catch((adapterError) => {
+            Ember.Logger.info(rule.get('errors'))
+            Ember.Logger.info(rule.get('errors.name'))
+            Ember.Logger.info(rule.get('errors').toArray())
+            Ember.Logger.info(rule.get('isValid'))
+            Ember.Logger.info(adapterError)
+          })
+        }
+      }.bind(this))
     }
 
   }
