@@ -3,9 +3,10 @@ import DS from 'ember-data'
 import moment from 'moment'
 
 export default DS.Model.extend({
-  custid: DS.attr('string'),
-  adminid: DS.attr('string'),
-  fmnid: DS.attr('string'),
+  ruleuuid: DS.attr('string'),
+  couuid: DS.attr('string'),
+  useruuid: DS.attr('string'),
+  fmnuuid: DS.attr('string'),
   rname: DS.attr('string'),
   direct: DS.attr('string'),
   validfrom: DS.attr('date'),

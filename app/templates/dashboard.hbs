@@ -24,18 +24,58 @@
 </div>
 
 <div class="sixteen wide mobile sixteen wide tablet eight wide computer column">
-  {{traffic-band}}
+  {{dash-widget
+    'traffic-band'
+    'bits/s'
+    'qf-traffic'
+    'traffic bandwidth'
+    '#90CAF9'
+    '#80CBC4'
+    'area'
+  }}
 </div>
 <div class="sixteen wide mobile sixteen wide tablet four wide computer column">
-  {{in-bps}}
+  {{dash-widget
+    'bps-in'
+    'bits/s'
+    'qf-in-bps'
+    'bps (in)'
+    '#90CAF9'
+    ''
+    'area'
+  }}
 </div>
 <div class="sixteen wide mobile sixteen wide tablet four wide computer column">
-  {{top-in-bps}}
+  {{dash-widget
+    'top-10-bps-in'
+    'bits/s'
+    'qf-top-10-in-bps'
+    'top 10 bps (in)'
+    '#BBDEFB'
+    ''
+    'line'
+  }}
 </div>
 <div class="sixteen wide mobile sixteen wide tablet eight wide computer column">
-  {{in-pps}}
+  {{dash-widget
+    'pps-in'
+    'packets/s'
+    'qf-in-pps'
+    'pps (in)'
+    '#F48FB1'
+    ''
+    'area'
+  }}
 </div>
 <div class="sixteen wide mobile sixteen wide tablet eight wide computer column">
-  {{top-in-pps}}
+  {{dash-widget
+    'top-10-pps-in'
+    'packets/s'
+    'qf-top-10-in-pps'
+    'top 10 pps (in)'
+    '#F8BBD0'
+    ''
+    'line'
+  }}
 </div>
 

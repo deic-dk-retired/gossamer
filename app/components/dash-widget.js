@@ -3,7 +3,9 @@ import * as d3 from 'd3'
 import { event } from 'd3-selection'
 
 const DashWidgetComponent = Ember.Component.extend({
-  // tagName: '',
+
+  endpoint: 'http://10.33.1.97:4242/api/series/',
+
   class: Ember.computed('params.[]', function () {
     return this.get('params')[0]
   }),
@@ -12,7 +14,7 @@ const DashWidgetComponent = Ember.Component.extend({
     return this.get('params')[1]
   }),
 
-  url: Ember.computed('params.[]', function () {
+  series: Ember.computed('params.[]', function () {
     return this.get('params')[2]
   }),
 
@@ -32,6 +34,10 @@ const DashWidgetComponent = Ember.Component.extend({
     return this.get('params')[6]
   }),
 
+  url: Ember.computed('endppoint', 'series', function () {
+    return this.get('endpoint') + this.get('series')
+  }),
+
   didRender () {
     this._super(...arguments)
     Ember.$('.segment').append(`<div class="ui active inverted dimmer">
@@ -41,6 +47,8 @@ const DashWidgetComponent = Ember.Component.extend({
 
   didInsertElement () {
     this._super(...arguments)
+    this.$().addClass(this.get('class'))
+
     let parseTime = d3.timeParse('%Y-%m-%dT%H:%M:%SZ')
     let xTime = d3.timeFormat('%H:%M')
 
@@ -129,7 +137,6 @@ const DashWidgetComponent = Ember.Component.extend({
     .attr('class', 'context')
     .attr('transform', 'translate(' + margin2.left + ',' + margin2.top + ')')
 
-    let thisComponent = this
     // callback to handle fetched data
     // also renders the chart
     let render = function (error, data) {
