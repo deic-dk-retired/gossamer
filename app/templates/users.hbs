@@ -1,35 +1,37 @@
-<div class="sixteen wide column">
-  <div class="ui link fluid stackable cards user">
-    {{#each users as |u|}}
-      {{user-card
-        u=u
-        showUser=(action 'showUser')
-        deactivateUser=(action 'deactivateUser')
-        activateUser=(action 'activateUser')
-      }}
-    {{/each}}
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <div class="ui link fluid stackable cards user">
+      {{#each users as |u|}}
+        {{user-card
+          u=u
+          showUser=(action 'showUser')
+          deactivateUser=(action 'deactivateUser')
+          activateUser=(action 'activateUser')
+        }}
+      {{/each}}
+    </div>
   </div>
-</div>
-<div class="sixteen wide mobile ten wide tablet six wide computer column">
-  {{user-edit
+  <div class="sixteen wide mobile ten wide tablet six wide computer column">
+    {{user-edit
 
-    userid=userid
-    firstname=firstname
-    kind=kind
-    customerid=customerid
-    couuid=couuid
-    companyname=companyname
-    netids=netids
-    conetlist=conetlist
-    conetworks=conetworks
-    usernetlist=usernetlist
+      userid=userid
+      firstname=firstname
+      kind=kind
+      customerid=customerid
+      couuid=couuid
+      companyname=companyname
+      netids=netids
+      conetlist=conetlist
+      conetworks=conetworks
+      usernetlist=usernetlist
 
-    users=users
-    customers=customers
-    networks=networks
-    act=act
-    buttonico=buttonico
-    saveUser=(action 'saveUser')
-    resetForm=(action 'resetForm')
-  }}
+      users=users
+      customers=customers
+      networks=networks
+      act=act
+      buttonico=buttonico
+      saveUser=(action 'saveUser')
+      resetForm=(action 'resetForm')
+    }}
+  </div>
 </div>

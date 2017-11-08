@@ -37,10 +37,17 @@ export default Ember.Component.extend({
     let tot = moment(a).diff(b)
     let now = this.get('now')
     let percent = (moment(now).diff(b) / tot).toFixed(2)
-    return `${percent}`
+    if (percent > 1) {
+      return 1
+    } else {
+      return `${percent}`
+    }
+    // return `${percent}`
   }),
 
   prcnt: 0.0,
+
+  isClear: false,
 
   init () {
     this._super(...arguments)
@@ -115,6 +122,23 @@ export default Ember.Component.extend({
 
   didDestroyElement () {
     this._super(...arguments)
+  },
+
+  actions: {
+    toggleClear (rid) {
+      this.toggleProperty('isClear')
+
+      if (this.get('isClear')) {
+        Ember.$('.rule-' + rid + ' button.labeled').addClass('hide')
+        Ember.$('.rule-' + rid + ' .buttons').removeClass('hide')
+        Ember.$('.rule-' + rid + ' .extra.content').removeClass('hide')
+      }
+      if (!this.get('isClear')) {
+        Ember.$('.rule-' + rid + ' button.labeled').removeClass('hide')
+        Ember.$('.rule-' + rid + ' .buttons').addClass('hide')
+        Ember.$('.rule-' + rid + ' .extra.content').addClass('hide')
+      }
+    }
   }
 
 })

@@ -65,8 +65,16 @@
       </div>
     </div>
   </div>
-  <button class="ui bottom attached labeled icon grey button" {{action updateRule rule.id}}>
+  {{!-- <div class="extra content hide centered">
+    <div class="ui red inverted label tiny">Are you sure?</div>
+  </div> --}}
+  <button class="ui bottom attached labeled icon grey button" {{action 'toggleClear' rule.id}}>
     <i class="trash outline icon"></i>
     Clear Rule
   </button>
+  <div class="ui buttons bottom attached hide">
+    <button class="ui green button" {{action 'toggleClear' rule.id}}>Not Yet!</button>
+    <div class="or"></div>
+    <button class="ui blue button" {{action updateRule rule.id}}>Yes</button>
+  </div>
 </div>

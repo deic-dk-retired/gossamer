@@ -46,20 +46,10 @@ export default Ember.Controller.extend({
     },
 
     showRule (rid) {
-      Ember.Logger.info(rid)
       let rule = this.get('store').peekRecord('rule', rid)
       this.send('toggleActive', this.get('rid'), rid)
       this.setProperties({
-        rid: parseInt(rid),
-        fnm: rule.get('fnmid'),
-        coid: rule.get('custid'),
-        rname: rule.get('rname'),
-        uid: rule.get('adminid'),
-        way: rule.get('direct'),
-        active: rule.get('isactive'),
-        expired: rule.get('isexpired'),
-        proto: rule.get('ipprotocol'),
-        action: rule.get('action')
+
       })
     },
 
@@ -77,9 +67,9 @@ export default Ember.Controller.extend({
             Ember.Logger.info(this.get('responseMessage'))
 
             this.get('notifications').clearAll()
-            this.get('notifications').info(ruleuuid + ' was cleared!', {
+            this.get('notifications').info('Rule ' + ruleuuid.substr(0, ruleuuid.indexOf('-')) + ' was cleared!', {
               autoClear: true,
-              clearDuration: 5000
+              clearDuration: 8000
             })
           })
           .catch((adapterError) => {

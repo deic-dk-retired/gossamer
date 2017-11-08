@@ -1,64 +1,66 @@
-<div class="sixteen wide column">
-  <h3 class="ui header">Active currently</h3>
-    <div class="ui link cards">
-      {{#if (gt rules.meta.recent 0)}}
-        {{#each rules as |rule i|}}
-          {{#if rule.isactive}}
-            {{rules-card
-              rule=rule
-              showRule=(action 'showRule')
-              updateRule=(action 'updateRule')
-            }}
-          {{/if}}
-        {{/each}}
-      {{else}}
-        &#8942;
-      {{/if}}
-    </div>
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <h3 class="ui header">Active currently</h3>
+      <div class="ui link cards">
+        {{#if (gt rules.meta.recent 0)}}
+          {{#each rules as |rule i|}}
+            {{#if rule.isactive}}
+              {{rules-card
+                rule=rule
+                showRule=(action 'showRule')
+                updateRule=(action 'updateRule')
+              }}
+            {{/if}}
+          {{/each}}
+        {{else}}
+          &#8942;
+        {{/if}}
+      </div>
 
-    <h3 class="ui header">Expired earlier</h3>
-    <div class="tabpager">
-      <table class="ui selectable row striped stackable table">
-        <thead>
-          <tr>
-            <th class="two wide"><i class="icon hashtag"></i> Protocol</th>
-            <th class="two wide">Src. <i class="icon long right arrow"></i></th>
-            <th class="two wide"><i class="icon radio selected"></i> Dst.</th>
-            <th class="two wide"><i class="icon ellipsis horizontal"></i> Dst. Prts (range)</th>
-            <th class="two wide"><i class="icon bug"></i> Bits (range)</th>
-            <th class="two wide"><i class="icon warning sign"></i> Action</th>
-            <th class="three wide right aligned"><i class="icon history"></i> Expired</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#if (gt rules.meta.older 0)}}
-            {{#each rules as |rule j|}}
-              {{#if rule.isexpired}}
-                {{rules-list
-                  rule=rule
-                  showRule=(action 'showRule')
-                  fetchMore=(action 'fetchMore')
-                }}
-              {{/if}}
-            {{/each}}
-          {{else}}
-          <tr>
-            <td>&#8942;</td>
-            <td>&#8942;</td>
-            <td>&#8942;</td>
-            <td>&#8942;</td>
-            <td>&#8942;</td>
-            <td>&#8942;</td>
-            <td>&#8942;</td>
-          </tr>
-          {{/if}}
-        </tbody>
-      </table>
-    </div>
+      <h3 class="ui header">Expired earlier</h3>
+      <div class="tabpager">
+        <table class="ui selectable row striped stackable table">
+          <thead>
+            <tr>
+              <th class="two wide"><i class="icon hashtag"></i> Protocol</th>
+              <th class="two wide">Src. <i class="icon long right arrow"></i></th>
+              <th class="two wide"><i class="icon radio selected"></i> Dst.</th>
+              <th class="two wide"><i class="icon ellipsis horizontal"></i> Dst. Prts (range)</th>
+              <th class="two wide"><i class="icon bug"></i> Bits (range)</th>
+              <th class="two wide"><i class="icon warning sign"></i> Action</th>
+              <th class="three wide right aligned"><i class="icon history"></i> Expired</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#if (gt rules.meta.older 0)}}
+              {{#each rules as |rule j|}}
+                {{#if rule.isexpired}}
+                  {{rules-list
+                    rule=rule
+                    showRule=(action 'showRule')
+                    fetchMore=(action 'fetchMore')
+                  }}
+                {{/if}}
+              {{/each}}
+            {{else}}
+            <tr>
+              <td>&#8942;</td>
+              <td>&#8942;</td>
+              <td>&#8942;</td>
+              <td>&#8942;</td>
+              <td>&#8942;</td>
+              <td>&#8942;</td>
+              <td>&#8942;</td>
+            </tr>
+            {{/if}}
+          </tbody>
+        </table>
+      </div>
 
-    <button class="ui labeled icon black grey button" {{action 'fetchMore'}}>
-      <i class="arrow down icon"></i>
-      Load More
-    </button>
+      <button class="ui labeled icon black grey button" {{action 'fetchMore'}}>
+        <i class="arrow down icon"></i>
+        Load More
+      </button>
+  </div>
 
 </div>
