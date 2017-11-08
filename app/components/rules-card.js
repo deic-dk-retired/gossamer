@@ -113,7 +113,7 @@ export default Ember.Component.extend({
       let f = this.get('frequency')
       let reanimate = setInterval(function () {
         bar.animate(this.get('prcnt'))
-        if (this.get('prcnt') > 0.99) {
+        if (!this.get('pre_checked') && this.get('prcnt') > 0.99) {
           this.removeCard(reanimate)
         }
       }.bind(this), f)

@@ -17,6 +17,16 @@ export default Ember.Controller.extend({
   proto: '',
   action: '',
 
+  pre_checked: true,
+
+  checkLabel: Ember.computed('pre_checked', function () {
+    if (this.get('pre_checked')) {
+      return `${'Refresh Paused'}`
+    } else {
+      return `${'Refreshing...'}`
+    }
+  }),
+
   init () {
     this._super(...arguments)
     this.errors = []
