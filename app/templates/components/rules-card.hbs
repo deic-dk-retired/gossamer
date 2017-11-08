@@ -73,8 +73,13 @@
     Clear Rule
   </button>
   <div class="ui buttons bottom attached hide">
-    <button class="ui green button" {{action 'toggleClear' rule.id}}>Not Yet!</button>
-    <div class="or"></div>
-    <button class="ui blue button" {{action updateRule rule.id}}>Yes</button>
+    <button class="ui blue button" {{action 'toggleClear' rule.id}}>
+      <i class="remove icon"></i>
+      Not Yet!
+    </button>
+    <button class="ui negative button" {{action updateRule rule.id}}>
+      <i class="check icon"></i>
+      Yes
+    </button>
   </div>
 </div>
