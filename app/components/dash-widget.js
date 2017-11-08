@@ -38,11 +38,33 @@ const DashWidgetComponent = Ember.Component.extend({
     return this.get('endpoint') + this.get('series')
   }),
 
+  pre_checked: true,
+
+  checkLabel: Ember.computed('pre_checked', function () {
+    if (this.get('pre_checked')) {
+      return `${'Refresh Off'}`
+    } else {
+      return `${'Refreshing...'}`
+    }
+  }),
+
+  baseRate: 10,
+
+  init () {
+    this._super(...arguments)
+    this.set('baseRate', 10)
+  },
+
   didRender () {
     this._super(...arguments)
-    Ember.$('.segment').append(`<div class="ui active inverted dimmer">
+    this.$('.segment').append(`<div class="ui active inverted dimmer">
       <div class="ui mini text loader">Loading&hellip;</div>
     </div>`)
+    if (this.$('.dimmer').length !== 0) {
+      setTimeout(function () {
+        this.$('.dimmer').remove()
+      }.bind(this), 1000)
+    }
   },
 
   didInsertElement () {
@@ -65,7 +87,7 @@ const DashWidgetComponent = Ember.Component.extend({
     let height2 = +svgH - margin2.top - margin2.bottom
 
     // set widget title
-    widget.select('.title p').text(this.get('title'))
+    widget.select('.title').text(this.get('title'))
 
     // set x & y scales
     let x = d3.scaleTime().range([0, width])
@@ -142,11 +164,6 @@ const DashWidgetComponent = Ember.Component.extend({
     let render = function (error, data) {
       if (error) throw error
 
-      if (this.$('.dimmer').length !== 0) {
-        setTimeout(function () {
-          this.$('.dimmer').remove()
-        }, 1000)
-      }
       // remove old points
       focus.selectAll('path').remove()
       focus.selectAll('g').remove()
@@ -215,10 +232,12 @@ const DashWidgetComponent = Ember.Component.extend({
 
     // fetch data and render chart content
     d3.json(this.get('url'), render)
-    // update every 5sec
+
     let refresh = setInterval(function (url) {
-      d3.json(url, render)
-    }, 10000, this.get('url'))
+      if (!this.get('pre_checked')) {
+        d3.json(url, render)
+      }
+    }.bind(this), this.get('baseRate') * 1000, this.get('url'))
 
     function pauseRefresh () {
       clearInterval(refresh)

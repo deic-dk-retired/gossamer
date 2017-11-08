@@ -21,7 +21,7 @@ export default Ember.Controller.extend({
 
   checkLabel: Ember.computed('pre_checked', function () {
     if (this.get('pre_checked')) {
-      return `${'Refresh Paused'}`
+      return `${'Realtime Off'}`
     } else {
       return `${'Refreshing...'}`
     }

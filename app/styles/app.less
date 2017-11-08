@@ -269,15 +269,26 @@ aside {
         display: inline-block;
       }
   }
+  > .list {
+    width: 100%;
+    > .item {
+      width: inherit;
+    }
+  }
+
+  > .list > .item .list {
+    padding: 0!important;
+    .item label {
+      font-size: @sm;
+    }
+  }
+
   .title {
     width: 100%;
-    p {
-      color: @darker800;
-      text-transform: capitalize;
-      font-weight: 400;
-      font-size: @xxlg;
-      padding: 0 0 @lg;
-    }
+    color: @darker800;
+    text-transform: capitalize;
+    font-weight: 400!important;
+    padding: 0 0 @lg;
   }
   .controls {
     width: 15%;
