@@ -1,4 +1,5 @@
 <div class="ui grid">
+
   <div class="sixteen wide column">
     <div class="ui horizontal list">
       <div class="item">
@@ -25,7 +26,8 @@
         &#8942;
       {{/if}}
     </div>
-
+  </div>
+  <div class="sixteen wide column">
     <h3 class="ui header">Expired earlier</h3>
     <div class="tabpager">
       <table class="ui selectable row striped stackable table">
@@ -65,11 +67,11 @@
         </tbody>
       </table>
     </div>
-
-    <button class="ui labeled icon black grey button" {{action 'fetchMore'}}>
+  </div>
+  <div class="sixteen wide mobile six wide tablet three wide computer centered column">
+    <button class="ui labeled icon black grey button fluid" {{action 'fetchMore'}}>
       <i class="arrow down icon"></i>
       Load More
     </button>
   </div>
-
 </div>
