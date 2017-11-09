@@ -226,18 +226,17 @@ const DashWidgetComponent = Ember.Component.extend({
       return d3.json(u, func)
     }
     let ep = this.get('url')
-    let f = this.get('fr')
 
     renderD3(ep, render)
 
-    let refreshD3 = function (f) {
+    let refreshD3 = function () {
       if (this.get('pre_checked') === true) {
         renderD3(ep, render)
       }
       setTimeout(refreshD3, this.get('fr'))
     }.bind(this)
 
-    refreshD3(this.get('fr'))
+    refreshD3()
 
     function brushed () {
       if (event.sourceEvent && event.sourceEvent.type === 'zoom') return // ignore brush-by-zoom

@@ -42,7 +42,6 @@ export default Ember.Component.extend({
     } else {
       return `${percent}`
     }
-    // return `${percent}`
   }),
 
   prcnt: 0.0,
@@ -70,7 +69,7 @@ export default Ember.Component.extend({
     setTimeout(function () {
       Ember.$('.card.rule-' + this.get('rid')).remove()
     }.bind(this), 300)
-    clearInterval(timer)
+    clearTimeout(timer)
   },
 
   didInsertElement () {
@@ -111,12 +110,14 @@ export default Ember.Component.extend({
 
       bar.animate(percent)
       let f = this.get('frequency')
-      let reanimate = setInterval(function () {
+      let reanimate = function () {
         bar.animate(this.get('prcnt'))
         if (this.get('pre_checked') && this.get('prcnt') > 0.99) {
           this.removeCard(reanimate)
         }
-      }.bind(this), f)
+        setTimeout(reanimate, f)
+      }.bind(this)
+      reanimate()
     }
   },
 
