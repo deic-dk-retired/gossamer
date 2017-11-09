@@ -113,7 +113,7 @@ export default Ember.Component.extend({
       let f = this.get('frequency')
       let reanimate = setInterval(function () {
         bar.animate(this.get('prcnt'))
-        if (!this.get('pre_checked') && this.get('prcnt') > 0.99) {
+        if (this.get('pre_checked') && this.get('prcnt') > 0.99) {
           this.removeCard(reanimate)
         }
       }.bind(this), f)
@@ -125,20 +125,23 @@ export default Ember.Component.extend({
   },
 
   actions: {
+
     toggleClear (rid) {
       this.toggleProperty('isClear')
+      this.send('toggleConfirm', rid)
+    },
 
+    toggleConfirm (rid) {
       if (this.get('isClear')) {
         Ember.$('.rule-' + rid + ' button.labeled').addClass('hide')
         Ember.$('.rule-' + rid + ' .buttons').removeClass('hide')
-        Ember.$('.rule-' + rid + ' .extra.content').removeClass('hide')
       }
       if (!this.get('isClear')) {
         Ember.$('.rule-' + rid + ' button.labeled').removeClass('hide')
         Ember.$('.rule-' + rid + ' .buttons').addClass('hide')
-        Ember.$('.rule-' + rid + ' .extra.content').addClass('hide')
       }
     }
+
   }
 
 })

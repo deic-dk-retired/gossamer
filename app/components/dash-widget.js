@@ -38,37 +38,28 @@ const DashWidgetComponent = Ember.Component.extend({
     return this.get('endpoint') + this.get('series')
   }),
 
-  pre_checked: true,
+  rdioGrpName: Ember.computed('class', function () {
+    return `${'rdio-' + this.get('class')}`
+  }),
+
+  pre_checked: false,
 
   checkLabel: Ember.computed('pre_checked', function () {
-    if (this.get('pre_checked')) {
-      return `${'Refresh Off'}`
+    if (!this.get('pre_checked')) {
+      this.set('baseRate', 10)
+      return `${'Streaming Off'}`
     } else {
-      return `${'Refreshing...'}`
+      return `${'Streaming...'}`
     }
   }),
 
   baseRate: 10,
 
-  init () {
-    this._super(...arguments)
-    this.set('baseRate', 10)
-  },
+  fr: Ember.computed('baseRate', function () {
+    return `${this.get('baseRate') * 1000}`
+  }),
 
-  didRender () {
-    this._super(...arguments)
-    this.$('.segment').append(`<div class="ui active inverted dimmer">
-      <div class="ui mini text loader">Loading&hellip;</div>
-    </div>`)
-    if (this.$('.dimmer').length !== 0) {
-      setTimeout(function () {
-        this.$('.dimmer').remove()
-      }.bind(this), 1000)
-    }
-  },
-
-  didInsertElement () {
-    this._super(...arguments)
+  renderGraph () {
     this.$().addClass(this.get('class'))
 
     let parseTime = d3.timeParse('%Y-%m-%dT%H:%M:%SZ')
@@ -231,17 +222,22 @@ const DashWidgetComponent = Ember.Component.extend({
     }.bind(this)
 
     // fetch data and render chart content
-    d3.json(this.get('url'), render)
-
-    let refresh = setInterval(function (url) {
-      if (!this.get('pre_checked')) {
-        d3.json(url, render)
-      }
-    }.bind(this), this.get('baseRate') * 1000, this.get('url'))
-
-    function pauseRefresh () {
-      clearInterval(refresh)
+    let renderD3 = function (u, func) {
+      return d3.json(u, func)
     }
+    let ep = this.get('url')
+    let f = this.get('fr')
+
+    renderD3(ep, render)
+
+    let refreshD3 = function (f) {
+      if (this.get('pre_checked') === true) {
+        renderD3(ep, render)
+      }
+      setTimeout(refreshD3, this.get('fr'))
+    }.bind(this)
+
+    refreshD3(this.get('fr'))
 
     function brushed () {
       if (event.sourceEvent && event.sourceEvent.type === 'zoom') return // ignore brush-by-zoom
@@ -262,9 +258,28 @@ const DashWidgetComponent = Ember.Component.extend({
       focus.select('.domain').remove()
       context.select('.brush').call(brush.move, x.range().map(t.invertX, t))
     }
-    // time parser for influx timestamp
-  }
+  },
 
+  init () {
+    this._super(...arguments)
+  },
+
+  didRender () {
+    this._super(...arguments)
+    this.$('.segment').append(`<div class="ui active inverted dimmer">
+      <div class="ui mini text loader">Loading&hellip;</div>
+    </div>`)
+    if (this.$('.dimmer').length !== 0) {
+      setTimeout(function () {
+        this.$('.dimmer').remove()
+      }.bind(this), 1000)
+    }
+  },
+
+  didInsertElement () {
+    this._super(...arguments)
+    this.renderGraph()
+  }
 })
 
 DashWidgetComponent.reopenClass({

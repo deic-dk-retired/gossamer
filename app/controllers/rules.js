@@ -17,11 +17,11 @@ export default Ember.Controller.extend({
   proto: '',
   action: '',
 
-  pre_checked: true,
+  pre_checked: false,
 
   checkLabel: Ember.computed('pre_checked', function () {
-    if (this.get('pre_checked')) {
-      return `${'Realtime Off'}`
+    if (!this.get('pre_checked')) {
+      return `${'Refresh Off'}`
     } else {
       return `${'Refreshing...'}`
     }

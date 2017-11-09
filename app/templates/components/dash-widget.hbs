@@ -1,5 +1,6 @@
 <div class="ui segment">
   <div class="dash-widget">
+
     <div class="ui tiny horizontal list">
       <div class="item">
 
@@ -7,29 +8,22 @@
           <div class="ui tiny horizontal list">
             <div class="item">
               {{ui-checkbox
-                class="slider"
+                class="toggle"
                 label=checkLabel
                 checked=pre_checked
                 onChange=(action (mut pre_checked))
               }}
             </div>
             <div class="item">
-              {{ui-radio name="baseRate" label="20s" value=20
-                disabled=(if pre_checked true false)
-                current=baseRate
-                onChange=(action (mut baseRate))
-              }}
-            </div>
-            <div class="item">
-              {{ui-radio name="baseRate" label="40s" value=40
-               disabled=(if pre_checked true false)
+              {{ui-radio name=rdioGrpName label="30s" value=30
+               disabled=(if pre_checked false true)
                current=baseRate
                onChange=(action (mut baseRate))
               }}
             </div>
             <div class="item">
-              {{ui-radio name="baseRate" label="1m" value=60
-               disabled=(if pre_checked true false)
+              {{ui-radio name=rdioGrpName label="1m" value=60
+               disabled=(if pre_checked false true)
                current=baseRate
                onChange=(action (mut baseRate))
               }}
@@ -40,18 +34,9 @@
         <div class="content">
           <div class="ui header medium title"></div>
         </div>
-
       </div>
     </div>
 
-    {{!-- <div class="header">
-      <div class="title">
-        <p></p>
-      </div>
-      <div class="controls ui form tiny">
-        ax
-      </div>
-    </div> --}}
     <svg></svg>
   </div>
 </div>
