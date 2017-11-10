@@ -106,12 +106,14 @@ export default Ember.Controller.extend({
       })
       Ember.$('.card').removeClass('blue')
       Ember.$('.togDisabled').addClass('disabled')
+      Ember.$('.right-slider').addClass('hide')
     },
 
-    toggleActive (toSet) {
+    toggleActive (usrname) {
       Ember.$('.card').removeClass('blue')
-      Ember.$('.usr-' + toSet).addClass('blue')
+      Ember.$('.usr-' + usrname).addClass('blue')
       Ember.$('.togDisabled').removeClass('disabled')
+      Ember.$('.right-slider').removeClass('hide')
     },
 
     openModal (name) {

@@ -1,5 +1,5 @@
-<div class="ui padded fixed segment">
-  <h2>Edit <span class="enhance">{{firstname}}</span></h2>
+<div class="edit-box">
+  <h2 class="ui sticky fixed">Edit <span class="enhance">{{firstname}}</span></h2>
   <form class="ui form" {{action saveUser on='submit'}}>
       <div class="required field">
         <label>Admin Type</label>
@@ -7,7 +7,7 @@
           <div class="field">
             {{ui-radio
               name="kind"
-              label="Network"
+              label="Net"
               value="netadmin"
               current=kind
               onChange=(action (mut kind))
@@ -16,7 +16,7 @@
           <div class="field">
             {{ui-radio
               name="kind"
-              label="Database"
+              label="DB"
               value="dbadmin"
               current=kind
               onChange=(action (mut kind))
