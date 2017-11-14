@@ -1,50 +1,85 @@
-<div {{action 'toggleDetail'}} class="card {{if showMore "detail"}}">
-  <div class="protocol content">
-    <span class="u{{rule.ipprotocol}}">udp</span>
-    <span class="t{{rule.ipprotocol}}">tcp</span>
-    <span class="i{{rule.ipprotocol}}">icmp</span>
-    <span class="o{{rule.ipprotocol}}">other</span>
-    <span class="counter"><a class="counter ui basic circular label tiny">{{rule.destport}}</a></span>
+<div class="ui raised card rule rule-{{rule.id}}" {{action showRule rule.id}}>
+  <div class="content">
+    <div class="right floated meta">
+      {{#if (eq (null-replace rule.destport) '...')}}
+        {{#ui-popup content="no dst. ports assigned" variation="mini inverted" position="top center"}}
+          <a class="ui circular empty blue label"></a>
+        {{/ui-popup}}
+      {{else}}
+        {{#ui-popup content="affected ports" variation="mini inverted" position="top center"}}
+          <a class="ui circular blue label">{{rule.destport}}</a>
+        {{/ui-popup}}
+      {{/if}}
+    </div>
+    <div class="header title">{{rule.ipprotocol}}</div>
   </div>
-  <div class="ruleinfo content">
-    <div class="time">
-      <p><i class="icon calendar"></i> {{moment-format rule.validfrom 'ddd, DD MMM'}} &#126; {{moment-format rule.validfrom 'hh:mm:ss a'}}</p>
-      {{!-- <p><i class="icon clock"></i> </p> --}}
-    </div>
-    <div class="duration">
-      <p>
-        <i class="icon circle notched end"></i>
-        <span> <span class="emph">Active</span> for </span>
-        <span>{{moment-duration rule.duration}}</span>
-      </p>
-    </div>
-    <div class="pktlen">
-      <p><i class="icon bomb"></i>
-        {{#if (eq rule.pktlen 'null')}}
-          &hellip;
-        {{else}}
-          {{rule.pktlen}}<span> bits (range)</span>
-        {{/if}}
-      </p>
-    </div>
-    <div class="name">
-      <p><i class="icon barcode outline"></i> {{rule.rname}}</p>
-    </div>
-    <div class="action">
-      <p><i class="icon fire"></i> {{rule.action}}</p>
+  <div class="content">
+    <div class="description">
+      <div class="ui very relaxed list">
+        <div class="item">
+          <i class="icon calendar"></i>
+          <div class="content">
+            {{moment-format rule.validfrom 'ddd, DD MMM'}} &#126; {{moment-format rule.validfrom 'hh:mm:ss a'}}
+          </div>
+        </div>
+        <div class="item">
+          <i class="icon clock notched end"></i>
+          <div class="content">
+            Active for {{moment-from-now rule.validfrom hideSuffix=true interval=120000}}
+          </div>
+        </div>
+        {{#ui-popup content="(running time / duration) %" variation="mini inverted" position="top center"}}
+          <div class="progress-{{rule.id}} prog" >
+          </div>
+        {{/ui-popup}}
+        <div class="item">
+          <i class="icon bug"></i>
+          <div class="content">
+            {{null-replace rule.pktlen}} <span> bits (range)</span>
+          </div>
+        </div>
+        <div class="item">
+          <i class="icon pin"></i>
+          <div class="content">
+            {{rule.rname}}
+          </div>
+        </div>
+        <div class="item">
+          <i class="icon warning sign"></i>
+          <div class="content">
+            {{rule.action}}
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="ip-add content">
-    <div class="srcip"><label>src. ip</label>
-      <span>
-        {{#if (eq rule.srcprefix null)}}
-         &hellip;:&hellip;:&hellip;:&hellip;
-        {{else}}
-          {{rule.srcprefix}}
-        {{/if}}
-      </span>
+  <div class="content network">
+    <div class="right floated item">
+      <div class="header"><i class="icon radio selected"></i>Dest.</div>
+      <div class="meta">{{null-replace rule.destprefix}}</div>
     </div>
-    <div class="destip"><label>dst. ip</label> <span>{{rule.destprefix}}</span></div>
-    <div class="atck-arrow"></div>
+    <div class="item">
+      <div class="header">Src.<i class="icon long arrow right"></i></div>
+      <div class="meta">
+        {{null-replace rule.srcprefix}}
+      </div>
+    </div>
+  </div>
+  {{!-- <div class="extra content hide centered">
+    <div class="ui red inverted label tiny">Are you sure?</div>
+  </div> --}}
+  <button class="ui bottom attached labeled icon grey button" {{action 'toggleClear' rule.id}}>
+    <i class="trash outline icon"></i>
+    Clear Rule
+  </button>
+  <div class="ui buttons bottom attached hide">
+    <button class="ui blue button" {{action 'toggleClear' rule.id}}>
+      <i class="remove icon"></i>
+      Not Yet!
+    </button>
+    <button class="ui negative button" {{action updateRule rule.id}}>
+      <i class="check icon"></i>
+      Yes, go!
+    </button>
   </div>
 </div>

@@ -1,31 +1,69 @@
 <div class="ui grid">
-  <div class="ten wide column">
-    <p>Active recently</p>
-      <div class="history-cards">
-        {{#each model as |r i|}}
-          {{#if (lte i 5)}}
-            {{rules-card rule=r}}
+
+  <div class="sixteen wide column">
+    <div class="ui horizontal list">
+      <div class="item">
+        <h3 class="ui header">Active currently</h3>
+      </div>
+      <div class="item">
+        {{ui-checkbox class="toggle" label=checkLabel checked=pre_checked onChange=(action (mut pre_checked))}}
+      </div>
+      <div>&nsbp;</div>
+    </div>
+    <div class="ui link cards">
+      {{#if (gt rules.meta.recent 0)}}
+        {{#each rules as |rule i|}}
+          {{#if rule.isactive}}
+            {{rules-card
+              rule=rule
+              pre_checked=pre_checked
+              showRule=(action 'showRule')
+              updateRule=(action 'updateRule')
+            }}
           {{/if}}
         {{/each}}
-      </div>
-      <p>Active earlier</p>
-      <div class="history-thumbs">
-        <ul class="timeline">
-        {{#each model as |r j|}}
-          {{#if (and (gt j 5) (lte j 15))}}
-            {{rules-list rule=r}}
-          {{/if}}
-        {{/each}}
-        </ul>
-        <div class="sec-load center">
-          <button {{action 'showMore'}} class="compact icon ui button basic black mini">
-             + More
-          </button>
-        </div>
-      </div>
+      {{else}}
+        &#8942;
+      {{/if}}
+    </div>
   </div>
-  <div class="six wide column">
-    {{!-- {{in-bps}} --}}
+  <div class="sixteen wide column">
+    <h3 class="ui header">Expired earlier</h3>
+    <div class="tabpager">
+      <table class="ui selectable row striped stackable table">
+        <thead>
+          <tr>
+            <th class="two wide"><i class="icon hashtag"></i> Protocol</th>
+            <th class="two wide">Src. <i class="icon long right arrow"></i></th>
+            <th class="two wide"><i class="icon radio selected"></i> Dst.</th>
+            <th class="two wide"><i class="icon ellipsis horizontal"></i> Dst. Prts (range)</th>
+            <th class="two wide"><i class="icon bug"></i> Bits (range)</th>
+            <th class="two wide"><i class="icon warning sign"></i> Action</th>
+            <th class="three wide right aligned"><i class="icon history"></i> Expired</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#if (gt rules.meta.older 0)}}
+            {{#each rules as |rule j|}}
+              {{#if rule.isexpired}}
+                {{rules-list
+                  rule=rule
+                  showRule=(action 'showRule')
+                  fetchMore=(action 'fetchMore')
+                }}
+              {{/if}}
+            {{/each}}
+          {{else}}
+            {{rules-empty-row}}
+          {{/if}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="sixteen wide mobile six wide tablet three wide computer centered column">
+    <button class="ui labeled icon black grey button fluid" {{action 'fetchMore'}}>
+      <i class="arrow down icon"></i>
+      Load More
+    </button>
   </div>
 </div>
-

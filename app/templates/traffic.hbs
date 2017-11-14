@@ -1,14 +1,46 @@
 <div class="ui grid">
-  <div class="four wide column">
-    {{out-bps}}
+  <div class="sixteen wide mobile sixteen wide tablet eight wide computer column">
+    {{dash-widget
+      'bps-in'
+      'bits/s'
+      'qf-in-bps'
+      'bps (in)'
+      '#90CAF9'
+      ''
+      'area'
+    }}
   </div>
-  <div class="four wide column">
-    {{in-bps}}
+  <div class="sixteen wide mobile sixteen wide tablet eight wide computer column">
+    {{dash-widget
+      'top-10-bps-in'
+      'bits/s'
+      'qf-top-10-in-bps'
+      'top 10 bps (in)'
+      '#BBDEFB'
+      ''
+      'line'
+    }}
   </div>
-  <div class="four wide column">
-    {{top-in-bps}}
+  <div class="sixteen wide mobile sixteen wide tablet eight wide computer column">
+    {{dash-widget
+      'bps-out'
+      'bits/s'
+      'qf-out-bps'
+      'bps (out)'
+      '#90CAF9'
+      ''
+      'area'
+    }}
   </div>
-  <div class="four wide column">
-    {{top-out-bps}}
+  <div class="sixteen wide mobile sixteen wide tablet eight wide computer column">
+    {{dash-widget
+      'top-10-bps-out'
+      'bits/s'
+      'qf-top-10-out-bps'
+      'top 10 bps (out)'
+      '#90CAF9'
+      ''
+      'line'
+    }}
   </div>
 </div>

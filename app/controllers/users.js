@@ -2,29 +2,79 @@ import Ember from 'ember'
 // import Cryptojs from '/node_modules/crypto-js'
 
 export default Ember.Controller.extend({
-  userid: null,
+  notifications: Ember.inject.service('notification-messages'),
+
+  userid: '',
+  firstname: '',
   kind: '',
-  customerid: null,
+  customerid: '',
+  couuid: '',
   companyname: '',
-  netnames: [],
-  netids: Ember.computed('netnames', function () {
-    if (this.get('netnames').length !== 0) {
-      return this.get('netnames').map((e) => { return parseInt(e.id) }).map((e) => { return parseInt(e) })
-    }
-    if (this.get('netnames').length === 0) {
-      return []
+  // netids: [],
+
+  // customer network list [id,...]
+  conetlist: Ember.computed('customerid', function () {
+    if (this.get('customerid') !== '') {
+      let co = this.get('store').peekRecord('customer', parseInt(this.get('customerid')))
+      Ember.Logger.info(co.get('conets'))
+      return `${co.get('conets')}`
     }
   }),
-  name: '',
-  firstname: Ember.computed('name', function () {
-    return `${this.get('name').split(' ')[0]}`
+
+  // customer network objects {id, name, net}
+  conetworks: Ember.computed('customerid', function () {
+    let netobjlist = []
+    let netlist = []
+    if (this.get('customerid') !== '') {
+      let co = this.get('store').peekRecord('customer', parseInt(this.get('customerid')))
+      netlist = co.get('conets')
+
+      if (netlist.length === 1) {
+        let network = this.get('store').peekRecord('network', netlist[0])
+        netobjlist.push({
+          id: network.get('id'),
+          coid: network.get('customerid'),
+          name: network.get('name'),
+          net: network.get('net')
+        })
+        return Ember.RSVP.hash({
+          networks: netobjlist
+        })
+      }
+      if (netlist.length > 1) {
+        netlist.map((e) => {
+          let network = this.get('store').peekRecord('network', e)
+          netobjlist.push({
+            id: network.get('id'),
+            coid: network.get('customerid'),
+            name: network.get('name'),
+            net: network.get('net')
+          })
+        })
+        return Ember.RSVP.hash({
+          networks: netobjlist
+        })
+      }
+      if (netlist.length === 0) {
+        return Ember.RSVP.hash({
+          networks: netobjlist
+        })
+      }
+    }
   }),
-  username: '',
+
+  // user network ids [id,...]
+  usernetlist: Ember.computed('userid', function () {
+    let usernetworks = []
+    if (this.get('userid') !== '') {
+      usernetworks = this.get('store').peekRecord('user', this.get('userid')).get('usrnets')
+    }
+    Ember.Logger.info(usernetworks)
+    return `${usernetworks}`
+  }),
+
   isDisabled: 'disabled',
   changePass: 'disabled',
-  isActive: false,
-  isData: true,
-  datavalue: 'data-value',
   responseMessage: '',
 
   init () {
@@ -43,42 +93,46 @@ export default Ember.Controller.extend({
 
     resetForm () {
       this.setProperties({
-        userid: null,
+        userid: '',
+        firstname: '',
         kind: '',
-        customerid: null,
+        customerid: '',
+        couuid: '',
         companyname: '',
-        netnames: [],
-        name: '',
-        username: '',
+        netids: [],
+
         isDisabled: 'disabled',
-        changePass: 'disabled',
-        isActive: false
+        changePass: 'disabled'
       })
-      Ember.$('.card').removeClass('active')
+      Ember.$('.card').removeClass('blue')
       Ember.$('.togDisabled').addClass('disabled')
+      Ember.$('.right-slider').addClass('hide')
     },
 
-    toggleActive (set, toSet) {
-      if (set !== toSet) {
-        Ember.$('.card').removeClass('active')
-        Ember.$('.usr-' + toSet).addClass('active')
-        Ember.$('.togDisabled').removeClass('disabled')
-      }
+    toggleActive (usrname) {
+      Ember.$('.card').removeClass('blue')
+      Ember.$('.usr-' + usrname).addClass('blue')
+      Ember.$('.togDisabled').removeClass('disabled')
+      Ember.$('.right-slider').removeClass('hide')
     },
 
-    showUser (uid, username) {
+    openModal (name) {
+      Ember.$('.ui.' + name + '.modal').modal('show')
+    },
+
+    showUser (uid) {
       let user = this.get('store').peekRecord('user', uid)
       let customer = this.get('store').peekRecord('customer', parseInt(user.get('customerid')))
-      this.send('toggleActive', this.get('username'), username)
+      this.send('toggleActive', user.get('username'))
       this.setProperties({
         userid: parseInt(user.get('id')),
         kind: user.get('kind'),
         customerid: parseInt(customer.get('id')),
+        couuid: customer.get('couuid'),
         companyname: customer.get('companyname'),
-        netnames: user.get('networks').get('content.relationship.members.list'),
-        name: user.get('name'),
-        username: username
+        firstname: user.get('firstname')
       })
+      this.set('netids', user.get('usrnets'))
     },
 
     saveUser () {
@@ -87,30 +141,105 @@ export default Ember.Controller.extend({
       }
     },
 
+    deactivateUser (uid) {
+      let emuser = this.get('store').peekRecord('user', uid).get('firstname')
+      this.get('store').findRecord('user', parseInt(uid))
+      .then(function (user) {
+        user.set('valid', 'inactive')
+        if (user.get('hasDirtyAttributes')) {
+          Ember.Logger.info(user.changedAttributes())
+          user.save()
+          .then((response) => {
+            this.set('responseMessage', `User ${response.get('store').peekRecord('user', response.get('id')).get('firstname')} was deactivated`)
+            Ember.Logger.info(this.get('responseMessage'))
+
+            this.get('notifications').clearAll()
+            this.get('notifications').info(emuser + ' was deactivated!', {
+              autoClear: true,
+              clearDuration: 5000
+            })
+          })
+          .catch((adapterError) => {
+            Ember.Logger.info(user.get('errors'))
+            Ember.Logger.info(user.get('errors.name'))
+            Ember.Logger.info(user.get('errors').toArray())
+            Ember.Logger.info(user.get('isValid'))
+            Ember.Logger.info(adapterError)
+          })
+        }
+      }.bind(this))
+      this.send('resetForm')
+    },
+
+    activateUser (uid) {
+      let emuser = this.get('store').peekRecord('user', uid).get('firstname')
+      this.get('store').findRecord('user', parseInt(uid))
+      .then(function (user) {
+        user.set('valid', 'active')
+        if (user.get('hasDirtyAttributes')) {
+          Ember.Logger.info(user.changedAttributes())
+          user.save()
+          .then((response) => {
+            this.set('responseMessage', `User ${response.get('store').peekRecord('user', response.get('id')).get('firstname')} was activated`)
+            Ember.Logger.info(this.get('responseMessage'))
+
+            this.get('notifications').clearAll()
+            this.get('notifications').success(emuser + ' is activated!', {
+              autoClear: true,
+              clearDuration: 5000
+            })
+          })
+          .catch((adapterError) => {
+            Ember.Logger.info(user.get('errors'))
+            Ember.Logger.info(user.get('errors.name'))
+            Ember.Logger.info(user.get('errors').toArray())
+            Ember.Logger.info(user.get('isValid'))
+            Ember.Logger.info(adapterError)
+          })
+        }
+      }.bind(this))
+    },
+
     updateUser () {
       let uid = this.get('userid')
       let kind = this.get('kind')
       let cuid = this.get('customerid')
-      let coname = this.get('store').peekRecord('customer', parseInt(cuid)).get('companyname')
+      let couuid = this.get('store').peekRecord('customer', parseInt(cuid)).get('couuid')
+      let nets = this.get('netids').sort(function (a, b) { return parseInt(a) - parseInt(b) })
 
       this.get('store').findRecord('user', parseInt(uid))
       .then(function (user) {
         user.set('customerid', parseInt(cuid))
-        user.set('companyname', coname)
+        user.set('couuid', couuid)
         user.set('kind', kind)
-        Ember.Logger.info(user.changedAttributes())
-        user.save()
-        .then((response) => {
-          this.set('responseMessage', `User ${response.get('id').name} was updated`)
-        })
-        .catch((adapterError) => {
-          Ember.Logger.info(user.get('errors'))
-          Ember.Logger.info(user.get('errors.name'))
-          Ember.Logger.info(user.get('errors').toArray())
-          Ember.Logger.info(user.get('isValid'))
-          Ember.Logger.info(adapterError)
-        })
-      })
+        user.set('usrnets', nets)
+        if (user.get('hasDirtyAttributes')) {
+          Ember.Logger.info(user.changedAttributes())
+          user.save()
+          .then((response) => {
+            this.set('responseMessage', `User ${response.get('store').peekRecord('user', response.get('id')).get('firstname')} was updated`)
+
+            this.get('notifications').clearAll()
+            this.get('notifications').success('Successfully updated!', {
+              autoClear: true,
+              clearDuration: 5000
+            })
+          })
+          .catch((adapterError) => {
+            Ember.Logger.info(user.get('errors'))
+            Ember.Logger.info(user.get('errors.name'))
+            Ember.Logger.info(user.get('errors').toArray())
+            Ember.Logger.info(user.get('isValid'))
+            Ember.Logger.info(adapterError)
+
+            this.get('notifications').clearAll()
+            this.get('notifications').error('Something went wrong!', {
+              autoClear: true,
+              clearDuration: 10000
+            })
+          })
+        }
+      }.bind(this))
     }
 
   }

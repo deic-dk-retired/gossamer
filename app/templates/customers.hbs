@@ -1,40 +1,41 @@
 <div class="ui grid">
-  <div class="eight wide column">
-    <h2>Customers</h2>
-    <div class="ui three stackable cards user">
-      {{#each model.customers as |co|}}
-        {{co-stub
-          co=co
-          showCustomer=(action 'showCustomer')
-        }}
-      {{/each}}
+    <div class="sixteen wide column">
+      <div class="ui link fluid stackable cards cards">
+        {{#each model.customers as |co|}}
+          {{co-stub
+            co=co
+            showCustomer=(action 'showCustomer')
+            removeCustomer=(action 'removeCustomer')
+          }}
+        {{/each}}
+      </div>
     </div>
-  </div>
-  <div class="eight wide column">
-    {{co-edit
-      coid=coid
-      coname=coname
-      add1=add1
-      add2=add2
-      add3=add3
-      add4=add4
-      coemail=coemail
-      cophone=cophone
-      cocvr=cocvr
-      coean=coean
-      accname=accname
-      accemail=accemail
-      accphone=accphone
-      accrate=accrate
-      fee=fee
-      discount=discount
-      act=act
-      buttonico=buttonico
-      networks=networks
-      saveCustomer=(action 'saveCustomer')
-      addNetwork=(action 'addNetwork')
-      resetForm=(action 'resetForm')
-      required=(action 'required')
-    }}
-  </div>
+    <div class="right-slider hide">
+      {{co-edit
+        coid=coid
+        coname=coname
+        add1=add1
+        add2=add2
+        add3=add3
+        add4=add4
+        coemail=coemail
+        cophone=cophone
+        cocvr=cocvr
+        coean=coean
+        accname=accname
+        accemail=accemail
+        accphone=accphone
+        accrate=accrate
+        fee=fee
+        discount=discount
+        act=act
+        buttonico=buttonico
+        networks=networks
+        saveCustomer=(action 'saveCustomer')
+        addNetwork=(action 'addNetwork')
+        removeNetwork=(action 'removeNetwork')
+        resetForm=(action 'resetForm')
+        required=(action 'required')
+      }}
+    </div>
 </div>

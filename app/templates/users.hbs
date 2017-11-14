@@ -1,26 +1,32 @@
 <div class="ui grid">
-  <div class="eight wide column">
-    <h2>Users</h2>
-    <div class="ui three stackable cards user">
+  <div class="sixteen wide column">
+    <div class="ui link fluid stackable cards user">
       {{#each users as |u|}}
         {{user-card
           u=u
           showUser=(action 'showUser')
+          deactivateUser=(action 'deactivateUser')
+          activateUser=(action 'activateUser')
         }}
       {{/each}}
     </div>
   </div>
-  <div class="eight wide column">
+
+  <div class="right-slider hide">
     {{user-edit
+
       userid=userid
+      firstname=firstname
       kind=kind
       customerid=customerid
+      couuid=couuid
       companyname=companyname
-      netnames=netnames
       netids=netids
-      name=name
-      firstname=firstname
-      username=username
+      conetlist=conetlist
+      conetworks=conetworks
+      usernetlist=usernetlist
+
+      users=users
       customers=customers
       networks=networks
       act=act
@@ -29,4 +35,5 @@
       resetForm=(action 'resetForm')
     }}
   </div>
+
 </div>

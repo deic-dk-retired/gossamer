@@ -5,7 +5,7 @@ export default Ember.Route.extend({
 
   model () {
     return Ember.RSVP.hash({
-      users: this.get('store').findAll('user', {include: 'networks'}),
+      users: this.get('store').findAll('user'),
       customers: this.store.findAll('customer'),
       networks: this.store.findAll('network')
     })
@@ -21,6 +21,16 @@ export default Ember.Route.extend({
     Ember.set(controller, 'users', model.users)
     Ember.set(controller, 'customers', model.customers)
     Ember.set(controller, 'networks', model.networks)
+  },
+
+  actions: {
+    loading (transition, originRoute) {
+      Ember.Logger.info('loading users...')
+    },
+
+    didTransition () {
+      Ember.Logger.info('all models loaded for users route')
+    }
   }
 
 })

@@ -3,77 +3,111 @@ import * as d3 from 'd3'
 import { event } from 'd3-selection'
 
 const DashWidgetComponent = Ember.Component.extend({
-  // tagName: '',
+
+  endpoint: 'http://10.33.1.97:4242/api/series/',
+
   class: Ember.computed('params.[]', function () {
     return this.get('params')[0]
   }),
+
   ytext: Ember.computed('params.[]', function () {
     return this.get('params')[1]
   }),
-  url: Ember.computed('params.[]', function () {
+
+  series: Ember.computed('params.[]', function () {
     return this.get('params')[2]
   }),
+
   title: Ember.computed('params.[]', function () {
     return this.get('params')[3]
   }),
+
   gfill1: Ember.computed('params.[]', function () {
     return this.get('params')[4]
   }),
+
   gfill2: Ember.computed('params.[]', function () {
     return this.get('params')[5]
   }),
+
   shape: Ember.computed('params.[]', function () {
     return this.get('params')[6]
   }),
-  didInsertElement () {
-    this._super(...arguments)
-    // time parser for influx timestamp
-    var parseTime = d3.timeParse('%Y-%m-%dT%H:%M:%SZ')
-    var xTime = d3.timeFormat('%H:%M')
+
+  url: Ember.computed('endppoint', 'series', function () {
+    return this.get('endpoint') + this.get('series')
+  }),
+
+  rdioGrpName: Ember.computed('class', function () {
+    return `${'rdio-' + this.get('class')}`
+  }),
+
+  pre_checked: false,
+
+  checkLabel: Ember.computed('pre_checked', function () {
+    if (!this.get('pre_checked')) {
+      this.set('baseRate', 10)
+      return `${'Streaming Off'}`
+    } else {
+      return `${'Streaming...'}`
+    }
+  }),
+
+  baseRate: 10,
+
+  fr: Ember.computed('baseRate', function () {
+    return `${this.get('baseRate') * 1000}`
+  }),
+
+  renderGraph () {
+    this.$().addClass(this.get('class'))
+
+    let parseTime = d3.timeParse('%Y-%m-%dT%H:%M:%SZ')
+    let xTime = d3.timeFormat('%H:%M')
 
     // get svg width and height from DOM
-    var widget = d3.select('.' + this.get('class') + ' .dash-widget')
-    var svg = d3.select('.' + this.get('class') + ' .dash-widget' + ' > svg')
-    var svgW = this.$('.dash-widget svg').outerWidth()
-    var svgH = this.$('.dash-widget svg').outerHeight()
+    let widget = d3.select('.' + this.get('class') + ' .dash-widget')
+    let svg = d3.select('.' + this.get('class') + ' .dash-widget' + ' > svg')
+    let svgW = this.$('.dash-widget svg').outerWidth()
+    let svgH = this.$('.dash-widget svg').outerHeight()
     // configure chart widget dimensions
-    var margin = {top: 10, right: 10, bottom: 80, left: 32}
-    var margin2 = {top: 310, right: 10, bottom: 20, left: 32}
-    var width = svgW - margin.left - margin.right - 20
-    var height = +svgH - margin.top - margin.bottom
-    var height2 = +svgH - margin2.top - margin2.bottom
+    let margin = {top: 20, right: 0, bottom: 100, left: 32}
+    let margin2 = {top: 310, right: 0, bottom: 20, left: 32}
+    let width = svgW - margin.left - margin.right - 20
+    let height = +svgH - margin.top - margin.bottom
+    let height2 = +svgH - margin2.top - margin2.bottom
 
     // set widget title
-    widget.select('.title p').text(this.get('title'))
+    widget.select('.title').text(this.get('title'))
 
     // set x & y scales
-    var x = d3.scaleTime().range([0, width])
-    var x2 = d3.scaleTime().range([0, width])
-    var y = d3.scaleLinear().range([height, 0])
-    var y2 = d3.scaleLinear().range([height2, 0])
+    let x = d3.scaleTime().range([0, width])
+    let x2 = d3.scaleTime().range([0, width])
+    let y = d3.scaleLinear().range([height, 0])
+    let y2 = d3.scaleLinear().range([height2, 0])
 
     // x & y axes gen
-    var xAxis = d3.axisBottom(x)
-    var xAxis2 = d3.axisBottom(x2)
-    var yAxis = d3.axisLeft(y)
+    let xAxis = d3.axisBottom(x)
+    let xAxis2 = d3.axisBottom(x2)
+    let yAxis = d3.axisLeft(y)
 
-    var brush = d3.brushX()
+    let brush = d3.brushX()
       .extent([[0, 0], [width, height2]])
       .on('brush end', brushed)
 
-    var zoom = d3.zoom()
+    let zoom = d3.zoom()
       .scaleExtent([1, Infinity])
       .translateExtent([[0, 0], [width, height]])
       .extent([[0, 0], [width, height]])
       .on('zoom', zoomed)
 
-    var shape = ''
-    var shape2 = ''
-    var css = 'd3shape ' // .area or .line
-    var skin = '' // stroke or fill
+    let shape = ''
+    let shape2 = ''
+    let shpclss = 'd3shape ' // .area or .line
+    let skin = '' // stroke or fill
 
     if (this.get('shape') === 'line') {
-      css = css + 'line'
+      shpclss = shpclss + 'line'
       skin = 'stroke'
         // lines to append
       shape = d3.line()
@@ -86,7 +120,7 @@ const DashWidgetComponent = Ember.Component.extend({
           .y((d) => y2(d.y))
     }
     if (this.get('shape') === 'area') {
-      css = css + 'area'
+      shpclss = shpclss + 'area'
       skin = 'fill'
         // areas to append
       shape = d3.area()
@@ -108,36 +142,37 @@ const DashWidgetComponent = Ember.Component.extend({
         .attr('height', height)
 
     // focus and context groups for svg elements
-    var focus = svg.append('g')
+    let focus = svg.append('g')
     .attr('class', 'focus')
     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
-    var context = svg.append('g')
+    let context = svg.append('g')
     .attr('class', 'context')
     .attr('transform', 'translate(' + margin2.left + ',' + margin2.top + ')')
 
-    var thisComponent = this
     // callback to handle fetched data
     // also renders the chart
-    var render = function (error, data) {
-      // console.log(thisComponent.get('gfill1'))
-      if (error) throw error
+    let render = function (err, resp) {
+      if (err) throw err
+
       // remove old points
       focus.selectAll('path').remove()
       focus.selectAll('g').remove()
       context.selectAll('path').remove()
       context.selectAll('g').remove()
       // format dates and values
-      var d = data.stamp.map(function (obj) {
-        var o = {}
+      let dat = resp.series.map(function (obj) {
+        let o = {}
         o.x = parseTime(obj.x)
         o.y = +obj.y
         return o
       })
 
+      // Ember.Logger.info(dat)
+
       // set domains and ranges
-      x.domain(d3.extent(d.map((d) => d.x)))
-      y.domain([0, d3.max(d, (d) => d.y)])
+      x.domain(d3.extent(dat.map((d) => d.x)))
+      y.domain([0, d3.max(dat, (d) => d.y)])
       x2.domain(x.domain())
       y2.domain(y.domain())
 
@@ -145,7 +180,6 @@ const DashWidgetComponent = Ember.Component.extend({
       focus.append('g')
         .attr('class', 'axis axis--x')
         .attr('transform', 'translate(0,' + height + ')')
-        .call(xAxis.tickSize(0 - height).tickFormat(xTime).ticks(8))
       focus.select('.domain').remove()
 
       focus.append('g')
@@ -153,19 +187,19 @@ const DashWidgetComponent = Ember.Component.extend({
         .call(yAxis.tickFormat(d3.format('.0s')).tickSize(0 - width).ticks(8))
         .append('text')
           .attr('class', 'ytext')
-          .text(thisComponent.get('ytext'))
+          .text(this.get('ytext'))
       focus.select('.domain').remove()
 
       // append path with data
-      focus.append('path').datum(d)
-        .attr('class', css)
-        .attr(skin, thisComponent.get('gfill1'))
+      focus.append('path').datum(dat)
+        .attr('class', shpclss)
+        .attr(skin, this.get('gfill1'))
         .attr('d', shape)
 
       // append path to context
-      context.append('path').datum(d)
-      .attr('class', css)
-      .attr(skin, thisComponent.get('gfill1'))
+      context.append('path').datum(dat)
+      .attr('class', shpclss)
+      .attr(skin, this.get('gfill1'))
       .attr('d', shape2)
 
       // append x axis to context
@@ -187,38 +221,66 @@ const DashWidgetComponent = Ember.Component.extend({
         .attr('height', height)
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
         .call(zoom)
-    }
+    }.bind(this)
 
     // fetch data and render chart content
-    d3.json(this.get('url'), render)
-    // update every 5sec
-    var refresh = setInterval(function (url) {
-      d3.json(url, render)
-    }, 5000, this.get('url'))
+    let renderD3 = function (u, func) {
+      return d3.json(u, func)
+    }
+    let ep = this.get('url')
+
+    renderD3(ep, render)
+
+    let refreshD3 = function () {
+      if (this.get('pre_checked') === true) {
+        renderD3(ep, render)
+      }
+      setTimeout(refreshD3, this.get('fr'))
+    }.bind(this)
+
+    refreshD3()
 
     function brushed () {
       if (event.sourceEvent && event.sourceEvent.type === 'zoom') return // ignore brush-by-zoom
-      var s = event.selection || x2.range()
+      let s = event.selection || x2.range()
       x.domain(s.map(x2.invert, x2))
       focus.select('.d3shape').attr('d', shape)
       focus.select('.axis--x').call(xAxis)
       focus.select('.domain').remove()
-      svg.select('.zoom').call(zoom.transform, d3.zoomIdentity
-    .scale(width / (s[1] - s[0]))
-    .translate(-s[0], 0))
+      svg.select('.zoom').call(zoom.transform, d3.zoomIdentity.scale(width / (s[1] - s[0])).translate(-s[0], 0))
     }
 
     function zoomed () {
       if (event.sourceEvent && event.sourceEvent.type === 'brush') return // ignore zoom-by-brush
-      var t = event.transform
+      let t = event.transform
       x.domain(t.rescaleX(x2).domain())
       focus.select('.d3shape').attr('d', shape)
       focus.select('.axis--x').call(xAxis)
       focus.select('.domain').remove()
       context.select('.brush').call(brush.move, x.range().map(t.invertX, t))
     }
-  }
+  },
 
+  init () {
+    this._super(...arguments)
+  },
+
+  didRender () {
+    this._super(...arguments)
+    this.$('.segment').append(`<div class="ui active inverted dimmer">
+      <div class="ui mini text loader">Loading&hellip;</div>
+    </div>`)
+    if (this.$('.dimmer').length !== 0) {
+      setTimeout(function () {
+        this.$('.dimmer').remove()
+      }.bind(this), 1000)
+    }
+  },
+
+  didInsertElement () {
+    this._super(...arguments)
+    this.renderGraph()
+  }
 })
 
 DashWidgetComponent.reopenClass({

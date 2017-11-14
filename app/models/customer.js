@@ -1,6 +1,7 @@
 import DS from 'ember-data'
 
 export default DS.Model.extend({
+  couuid: DS.attr('string'),
   companyname: DS.attr('string'),
   companyadr1: DS.attr('string'),
   companyadr2: DS.attr('string'),
@@ -19,5 +20,5 @@ export default DS.Model.extend({
   ean: DS.attr('string'),
   valid: DS.attr('boolean'),
   description: DS.attr('string'),
-  networks: DS.hasMany('network', {async: true})
+  conets: DS.attr()
 })

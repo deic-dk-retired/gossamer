@@ -1,7 +1,9 @@
 import Ember from 'ember'
+import uuid from 'npm:uuid'
 
 export default Ember.Controller.extend({
   coid: null,
+  couuid: null,
   coname: '',
   add1: '',
   add2: '',
@@ -43,6 +45,7 @@ export default Ember.Controller.extend({
     resetForm () {
       this.setProperties({
         coid: null,
+        couuid: null,
         coname: '',
         add1: '',
         add2: '',
@@ -61,21 +64,23 @@ export default Ember.Controller.extend({
         isDisabled: 'disabled',
         isActive: false
       })
-      Ember.$('.card').removeClass('active')
+      Ember.$('.card').removeClass('blue')
       Ember.$('.togDisabled').addClass('disabled')
+      Ember.$('.right-slider').addClass('hide')
     },
 
     saveCustomer () {
-      if (this.get('act') === 'Save') {
+      if (this.get('act') === 'Edit') {
         this.send('updateCustomer')
       }
     },
 
     toggleActive (set, toSet) {
       if (set !== toSet) {
-        Ember.$('.card').removeClass('active')
-        Ember.$('.co-' + toSet).addClass('active')
+        Ember.$('.card').removeClass('blue')
+        Ember.$('.co-' + toSet).addClass('blue')
         Ember.$('.togDisabled').removeClass('disabled')
+        Ember.$('.right-slider').removeClass('hide')
       }
     },
 
@@ -86,6 +91,7 @@ export default Ember.Controller.extend({
 
       this.setProperties({
         coid: parseInt(cid),
+        couuid: co.get('couuid'),
         coname: co.get('companyname'),
         add1: co.get('companyadr1'),
         add2: co.get('companyadr2'),
@@ -105,22 +111,33 @@ export default Ember.Controller.extend({
     },
 
     updateCustomer () {
+      Ember.Logger.info('update customer ' + this.get('coname'))
+    },
 
+    removeCustomer (coid) {
+      this.get('store').findRecord('customer', coid, { backgroundReload: false }).then(function (co) {
+        co.destroyRecord()
+      })
     },
 
     addNetwork (cid, ...params) {
-      this.get('store').createRecord('network', {
+      let network = this.get('store').createRecord('network', {
+        netuuid: uuid.v4(),
+        couuid: this.get('couuid'),
         customerid: parseInt(cid),
         name: params[0],
         kind: params[1],
         net: params[2],
         description: params[3]
-      }).save()
+      })
 
-      // Ember.Logger.info(co.get('companyname'))
-      // Ember.Logger.info(params[0])
-      // Ember.Logger.info(params[1])
-      // Ember.Logger.info(params[2])
+      network.save()
+    },
+
+    removeNetwork (netid) {
+      this.get('store').findRecord('network', netid, { backgroundReload: false }).then(function (network) {
+        network.destroyRecord()
+      })
     }
 
   }

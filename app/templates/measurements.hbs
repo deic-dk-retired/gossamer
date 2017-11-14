@@ -1,11 +1,35 @@
 <div class="ui grid">
-  <div class="eight wide column">
-    {{top-networks}}
+  <div class="sixteen wide mobile sixteen wide tablet eight wide computer column">
+    {{dash-widget
+      'traffic-spec-network'
+      'bits/s'
+      'qf-traffic-spec-network'
+      'traffic for 130_226_136_240_28 (in)'
+      '#42A5F5'
+      ''
+      'area'
+    }}
   </div>
-  <div class="eight wide column">
-    {{top-incoming}}
+  <div class="sixteen wide mobile sixteen wide tablet eight wide computer column">
+    {{dash-widget
+      'top-networks'
+      'packets/s'
+      'qf-top-networks'
+      'top networks (in)'
+      '#82B1FF'
+      '#BBDEFB'
+      'line'
+    }}
   </div>
-  <div class="eight wide column">
-    {{traffic-spec-network}}
+  <div class="sixteen wide mobile sixteen wide tablet eight wide computer column">
+    {{dash-widget
+      'top-incoming'
+      'bits/s'
+      'qf-top-incoming'
+      'top hosts (in)'
+      '#64B5F6'
+      '#82B1FF'
+      'line'
+    }}
   </div>
 </div>
