@@ -1,6 +1,6 @@
 import { moduleForModel, test } from 'ember-qunit';
 
-moduleForModel('icmp', 'Unit | Model | icmp', {
+moduleForModel('icmpcode', 'Unit | Model | icmpcode', {
   // Specify the other units that are required for this test.
   needs: []
 });

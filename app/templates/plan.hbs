@@ -14,42 +14,40 @@
           <label>Protocol</label>
           <div class="inline fields">
             <div class="field">
-              {{ui-radio name="protocol" label="TCP" value="tcp" current=value onChange=(action (mut protocol))}}
+              {{ui-radio name="protocol" label="TCP" value="tcp" current=protocol onChange=(action (mut protocol))}}
             </div>
             <div class="field">
-              {{ui-radio name="protocol" label="UDP" value="udp" current=value onChange=(action (mut protocol))}}
+              {{ui-radio name="protocol" label="UDP" value="udp" current=protocol onChange=(action (mut protocol))}}
             </div>
             <div class="field">
-              {{ui-radio name="protocol" label="ICMP" value="icmp" current=value onChange=(action (mut protocol))}}
+              {{ui-radio name="protocol" label="ICMP" value="icmp" current=protocol onChange=(action (mut protocol))}}
             </div>
           </div>
         </div>
 
-        <h4 class="ui dividing medium header">Protocol Information</h4>
+        <h4 class="ui dividing medium header blue">Protocol Information</h4>
         {{#if (eq protocol 'tcp')}}
-          {{tcp-fields mod=model}}
+          {{tcp-fields mod=model tcpflags=tcpflags}}
         {{else}}
           {{#if (eq protocol 'udp')}}
-            {{udp-fields}}
+            {{udp-fields destip=destip destport=destport}}
           {{else}}
             {{#if (eq protocol 'icmp')}}
-              {{icmp-fields mod=model}}
+              {{icmp-fields mod=model icmptype=icmptype icmpcode=icmpcode}}
             {{else}}
               <p>Select a protocol above to proceed</p>
             {{/if}}
           {{/if}}
         {{/if}}
 
-        <h4 class="ui dividing medium header">Additional Parameters</h4>
+        <h4 class="ui dividing medium header blue">Additional Parameters</h4>
         <div class="field">
           <label>Packet Size or Range</label>
-          {{input type="text" id="pktLength" name="pktLength" placeholder="e.g. 1500 or >=64&<=9000"}}
-          {{!-- <input type="text" id="pktLength" name="pktLength" placeholder="e.g. 2048"> --}}
-          {{!-- \b\d{1,4}[.]\d{1,4}[.]\d{1,4}[.]\d{1,4}\b --}}
+          {{input type="text" id="pktLength" name="pktLength" value=pktlen placeholder="e.g. 1500 or >=64&<=9000"}}
         </div>
         <div class="field">
           <label>Fragment Options</label>
-          {{#ui-dropdown id="fragEncode" name="fragEncode" class="search selection" allowAdditions=true selected=fragEncode onChange=(action (mut fragEncode))}}
+          {{#ui-dropdown name="fragEncode" class="search selection" allowAdditions=true selected=fragEncode onChange=(action (mut fragEncode))}}
             <div class="default text">Select/Add encoding</div>
             <i class="dropdown icon"></i>
           {{/ui-dropdown}}
@@ -57,7 +55,12 @@
 
         <div class="field">
           <label>Short Comment&hellip;</label>
-          <textarea id="shortComment" name="shortComment" rows="5"></textarea>
+          <textarea id="shortComment" name="shortComment" value=shrtcomm rows="5"></textarea>
+        </div>
+
+        <h4 class="ui dividing medium header blue">Duration</h4>
+        <div class="field">
+           {{ui-checkbox label="Set for 10 minutes on deploy" checked=isdefDur onChange=(action (mut isdefDur))}}
         </div>
 
         <div class="ui grid">
@@ -65,7 +68,7 @@
             <label>From:</label>
             {{ember-flatpickr
               allowInput=false
-              altFormat='D, d M Y  (H:i)'
+              altFormat='D, d M \'y, H:i'
               altInput=true
               altInputClass='my-alt-input'
 
@@ -108,7 +111,7 @@
             <label>To:</label>
             {{ember-flatpickr
               allowInput=false
-              altFormat='D, d M Y  (H:i)'
+              altFormat='D, d M \'y, H:i'
               altInput=true
               altInputClass='my-alt-input'
 
@@ -150,29 +153,32 @@
 
         </div>
 
-        <div class="required field">
-          <label>Action</label>
-          <div class="inline fields">
-            <div class="field">
-              {{ui-radio name="ruleact" label="Rate Limit" value="limit" current=value onChange=(action (mut ruleact))}}
-            </div>
-            <div class="field">
-              {{ui-radio name="ruleact" label="Block" value="block" current=value onChange=(action (mut ruleact))}}
-            </div>
+        <h4 class="ui dividing medium header blue">Required Action</h4>
+
+        <div class="inline fields">
+          <div class="field">
+            {{ui-radio name="ruleact" label="Block" value="block" current=ruleact onChange=(action (mut ruleact))}}
+          </div>
+          <div class="field">
+            {{ui-radio name="ruleact" label="Rate Limit" value="limit" current=ruleact onChange=(action (mut ruleact))}}
           </div>
         </div>
+
 
         {{#if (eq ruleact 'limit')}}
           <div class="required field">
             <label>Bits/sec > 0</label>
-            {{input type="text" id="pktspsec" name="pktspsec" placeholder="e.g. 9600"}}
+            {{input type="text" id="pktrate" name="pktrate" value=pktrate placeholder="e.g. 9600"}}
           </div>
-
         {{/if}}
 
         <button class="ui labeled icon blue button" type="submit">
           <i class="long right arrow icon"></i>
           Deploy Rule
+        </button>
+        <button class="ui labeled icon button" type="reset" {{action 'resetForm'}}>
+          <i class="remove icon"></i>
+          Cancel
         </button>
 
       </form>

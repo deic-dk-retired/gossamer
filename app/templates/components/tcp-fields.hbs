@@ -2,12 +2,17 @@
 
 <div class="required field">
   <label>TCP Flags</label>
-  {{#ui-dropdown id="tcp-flags" class="fluid search multiple selection" selected=tcp-flags onChange=(action (mut tcp-flags))}}
+  {{#ui-dropdown
+    name="tcpflags"
+    class="fluid search multiple selection"
+    selected=tcpflags
+    onChange=(action (mut tcpflags))
+  }}
     <i class="dropdown icon"></i>
     <div class="default text">Flags</div>
     <div class="menu">
       {{#each mod.tcps as |tcp|}}
-        <div class="item" data-value="{{tcp.flag}}">
+        <div class="item" data-value="{{tcp.flag}}" data-text="{{tcp.flag}}">
           {{tcp.flag}}
         </div>
       {{/each}}

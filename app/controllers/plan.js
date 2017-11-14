@@ -9,19 +9,44 @@ export default Ember.Controller.extend({
   fromDate: null,
   toDate: null,
 
-  init () {
-    this._super(...arguments)
-    this.updateTime()
-  },
+  protocol: '',
 
-  updateTime () {
-    let self = this
-    setInterval(function () {
-      self.set('now', moment.now())
-    }, 1000, self)
-  },
+  icmptype: null,
+  icmpcode: null,
+
+  isdefDur: false,
+
+  isdefDurChanged: Ember.on('init', Ember.observer('isdefDur', function () {
+    let uptime = function () {
+      if (this.get('isdefDur')) {
+        this.set('now', moment.now())
+      }
+      setTimeout(uptime, 1000)
+    }.bind(this)
+    uptime()
+  })),
+
+  ruleact: 'block',
 
   actions: {
+    resetForm () {
+      this.setProperties({
+        protocol: null,
+        destip: null,
+        destport: null,
+        tcpflags: [],
+        icmptype: null,
+        icmpcode: null,
+
+        pktlen: null,
+        fragEncode: null,
+        shrtcomm: null,
+        isdefDur: false,
+        ruleact: 'block',
+        pktrate: 0
+      })
+    },
+
     pauseTime () {
       clearInterval(this.updateTime())
     },

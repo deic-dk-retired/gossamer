@@ -103,11 +103,11 @@ const DashWidgetComponent = Ember.Component.extend({
 
     let shape = ''
     let shape2 = ''
-    let css = 'd3shape ' // .area or .line
+    let shpclss = 'd3shape ' // .area or .line
     let skin = '' // stroke or fill
 
     if (this.get('shape') === 'line') {
-      css = css + 'line'
+      shpclss = shpclss + 'line'
       skin = 'stroke'
         // lines to append
       shape = d3.line()
@@ -120,7 +120,7 @@ const DashWidgetComponent = Ember.Component.extend({
           .y((d) => y2(d.y))
     }
     if (this.get('shape') === 'area') {
-      css = css + 'area'
+      shpclss = shpclss + 'area'
       skin = 'fill'
         // areas to append
       shape = d3.area()
@@ -152,8 +152,8 @@ const DashWidgetComponent = Ember.Component.extend({
 
     // callback to handle fetched data
     // also renders the chart
-    let render = function (error, data) {
-      if (error) throw error
+    let render = function (err, resp) {
+      if (err) throw err
 
       // remove old points
       focus.selectAll('path').remove()
@@ -161,16 +161,18 @@ const DashWidgetComponent = Ember.Component.extend({
       context.selectAll('path').remove()
       context.selectAll('g').remove()
       // format dates and values
-      let d = data.stamp.map(function (obj) {
+      let dat = resp.series.map(function (obj) {
         let o = {}
         o.x = parseTime(obj.x)
         o.y = +obj.y
         return o
       })
 
+      // Ember.Logger.info(dat)
+
       // set domains and ranges
-      x.domain(d3.extent(d.map((d) => d.x)))
-      y.domain([0, d3.max(d, (d) => d.y)])
+      x.domain(d3.extent(dat.map((d) => d.x)))
+      y.domain([0, d3.max(dat, (d) => d.y)])
       x2.domain(x.domain())
       y2.domain(y.domain())
 
@@ -189,14 +191,14 @@ const DashWidgetComponent = Ember.Component.extend({
       focus.select('.domain').remove()
 
       // append path with data
-      focus.append('path').datum(d)
-        .attr('class', css)
+      focus.append('path').datum(dat)
+        .attr('class', shpclss)
         .attr(skin, this.get('gfill1'))
         .attr('d', shape)
 
       // append path to context
-      context.append('path').datum(d)
-      .attr('class', css)
+      context.append('path').datum(dat)
+      .attr('class', shpclss)
       .attr(skin, this.get('gfill1'))
       .attr('d', shape2)
 

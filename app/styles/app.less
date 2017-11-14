@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import url('https://fonts.googleapis.com/css?family=Montserrat:200:400|Kanit:700i');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300:400|Kanit:700i');
 @import url('http://tawian.io/text-spinners/spinners.css');
 
 @blue: #0288D1;
@@ -20,8 +20,7 @@
 @light-bg: #FAFAFA;
 
 * {
-  font-weight: 200;
-  font-weight: lighter;
+  font-weight: 300!important;
 }
 
 .hide {
@@ -86,28 +85,50 @@ body .bg {
     overflow-y: scroll;
     .ui.top.fixed.menu {
       padding-left: 55px!important;
+      padding-right: 15px!important;
       z-index: 1001;
       background:rgba(255,255,255, .98);
       .title {
         text-transform: capitalize;
-        font-weight: 400;
+        font-weight: 300;
       }
     }
+    .ui.top.fixed.menu .item:last-child{
+      border-right: 1px solid rgba(96, 125, 139, 0.1);
+    }
+
     .ui.top.fixed.menu .user-menu {
       max-width: 200px;
       min-width: 200px;
-      left: -145px;
     }
-
+    .ui.top.fixed.menu .notify {
+      .empty {
+        position: absolute;
+        z-index: 5;
+        top: 10px;
+        left: 10px;
+      }
+    }
     .ui.top.fixed.menu .notify-menu {
       max-width: 300px;
       min-width: 300px;
-      left: -208px;
+      left: -250px;
+      .sticky {
+        // position: fixed!important;
+        // z-index: 1;
+        // top:35px;
+        width: 300px;
+        background: rgba(255,255,255, .95);
+        padding: 20px 20px 20px;
+        box-shadow: 0px 2px 2px 0px #D4D4D5, 0px 0px 0px 0px #D4D4D5;
+      }
       .list {
         margin: 0;
+        padding: 0;
       }
       .item {
-        padding: 20px;
+        padding: 10px 25px 10px 15px;
+        text-align: left;
       }
       .content {
         white-space: -moz-pre-wrap !important;
@@ -119,16 +140,16 @@ body .bg {
       }
     }
     .right-slider {
-      right: 0px;
+      right: 0;
       position: fixed;
+      z-index: 100;
       background: #fff;
       padding: 0;
       min-width: 320px;
       width: 30vw;
       height: 100%;
-      z-index: 100;
-      top: 50px;
-      box-shadow: 0px 0px 4px 2px #D4D4D5, 0px 0px 0px 1px #D4D4D5;
+      top: 49px;
+      box-shadow: 0px 0px 4px 2px #D4D4D5;
       overflow: hidden;
       overflow-y: scroll;
       transition: .2s all ease-out;
@@ -136,13 +157,23 @@ body .bg {
         display: initial!important;
         right: -100vw;
         right: -100%;
+        transition: .2s all ease-in;
+        .sticky {
+          right: -100vw;
+          right: -100%;
+        }
       }
     }
-    .right-slider h2 {
-      background: #fff;
-      border-bottom: 1px solid #e4e4e4;
-      width: 100%;
+    .right-slider .sticky {
+      right:0;
+      position: fixed;
+      z-index: 1;
+      min-width: 320px;
+      width: 30vw;
+      background: rgba(255,255,255,.95);
+      box-shadow: 0px 0px 2px 1px #D4D4D5;
       padding: 10px 20px;
+      transition: .2s all ease-out;
     }
     .right-slider form {
       padding: 70px 30px 100px 20px;
@@ -195,10 +226,11 @@ aside {
     background: @black!important;
      span {
         font-family: 'Kanit'!important;
-        font-weight: 700;
+        font-weight: 700!important;
         font-style: italic;
         margin-left: -5.2px;
-        font-size: 1.24em;
+        font-size: 1.2em;
+        line-height: .9em;
       }
   }
   .user {
@@ -281,6 +313,10 @@ aside {
 
 .enhance {
   color: @blue!important;
+  &.active {
+    // box-shadow: inset 0px -3px 0 @blue!important;
+    // background: rgba(0,0,0,.05)!important;
+  }
 }
 
 .inactive.card {
@@ -323,7 +359,7 @@ aside {
     width: 100%;
     color: @darker800;
     text-transform: capitalize;
-    font-weight: 400!important;
+    font-weight: 300!important;
     padding: 0 0 @lg;
   }
   .controls {

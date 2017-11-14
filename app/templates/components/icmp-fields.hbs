@@ -1,12 +1,17 @@
 <div class="required twelve wide field">
   <label>ICMP Type</label>
-    {{#ui-dropdown id="icmp-type" class="search selection" selected=icmptype onChange=(action (mut selected))}}
+    {{#ui-dropdown
+      name="icmptype"
+      class="search selection"
+      selected=icmptype
+      onChange=(action (mut icmptype))
+    }}
       <div class="default text">Select Type</div>
       <i class="dropdown icon"></i>
       <div class="menu">
-        {{#each mod.icmps as |icmp|}}
-          <div class="item" data-value="{{icmp.name}}">
-            {{icmp.name}}
+        {{#each mod.ictype as |ictype|}}
+          <div class="item" data-value="{{ictype.id}}" data-text="{{ictype.name}}">
+            {{ictype.id}}, {{ictype.name}}
           </div>
         {{/each}}
       </div>
@@ -14,13 +19,18 @@
 </div>
 <div class="required twelve wide field">
   <label>ICMP Code</label>
-  {{#ui-dropdown id="icmp-code" class="search selection" selected=icmpcode onChange=(action (mut icmpcode)) as |execute mapper|}}
+  {{#ui-dropdown
+    name="icmpcode"
+    class="search selection"
+    selected=icmpcode
+    onChange=(action (mut icmpcode))
+  }}
     <div class="default text">Select Code</div>
     <i class="dropdown icon"></i>
     <div class="menu">
-      {{#each mod.icmps as |icmp|}}
-          <div class="item" data-value="{{icmp.code}}">
-            {{icmp.code}}
+      {{#each mod.iccode as |iccode|}}
+          <div class="item" data-value="{{iccode.id}}" data-text="{{iccode.name}}" >
+            {{iccode.id}}, {{iccode.name}}
           </div>
         {{/each}}
     </div>
