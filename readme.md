@@ -13,7 +13,7 @@ Along with the app logo, this section displays notification counts, and a quick 
 ### Search
 A site wide search bar that lets users to query rules by name, protocol, timestamp etc.
 
-![](public/readme/alerts.png)
+![](public/readme/search.png)
 
 ### Add Rule
 This section allows a user to add a rule over the networks assigned to that user. A user can be assigned networks by a global admin or a db admin. A network admin is the lowest level of access that can only view and add rules over her own networks.
