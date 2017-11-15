@@ -119,14 +119,15 @@ export default Ember.Component.extend({
           this.removeCard(reanimate)
           return
         }
-        setTimeout(reanimate, f)
+        this._timer = setTimeout(reanimate, f)
       }.bind(this)
       reanimate()
     }
   },
 
-  didDestroyElement () {
+  willDestroyElement () {
     this._super(...arguments)
+    clearTimeout(this.get('_timer'))
   },
 
   actions: {

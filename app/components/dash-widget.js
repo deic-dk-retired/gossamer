@@ -235,7 +235,7 @@ const DashWidgetComponent = Ember.Component.extend({
       if (this.get('pre_checked') === true) {
         renderD3(ep, render)
       }
-      setTimeout(refreshD3, this.get('fr'))
+      this._timer = setTimeout(refreshD3, this.get('fr'))
     }.bind(this)
 
     refreshD3()
@@ -280,6 +280,11 @@ const DashWidgetComponent = Ember.Component.extend({
   didInsertElement () {
     this._super(...arguments)
     this.renderGraph()
+  },
+
+  willDestroyElement () {
+    this._super(...arguments)
+    clearTimeout(this.get('_timer'))
   }
 })
 
