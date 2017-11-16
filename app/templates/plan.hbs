@@ -60,7 +60,7 @@
 
         <h4 class="ui dividing medium header blue">Duration</h4>
         <div class="field">
-           {{ui-checkbox label="Set for 10 minutes on deploy" checked=isdefDur onChange=(action (mut isdefDur))}}
+           {{ui-checkbox label="Run for 10 minutes on deploy" checked=isdefDur onChange=(action (mut isdefDur))}}
         </div>
 
         <div class="ui grid">
@@ -164,7 +164,6 @@
           </div>
         </div>
 
-
         {{#if (eq ruleact 'limit')}}
           <div class="required field">
             <label>Bits/sec > 0</label>
@@ -172,13 +171,13 @@
           </div>
         {{/if}}
 
-        <button class="ui labeled icon blue button" type="submit">
-          <i class="long right arrow icon"></i>
-          Deploy Rule
+        <button class="ui animated fade blue button" type="submit">
+          <div class="hidden content"><i class="check icon"></i></div>
+          <div class="visible content">Deploy Rule</div>
         </button>
-        <button class="ui labeled icon button" type="reset" {{action 'resetForm'}}>
-          <i class="remove icon"></i>
-          Cancel
+        <button class="ui animated fade button" type="reset" {{action 'resetForm'}}>
+          <div class="hidden content"><i class="remove icon"></i></div>
+           <div class="visible content">Cancel</div>
         </button>
 
       </form>

@@ -1,50 +1,61 @@
-<div class="ui top fixed large menu">
-  <div class="header item">
-    <span class="title">{{routename}}</span>
-  </div>
-
-  <div class="right menu">
-    <div class="item">
-      {{#ui-search source=someList onSearchQuery=(action (mut query)) onSelect=(action (mut selected))}}
-        <div class="ui transparent icon input">
-          <input class="prompt" type="text" placeholder="Search...">
-          <i class="search link icon"></i>
-        </div>
-        <div class="results"></div>
-      {{/ui-search}}
+{{!-- {{#if isUser}} --}}
+  <div class="ui top fixed large menu">
+    <div class="header item">
+      <span class="title">{{routename}}</span>
     </div>
 
-    {{#link-to 'plan' class="item enhance"}}
-      <i class="add icon"></i> Add Rule
-    {{/link-to}}
-
-    {{#ui-dropdown class="scrolling item icon notify"}}
-      <i class="alarm outline icon"></i>
-      <span class="ui circular empty blue label"></span>
-      {{alerts-menu}}
-    {{/ui-dropdown}}
-
-    {{#ui-dropdown class="item icon"}}
-      <i class="icon setting"></i>
-      <div class="menu user-menu">
-        {{#if (eq kind 'globaladmin')}}
-          <div class="header">Super Settings</div>
-          <div class="divider"></div>
-          {{#link-to "users" class="item"}}
-            <i class="users outline icon"></i>Users
-          {{/link-to}}
-          {{#link-to "customers" class="item"}}
-            <i class="hand peace icon"></i>Customers
-          {{/link-to}}
-          <div class="divider"></div>
-        {{/if}}
-        {{#link-to "login" class="item"}}
-          <i class="sign out icon"></i>Sign Out
-         {{/link-to}}
+    <div class="right menu">
+      <div class="item">
+        {{#ui-search source=someList onSearchQuery=(action (mut query)) onSelect=(action (mut selected))}}
+          <div class="ui transparent icon input">
+            <input class="prompt" type="text" placeholder="Search...">
+            <i class="search link icon"></i>
+          </div>
+          <div class="results"></div>
+        {{/ui-search}}
       </div>
-    {{/ui-dropdown}}
 
-    {{!-- <span class="item"></span> --}}
+      {{#link-to 'plan' class="item enhance"}}
+        <i class="add icon"></i> Add Rule
+      {{/link-to}}
+
+      {{#ui-dropdown class="scrolling item icon notify"}}
+        <i class="alarm outline icon"></i>
+        <span class="ui circular empty blue label"></span>
+        {{alerts-menu}}
+      {{/ui-dropdown}}
+
+      {{#ui-dropdown class="item icon"}}
+        <i class="icon setting"></i>
+        <div class="menu user-menu">
+          {{#if (eq kind 'globaladmin')}}
+            <div class="header">Super Settings</div>
+            <div class="divider"></div>
+            {{#link-to "users" class="item"}}
+              <i class="users outline icon"></i>Users
+            {{/link-to}}
+            {{#link-to "customers" class="item"}}
+              <i class="hand peace icon"></i>Customers
+            {{/link-to}}
+            <div class="divider"></div>
+          {{/if}}
+          {{#link-to "login" class="item"}}
+            <i class="sign out icon"></i>Sign Out
+           {{/link-to}}
+        </div>
+      {{/ui-dropdown}}
+    </div>
   </div>
+{{!-- {{else}}
+  <div class="ui top fixed large menu">
+    <div class="header item">
+      <span class="title">DdPs</span>
+    </div>
+    <div class="right menu">
+      {{#link-to 'login' class="item enhance"}}
+        <i class="sign in icon"></i> Login
+      {{/link-to}}
+    </div>
 
-</div>
+  </div>
+{{/if}} --}}

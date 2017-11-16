@@ -100,7 +100,7 @@ const DashStatsComponent = Ember.Component.extend({
       trailColor: '#f0f0f0',
       trailWidth: 1,
       easing: 'easeInOut',
-      duration: 1400,
+      duration: 2500,
       svgStyle: null,
       text: {
         value: '',
@@ -117,7 +117,6 @@ const DashStatsComponent = Ember.Component.extend({
         } else {
           bar.setText(v + ' <div class="statslabel">' + l.toUpperCase() + '</div>')
         }
-
         bar.text.style.color = state.color
       }
     })

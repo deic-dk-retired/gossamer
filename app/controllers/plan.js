@@ -21,12 +21,18 @@ export default Ember.Controller.extend({
       if (this.get('isdefDur')) {
         this.set('now', moment.now())
       }
-      setTimeout(uptime, 1000)
+      this._timer = setTimeout(uptime, 1000)
     }.bind(this)
     uptime()
   })),
 
   ruleact: 'block',
+
+  willDestry () {
+    this._super(...arguments)
+    this.set('isdefDur', false)
+    clearTimeout(this.get('_timer'))
+  },
 
   actions: {
     resetForm () {
@@ -45,10 +51,6 @@ export default Ember.Controller.extend({
         ruleact: 'block',
         pktrate: 0
       })
-    },
-
-    pauseTime () {
-      clearInterval(this.updateTime())
     },
 
     addRule () {

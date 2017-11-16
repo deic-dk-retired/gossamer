@@ -2,10 +2,11 @@
 <div class="ui centered grid begin">
   <div class=" sixteen wide mobile six wide tablet three wide computer column">
     <form class="ui large form" {{action "authenticate" on="submit"}}>
-      <div class="ui stacked blue padded segment">
+
+      <div class="ui stacked padded inverted segment">
         <div class="welcome">
           <span class="logo">
-            DDPS
+            DDPs
           </span>
         </div>
         <div class="field">
@@ -20,9 +21,9 @@
             {{input type='password' placeholder='and password' value=password}}
           </div>
         </div>
-        <button class="ui fluid large blue submit labeled icon button" type="submit" value="Login">
-          <i class="sign in icon"></i>
-          Login
+        <button class="ui fluid large blue submit animated fade button" type="submit" value="Login">
+          <div class="hidden content"><i class="sign in icon"></i></div>
+          <div class="visible content">Sign In</div>
         </button>
       </div>
 
@@ -33,6 +34,7 @@
           Login failed! Please try again.
         </div>
       {{/if}}
+
     </form>
   </div>
 </div>

@@ -62,17 +62,16 @@ export default Ember.Component.extend({
 
   updateNow () {
     let f = this.get('frequency')
-    setInterval(function () {
+    this._intrvl = setInterval(function () {
       this.set('now', moment.now())
     }.bind(this), f)
   },
 
-  removeCard (timer) {
+  removeCard () {
     Ember.$('.card.rule-' + this.get('rid')).addClass('toRemove')
-    setTimeout(function () {
+    this._timer1 = setTimeout(function () {
       Ember.$('.card.rule-' + this.get('rid')).remove()
     }.bind(this), 300)
-    clearTimeout(timer)
   },
 
   didInsertElement () {
@@ -88,7 +87,7 @@ export default Ember.Component.extend({
         trailColor: '#f4f4f4',
         trailWidth: 1,
         easing: 'easeInOut',
-        duration: 1400,
+        duration: 2500,
         svgStyle: null,
         text: {
           value: '',
@@ -105,7 +104,6 @@ export default Ember.Component.extend({
           } else {
             bar.setText(value + ' <span class="centsign">%</span><div class="proglabel">complete</div>')
           }
-
           bar.text.style.color = '#37474F'
         }
       })
@@ -116,10 +114,9 @@ export default Ember.Component.extend({
       let reanimate = function () {
         bar.animate(this.get('prcnt'))
         if (this.get('pre_checked') && this.get('prcnt') > 0.99) {
-          this.removeCard(reanimate)
-          return
+          this.removeCard()
         }
-        this._timer = setTimeout(reanimate, f)
+        this._timer2 = setTimeout(reanimate, f)
       }.bind(this)
       reanimate()
     }
@@ -127,7 +124,9 @@ export default Ember.Component.extend({
 
   willDestroyElement () {
     this._super(...arguments)
-    clearTimeout(this.get('_timer'))
+    clearTimeout(this.get('_timer1'))
+    clearTimeout(this.get('_timer2'))
+    clearInterval(this.get('_intrvl'))
   },
 
   actions: {
