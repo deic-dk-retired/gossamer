@@ -11,18 +11,16 @@ export default Ember.Component.extend({
     </div>`)
   },
 
-  didRender () {
+  didInsertElement () {
     this._super(...arguments)
-    setTimeout(function () {
+    this._timer = setTimeout(function () {
       this.$('.dimmer').remove()
     }, 500)
   },
 
-  didInsertElement () {
+  willDestroyElement () {
     this._super(...arguments)
-    setTimeout(function () {
-      this.$('.dimmer').remove()
-    }, 500)
+    clearTimeout(this.get('_timer'))
   },
 
   actions: {

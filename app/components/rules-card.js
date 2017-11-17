@@ -40,7 +40,7 @@ export default Ember.Component.extend({
     if (percent < 0) {
       return 0
     }
-    if (percent > 1) {
+    if (percent >= 1) {
       return `${percent / percent}`
     } else {
       return `${percent}`
@@ -62,8 +62,10 @@ export default Ember.Component.extend({
 
   updateNow () {
     let f = this.get('frequency')
-    this._intrvl = setInterval(function () {
-      this.set('now', moment.now())
+    this.set('now', moment.now())
+
+    this._timer3 = setTimeout(function () {
+      this.updateNow()
     }.bind(this), f)
   },
 
@@ -112,10 +114,11 @@ export default Ember.Component.extend({
       bar.animate(percent)
       let f = this.get('frequency')
       let reanimate = function () {
-        bar.animate(this.get('prcnt'))
-        if (this.get('pre_checked') && this.get('prcnt') > 0.99) {
+        if (this.get('pre_checked') && this.get('prcnt') >= 1.00) {
           this.removeCard()
+          return
         }
+        bar.animate(this.get('prcnt'))
         this._timer2 = setTimeout(reanimate, f)
       }.bind(this)
       reanimate()
@@ -126,7 +129,7 @@ export default Ember.Component.extend({
     this._super(...arguments)
     clearTimeout(this.get('_timer1'))
     clearTimeout(this.get('_timer2'))
-    clearInterval(this.get('_intrvl'))
+    clearTimeout(this.get('_timer3'))
   },
 
   actions: {
