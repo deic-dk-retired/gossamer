@@ -40,7 +40,7 @@ export default Ember.Component.extend({
     if (percent < 0) {
       return 0
     }
-    if (percent > 1) {
+    if (percent >= 1) {
       return `${percent / percent}`
     } else {
       return `${percent}`
@@ -62,17 +62,18 @@ export default Ember.Component.extend({
 
   updateNow () {
     let f = this.get('frequency')
-    setInterval(function () {
-      this.set('now', moment.now())
+    this.set('now', moment.now())
+
+    this._timer3 = setTimeout(function () {
+      this.updateNow()
     }.bind(this), f)
   },
 
-  removeCard (timer) {
+  removeCard () {
     Ember.$('.card.rule-' + this.get('rid')).addClass('toRemove')
-    setTimeout(function () {
+    this._timer1 = setTimeout(function () {
       Ember.$('.card.rule-' + this.get('rid')).remove()
     }.bind(this), 300)
-    clearTimeout(timer)
   },
 
   didInsertElement () {
@@ -88,7 +89,7 @@ export default Ember.Component.extend({
         trailColor: '#f4f4f4',
         trailWidth: 1,
         easing: 'easeInOut',
-        duration: 1400,
+        duration: 2500,
         svgStyle: null,
         text: {
           value: '',
@@ -105,7 +106,6 @@ export default Ember.Component.extend({
           } else {
             bar.setText(value + ' <span class="centsign">%</span><div class="proglabel">complete</div>')
           }
-
           bar.text.style.color = '#37474F'
         }
       })
@@ -114,19 +114,22 @@ export default Ember.Component.extend({
       bar.animate(percent)
       let f = this.get('frequency')
       let reanimate = function () {
-        bar.animate(this.get('prcnt'))
-        if (this.get('pre_checked') && this.get('prcnt') > 0.99) {
-          this.removeCard(reanimate)
+        if (this.get('pre_checked') && this.get('prcnt') >= 1.00) {
+          this.removeCard()
           return
         }
-        setTimeout(reanimate, f)
+        bar.animate(this.get('prcnt'))
+        this._timer2 = setTimeout(reanimate, f)
       }.bind(this)
       reanimate()
     }
   },
 
-  didDestroyElement () {
+  willDestroyElement () {
     this._super(...arguments)
+    clearTimeout(this.get('_timer1'))
+    clearTimeout(this.get('_timer2'))
+    clearTimeout(this.get('_timer3'))
   },
 
   actions: {

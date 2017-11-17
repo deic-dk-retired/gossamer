@@ -11,17 +11,17 @@ export default Ember.Route.extend({
     Ember.Logger.info(`before rules is loaded...`)
   },
 
-  model (params) {
-    // Ember.Logger.info(params)
-    // return Ember.RSVP.hash({
-    //   rules: this.get('store').query('rule', params)
-    // })
+  fetchRules (params) {
     return this.get('store').query('rule', params).then((d) => {
       return {
         rules: d,
         meta: d.get('meta')
       }
     })
+  },
+
+  model (params) {
+    return this.fetchRules(params)
   },
 
   afterModel () {

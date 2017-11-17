@@ -49,19 +49,19 @@ const DashStatsComponent = Ember.Component.extend({
       case 'exp':
         v = stats.expired
         l = 'expired'
-        c = 'blue'
+        c = 'green'
         h = '#0288D1'
         break
       case 'tcp':
         v = stats.tcp
         l = 'tcp'
-        c = 'orange'
+        c = 'blue'
         h = '#FFB74D'
         break
       case 'icmp':
         v = stats.icmp
         l = 'icmp'
-        c = 'yellow'
+        c = 'blue'
         h = '#FFEB3B'
         break
       case 'udp':
@@ -75,13 +75,13 @@ const DashStatsComponent = Ember.Component.extend({
       case 'tot':
         v = stats.total
         l = 'total'
-        c = 'teal'
+        c = 'blue'
         h = '#00B5AD'
         break
       case 'net':
         v = stats.networks
         l = 'networks'
-        c = 'olive'
+        c = 'blue'
         h = '#B5CC18'
         break
     }
@@ -100,7 +100,7 @@ const DashStatsComponent = Ember.Component.extend({
       trailColor: '#f0f0f0',
       trailWidth: 1,
       easing: 'easeInOut',
-      duration: 1400,
+      duration: 2500,
       svgStyle: null,
       text: {
         value: '',
@@ -117,7 +117,6 @@ const DashStatsComponent = Ember.Component.extend({
         } else {
           bar.setText(v + ' <div class="statslabel">' + l.toUpperCase() + '</div>')
         }
-
         bar.text.style.color = state.color
       }
     })

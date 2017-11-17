@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import url('https://fonts.googleapis.com/css?family=Montserrat:300:400|Kanit:700i');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300:400|Kanit:800i');
 @import url('http://tawian.io/text-spinners/spinners.css');
 
 @blue: #0288D1;
@@ -35,7 +35,9 @@ body.pushable {
 }
 
 body .bg {
-  background: url('/assets/images/pbg.jpg') 50% 50% repeat #f4f4f4;
+  background: #36D1DC;
+  background: -webkit-linear-gradient(to left, #348AC7, #7474BF);
+  background: linear-gradient(to left, #348AC7, #7474BF);
   opacity: 1;
   width: 100%;
   height: 100%;
@@ -54,7 +56,9 @@ body .bg {
   overflow-x: hidden;
   padding: 0!important;
   .pusher {
-    background: #f4f4f4!important;
+    background: #f0f4f7;
+    background: -webkit-linear-gradient(to left, #f4f4f4, #f0f4f7);
+    background: linear-gradient(to left, #f4f4f4, #f0f4f7);
     position: relative;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
@@ -206,9 +210,10 @@ body .bg {
     font-size: 1.5em;
   }
   .logo {
-    font-weight: 700;
+    font-weight: 800!important;
     font-style: italic;
     font-size: 2.5em;
+    color: #fff;
   }
 }
 
@@ -226,7 +231,7 @@ aside {
     background: @black!important;
      span {
         font-family: 'Kanit'!important;
-        font-weight: 700!important;
+        font-weight: 800!important;
         font-style: italic;
         margin-left: -5.2px;
         font-size: 1.2em;
@@ -250,6 +255,9 @@ aside {
 
 .table th {
   text-transform: uppercase!important;
+}
+.table tr{
+  pointer-events: none;
 }
 
 .rule {
