@@ -53,6 +53,10 @@ export default Ember.Controller.extend({
       })
     },
 
+    setMinDate () {
+      this.set('toMinDate', this.get('fromDate'))
+    },
+
     addRule () {
       Ember.Logger.info('Create rule')
     }

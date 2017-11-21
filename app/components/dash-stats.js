@@ -56,7 +56,7 @@ const DashStatsComponent = Ember.Component.extend({
         v = stats.tcp
         l = 'tcp'
         c = 'blue'
-        h = '#FFB74D'
+        h = '#0288d1'
         break
       case 'icmp':
         v = stats.icmp

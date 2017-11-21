@@ -67,10 +67,10 @@
           <div class="required field eight wide column">
             <label>From:</label>
             {{ember-flatpickr
-              allowInput=false
               altFormat='D, d M \'y, H:i'
               altInput=true
               altInputClass='my-alt-input'
+              allowInput=false
 
               clickOpens=true
               date=(readonly now)
@@ -83,13 +83,13 @@
               enableSeconds=false
               enableTime=true
 
-              flatpickrRef=flatpickrRef
+              flatpickrRef=fpFrom
               hourIncrement=1
               inline=false
-              locale='uk'
+              locale='fr'
 
               maxDate=maxDate
-              minDate=minDate
+              minDate=now
               minuteIncrement=5
               mode='single'
 
@@ -110,10 +110,11 @@
           <div class="required field eight wide column">
             <label>To:</label>
             {{ember-flatpickr
-              allowInput=false
               altFormat='D, d M \'y, H:i'
               altInput=true
               altInputClass='my-alt-input'
+
+              allowInput=false
 
               clickOpens=true
               date=(readonly nowef10m)
@@ -126,13 +127,13 @@
               enableSeconds=false
               enableTime=true
 
-              flatpickrRef=flatpickrRef
+              flatpickrRef=fpTo
               hourIncrement=1
               inline=false
-              locale='uk'
+              locale='fr'
 
               maxDate=maxDate
-              minDate=minDate
+              minDate=nowef10m
               minuteIncrement=5
               mode='single'
 
