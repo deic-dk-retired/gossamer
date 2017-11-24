@@ -12,16 +12,7 @@ const DashStatsComponent = Ember.Component.extend({
     return this.get('params')[1]
   }),
 
-  didRender () {
-    this._super(...arguments)
-    Ember.$('.segment').append(`<div class="ui active inverted dimmer">
-    <div class="ui mini text loader">Loading&hellip;</div>
-  </div>`)
-  },
-
-  didInsertElement () {
-    this._super(...arguments)
-
+  renderStat () {
     let wv = this.$('.value')
     let wl = this.$('.label')
     let tocolor = this.$('.ui')
@@ -67,10 +58,12 @@ const DashStatsComponent = Ember.Component.extend({
       case 'udp':
         v = stats.udp
         l = 'udp'
+        c = 'blue'
         break
       case 'oth':
         v = stats.other
         l = 'others'
+        c = 'blue'
         break
       case 'tot':
         v = stats.total
@@ -91,36 +84,28 @@ const DashStatsComponent = Ember.Component.extend({
     if (v >= 1000) {
       v = f(v)
     }
-    wv.text(v)
+    if (/[A-za-z]$/g.test(v)){
+      wv.append(v.substr(0,v.length - 1) + `<span class='suffix'>` + v.substr(-1) +`</span>`)
+    }
+    else {
+      wv.text(v)
+    }
+
+    // wv.text(/[A-za-z]$/g.test(v) ? v.substr(0,v.length - 1): v)
     wl.text(l)
     tocolor.addClass(c)
+  },
 
-    let bar = new ProgressBar.Circle(where, {
-      strokeWidth: 5,
-      trailColor: '#f0f0f0',
-      trailWidth: 1,
-      easing: 'easeInOut',
-      duration: 2500,
-      svgStyle: null,
-      text: {
-        value: '',
-        alignToBottom: true
-      },
-      from: {color: '#90A4AE'},
-      to: {color: h},
-        // Set default step function for all animate calls
-      step: (state, bar) => {
-        bar.path.setAttribute('stroke', state.color)
-        let value = (bar.value() * 100).toFixed(1)
-        if (value === 0) {
-          bar.setText('')
-        } else {
-          bar.setText(v + ' <div class="statslabel">' + l.toUpperCase() + '</div>')
-        }
-        bar.text.style.color = state.color
-      }
-    })
-    bar.animate(percent)
+  didRender () {
+    this._super(...arguments)
+    Ember.$('.segment').append(`<div class="ui active inverted dimmer">
+    <div class="ui mini text loader">Loading&hellip;</div>
+  </div>`)
+  },
+
+  didInsertElement () {
+    this._super(...arguments)
+    this.renderStat()
   }
 })
 
