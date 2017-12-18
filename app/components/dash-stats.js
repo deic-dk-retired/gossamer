@@ -1,6 +1,5 @@
 import Ember from 'ember'
 import * as d3 from 'd3'
-import ProgressBar from 'npm:progressbar.js'
 
 const DashStatsComponent = Ember.Component.extend({
 
@@ -18,7 +17,6 @@ const DashStatsComponent = Ember.Component.extend({
     let tocolor = this.$('.ui')
     let f = d3.formatPrefix(',.1', 1e3)
     let stats = this.get('stats')
-    let where = '.progress-' + this.get('class')
     let percent = 0.0
 
     setTimeout(function () {
@@ -84,10 +82,9 @@ const DashStatsComponent = Ember.Component.extend({
     if (v >= 1000) {
       v = f(v)
     }
-    if (/[A-za-z]$/g.test(v)){
-      wv.append(v.substr(0,v.length - 1) + `<span class='suffix'>` + v.substr(-1) +`</span>`)
-    }
-    else {
+    if (/[A-za-z]$/g.test(v)) {
+      wv.append(v.substr(0, v.length - 1) + `<span class='suffix'>` + v.substr(-1) + `</span>`)
+    } else {
       wv.text(v)
     }
 
