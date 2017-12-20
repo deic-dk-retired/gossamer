@@ -82,14 +82,17 @@ body .bg {
     -webkit-flex: 1 1 auto;
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
-    min-width: 0px;
+    min-width: 480px;
     padding: 40px 30px 400px;
     overflow-y: scroll;
     .ui.top.fixed.menu {
-      padding-left: 55px!important;
-      padding-right: 15px!important;
+      padding-left: 55px;
+      padding-right: 15px;
       z-index: 1001;
       background:rgba(255,255,255, .98);
+      .togglecon {
+        display: none;
+      }
       .title {
         text-transform: capitalize;
         font-weight: 300;
@@ -294,7 +297,7 @@ aside {
 .ui.statistic {
   .value .suffix {
     position:absolute;
-    top: 24%;
+    bottom: 3%;
     font-size: 2rem!important;
   }
 }
@@ -422,14 +425,30 @@ aside {
 }
 
 @media screen
+and (max-width: 620px)
+{
+  .toc {
+    display: none;
+  }
+  .article {
+    .ui.top.fixed.menu {
+      padding-left: 0px!important;
+      padding-right: 0px!important;
+      .item.togglecon {
+        display: block!important;
+      }
+    }
+  }
+}
+
+@media screen
 and (min-width: 600px)
-and (max-width: 1200px)
-and (orientation:landscape) {
+and (max-width: 1200px) {
   .ui.medium.statistic {
     .value {
       font-size: 1.5rem!important;
       .suffix {
-        top: 26%;
+        bottom: 15%;
         font-size: 1rem!important;
       }
     }
@@ -441,13 +460,12 @@ and (orientation:landscape) {
 
 @media screen
 and (min-width: 1200px)
-and (max-width: 1800px)
-and (orientation:landscape) {
+and (max-width: 1800px) {
   .ui.medium.statistic {
     .value {
       font-size: 3rem!important;
       .suffix {
-        top: 27%;
+        bottom: 4%;
         font-size: 1rem!important;
       }
     }

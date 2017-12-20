@@ -32,7 +32,7 @@ export default Ember.Controller.extend({
       if (netlist.length === 1) {
         let network = this.get('store').peekRecord('network', netlist[0])
         netobjlist.push({
-          id: network.get('id'),
+          // id: network.get('id'),
           coid: network.get('customerid'),
           name: network.get('name'),
           net: network.get('net')
@@ -45,7 +45,7 @@ export default Ember.Controller.extend({
         netlist.map((e) => {
           let network = this.get('store').peekRecord('network', e)
           netobjlist.push({
-            id: network.get('id'),
+            // id: network.get('id'),
             coid: network.get('customerid'),
             name: network.get('name'),
             net: network.get('net')

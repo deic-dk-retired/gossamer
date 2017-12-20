@@ -1,5 +1,9 @@
 {{!-- {{#if isUser}} --}}
   <div class="ui top fixed large menu">
+    <div class="item togglecon" {{ action 'togglesidebar'}}>
+      <i class="{{if isHide 'sidebar' 'blue remove'}} icon"></i>
+    </div>
+
     <div class="header item">
       <span class="title">{{routename}}</span>
     </div>
@@ -39,9 +43,9 @@
             {{/link-to}}
             <div class="divider"></div>
           {{/if}}
-          {{#link-to "login" class="item"}}
+          <a href="#" class="item" {{action invalidateSession}}>
             <i class="sign out icon"></i>Sign Out
-           {{/link-to}}
+          </a>
         </div>
       {{/ui-dropdown}}
     </div>

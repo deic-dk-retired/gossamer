@@ -28,12 +28,19 @@ module.exports = function (environment) {
 
   }
 
+  ENV['ember-simple-auth'] = {
+    authorzer: 'authorizer:custom',
+    routeAfterAuthentication: '/'
+  }
+
   if (environment === 'development') {
     ENV.APP.LOG_RESOLVER = false
     ENV.APP.LOG_ACTIVE_GENERATION = true
     ENV.APP.LOG_TRANSITIONS = true
     ENV.APP.LOG_TRANSITIONS_INTERNAL = true
     ENV.APP.LOG_VIEW_LOOKUPS = true
+    ENV.APP.HOST = 'http://10.33.1.97:4242'
+    ENV.APP.API = 'api'
   }
 
   if (environment === 'test') {

@@ -7,16 +7,16 @@ const Router = Ember.Router.extend({
 })
 
 Router.map(function () {
+  this.route('customers')
   this.route('dashboard')
-  this.route('plan')
   this.route('login')
-  this.route('users')
-  this.route('rules')
+  this.route('measurements')
   this.route('not-found', {path: '/*path'})
   this.route('packets')
-  this.route('measurements')
+  this.route('plan')
+  this.route('rules')
   this.route('traffic')
-  this.route('customers')
+  this.route('users')
 })
 
 export default Router

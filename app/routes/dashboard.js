@@ -1,7 +1,8 @@
 import Ember from 'ember'
 import fetch from 'fetch'
+import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin'
 
-export default Ember.Route.extend({
+export default Ember.Route.extend(AuthenticatedRouteMixin, {
   userid: '3611a271-50ae-4425-86c5-b58b04393242',
 
   model () {
