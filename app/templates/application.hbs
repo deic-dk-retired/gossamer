@@ -1,24 +1,4 @@
-{{!-- {{#if (not-eq currentRouteName 'login')}}
-  {{notification-container position="top-right"}}
-  <div class="pusher">
-    <div class="full height">
-      <div class="toc">
-        {{side-menu username='Ashokaditya' kind='globaladmin'}}
-      </div>
-      <div class="article">
-        {{top-menu isUser=true routename=currentRouteName kind='globaladmin'}}
-        {{outlet}}
-      </div>
-    </div>
-  </div>
-{{else}}
-  {{#if (eq currentRouteName "login")}}
-    {{render "login"}}
-  {{/if}}
-{{/if}} --}}
-
 {{#if session.isAuthenticated}}
-  {{!-- {{outlet}} --}}
   {{notification-container position="top-right"}}
   <div class="pusher">
     <div class="full height">
@@ -30,7 +10,6 @@
           isUser=true
           routename=currentRouteName
           kind='globaladmin'
-          invalidateSession=(action 'invalidateSession')
         }}
         {{outlet}}
       </div>

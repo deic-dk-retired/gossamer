@@ -1,6 +1,7 @@
 import Ember from 'ember'
 
 export default Ember.Component.extend({
+  session: Ember.inject.service('session'),
   tagName: '',
   someList: [
     {
@@ -22,6 +23,13 @@ export default Ember.Component.extend({
       this.toggleProperty('isHide')
       Ember.$('.toc')
       Ember.Logger.info('show')
+    },
+
+    invalidateSession () {
+      let session = this.get('session')
+      if (session.get('isAuthenticated')) {
+        session.invalidate()
+      }
     }
   }
 })
