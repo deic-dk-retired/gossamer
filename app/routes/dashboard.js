@@ -1,12 +1,18 @@
-import Ember from 'ember'
-import fetch from 'fetch'
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin'
+import config from '../config/environment'
+import fetch from 'fetch'
+import Ember from 'ember'
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
-  userid: '3611a271-50ae-4425-86c5-b58b04393242',
+  session: Ember.inject.service('session'),
+  url: `${config.APP.HOST + '/' + config.APP.API}`,
+
+  userid: Ember.computed('session', function () {
+    return `${this.get('session.data.authenticated.uuid')}`
+  }),
 
   model () {
-    return fetch('http://10.33.1.97:4242/api/stats/' + this.get('userid'))
+    return fetch(this.get('url') + '/stats/' + this.get('userid'))
     .then((response) => {
       if (response.status !== 200) {
         Ember.Logger.info('Looks like there was a problem. Status Code: ' + response.status)

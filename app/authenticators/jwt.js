@@ -39,7 +39,6 @@ export default Base.extend({
     return new Promise((resolve, reject) => {
       // Ember.Logger.info(requestOptions)
       ajax(requestOptions).then((res) => {
-        Ember.Logger.info(res)
         const { jwt } = res
         // Wrapping aync operation in Ember.run
         run(() => {
@@ -47,6 +46,8 @@ export default Base.extend({
             token: jwt,
             uid: res.data[0].id,
             uuid: res.data[0].attributes.useruuid,
+            uname: res.data[0].attributes.username,
+            ualias: res.data[0].attributes.useralias,
             role: res.data[0].attributes.usrtype,
             client: res.data[0].attributes.clnt
           })

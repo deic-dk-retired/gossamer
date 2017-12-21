@@ -3,13 +3,13 @@
   <div class="pusher">
     <div class="full height">
       <div class="toc">
-        {{side-menu username='Ashokaditya' kind='globaladmin'}}
+        {{side-menu username=username kind=usertype}}
       </div>
       <div class="article">
         {{top-menu
           isUser=true
           routename=currentRouteName
-          kind='globaladmin'
+          kind=usertype
         }}
         {{outlet}}
       </div>
