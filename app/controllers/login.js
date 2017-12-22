@@ -1,9 +1,10 @@
 import Ember from 'ember'
-// import fetch from 'fetch'
 
 export default Ember.Controller.extend({
   session: Ember.inject.service(),
-  // loginFailed: false,
+  notifications: Ember.inject.service('notification-messages'),
+
+  loginFailed: false,
   // isProcessing: false,
   errorMessage: null,
 
@@ -11,11 +12,17 @@ export default Ember.Controller.extend({
 
     authenticate () {
       let { username, password } = this.getProperties('username', 'password')
-      // Ember.Logger.info(username, password)
       this.get('session')
       .authenticate('authenticator:jwt', {username, password})
       .catch((err) => {
-        this.set('errorMessage', err.error || err)
+        this.set('loginFailed', true)
+        this.set('errorMessage', err.responseJSON.message)
+
+        this.get('notifications').clearAll()
+        this.get('notifications').error(this.get('errorMessage'), {
+          autoClear: true,
+          clearDuration: 5000
+        })
       })
     }
   }

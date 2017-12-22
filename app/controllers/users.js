@@ -165,6 +165,12 @@ export default Ember.Controller.extend({
             Ember.Logger.info(user.get('errors').toArray())
             Ember.Logger.info(user.get('isValid'))
             Ember.Logger.info(adapterError)
+
+            this.get('notifications').clearAll()
+            this.get('notifications').error('Something went wrong on deactivate!', {
+              autoClear: true,
+              clearDuration: 10000
+            })
           })
         }
       }.bind(this))
@@ -195,6 +201,12 @@ export default Ember.Controller.extend({
             Ember.Logger.info(user.get('errors').toArray())
             Ember.Logger.info(user.get('isValid'))
             Ember.Logger.info(adapterError)
+
+            this.get('notifications').clearAll()
+            this.get('notifications').error('Something went wrong on activate!', {
+              autoClear: true,
+              clearDuration: 10000
+            })
           })
         }
       }.bind(this))
@@ -233,7 +245,7 @@ export default Ember.Controller.extend({
             Ember.Logger.info(adapterError)
 
             this.get('notifications').clearAll()
-            this.get('notifications').error('Something went wrong!', {
+            this.get('notifications').error('Something went wrong on update!', {
               autoClear: true,
               clearDuration: 10000
             })
