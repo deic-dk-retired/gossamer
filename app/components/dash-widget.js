@@ -3,6 +3,7 @@ import * as d3 from 'd3'
 import { event } from 'd3-selection'
 
 const DashWidgetComponent = Ember.Component.extend({
+  session: Ember.inject.service('session'),
 
   endpoint: 'http://10.33.1.97:4242/api/series/',
 
@@ -225,8 +226,14 @@ const DashWidgetComponent = Ember.Component.extend({
 
     // fetch data and render chart content
     let renderD3 = function (u, func) {
-      return d3.json(u, func)
-    }
+      // return d3.json(u, func)
+      //          .header('jwtauthtkn', this.get('session.data.authenticated.token'))
+      return d3.request(u)
+      .mimeType('application/json')
+      .header('jwtauthtkn', this.get('session.data.authenticated.token'))
+      .response(function (xhr) { return JSON.parse(xhr.responseText) })
+      .get(func)
+    }.bind(this)
     let ep = this.get('url')
 
     renderD3(ep, render)

@@ -4,7 +4,6 @@ import fetch from 'fetch'
 import Ember from 'ember'
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
-  session: Ember.inject.service('session'),
   url: `${config.APP.HOST + '/' + config.APP.API}`,
 
   userid: Ember.computed('session', function () {
@@ -12,7 +11,11 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   }),
 
   model () {
-    return fetch(this.get('url') + '/stats/' + this.get('userid'))
+    return fetch(this.get('url') + '/stats/' + this.get('userid'),
+      { headers: {
+        'jwtauthtkn': this.get('session.data.authenticated.token')}
+      }
+    )
     .then((response) => {
       if (response.status !== 200) {
         Ember.Logger.info('Looks like there was a problem. Status Code: ' + response.status)
