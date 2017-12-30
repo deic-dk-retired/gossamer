@@ -10,7 +10,6 @@ export default Base.extend({
   user: null,
   pwd: null,
   crypto: null,
-  // creds: null,
   scpw: `${config.APP.SCPSS}`,
 
   restore (data) {
