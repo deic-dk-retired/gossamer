@@ -56,6 +56,7 @@
   },
   "private": true,
   "dependencies": {
+    "crypto-json": "^2.0.0",
     "defs": "^1.1.1",
     "progressbar.js": "^1.0.1"
   }

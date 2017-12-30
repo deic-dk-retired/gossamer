@@ -17,7 +17,6 @@ const DashStatsComponent = Ember.Component.extend({
     let tocolor = this.$('.ui')
     let f = d3.formatPrefix(',.1', 1e3)
     let stats = this.get('stats')
-    let percent = 0.0
 
     setTimeout(function () {
       this.$('.dimmer').remove()
@@ -77,8 +76,6 @@ const DashStatsComponent = Ember.Component.extend({
         break
     }
 
-    percent = (v / stats.total)
-
     if (v >= 1000) {
       v = f(v)
     }
@@ -88,7 +85,6 @@ const DashStatsComponent = Ember.Component.extend({
       wv.text(v)
     }
 
-    // wv.text(/[A-za-z]$/g.test(v) ? v.substr(0,v.length - 1): v)
     wl.text(l)
     tocolor.addClass(c)
   },

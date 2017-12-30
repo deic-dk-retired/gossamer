@@ -3,7 +3,15 @@ import Ember from 'ember'
 export default Ember.Controller.extend({
   session: Ember.inject.service('session'),
 
-  username: Ember.computed('session', function () {
+  uname: Ember.computed('session', function () {
+    return `${this.get('session.data.authenticated.uname')}`
+  }),
+
+  usrmail: Ember.computed('session', function () {
+    return `${this.get('session.data.authenticated.uname') + '@deic.dk'}`
+  }),
+
+  fname: Ember.computed('session', function () {
     return `${this.get('session.data.authenticated.ualias').split(' ')[0]}`
   }),
 

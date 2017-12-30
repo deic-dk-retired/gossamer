@@ -1,12 +1,17 @@
 import Ember from 'ember'
+import crptojs from 'npm:crypto-json'
+import config from '../config/environment'
 import Base from 'ember-simple-auth/authenticators/base'
 
 const { RSVP: { Promise }, $: { ajax }, run } = Ember
 
 export default Base.extend({
-  serverTokenEndpoint: 'http://10.33.1.97:4242/api/auth',
+  serverTokenEndpoint: `${config.APP.HOST + '/' + config.APP.API + '/auth'}`,
   user: null,
   pwd: null,
+  crypto: null,
+  // creds: null,
+  scpw: `${config.APP.SCPSS}`,
 
   restore (data) {
     return new Promise((res, rej) => {
@@ -19,9 +24,18 @@ export default Base.extend({
   },
 
   authenticate (creds) {
-    // Ember.Logger.info(creds)
     this.user = creds.username
     this.pwd = creds.password
+
+    let idObj = {
+      un: this.get('user'),
+      ke: this.get('pwd')
+    }
+
+    this.crypto = crptojs.encrypt(idObj, this.get('scpw'), {
+      algorithm: 'aes256',
+      encoding: 'hex'
+    })
 
     const requestOptions = {
       url: this.serverTokenEndpoint,
@@ -30,15 +44,12 @@ export default Base.extend({
       headers: {
         'Content-Type': 'application/json'
       },
-      data: JSON.stringify({
-        'username': this.get('user'),
-        'password': this.get('pwd')
-      })
+      data: JSON.stringify(this.crypto)
     }
 
     return new Promise((resolve, reject) => {
-      // Ember.Logger.info(requestOptions)
-      ajax(requestOptions).then((res) => {
+      ajax(requestOptions)
+      .then((res) => {
         const { jwt } = res
         // Wrapping aync operation in Ember.run
         run(() => {
