@@ -1,4 +1,5 @@
 /* eslint-env node */
+require('dotenv').config()
 
 module.exports = function (environment) {
   var ENV = {
@@ -39,8 +40,9 @@ module.exports = function (environment) {
     ENV.APP.LOG_TRANSITIONS = true
     ENV.APP.LOG_TRANSITIONS_INTERNAL = true
     ENV.APP.LOG_VIEW_LOOKUPS = true
-    ENV.APP.HOST = 'http://10.33.1.97:4242'
+    ENV.APP.HOST = process.env.DDPS_SERV
     ENV.APP.API = 'api'
+    ENV.APP.SCPSS = process.env.SU_SEC_3SHA512
   }
 
   if (environment === 'test') {
