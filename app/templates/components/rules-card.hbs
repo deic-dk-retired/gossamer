@@ -65,10 +65,7 @@
       </div>
     </div>
   </div>
-  {{!-- <div class="extra content hide centered">
-    <div class="ui red inverted label tiny">Are you sure?</div>
-  </div> --}}
-  <button class="ui bottom attached icon grey button" {{action 'toggleClear' rule.id}}>
+  <button class="ui bottom attached icon grey button {{if (lte actprogress 0.90) 'disabled'}}" {{action 'toggleClear' rule.id}}>
     <i class="trash outline icon"></i>
     Clear Rule
   </button>
