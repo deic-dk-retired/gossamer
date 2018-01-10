@@ -2,6 +2,8 @@ import Ember from 'ember'
 import uuid from 'npm:uuid'
 
 export default Ember.Controller.extend({
+  notifications: Ember.inject.service('notification-messages'),
+
   coid: null,
   couuid: null,
   coname: '',
@@ -132,12 +134,43 @@ export default Ember.Controller.extend({
       })
 
       network.save()
+      .then((response) => {
+        this.set('responseMessage',
+          `Network ${response.get('store').peekRecord('network', response.get('id')).get('name')} was created successfully`)
+        this.get('notifications').clearAll()
+        this.get('notifications').success(this.get('responseMessage'), {
+          autoClear: true,
+          clearDuration: 5000
+        })
+      })
+      .catch((adapterError) => {
+        Ember.Logger.info(network.get('errors'))
+        Ember.Logger.info(network.get('errors.name'))
+        Ember.Logger.info(network.get('errors').toArray())
+        Ember.Logger.info(network.get('isValid'))
+        Ember.Logger.info(adapterError)
+
+        this.get('notifications').clearAll()
+        this.get('notifications').error('Something went wrong on create!', {
+          autoClear: true,
+          clearDuration: 10000
+        })
+      })
     },
 
     removeNetwork (netid) {
-      this.get('store').findRecord('network', netid, { backgroundReload: false }).then(function (network) {
+      this.get('store').findRecord('network', netid, { backgroundReload: false })
+      .then(function (network) {
+        Ember.Logger.info(network)
+        this.set('responseMessage',
+          `Network ${this.get('store').peekRecord('network', network.get('id')).get('name')} was removed!`)
         network.destroyRecord()
-      })
+        this.get('notifications').clearAll()
+        this.get('notifications').info(this.get('responseMessage'), {
+          autoClear: true,
+          clearDuration: 5000
+        })
+      }.bind(this))
     }
 
   }

@@ -1,34 +1,21 @@
-{{#if (not-eq currentRouteName 'login')}}
+{{#if session.isAuthenticated}}
   {{notification-container position="top-right"}}
   <div class="pusher">
     <div class="full height">
       <div class="toc">
-        {{side-menu username='Ashokaditya' kind='globaladmin'}}
+        {{side-menu name=fname kind=usertype usrname=uname useremail=usrmail}}
       </div>
       <div class="article">
-        {{top-menu isUser=true routename=currentRouteName kind='globaladmin'}}
+        {{top-menu
+          isUser=true
+          routename=currentRouteName
+          kind=usertype
+        }}
         {{outlet}}
       </div>
     </div>
   </div>
 {{else}}
-  {{#if (eq currentRouteName "login")}}
-    {{render "login"}}
-  {{/if}}
-{{/if}}
-
-{{!-- {{#if session.isAuthenticated}}
-  <div class="pusher">
-    <div class="full height">
-      <div class="toc">
-        {{side-menu username='Ashokaditya' kind='globaladmin'}}
-      </div>
-      <div class="article">
-        {{top-menu isUser=true routename=currentRouteName kind='globaladmin'}}
-        {{outlet}}
-      </div>
-    </div>
-  </div>
-{{else}}
+  {{notification-container position="top"}}
   {{render "login"}}
-{{/if}} --}}
+{{/if}}

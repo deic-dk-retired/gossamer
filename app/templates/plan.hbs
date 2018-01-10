@@ -27,13 +27,22 @@
 
         <h4 class="ui dividing medium header blue">Protocol Information</h4>
         {{#if (eq protocol 'tcp')}}
-          {{tcp-fields mod=model tcpflags=tcpflags}}
+          {{tcp-fields
+            mod=model
+            destip=destip
+            destport=destport
+            tcpflags=tcpflags}}
         {{else}}
           {{#if (eq protocol 'udp')}}
-            {{udp-fields destip=destip destport=destport}}
+            {{udp-fields
+              destip=destip
+              destport=destport}}
           {{else}}
             {{#if (eq protocol 'icmp')}}
-              {{icmp-fields mod=model icmptype=icmptype icmpcode=icmpcode}}
+              {{icmp-fields
+                mod=model
+                icmptype=icmptype
+                icmpcode=icmpcode}}
             {{else}}
               <p>Select a protocol above to proceed</p>
             {{/if}}
@@ -43,19 +52,19 @@
         <h4 class="ui dividing medium header blue">Additional Parameters</h4>
         <div class="field">
           <label>Packet Size or Range</label>
-          {{input type="text" id="pktLength" name="pktLength" value=pktlen placeholder="e.g. 1500 or >=64&<=9000"}}
+          {{input type="text" id="pktlen" name="pktlen" value=pktlen placeholder="e.g. 1500 or >=64&<=9000"}}
         </div>
         <div class="field">
           <label>Fragment Options</label>
-          {{#ui-dropdown name="fragEncode" class="search selection" allowAdditions=true selected=fragEncode onChange=(action (mut fragEncode))}}
+          {{#ui-dropdown name="fragenc" class="search selection" allowAdditions=true selected=fragenc onChange=(action (mut fragenc))}}
             <div class="default text">Select/Add encoding</div>
             <i class="dropdown icon"></i>
           {{/ui-dropdown}}
         </div>
 
         <div class="field">
-          <label>Short Comment&hellip;</label>
-          <textarea id="shortComment" name="shortComment" value=shrtcomm rows="5"></textarea>
+          <label>Short Description&hellip;</label>
+          {{input type="text" id="shrtcomm" name="shrtcomm" value=shrtcomm placeholder="e.g. optimized rule"}}
         </div>
 
         <h4 class="ui dividing medium header blue">Duration</h4>
@@ -67,10 +76,10 @@
           <div class="required field eight wide column">
             <label>From:</label>
             {{ember-flatpickr
-              allowInput=false
               altFormat='D, d M \'y, H:i'
               altInput=true
               altInputClass='my-alt-input'
+              allowInput=false
 
               clickOpens=true
               date=(readonly now)
@@ -83,13 +92,13 @@
               enableSeconds=false
               enableTime=true
 
-              flatpickrRef=flatpickrRef
+              flatpickrRef=fpFrom
               hourIncrement=1
               inline=false
-              locale='uk'
+              locale='fr'
 
               maxDate=maxDate
-              minDate=minDate
+              minDate=now
               minuteIncrement=5
               mode='single'
 
@@ -110,10 +119,11 @@
           <div class="required field eight wide column">
             <label>To:</label>
             {{ember-flatpickr
-              allowInput=false
               altFormat='D, d M \'y, H:i'
               altInput=true
               altInputClass='my-alt-input'
+
+              allowInput=false
 
               clickOpens=true
               date=(readonly nowef10m)
@@ -126,13 +136,13 @@
               enableSeconds=false
               enableTime=true
 
-              flatpickrRef=flatpickrRef
+              flatpickrRef=fpTo
               hourIncrement=1
               inline=false
-              locale='uk'
+              locale='fr'
 
               maxDate=maxDate
-              minDate=minDate
+              minDate=nowef10m
               minuteIncrement=5
               mode='single'
 
@@ -157,14 +167,14 @@
 
         <div class="inline fields">
           <div class="field">
-            {{ui-radio name="ruleact" label="Block" value="block" current=ruleact onChange=(action (mut ruleact))}}
+            {{ui-radio name="ruleact" label="Block" value="discard" current=ruleact onChange=(action (mut ruleact))}}
           </div>
           <div class="field">
-            {{ui-radio name="ruleact" label="Rate Limit" value="limit" current=ruleact onChange=(action (mut ruleact))}}
+            {{ui-radio name="ruleact" label="Rate Limit" value="rate limit" current=ruleact onChange=(action (mut ruleact))}}
           </div>
         </div>
 
-        {{#if (eq ruleact 'limit')}}
+        {{#if (eq ruleact 'rate limit')}}
           <div class="required field">
             <label>Bits/sec > 0</label>
             {{input type="text" id="pktrate" name="pktrate" value=pktrate placeholder="e.g. 9600"}}

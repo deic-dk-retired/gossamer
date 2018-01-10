@@ -1,19 +1,58 @@
 import Ember from 'ember'
+import uuid from 'npm:uuid'
 import moment from 'moment'
+import cidr from 'npm:cidr-range'
 
 export default Ember.Controller.extend({
+  notifications: Ember.inject.service('notification-messages'),
+  session: Ember.inject.service(),
+
+  uid: Ember.computed('session', function () {
+    return `${this.get('session.data.authenticated.uid')}`
+  }),
+
+  uuid: Ember.computed('uid', function () {
+    let uid = this.get('uid')
+    return `${this.get('store').peekRecord('user', uid).get('useruuid')}`
+  }),
+
+  usrtype: Ember.computed('uid', function () {
+    let uid = this.get('uid')
+    return `${this.get('store').peekRecord('user', uid).get('kind')}`
+  }),
+
+  fmnuuid: Ember.computed('usrtype', function () {
+    let usertype = this.get('usrtype')
+    let fnmobj = {fnmid: null, fnmuuid: ''}
+    if (usertype === 'globaladmin') {
+      fnmobj.fnmid = 1
+      fnmobj.fnmuuid = 'aac8c5a6-097b-4c0c-bbe6-fe6677ff7eac'
+    } else {
+      fnmobj.fnmid = null
+      fnmobj.fnmuuid = null
+    }
+    return fnmobj
+  }),
+
+  coid: Ember.computed('uid', function () {
+    let uid = this.get('uid')
+    return `${this.get('store').peekRecord('user', uid).get('customerid')}`
+  }),
+
+  couuid: Ember.computed('uid', function () {
+    let uid = this.get('uid')
+    return `${this.get('store').peekRecord('user', uid).get('couuid')}`
+  }),
+
   now: moment.now(),
   nowef10m: Ember.computed('now', function () {
     return this.get('now') + 600000
   }),
-  fromDate: null,
-  toDate: null,
 
   protocol: '',
-
   icmptype: null,
   icmpcode: null,
-
+  tcpflags: [],
   isdefDur: false,
 
   isdefDurChanged: Ember.on('init', Ember.observer('isdefDur', function () {
@@ -26,7 +65,31 @@ export default Ember.Controller.extend({
     uptime()
   })),
 
-  ruleact: 'block',
+  // fromDate: Ember.computed('now', function () {
+  //   let d = Date(moment.unix(this.get('now')))
+  //   let nd = new Date(d)
+  //   return nd
+  // }),
+  // toDate: Ember.computed('nowef10m', function () {
+  //   let d = Date(moment.unix(this.get('nowef10m')))
+  //   let nd = new Date(d)
+  //   return nd
+  // }),
+  fromDate: null,
+  toDate: null,
+
+  ruleact: 'discard',
+
+  resact: Ember.computed('ruleact', function () {
+    let act = this.get('ruleact')
+    let react = 'discard'
+    if (act === 'rate limit') {
+      react = act + ' ' + this.get('pktrate')
+    }
+    return react
+  }),
+
+  responseMessage: '',
 
   willDestry () {
     this._super(...arguments)
@@ -45,16 +108,64 @@ export default Ember.Controller.extend({
         icmpcode: null,
 
         pktlen: null,
-        fragEncode: null,
+        fragenc: null,
         shrtcomm: null,
         isdefDur: false,
-        ruleact: 'block',
+        ruleact: 'discard',
         pktrate: 0
       })
     },
 
+    setMinDate () {
+      this.set('toMinDate', this.get('fromDate'))
+    },
+
     addRule () {
-      Ember.Logger.info('Create rule')
+      let ruuid = uuid.v4()
+      let rule = this.get('store').createRecord('rule', {
+        ruleuuid: ruuid,
+        couuid: this.get('couuid'),
+        useruuid: this.get('uuid'),
+        fmnuuid: this.get('fmnuuid').fnmuuid,
+        // validfrom: this.get('fromDate').toISOString(),
+        // validto: this.get('toDate').toISOString(),
+        validfrom: this.get('fromDate').pop().toISOString(),
+        validto: this.get('toDate').pop().toISOString(),
+        destprefix: this.get('destip'),
+        destport: this.get('destport'),
+        ipprotocol: this.get('protocol'),
+        icmptype: this.get('icmptype'),
+        icmpcode: this.get('icmpcode'),
+        tcpflags: this.get('tcpflags').join().toLowerCase(),
+        description: this.get('shrtcomm'),
+        pktlen: this.get('pktlen'),
+        action: this.get('resact')
+      })
+
+      rule.save()
+      .then((response) => {
+        Ember.Logger.info()
+        this.set('responseMessage',
+          `A ${response.get('store').peekRecord('rule', response.get('id')).get('ipprotocol').toUpperCase()} was created successfully on ${response.get('store').peekRecord('rule', response.get('id')).get('destprefix')}`)
+        this.get('notifications').clearAll()
+        this.get('notifications').success(this.get('responseMessage'), {
+          autoClear: true,
+          clearDuration: 5000
+        })
+      })
+      .catch((adapterError) => {
+        Ember.Logger.info(rule.get('errors'))
+        Ember.Logger.info(rule.get('errors.name'))
+        Ember.Logger.info(rule.get('errors').toArray())
+        Ember.Logger.info(rule.get('isValid'))
+        Ember.Logger.info(adapterError)
+
+        this.get('notifications').clearAll()
+        this.get('notifications').error('Something went wrong on create!', {
+          autoClear: true,
+          clearDuration: 10000
+        })
+      })
     }
   }
 })

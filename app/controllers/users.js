@@ -32,7 +32,7 @@ export default Ember.Controller.extend({
       if (netlist.length === 1) {
         let network = this.get('store').peekRecord('network', netlist[0])
         netobjlist.push({
-          id: network.get('id'),
+          // id: network.get('id'),
           coid: network.get('customerid'),
           name: network.get('name'),
           net: network.get('net')
@@ -45,7 +45,7 @@ export default Ember.Controller.extend({
         netlist.map((e) => {
           let network = this.get('store').peekRecord('network', e)
           netobjlist.push({
-            id: network.get('id'),
+            // id: network.get('id'),
             coid: network.get('customerid'),
             name: network.get('name'),
             net: network.get('net')
@@ -165,6 +165,12 @@ export default Ember.Controller.extend({
             Ember.Logger.info(user.get('errors').toArray())
             Ember.Logger.info(user.get('isValid'))
             Ember.Logger.info(adapterError)
+
+            this.get('notifications').clearAll()
+            this.get('notifications').error('Something went wrong on deactivate!', {
+              autoClear: true,
+              clearDuration: 10000
+            })
           })
         }
       }.bind(this))
@@ -195,6 +201,12 @@ export default Ember.Controller.extend({
             Ember.Logger.info(user.get('errors').toArray())
             Ember.Logger.info(user.get('isValid'))
             Ember.Logger.info(adapterError)
+
+            this.get('notifications').clearAll()
+            this.get('notifications').error('Something went wrong on activate!', {
+              autoClear: true,
+              clearDuration: 10000
+            })
           })
         }
       }.bind(this))
@@ -233,7 +245,7 @@ export default Ember.Controller.extend({
             Ember.Logger.info(adapterError)
 
             this.get('notifications').clearAll()
-            this.get('notifications').error('Something went wrong!', {
+            this.get('notifications').error('Something went wrong on update!', {
               autoClear: true,
               clearDuration: 10000
             })

@@ -3,14 +3,10 @@ import DS from 'ember-data'
 import { validator, buildValidations } from 'ember-cp-validations'
 
 const Validations = buildValidations({
+  username: validator('presence', true),
   kind: validator('presence', true),
-
-  password: [
-    validator('presence', true),
-    validator('length', {
-      min: 6
-    })
-  ]
+  customerid: validator('presence', true),
+  usrnets: validator('presence', true)
 })
 
 export default DS.Model.extend(Validations, {

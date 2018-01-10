@@ -106,7 +106,11 @@ export default Ember.Component.extend({
           } else {
             bar.setText(value + ' <span class="centsign">%</span><div class="proglabel">complete</div>')
           }
-          bar.text.style.color = '#37474F'
+          if (value >= 50) {
+            bar.text.style.color = state.color
+          } else {
+            bar.text.style.color = '#37474F'
+          }
         }
       })
       bar.text.style.fontSize = '1.2rem'
@@ -141,11 +145,11 @@ export default Ember.Component.extend({
 
     toggleConfirm (rid) {
       if (this.get('isClear')) {
-        Ember.$('.rule-' + rid + ' button.labeled').addClass('hide')
+        Ember.$('.rule-' + rid + ' button.icon').addClass('hide')
         Ember.$('.rule-' + rid + ' .buttons').removeClass('hide')
       }
       if (!this.get('isClear')) {
-        Ember.$('.rule-' + rid + ' button.labeled').removeClass('hide')
+        Ember.$('.rule-' + rid + ' button.icon').removeClass('hide')
         Ember.$('.rule-' + rid + ' .buttons').addClass('hide')
       }
     }
