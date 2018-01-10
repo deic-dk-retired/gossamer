@@ -57,6 +57,7 @@
   },
   "private": true,
   "dependencies": {
+    "cidr-range": "^1.0.6",
     "crypto-json": "^2.0.0",
     "defs": "^1.1.1",
     "progressbar.js": "^1.0.1"
