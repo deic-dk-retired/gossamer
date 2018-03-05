@@ -4,9 +4,9 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
   model () {
     return Ember.RSVP.hash({
-      rules: this.get('store').findAll('rule'),
-      fnms: this.get('store').findAll('fnm'),
-      users: this.get('store').findAll('user'),
+      rules: this.store.findAll('rule'),
+      fnms: this.store.findAll('fnm'),
+      users: this.store.findAll('user'),
       customers: this.store.findAll('customer'),
       networks: this.store.findAll('network'),
       ictype: this.get('store').findAll('icmptype'),
