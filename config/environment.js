@@ -35,15 +35,16 @@ module.exports = function (environment) {
     routeIfAlreadyAuthenticated: '/dashboard'
   }
 
+  ENV.APP.HOST = process.env.DDPS_SERV
+  ENV.APP.API = 'api'
+  ENV.APP.SCPSS = process.env.SU_SEC_3SHA512
+
   if (environment === 'development') {
     ENV.APP.LOG_RESOLVER = false
     ENV.APP.LOG_ACTIVE_GENERATION = true
     ENV.APP.LOG_TRANSITIONS = true
     ENV.APP.LOG_TRANSITIONS_INTERNAL = true
     ENV.APP.LOG_VIEW_LOOKUPS = true
-    ENV.APP.HOST = process.env.DDPS_SERV
-    ENV.APP.API = 'api'
-    ENV.APP.SCPSS = process.env.SU_SEC_3SHA512
   }
 
   if (environment === 'test') {
