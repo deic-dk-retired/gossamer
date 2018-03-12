@@ -3,7 +3,7 @@ import config from '../config/environment'
 import DS from 'ember-data'
 
 export default DS.JSONAPIAdapter.extend(DataAdapterMixin, {
-  host: `${config.APP.HOST}`,
+  host: `${config.APP.HOST + ':' + config.APP.PORT}`,
   namespace: `${config.APP.API}`,
   headers: {
     'Accept': 'application/vnd.api+json',

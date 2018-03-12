@@ -6,7 +6,7 @@ import Base from 'ember-simple-auth/authenticators/base'
 const { RSVP: { Promise }, $: { ajax }, run } = Ember
 
 export default Base.extend({
-  serverTokenEndpoint: `${config.APP.HOST + '/' + config.APP.API + '/auth'}`,
+  serverTokenEndpoint: `${config.APP.HOST + ':' + config.APP.PORT + '/' + config.APP.API + '/auth'}`,
   user: null,
   pwd: null,
   crypto: null,
