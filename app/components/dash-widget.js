@@ -156,7 +156,7 @@ const DashWidgetComponent = Ember.Component.extend({
     // callback to handle fetched data
     // also renders the chart
     let render = function (err, resp) {
-      if (err) throw err
+      if (err) { throw err }
 
       // remove old points
       focus.selectAll('path').remove()
@@ -250,7 +250,7 @@ const DashWidgetComponent = Ember.Component.extend({
     refreshD3()
 
     function brushed () {
-      if (event.sourceEvent && event.sourceEvent.type === 'zoom') return // ignore brush-by-zoom
+      if (event.sourceEvent && event.sourceEvent.type === 'zoom') { return } // ignore brush-by-zoom
       let s = event.selection || x2.range()
       x.domain(s.map(x2.invert, x2))
       focus.select('.d3shape').attr('d', shape)
@@ -260,7 +260,7 @@ const DashWidgetComponent = Ember.Component.extend({
     }
 
     function zoomed () {
-      if (event.sourceEvent && event.sourceEvent.type === 'brush') return // ignore zoom-by-brush
+      if (event.sourceEvent && event.sourceEvent.type === 'brush') { return } // ignore zoom-by-brush
       let t = event.transform
       x.domain(t.rescaleX(x2).domain())
       focus.select('.d3shape').attr('d', shape)
