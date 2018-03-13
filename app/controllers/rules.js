@@ -17,14 +17,16 @@ export default Ember.Controller.extend({
   proto: '',
   action: '',
 
-  pre_checked: false,
+  preChecked: false,
 
-  checkLabel: Ember.computed('pre_checked', function () {
-    if (!this.get('pre_checked')) {
-      return `${'Refresh Off'}`
+  checkLabel: Ember.computed('preChecked', function () {
+    let switchLabel = ''
+    if (!this.get('preChecked')) {
+      switchLabel = 'Refresh Off'
     } else {
-      return `${'Refreshing...'}`
+      switchLabel = 'Refreshing...'
     }
+    return `${switchLabel}`
   }),
 
   init () {

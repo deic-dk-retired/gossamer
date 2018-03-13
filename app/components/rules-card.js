@@ -37,14 +37,16 @@ export default Ember.Component.extend({
     let tot = moment(a).diff(b)
     let now = this.get('now')
     let percent = (moment(now).diff(b) / tot).toFixed(2)
+    let retVal = 0
     if (percent < 0) {
-      return 0
+      retVal = 0
     }
     if (percent >= 1) {
-      return `${percent / percent}`
+      retVal = 1
     } else {
-      return `${percent}`
+      retVal = percent
     }
+    return `${retVal}`
   }),
 
   prcnt: 0.0,
@@ -118,7 +120,7 @@ export default Ember.Component.extend({
       bar.animate(percent)
       let f = this.get('frequency')
       let reanimate = function () {
-        if (this.get('pre_checked') && this.get('prcnt') >= 1.00) {
+        if (this.get('preChecked') && this.get('prcnt') >= 1.00) {
           this.removeCard()
           return
         }

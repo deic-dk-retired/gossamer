@@ -10,27 +10,27 @@
               {{ui-checkbox
                 class="toggle"
                 label=checkLabel
-                checked=pre_checked
-                onChange=(action (mut pre_checked))
+                checked=preChecked
+                onChange=(action (mut preChecked))
               }}
             </div>
             <div class="item">
               {{ui-radio name=rdioGrpName label="10s" value=10
-               disabled=(if pre_checked false true)
+               disabled=(if preChecked false true)
                current=baseRate
                onChange=(action (mut baseRate))
               }}
             </div>
             <div class="item">
               {{ui-radio name=rdioGrpName label="30s" value=30
-               disabled=(if pre_checked false true)
+               disabled=(if preChecked false true)
                current=baseRate
                onChange=(action (mut baseRate))
               }}
             </div>
             <div class="item">
               {{ui-radio name=rdioGrpName label="1m" value=60
-               disabled=(if pre_checked false true)
+               disabled=(if preChecked false true)
                current=baseRate
                onChange=(action (mut baseRate))
               }}

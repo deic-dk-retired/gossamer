@@ -43,15 +43,17 @@ const DashWidgetComponent = Ember.Component.extend({
     return `${'rdio-' + this.get('class')}`
   }),
 
-  pre_checked: false,
+  preChecked: false,
 
-  checkLabel: Ember.computed('pre_checked', function () {
-    if (!this.get('pre_checked')) {
+  checkLabel: Ember.computed('preChecked', function () {
+    let switchLabel = ''
+    if (!this.get('preChecked')) {
       this.set('baseRate', 10)
-      return `${'Streaming Off'}`
+      switchLabel = 'Streaming Off'
     } else {
-      return `${'Streaming...'}`
+      switchLabel = 'Streaming...'
     }
+    return `${switchLabel}`
   }),
 
   baseRate: 10,
@@ -239,7 +241,7 @@ const DashWidgetComponent = Ember.Component.extend({
     renderD3(ep, render)
 
     let refreshD3 = function () {
-      if (this.get('pre_checked') === true) {
+      if (this.get('preChecked') === true) {
         renderD3(ep, render)
       }
       this._timer = setTimeout(refreshD3, this.get('fr'))

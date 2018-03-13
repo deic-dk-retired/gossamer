@@ -8,9 +8,9 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     this._super(...arguments)
     let session = this.get('session')
     if (!Ember.isEmpty(session) && session.isAuthenticated) {
-      return this.transitionTo('dashboard')
+      this.transitionTo('dashboard')
     } else {
-      return this.transitionTo('login')
+      this.transitionTo('login')
     }
   }
 })
