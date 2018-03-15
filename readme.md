@@ -1,5 +1,7 @@
 # Gossamer
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8bd0f85baa7f4ceebe78dbddadc75ff4)](https://app.codacy.com/app/DeIC/gossamer?utm_source=github.com&utm_medium=referral&utm_content=deic-dk/gossamer&utm_campaign=badger)
+
 # UI
 Built using [Ember.js](http://emberjs.com/) framework that incorporates common idioms of app development so we could focus on creating special features for this app than reinventing the wheel.  Also, we use [EmberCLI](https://ember-cli.com) to create consistent files, maintain a standard app structure, install and manage javascript library necessary for certain features and finally creating a production distribution of the app. Ember CLI ensures that relevant source and test files are created void of bugs and unnecessary development errors.  
 
