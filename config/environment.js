@@ -19,12 +19,11 @@ module.exports = function (environment) {
     },
 
     APP: {
-      // Here you can pass flags/options to your application instance
-      // when it is created
-      HOST: process.env.DDPS_HOST,
-      PORT: process.env.DDPS_PORT,
-      API: 'api',
-      SCPSS: process.env.SU_SEC_3SHA512
+      PORT: 8686,
+      SCPSS: process.env.SU_SEC_3SHA512,
+      SERV_HOST: process.env.SERV_HOST,
+      SERV_PORT: process.env.SERV_HOST,
+      SERV_API: process.env.SERV_NAMESPACE
     },
 
     'ember-cli-notifications': {
@@ -45,18 +44,8 @@ module.exports = function (environment) {
     ENV.APP.LOG_TRANSITIONS = true
     ENV.APP.LOG_TRANSITIONS_INTERNAL = true
     ENV.APP.LOG_VIEW_LOOKUPS = true
-    ENV.APP.PORT = 8080
-  }
-
-  if (environment === 'test') {
-    // Testem prefers this...
-    ENV.locationType = 'none'
-
-    // keep test console output quieter
-    ENV.APP.LOG_ACTIVE_GENERATION = false
-    ENV.APP.LOG_VIEW_LOOKUPS = false
-
-    ENV.APP.rootElement = '#ember-testing'
+    ENV.APP.SERV_PORT = 9696
+    ENV.APP.PORT = 8686
   }
 
   if (environment === 'production') {
@@ -65,7 +54,16 @@ module.exports = function (environment) {
     ENV.APP.LOG_TRANSITIONS = false
     ENV.APP.LOG_TRANSITIONS_INTERNAL = false
     ENV.APP.LOG_VIEW_LOOKUPS = false
-    ENV.APP.PORT = 8686
+    ENV.APP.SERV_PORT = 9090
+    ENV.APP.PORT = 8080
+  }
+
+  if (environment === 'test') {
+    ENV.locationType = 'none'
+    // keep test console output quieter
+    ENV.APP.LOG_ACTIVE_GENERATION = false
+    ENV.APP.LOG_VIEW_LOOKUPS = false
+    ENV.APP.rootElement = '#ember-testing'
   }
 
   return ENV
