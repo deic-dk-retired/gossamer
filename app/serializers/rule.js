@@ -1,7 +1,7 @@
 import ApplicationSerializer from './application'
 
 export default ApplicationSerializer.extend({
-  serialize (snapshot, options) {
+  serialize () {
     let json = this._super(...arguments)
     json = {
       ruleuuid: json.data.attributes.ruleuuid,

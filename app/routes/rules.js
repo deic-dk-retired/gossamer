@@ -33,7 +33,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   },
 
   actions: {
-    loading (transition, originRoute) {
+    loading () {
       Ember.$('.sec-load button').addClass('disabled')
       Ember.$('.sec-load .loading').removeClass('invisi')
       Ember.$('.sec-load .arrow').addClass('invisi')

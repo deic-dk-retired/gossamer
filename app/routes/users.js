@@ -27,6 +27,8 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   actions: {
     loading (transition, originRoute) {
       Ember.Logger.info('loading users...')
+      Ember.Logger.info(transition)
+      Ember.Logger.info(originRoute)
     },
 
     didTransition () {

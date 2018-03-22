@@ -59,10 +59,11 @@ export default Ember.Controller.extend({
 
     showRule (rid) {
       let rule = this.get('store').peekRecord('rule', rid)
-      this.send('toggleActive', this.get('rid'), rid)
-      this.setProperties({
+      Ember.Logger.info(rule)
+      // this.send('toggleActive', this.get('rid'), rid)
+      // this.setProperties({
 
-      })
+      // })
     },
 
     updateRule (rid) {

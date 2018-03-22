@@ -16,7 +16,7 @@ export default Ember.Controller.extend({
       .authenticate('authenticator:jwt', {username, password})
       .catch((err) => {
         this.set('loginFailed', true)
-        this.set('errorMessage', err.responseJSON.message)
+        this.set('errorMessage', err.responseJSON.message || 'error')
 
         this.get('notifications').clearAll()
         this.get('notifications').error(this.get('errorMessage'), {
