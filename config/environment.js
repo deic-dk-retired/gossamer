@@ -19,6 +19,7 @@ module.exports = function (environment) {
     },
 
     APP: {
+      PROTOCOL: 'http://',
       PORT: 8686,
       SCPSS: process.env.SU_SEC_3SHA512,
       SERV_HOST: process.env.SERV_HOST,

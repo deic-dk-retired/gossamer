@@ -4,7 +4,7 @@ import fetch from 'fetch'
 import Ember from 'ember'
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
-  url: `${config.APP.SERV_HOST + ':' + config.APP.SERV_PORT + '/' + config.APP.SERV_API}`,
+  url: `${config.APP.PROTOCOL + config.APP.SERV_HOST + ':' + config.APP.SERV_PORT + '/' + config.APP.SERV_API}`,
 
   userid: Ember.computed('session', function () {
     return `${this.get('session.data.authenticated.uuid')}`
