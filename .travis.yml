@@ -24,7 +24,11 @@ before_install:
     - export DISPLAY=:99.0
     - sh -e /etc/init.d/xvfb start
     - "npm config set spin false"
-    - "npm install -g npm@^2"
+    - "sudo rm -rf /usr/local/lib/node_modules"
+    - "sudo rm -rf ~/.npm"
+    - "brew uninstall --force node"
+    - "brew install node"
+    - "npm install -g npm@^7"
 install:
     - mkdir travis-phantomjs
     - wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -O $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
@@ -32,7 +36,7 @@ install:
     - export PATH=$PWD/travis-phantomjs:$PATH
     - npm install -g ember-cli@2.13.0
     - npm install -g bower
-    - npm install
     - bower install
+    - npm install
 script:
     - ember test --server
