@@ -1,11 +1,12 @@
 import Ember from 'ember'
 import * as d3 from 'd3'
 import { event } from 'd3-selection'
+import config from '../config/environment'
 
 const DashWidgetComponent = Ember.Component.extend({
   session: Ember.inject.service('session'),
 
-  endpoint: 'http://10.33.1.97:4242/api/series/',
+  endpoint: `${config.APP.PROTOCOL + config.APP.SERV_HOST + ':' + config.APP.SERV_PORT + '/' + config.APP.SERV_API + '/series/'}`,
 
   class: Ember.computed('params.[]', function () {
     return this.get('params')[0]
