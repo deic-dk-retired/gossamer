@@ -17,10 +17,10 @@ module.exports = function (defaults) {
       },
       // These settings allow you to specify the source of the Semantic files
       source: {
-        css: 'node_modules/semantic-ui-css',
-        javascript: 'node_modules/semantic-ui-css',
-        images: 'node_modules/semantic-ui-css/themes/default/assets/images',
-        fonts: 'node_modules/semantic-ui-css/themes/default/assets/fonts'
+        css: 'bower_components/semantic-ui/dist',
+        javascript: 'bower_components/semantic-ui/dist',
+        images: 'bower_components/semantic-ui/dist/themes/default/assets/images',
+        fonts: 'bower_components/semantic-ui/dist/themes/default/assets/fonts'
       },
       // These settings allow you to specify the destination of the Semantic files
       // This only applies to images and fonts, since those are assets
