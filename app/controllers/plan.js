@@ -7,6 +7,12 @@ export default Ember.Controller.extend({
   notifications: Ember.inject.service('notification-messages'),
   session: Ember.inject.service(),
 
+  protocol: '',
+  icmptype: null,
+  icmpcode: null,
+  tcpflags: [],
+  isdefDur: false,
+
   uid: Ember.computed('session', function () {
     return `${this.get('session.data.authenticated.uid')}`
   }),
@@ -44,39 +50,33 @@ export default Ember.Controller.extend({
     return `${this.get('store').peekRecord('user', uid).get('couuid')}`
   }),
 
-  now: moment.now(),
-  nowef10m: Ember.computed('now', function () {
-    return this.get('now') + 600000
+  mnow: moment.now(),
+  mnowef10m: Ember.computed('mnow', function () {
+    return this.get('mnow') + 600000
   }),
-
-  protocol: '',
-  icmptype: null,
-  icmpcode: null,
-  tcpflags: [],
-  isdefDur: false,
 
   isdefDurChanged: Ember.on('init', Ember.observer('isdefDur', function () {
     let uptime = function () {
       if (this.get('isdefDur')) {
-        this.set('now', moment.now())
+        this.set('mnow', moment.now())
       }
       this._timer = setTimeout(uptime, 1000)
     }.bind(this)
     uptime()
   })),
 
-  // fromDate: Ember.computed('now', function () {
-  //   let d = Date(moment.unix(this.get('now')))
-  //   let nd = new Date(d)
-  //   return nd
-  // }),
-  // toDate: Ember.computed('nowef10m', function () {
-  //   let d = Date(moment.unix(this.get('nowef10m')))
-  //   let nd = new Date(d)
-  //   return nd
-  // }),
-  fromDate: null,
-  toDate: null,
+  fromDate: Ember.computed('mnow', function () {
+    let d = new Date(this.get('mnow'))
+    return d
+  }),
+  toDate: Ember.computed('mnowef10m', function () {
+    let d = new Date(this.get('mnowef10m'))
+    return d
+  }),
+  extractDate (dt) {
+    let exdt = Array.isArray(dt) ? dt[0] : dt
+    return exdt
+  },
 
   ruleact: 'discard',
 
@@ -86,7 +86,7 @@ export default Ember.Controller.extend({
     if (act === 'rate limit') {
       react = act + ' ' + this.get('pktrate')
     }
-    return react
+    return `${react}`
   }),
 
   responseMessage: '',
@@ -122,15 +122,14 @@ export default Ember.Controller.extend({
 
     addRule () {
       let ruuid = uuid.v4()
+      let fxExDt = this.get('extractDate')
       let rule = this.get('store').createRecord('rule', {
         ruleuuid: ruuid,
         couuid: this.get('couuid'),
         useruuid: this.get('uuid'),
         fmnuuid: this.get('fmnuuid').fnmuuid,
-        // validfrom: this.get('fromDate').toISOString(),
-        // validto: this.get('toDate').toISOString(),
-        validfrom: this.get('fromDate').pop().toISOString(),
-        validto: this.get('toDate').pop().toISOString(),
+        validfrom: fxExDt(this.get('fromDate')).toISOString(),
+        validto: fxExDt(this.get('toDate')).toISOString(),
         destprefix: this.get('destip'),
         destport: this.get('destport'),
         ipprotocol: this.get('protocol'),
@@ -144,7 +143,6 @@ export default Ember.Controller.extend({
 
       rule.save()
       .then((response) => {
-        Ember.Logger.info()
         this.set('responseMessage',
           `A ${response.get('store').peekRecord('rule', response.get('id')).get('ipprotocol').toUpperCase()} was created successfully on ${response.get('store').peekRecord('rule', response.get('id')).get('destprefix')}`)
         this.get('notifications').clearAll()
@@ -154,10 +152,6 @@ export default Ember.Controller.extend({
         })
       })
       .catch((adapterError) => {
-        Ember.Logger.info(rule.get('errors'))
-        Ember.Logger.info(rule.get('errors.name'))
-        Ember.Logger.info(rule.get('errors').toArray())
-        Ember.Logger.info(rule.get('isValid'))
         Ember.Logger.info(adapterError)
 
         this.get('notifications').clearAll()

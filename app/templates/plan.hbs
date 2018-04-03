@@ -3,7 +3,7 @@
   <div class="sixteen wide mobile ten wide tablet six wide computer column">
 
     <div class="ui padded segment">
-      <div class="ui header large">Create rule</div>
+      <div class="ui header large">Create Rule</div>
       <form class="ui form" {{action 'addRule' on='submit'}}>
         <div class="field">
           <label>Source</label>
@@ -79,41 +79,19 @@
               altFormat='D, d M \'y, H:i'
               altInput=true
               altInputClass='my-alt-input'
-              allowInput=false
-
-              clickOpens=true
-              date=(readonly now)
+              date=(readonly mnow)
               dateFormat='M/D/Y'
-              defaultDate=now
-              defaultHour=12
-              defaultMinute=0
-              disableMobile=false
-
-              enableSeconds=false
+              defaultDate=fromDate
+              disableMobile=true
               enableTime=true
-
-              flatpickrRef=fpFrom
-              hourIncrement=1
-              inline=false
-              locale='fr'
-
-              maxDate=maxDate
-              minDate=now
-              minuteIncrement=5
-              mode='single'
-
+              minDate=mnow
+              minuteIncrement=1
               nextArrow='<i class="icon angle right"></i>'
-              noCalendar=false
               onChange=(action (mut fromDate))
-              parseDate=false
-
-              placeholder='Choose a Date'
+              placeholder='Choose a begin time'
               prevArrow='<i class="icon angle left"></i>'
-              shorthandCurrentMonth=false
-              static=false
+              shorthandCurrentMonth=true
               time_24hr=true
-              weekNumbers=false
-              wrap=false
             }}
           </div>
           <div class="required field eight wide column">
@@ -122,42 +100,19 @@
               altFormat='D, d M \'y, H:i'
               altInput=true
               altInputClass='my-alt-input'
-
-              allowInput=false
-
-              clickOpens=true
-              date=(readonly nowef10m)
+              date=(readonly mnowef10m)
               dateFormat='M/D/Y'
-              defaultDate=nowef10m
-              defaultHour=12
-              defaultMinute=0
-              disableMobile=false
-
-              enableSeconds=false
+              defaultDate=toDate
+              disableMobile=true
               enableTime=true
-
-              flatpickrRef=fpTo
-              hourIncrement=1
-              inline=false
-              locale='fr'
-
-              maxDate=maxDate
-              minDate=nowef10m
-              minuteIncrement=5
-              mode='single'
-
+              minDate=mnowef10m
+              minuteIncrement=1
               nextArrow='<i class="icon angle right"></i>'
-              noCalendar=false
               onChange=(action (mut toDate))
-              parseDate=false
-
-              placeholder='Choose a Date'
+              placeholder='Choose an end time'
               prevArrow='<i class="icon angle left"></i>'
-              shorthandCurrentMonth=false
-              static=false
+              shorthandCurrentMonth=true
               time_24hr=true
-              weekNumbers=false
-              wrap=false
             }}
           </div>
 
