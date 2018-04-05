@@ -30,8 +30,8 @@ moduleForComponent('rules-card', 'Integration | Component | rules card', {
 test('should display rules details', function (assert) {
   this.set('rulesObj', rules)
   this.render(hbs`{{rules-card rule=rulesObj}}`)
-  assert.equal(this.$('.counter').text().trim(), '26', 'Ports Affected: 26')
-  assert.equal(this.$('.name p').text().trim(), '00:25:90:47:2b:48', 'RuleName: 00:25:90:47:2b:48')
+  assert.equal(this.$('div.counter').text(), '26', 'Ports Affected: 26')
+  assert.equal(this.$('div.name p').text(), '00:25:90:47:2b:48', 'RuleName: 00:25:90:47:2b:48')
 })
 
 test('should toggle detail class on click', function (assert) {

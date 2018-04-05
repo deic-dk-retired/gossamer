@@ -56,11 +56,13 @@ const DashStatsComponent = Ember.Component.extend({
         v = stats.udp
         l = 'udp'
         c = 'blue'
+        h = '#37474F'
         break
       case 'oth':
         v = stats.other
         l = 'others'
         c = 'blue'
+        h = '#37474F'
         break
       case 'tot':
         v = stats.total
