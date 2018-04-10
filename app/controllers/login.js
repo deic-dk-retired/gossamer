@@ -5,19 +5,25 @@ export default Ember.Controller.extend({
   notifications: Ember.inject.service('notification-messages'),
 
   loginFailed: false,
-  // isProcessing: false,
+  processed: false,
   errorMessage: null,
 
   actions: {
 
     authenticate () {
       let { username, password } = this.getProperties('username', 'password')
-      this.get('session')
-      .authenticate('authenticator:jwt', {username, password})
+      let session = this.get('session')
+      session.authenticate('authenticator:jwt', {username, password})
+      .then(() => {
+        this.set('processed', 'Welcome ' + this.get('session.data.authenticated.ualias').split(' ')[0])
+        this.get('notifications').info(this.get('processed'), {
+          autoClear: true,
+          clearDuration: 3000
+        })
+      })
       .catch((err) => {
         this.set('loginFailed', true)
         this.set('errorMessage', err.responseJSON.message || 'error')
-
         this.get('notifications').clearAll()
         this.get('notifications').error(this.get('errorMessage'), {
           autoClear: true,

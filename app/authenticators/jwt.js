@@ -1,5 +1,6 @@
 import Ember from 'ember'
 import crptojs from 'npm:crypto-json'
+import ms from 'npm:ms'
 import config from '../config/environment'
 import Base from 'ember-simple-auth/authenticators/base'
 
@@ -47,8 +48,7 @@ export default Base.extend({
     }
 
     return new Promise((resolve, reject) => {
-      ajax(requestOptions)
-      .then((res) => {
+      ajax(requestOptions).then((res) => {
         const { jwt } = res
         // Wrapping aync operation in Ember.run
         run(() => {
@@ -59,7 +59,8 @@ export default Base.extend({
             uname: res.data[0].attributes.username,
             ualias: res.data[0].attributes.useralias,
             role: res.data[0].attributes.usrtype,
-            client: res.data[0].attributes.clnt
+            client: res.data[0].attributes.clnt,
+            texp: res.data[0].attributes.texp
           })
         })
       }, (error) => {
