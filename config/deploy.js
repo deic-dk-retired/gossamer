@@ -38,6 +38,11 @@ module.exports = function (deployTarget) {
     ENV.build.environment = 'production'
     ENV.APP.SERV_PORT = 9090
     ENV.APP.PORT = 8080
+    ENV.APP.LOG_RESOLVER = false
+    ENV.APP.LOG_ACTIVE_GENERATION = false
+    ENV.APP.LOG_TRANSITIONS = false
+    ENV.APP.LOG_TRANSITIONS_INTERNAL = false
+    ENV.APP.LOG_VIEW_LOOKUPS = false
     // configure other plugins for production deploy target here
   }
 
