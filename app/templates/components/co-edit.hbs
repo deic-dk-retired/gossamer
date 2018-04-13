@@ -1,7 +1,7 @@
 <div class="edit-box">
   <h2 class="title sticky">{{act}} <span class="enhance">{{coname}}</span> </h2>
   <form class="ui form" {{action saveCustomer on='submit'}}>
-    <div class="ui dividing medium header blue">General Info</div>
+    <div class="ui dividing medium header green">General Info</div>
     <div class="required field togDisabled disabled">
       <label>Co. Name</label>
       {{input type="text" id="name" name="name" placeholder="Co. Inc" value=coname change=(action required) }}
@@ -118,7 +118,7 @@
       </div>
     </div> --}}
 
-    <div class="ui dividing medium header blue">Networks</div>
+    <div class="ui dividing medium header green">Networks</div>
     <div class="required field togDisabled disabled column">
       <label>Name</label>
       {{input type="text" id="netname" name="netname" placeholder="Skynet" value=netname}}
@@ -157,7 +157,7 @@
       {{#each networks as |net|}}
         {{#if (eq net.customerid coid)}}
         <div class="item">
-          <div class="ui icon basic blue label">
+          <div class="ui icon basic green label">
             <i class="icon fork"></i>
             <div class="detail">{{net.name}} [{{net.net}}]</div>
             <i class="delete icon" {{action removeNetwork net.id}}></i>
@@ -169,7 +169,7 @@
 
 
 
-    <button class="ui animated fade button blue disabled togDisabled" type="submit" {{action saveCustomer}}>
+    <button class="ui animated fade button green disabled togDisabled" type="submit" {{action saveCustomer}}>
       <div class="visible content">Save</div>
       <div class="hidden content"><i class="{{buttonico}} icon"></i></div>
     </button>

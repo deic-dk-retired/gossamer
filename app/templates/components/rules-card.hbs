@@ -3,11 +3,11 @@
     <div class="right floated meta">
       {{#if (eq (null-replace rule.destport) '...')}}
         {{#ui-popup content="no dst. ports assigned" variation="mini inverted" position="top center"}}
-          <a class="ui circular empty blue label"></a>
+          <a class="ui circular empty green label"></a>
         {{/ui-popup}}
       {{else}}
         {{#ui-popup content="affected ports" variation="mini inverted" position="top center"}}
-          <a class="ui circular blue label">{{rule.destport}}</a>
+          <a class="ui circular green label">{{rule.destport}}</a>
         {{/ui-popup}}
       {{/if}}
     </div>
@@ -65,12 +65,12 @@
       </div>
     </div>
   </div>
-  <button class="ui bottom attached icon grey button {{if (lte actprogress 0.90) 'disabled'}}" {{action 'toggleClear' rule.id}}>
+  <button class="ui bottom attached icon grey button {{if (lte actprogress 0.25) 'disabled'}}" {{action 'toggleClear' rule.id}}>
     <i class="trash outline icon"></i>
     Clear Rule
   </button>
   <div class="ui buttons bottom attached hide">
-    <button class="ui blue button" {{action 'toggleClear' rule.id}}>
+    <button class="ui green button" {{action 'toggleClear' rule.id}}>
       <i class="remove icon"></i>
       Not Yet!
     </button>

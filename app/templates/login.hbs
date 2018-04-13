@@ -1,32 +1,30 @@
 <div class="bg"></div>
 <div class="ui centered grid begin">
-  <div class=" sixteen wide mobile six wide tablet three wide computer column">
-    <form class="ui large form" {{action "authenticate" on="submit"}}>
-
-      <div class="ui stacked padded inverted segment">
-        <div class="welcome">
-          <span class="logo">
-            DDPs
-          </span>
-        </div>
-        <div class="field">
-          <div class="ui left icon input">
-            <i class="user blue icon"></i>
-            {{input type='text' placeholder='Type in your username' value=username}}
+  <div class="column sixteen wide mobile six wide tablet three wide computer">
+    <div class="row">
+      <form class="ui large form" {{action "authenticate" on="submit"}}>
+        <div class="ui stacked padded segment">
+          <div class="welcome">
+            <span class="logo">DDPs</span>
           </div>
-        </div>
-        <div class="field">
-          <div class="ui left icon input">
-            <i class="lock blue icon"></i>
-            {{input type='password' placeholder='and password' value=password}}
+          <div class="field">
+            <div class="ui left icon input">
+              <i class="user black icon"></i>
+              {{input type='text' placeholder='Type in your username' value=username}}
+            </div>
           </div>
+          <div class="field">
+            <div class="ui left icon input">
+              <i class="lock black icon"></i>
+              {{input type='password' placeholder='and password' value=password}}
+            </div>
+          </div>
+          <button class="ui fluid large black submit animated fade button" type="submit" value="Login">
+            <div class="hidden content"><i class="sign in icon"></i></div>
+            <div class="visible content">Sign In</div>
+          </button>
         </div>
-        <button class="ui fluid large blue submit animated fade button" type="submit" value="Login">
-          <div class="hidden content"><i class="sign in icon"></i></div>
-          <div class="visible content">Sign In</div>
-        </button>
-      </div>
-
-    </form>
+      </form>
+    </div>
   </div>
 </div>

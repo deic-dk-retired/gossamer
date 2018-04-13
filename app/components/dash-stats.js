@@ -43,37 +43,37 @@ const DashStatsComponent = Ember.Component.extend({
       case 'tcp':
         v = stats.tcp
         l = 'tcp'
-        c = 'blue'
+        c = 'black'
         h = '#0288d1'
         break
       case 'icmp':
         v = stats.icmp
         l = 'icmp'
-        c = 'blue'
+        c = 'black'
         h = '#FFEB3B'
         break
       case 'udp':
         v = stats.udp
         l = 'udp'
-        c = 'blue'
+        c = 'black'
         h = '#37474F'
         break
       case 'oth':
         v = stats.other
         l = 'others'
-        c = 'blue'
+        c = 'black'
         h = '#37474F'
         break
       case 'tot':
         v = stats.total
         l = 'total'
-        c = 'blue'
+        c = 'black'
         h = '#00B5AD'
         break
       case 'net':
         v = stats.networks
         l = 'networks'
-        c = 'blue'
+        c = 'black'
         h = '#B5CC18'
         break
     }
