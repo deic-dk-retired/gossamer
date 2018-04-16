@@ -72,16 +72,16 @@ export default Ember.Component.extend({
   },
 
   removeCard () {
-    Ember.$('.card.rule-' + this.get('rid')).addClass('toRemove')
+    Ember.$(`.card.rule-${this.get('rid')}`).addClass('toRemove')
     this._timer1 = setTimeout(function () {
-      Ember.$('.card.rule-' + this.get('rid')).remove()
+      Ember.$(`.card.rule-${this.get('rid')}`).remove()
     }.bind(this), 300)
   },
 
   didInsertElement () {
     this._super(...arguments)
 
-    let where = '.progress-' + this.get('rid')
+    let where = `.progress-${this.get('rid')}`
     let percent = this.get('prcnt')
 
     if (where.length !== null) {
@@ -106,7 +106,7 @@ export default Ember.Component.extend({
           if (value === 0) {
             bar.setText('')
           } else {
-            bar.setText(value + ' <span class="centsign">%</span><div class="proglabel">complete</div>')
+            bar.setText(`${value} <span class="centsign">%</span><div class="proglabel">complete</div>`)
           }
           if (value >= 50) {
             bar.text.style.color = state.color
@@ -147,12 +147,12 @@ export default Ember.Component.extend({
 
     toggleConfirm (rid) {
       if (this.get('isClear')) {
-        Ember.$('.rule-' + rid + ' button.icon').addClass('hide')
-        Ember.$('.rule-' + rid + ' .buttons').removeClass('hide')
+        Ember.$(`.rule-${rid} button.icon`).addClass('hide')
+        Ember.$(`.rule-${rid} .buttons`).removeClass('hide')
       }
       if (!this.get('isClear')) {
-        Ember.$('.rule-' + rid + ' button.icon').removeClass('hide')
-        Ember.$('.rule-' + rid + ' .buttons').addClass('hide')
+        Ember.$(`.rule-${rid} button.icon`).removeClass('hide')
+        Ember.$(`.rule-${rid} .buttons`).addClass('hide')
       }
     }
 

@@ -70,8 +70,8 @@ const DashWidgetComponent = Ember.Component.extend({
     let xTime = d3.timeFormat('%H:%M')
 
     // get svg width and height from DOM
-    let widget = d3.select('.' + this.get('class') + ' .dash-widget')
-    let svg = d3.select('.' + this.get('class') + ' .dash-widget' + ' > svg')
+    let widget = d3.select(`.${this.get('class')} .dash-widget`)
+    let svg = d3.select(`.${this.get('class')} .dash-widget > svg`)
     let svgW = this.$('.dash-widget svg').outerWidth()
     let svgH = this.$('.dash-widget svg').outerHeight()
     // configure chart widget dimensions

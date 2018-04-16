@@ -82,7 +82,7 @@ const DashStatsComponent = Ember.Component.extend({
       v = f(v)
     }
     if (/[A-za-z]$/g.test(v)) {
-      wv.append(v.substr(0, v.length - 1) + `<span class='suffix'>` + v.substr(-1) + `</span>`)
+      wv.append(`${v.substr(0, v.length - 1)}<span class='suffix'>${v.substr(-1)}</span>`)
     } else {
       wv.text(v)
     }

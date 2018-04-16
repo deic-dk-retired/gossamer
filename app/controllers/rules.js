@@ -52,14 +52,14 @@ export default Ember.Controller.extend({
     toggleActive (set, toSet) {
       if (set !== toSet) {
         Ember.$('.card').removeClass('active')
-        Ember.$('.rule-' + toSet).addClass('active')
+        Ember.$(`.rule-${toSet}`).addClass('active')
         Ember.$('.togDisabled').removeClass('disabled')
       }
     },
 
     showRule (rid) {
       let rule = this.get('store').peekRecord('rule', rid)
-      Ember.Logger.info(rule)
+      // Ember.Logger.info(rule)
       // this.send('toggleActive', this.get('rid'), rid)
       // this.setProperties({
 
@@ -80,9 +80,9 @@ export default Ember.Controller.extend({
             Ember.Logger.info(this.get('responseMessage'))
 
             this.get('notifications').clearAll()
-            this.get('notifications').info('Rule ' + ruleuuid.substr(0, ruleuuid.indexOf('-')) + ' was cleared!', {
+            this.get('notifications').info(`Rule ${ruleuuid.substr(0, ruleuuid.indexOf('-'))} was cleared!`, {
               autoClear: true,
-              clearDuration: 8000
+              clearDuration: 5000
             })
           })
           .catch((adapterError) => {

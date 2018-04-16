@@ -15,8 +15,8 @@ export default Ember.Controller.extend({
       let session = this.get('session')
       session.authenticate('authenticator:jwt', {username, password})
       .then(() => {
-        this.set('processed', 'Welcome ' + this.get('session.data.authenticated.ualias').split(' ')[0])
-        this.get('notifications').info(this.get('processed'), {
+        this.set('processed', `Welcome ${this.get('session.data.authenticated.ualias').split(' ')[0]}`)
+        this.get('notifications').success(this.get('processed'), {
           autoClear: true,
           clearDuration: 3000
         })

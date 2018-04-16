@@ -104,20 +104,20 @@ export default Ember.Controller.extend({
         isDisabled: 'disabled',
         changePass: 'disabled'
       })
-      Ember.$('.card').removeClass('blue')
+      Ember.$('.card').removeClass('green')
       Ember.$('.togDisabled').addClass('disabled')
       Ember.$('.right-slider').addClass('hide')
     },
 
     toggleActive (usrname) {
-      Ember.$('.card').removeClass('blue')
-      Ember.$('.usr-' + usrname).addClass('blue')
+      Ember.$('.card').removeClass('green')
+      Ember.$(`.usr-${usrname}`).addClass('green')
       Ember.$('.togDisabled').removeClass('disabled')
       Ember.$('.right-slider').removeClass('hide')
     },
 
     openModal (name) {
-      Ember.$('.ui.' + name + '.modal').modal('show')
+      Ember.$(`.ui.${name}.modal`).modal('show')
     },
 
     showUser (uid) {
@@ -154,7 +154,7 @@ export default Ember.Controller.extend({
             Ember.Logger.info(this.get('responseMessage'))
 
             this.get('notifications').clearAll()
-            this.get('notifications').info(emuser + ' was deactivated!', {
+            this.get('notifications').info(`${emuser} was deactivated!`, {
               autoClear: true,
               clearDuration: 5000
             })
@@ -190,7 +190,7 @@ export default Ember.Controller.extend({
             Ember.Logger.info(this.get('responseMessage'))
 
             this.get('notifications').clearAll()
-            this.get('notifications').success(emuser + ' is activated!', {
+            this.get('notifications').success(`${emuser} is activated!`, {
               autoClear: true,
               clearDuration: 5000
             })

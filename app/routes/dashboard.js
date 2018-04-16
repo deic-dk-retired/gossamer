@@ -4,21 +4,21 @@ import fetch from 'fetch'
 import Ember from 'ember'
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
-  url: `${config.APP.PROTOCOL + config.APP.SERV_HOST + ':' + config.APP.SERV_PORT + '/' + config.APP.SERV_API}`,
+  url: `${config.APP.PROTOCOL}${config.APP.SERV_HOST}:${config.APP.SERV_PORT}/${config.APP.SERV_API}`,
 
   userid: Ember.computed('session', function () {
     return `${this.get('session.data.authenticated.uuid')}`
   }),
 
   model () {
-    return fetch(this.get('url') + '/stats/' + this.get('userid'),
+    return fetch(`${this.get('url')}/stats/${this.get('userid')}`,
       { headers: {
         'jwtauthtkn': this.get('session.data.authenticated.token')}
       }
     )
     .then((response) => {
       if (response.status !== 200) {
-        Ember.Logger.info('Looks like there was a problem. Status Code: ' + response.status)
+        Ember.Logger.info(`Looks like there was a problem. Status Code: ${response.status}`)
         return
       }
       return response.json()
@@ -27,7 +27,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       })
     })
     .catch((err) => {
-      Ember.Logger.info('dashboard stats error: ' + err)
+      Ember.Logger.info(`dashboard stats error: ${err}`)
     })
   },
 

@@ -1,13 +1,12 @@
 import Ember from 'ember'
 import crptojs from 'npm:crypto-json'
-import ms from 'npm:ms'
 import config from '../config/environment'
 import Base from 'ember-simple-auth/authenticators/base'
 
 const { RSVP: { Promise }, $: { ajax }, run } = Ember
 
 export default Base.extend({
-  serverTokenEndpoint: `${config.APP.PROTOCOL + config.APP.SERV_HOST + ':' + config.APP.SERV_PORT + '/' + config.APP.SERV_API + '/auth'}`,
+  serverTokenEndpoint: `${config.APP.PROTOCOL}${config.APP.SERV_HOST}:${config.APP.SERV_PORT}/${config.APP.SERV_API}/auth`,
   user: null,
   pwd: null,
   crypto: null,

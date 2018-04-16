@@ -84,7 +84,7 @@ export default Ember.Controller.extend({
     let act = this.get('ruleact')
     let react = 'discard'
     if (act === 'rate limit') {
-      react = act + ' ' + this.get('pktrate')
+      react = `${act} ${this.get('pktrate')}`
     }
     return `${react}`
   }),
