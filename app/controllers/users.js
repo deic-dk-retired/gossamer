@@ -2,8 +2,6 @@ import Ember from 'ember'
 // import Cryptojs from '/node_modules/crypto-js'
 
 export default Ember.Controller.extend({
-  notifications: Ember.inject.service('notification-messages'),
-
   userid: '',
   firstname: '',
   kind: '',

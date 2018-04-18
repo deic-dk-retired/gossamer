@@ -1,8 +1,7 @@
 import Ember from 'ember'
 
 export default Ember.Controller.extend({
-  session: Ember.inject.service(),
-  notifications: Ember.inject.service('notification-messages'),
+  // session: Ember.inject.service(),
 
   loginFailed: false,
   processed: false,

@@ -2,8 +2,6 @@ import Ember from 'ember'
 import uuid from 'npm:uuid'
 
 export default Ember.Controller.extend({
-  notifications: Ember.inject.service('notification-messages'),
-
   coid: null,
   couuid: null,
   coname: '',

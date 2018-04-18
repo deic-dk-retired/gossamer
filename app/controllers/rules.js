@@ -1,8 +1,6 @@
 import Ember from 'ember'
 
 export default Ember.Controller.extend({
-  notifications: Ember.inject.service('notification-messages'),
-
   queryParams: ['page'],
   page: 1,
 
@@ -59,7 +57,7 @@ export default Ember.Controller.extend({
 
     showRule (rid) {
       let rule = this.get('store').peekRecord('rule', rid)
-      // Ember.Logger.info(rule)
+      Ember.Logger.info(rule)
       // this.send('toggleActive', this.get('rid'), rid)
       // this.setProperties({
 

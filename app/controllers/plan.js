@@ -4,8 +4,7 @@ import moment from 'moment'
 import cidr from 'npm:cidr-range'
 
 export default Ember.Controller.extend({
-  notifications: Ember.inject.service('notification-messages'),
-  session: Ember.inject.service(),
+  // session: Ember.inject.service(),
 
   protocol: '',
   icmptype: null,
@@ -123,6 +122,8 @@ export default Ember.Controller.extend({
     addRule () {
       let ruuid = uuid.v4()
       let fxExDt = this.get('extractDate')
+      let dp = cidr(this.get('destip'))
+      Ember.Logger.info(dp)
       let rule = this.get('store').createRecord('rule', {
         ruleuuid: ruuid,
         couuid: this.get('couuid'),
