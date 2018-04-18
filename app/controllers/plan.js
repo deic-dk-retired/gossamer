@@ -4,7 +4,6 @@ import moment from 'moment'
 import cidr from 'npm:cidr-range'
 
 export default Ember.Controller.extend({
-  notifications: Ember.inject.service('notification-messages'),
   session: Ember.inject.service(),
 
   protocol: '',
