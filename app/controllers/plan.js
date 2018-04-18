@@ -4,7 +4,7 @@ import moment from 'moment'
 import cidr from 'npm:cidr-range'
 
 export default Ember.Controller.extend({
-  session: Ember.inject.service(),
+  // session: Ember.inject.service(),
 
   protocol: '',
   icmptype: null,
