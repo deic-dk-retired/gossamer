@@ -25,7 +25,7 @@
           </div>
         </div>
 
-        <h4 class="ui dividing medium header blue">Protocol Information</h4>
+        <h4 class="ui dividing medium header green">Protocol Information</h4>
         {{#if (eq protocol 'tcp')}}
           {{tcp-fields
             mod=model
@@ -49,7 +49,7 @@
           {{/if}}
         {{/if}}
 
-        <h4 class="ui dividing medium header blue">Additional Parameters</h4>
+        <h4 class="ui dividing medium header green">Additional Parameters</h4>
         <div class="field">
           <label>Packet Size or Range</label>
           {{input type="text" id="pktlen" name="pktlen" value=pktlen placeholder="e.g. 1500 or >=64&<=9000"}}
@@ -67,7 +67,7 @@
           {{input type="text" id="shrtcomm" name="shrtcomm" value=shrtcomm placeholder="e.g. optimized rule"}}
         </div>
 
-        <h4 class="ui dividing medium header blue">Duration</h4>
+        <h4 class="ui dividing medium header green">Duration</h4>
         <div class="field">
            {{ui-checkbox label="Run for 10 minutes on deploy" checked=isdefDur onChange=(action (mut isdefDur))}}
         </div>
@@ -118,7 +118,7 @@
 
         </div>
 
-        <h4 class="ui dividing medium header blue">Required Action</h4>
+        <h4 class="ui dividing medium header green">Required Action</h4>
 
         <div class="inline fields">
           <div class="field">
