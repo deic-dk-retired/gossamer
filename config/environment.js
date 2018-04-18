@@ -47,6 +47,10 @@ module.exports = function (environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = true
     ENV.APP.SERV_PORT = 9696
     ENV.APP.PORT = 8686
+    ENV['ember-qunit-nice-errors'] = {
+      showFileInfo: true,
+      completeExistingMessages: true
+    }
   }
 
   if (environment === 'production') {
