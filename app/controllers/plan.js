@@ -123,6 +123,8 @@ export default Ember.Controller.extend({
     addRule () {
       let ruuid = uuid.v4()
       let fxExDt = this.get('extractDate')
+      let dp = cidr(this.get('destip'))
+      Ember.Logger.info(dp)
       let rule = this.get('store').createRecord('rule', {
         ruleuuid: ruuid,
         couuid: this.get('couuid'),

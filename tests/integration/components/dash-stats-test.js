@@ -8,8 +8,6 @@ moduleForComponent('dash-stats', 'Integration | Component | dash stats', {
 test('it renders', function (assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
-
-  this.render(hbs`{{dash-stats}}`)
-
-  assert.equal(this.$().text(), '')
+  this.render(hbs`{{dash-stats ''}}`)
+  assert.equal(this.$().text().split('\n')[0], '')
 })

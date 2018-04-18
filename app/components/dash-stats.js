@@ -25,56 +25,47 @@ const DashStatsComponent = Ember.Component.extend({
     let v = 0
     let l = '...'
     let c = '#ffffff'
-    let h = '#37474F'
 
     switch (this.get('class').split('-')[0]) {
       case 'act':
         v = stats.active
         l = 'active'
         c = 'red'
-        h = '#ef5350'
         break
       case 'exp':
         v = stats.expired
         l = 'expired'
         c = 'green'
-        h = '#0288D1'
         break
       case 'tcp':
         v = stats.tcp
         l = 'tcp'
         c = 'black'
-        h = '#0288d1'
         break
       case 'icmp':
         v = stats.icmp
         l = 'icmp'
         c = 'black'
-        h = '#FFEB3B'
         break
       case 'udp':
         v = stats.udp
         l = 'udp'
         c = 'black'
-        h = '#37474F'
         break
       case 'oth':
         v = stats.other
         l = 'others'
         c = 'black'
-        h = '#37474F'
         break
       case 'tot':
         v = stats.total
         l = 'total'
         c = 'black'
-        h = '#00B5AD'
         break
       case 'net':
         v = stats.networks
         l = 'networks'
         c = 'black'
-        h = '#B5CC18'
         break
     }
 
