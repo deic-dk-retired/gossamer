@@ -11,11 +11,16 @@ node_js:
   - "8"
 env:
     - EMBER_VERSION=2.13.0
-    # - EMBER_VERSION=release
+    # - EMBER_VERSION=default
+    - EMBER_VERSION=release
+    - EMBER_VERSION=beta
+    - EMBER_VERSION=canary
 matrix:
   fast_finish: true
-  # allow_failures:
-  #   - env: EMBER_VERSION=2.13
+  allow_failures:
+    - env: EMBER_VERSION=release
+    - env: EMBER_VERSION=beta
+    - env: EMBER_VERSION=canary
 
 before_install:
     # setting the path for phantom.js 2.0.0

@@ -1,15 +1,7 @@
 import Ember from 'ember'
 import DS from 'ember-data'
-import { validator, buildValidations } from 'ember-cp-validations'
 
-const Validations = buildValidations({
-  username: validator('presence', true),
-  kind: validator('presence', true),
-  customerid: validator('presence', true),
-  usrnets: validator('presence', true)
-})
-
-export default DS.Model.extend(Validations, {
+export default DS.Model.extend({
   useruuid: DS.attr('string'),
   couuid: DS.attr('string'),
   customerid: DS.attr('number'),
