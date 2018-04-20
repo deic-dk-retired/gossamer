@@ -22,52 +22,69 @@ const DashStatsComponent = Ember.Component.extend({
       this.$('.dimmer').remove()
     }, 1000)
 
-    let v = 0
-    let l = '...'
-    let c = '#ffffff'
-
-    switch (this.get('class').split('-')[0]) {
-      case 'act':
-        v = stats.active
-        l = 'active'
-        c = 'red'
-        break
-      case 'exp':
-        v = stats.expired
-        l = 'expired'
-        c = 'green'
-        break
-      case 'tcp':
-        v = stats.tcp
-        l = 'tcp'
-        c = 'black'
-        break
-      case 'icmp':
-        v = stats.icmp
-        l = 'icmp'
-        c = 'black'
-        break
-      case 'udp':
-        v = stats.udp
-        l = 'udp'
-        c = 'black'
-        break
-      case 'oth':
-        v = stats.other
-        l = 'others'
-        c = 'black'
-        break
-      case 'tot':
-        v = stats.total
-        l = 'total'
-        c = 'black'
-        break
-      case 'net':
-        v = stats.networks
-        l = 'networks'
-        c = 'black'
-        break
+    let clsnm = this.get('class').split('-')[0]
+    let setStats = {
+      'act': () => {
+        return {
+          v: stats.active,
+          l: 'active',
+          c: 'red'
+        }
+      },
+      'exp': () => {
+        return {
+          v: stats.expired,
+          l: 'expired',
+          c: 'green'
+        }
+      },
+      'tcp': () => {
+        return {
+          v: stats.tcp,
+          l: 'tcp',
+          c: 'black'
+        }
+      },
+      'icmp': () => {
+        return {
+          v: stats.icmp,
+          l: 'icmp',
+          c: 'black'
+        }
+      },
+      'udp': () => {
+        return {
+          v: stats.udp,
+          l: 'udp',
+          c: 'black'
+        }
+      },
+      'oth': () => {
+        return {
+          v: stats.other,
+          l: 'others',
+          c: 'black'
+        }
+      },
+      'tot': () => {
+        return {
+          v: stats.total,
+          l: 'total',
+          c: 'black'
+        }
+      },
+      'net': () => {
+        return {
+          v: stats.networks,
+          l: 'networks',
+          c: 'black'
+        }
+      }
     }
+
+    let v = setStats[clsnm]().v
+    let c = setStats[clsnm]().c
+    let l = setStats[clsnm]().l
 
     if (v >= 1000) {
       v = f(v)
