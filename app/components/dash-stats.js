@@ -23,68 +23,51 @@ const DashStatsComponent = Ember.Component.extend({
     }, 1000)
 
     let clsnm = this.get('class').split('-')[0]
+    let stsobj = {
+      v: '...',
+      l: '...',
+      c: 'black'
+    }
     let setStats = {
       'act': () => {
-        return {
-          v: stats.active,
-          l: 'active',
-          c: 'red'
-        }
+        stsobj.v = stats.active
+        stsobj.l = 'active'
+        stsobj.c = 'red'
       },
       'exp': () => {
-        return {
-          v: stats.expired,
-          l: 'expired',
-          c: 'green'
-        }
+        stsobj.v = stats.expired
+        stsobj.l = 'expired'
+        stsobj.c = 'green'
       },
       'tcp': () => {
-        return {
-          v: stats.tcp,
-          l: 'tcp',
-          c: 'black'
-        }
+        stsobj.v = stats.tcp
+        stsobj.l = 'tcp'
       },
       'icmp': () => {
-        return {
-          v: stats.icmp,
-          l: 'icmp',
-          c: 'black'
-        }
+        stsobj.v = stats.icmp
+        stsobj.l = 'icmp'
       },
       'udp': () => {
-        return {
-          v: stats.udp,
-          l: 'udp',
-          c: 'black'
-        }
+        stsobj.v = stats.udp
+        stsobj.l = 'udp'
       },
       'oth': () => {
-        return {
-          v: stats.other,
-          l: 'others',
-          c: 'black'
-        }
+        stsobj.v = stats.other
+        stsobj.l = 'others'
       },
       'tot': () => {
-        return {
-          v: stats.total,
-          l: 'total',
-          c: 'black'
-        }
+        stsobj.v = stats.total
+        stsobj.l = 'total'
       },
       'net': () => {
-        return {
-          v: stats.networks,
-          l: 'networks',
-          c: 'black'
-        }
+        stsobj.v = stats.networks
+        stsobj.l = 'networks'
       }
     }
-
-    let v = setStats[clsnm]().v
-    let c = setStats[clsnm]().c
-    let l = setStats[clsnm]().l
+    setStats[clsnm]()
+    let v = stsobj.v
+    let c = stsobj.c
+    let l = stsobj.l
 
     if (v >= 1000) {
       v = f(v)
