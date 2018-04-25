@@ -54,7 +54,7 @@ export default Base.extend({
           resolve({
             token: jwt,
             uid: res.data[0].id,
-            uuid: res.data[0].attributes.useruuid,
+            // uuid: res.data[0].attributes.useruuid,
             uname: res.data[0].attributes.username,
             ualias: res.data[0].attributes.useralias,
             role: res.data[0].attributes.usrtype,

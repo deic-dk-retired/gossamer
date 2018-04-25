@@ -5,7 +5,7 @@ import moment from 'moment'
 export default DS.Model.extend({
   ruleuuid: DS.attr('string'),
   couuid: DS.attr('string'),
-  useruuid: DS.attr('string'),
+  userid: DS.attr('string'),
   fmnuuid: DS.attr('string'),
   rname: DS.attr('string', {readonly: true}),
   direct: DS.attr('string', {readonly: true}),

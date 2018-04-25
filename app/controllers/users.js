@@ -123,7 +123,7 @@ export default Ember.Controller.extend({
       let customer = this.get('store').peekRecord('customer', parseInt(user.get('customerid')))
       this.send('toggleActive', user.get('username'))
       this.setProperties({
-        userid: parseInt(user.get('id')),
+        userid: user.get('id'),
         kind: user.get('kind'),
         customerid: parseInt(customer.get('id')),
         couuid: customer.get('couuid'),
@@ -141,7 +141,7 @@ export default Ember.Controller.extend({
 
     deactivateUser (uid) {
       let emuser = this.get('store').peekRecord('user', uid).get('firstname')
-      this.get('store').findRecord('user', parseInt(uid))
+      this.get('store').findRecord('user', uid)
       .then(function (user) {
         user.set('valid', 'inactive')
         if (user.get('hasDirtyAttributes')) {
@@ -177,7 +177,7 @@ export default Ember.Controller.extend({
 
     activateUser (uid) {
       let emuser = this.get('store').peekRecord('user', uid).get('firstname')
-      this.get('store').findRecord('user', parseInt(uid))
+      this.get('store').findRecord('user', uid)
       .then(function (user) {
         user.set('valid', 'active')
         if (user.get('hasDirtyAttributes')) {
@@ -217,7 +217,7 @@ export default Ember.Controller.extend({
       let couuid = this.get('store').peekRecord('customer', parseInt(cuid)).get('couuid')
       let nets = this.get('netids').sort(function (a, b) { return parseInt(a) - parseInt(b) })
 
-      this.get('store').findRecord('user', parseInt(uid))
+      this.get('store').findRecord('user', uid)
       .then(function (user) {
         user.set('customerid', parseInt(cuid))
         user.set('couuid', couuid)

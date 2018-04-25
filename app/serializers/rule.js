@@ -6,7 +6,7 @@ export default ApplicationSerializer.extend({
     json = {
       ruleuuid: json.data.attributes.ruleuuid,
       couuid: json.data.attributes.couuid,
-      useruuid: json.data.attributes.useruuid,
+      userid: json.data.attributes.userid,
       fmnuuid: json.data.attributes.fmnuuid,
       validfrom: json.data.attributes.validfrom,
       validto: json.data.attributes.validto,
