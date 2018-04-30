@@ -1,5 +1,4 @@
 # Gossamer
-
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8bd0f85baa7f4ceebe78dbddadc75ff4)](https://app.codacy.com/app/DeIC/gossamer?utm_source=github.com&utm_medium=referral&utm_content=deic-dk/gossamer&utm_campaign=badger) [![Maintainability](https://api.codeclimate.com/v1/badges/4fb040104bac9e23c224/maintainability)](https://codeclimate.com/github/deic-dk/gossamer/maintainability) [![Known Vulnerabilities](https://snyk.io/test/github/deic-dk/gossamer/badge.svg)](https://snyk.io/test/github/deic-dk/gossamer) [![Build Status](https://semaphoreci.com/api/v1/ashokaditya/gossamer/branches/master/badge.svg)](https://semaphoreci.com/ashokaditya/gossamer)
 
 # UI
@@ -150,7 +149,6 @@ You will need the following things properly installed on your computer.
 * [PhantomJS](http://phantomjs.org/)
 
 ### Installation
-
 * `git clone <repository-url>` this repository
 * `cd gossamer`
 * `npm install`
@@ -159,35 +157,39 @@ You will need the following things properly installed on your computer.
 
 ### Semantic-UI
 * `npm install -g gulp`
-* pull out a terminal window and goto the project directory and then do `cd /bower_components/semantic-ui`
-* run `npm install` and follow the default instructions to install
+* Pull out a terminal window and goto the project directory and then do `cd /bower_components/semantic-ui`
+* Run `npm install` and follow the default instructions to install
 * `Yes, extend my current settings.`
 * `Automatic (Use defaults locations and all components)`
 * `Do not remove Setup Files`
 * `Yes to building semantic now`
-* this would create a `site` that you can then modify to reflect changes over elements of semantic-ui
-* make changes to `/globals/site.variables`, `/collections/menu.varibales`. To start, copy some of the variables and properties from `themes/default`
-* then run `gulp build` once done with changes.
-* or you can run `gulp watch` to watch changes and build the less files as you go.
+* This would create a `site` that you can then modify to reflect changes over elements of semantic-ui
+* Make changes to `/globals/site.variables`, `/collections/menu.varibales`. To start, copy some of the variables and properties from `themes/default`
+* Then run `gulp build` once done with changes.
+* Or you can run `gulp watch` to watch changes and build the less files as you go.
 
 ### Running / Development
-* `ember serve`
-* Visit your app at [http://localhost:8080](http://localhost:8080).
-* You could change the port in `.ember-cli`
+* `ember serve` or `ember s`
+* Visit your app at [http://localhost:8686](http://localhost:8686).
+* You could change the port in `.ember-cli` or have a more tailored `config/environment.js` file that allows for additional app settings.
 
 ## Code Generators
 Make use of the many generators for code, try `ember h g` for more details
 
 ## Running Tests
-* `ember test`
-* `ember test --server` or `ember t -s` for short
+* `ember test` or `npm test` or `ember t` for short
+* `ember test --server` or `ember t --s` for short
 
 ## Building
-* `ember build` (development)
-* `ember build --environment production` (production)
+* Clean the `tmp` and `dist` folders using `rm -r <foldername>/*`
+* Build development `ember build -dev` (development)
+* `ember build -prod` (production)
+* `ember build -prod --output-path <path/to/build>` (to a specific folder other than `/dist`)
 
 ## Deploying
-Specify what it takes to deploy your app.
+Ensure that all the tests pass before building a production version of the app. Also, ensure that a local .env file (not committed to git)
+has all the relevant variables and their values stated correctly. They are different for test, staging and production apis (ddosapi).
+Build and push the folders to the relevant remote nginx server using scp or git.
 
 ## Further Reading / Useful Links
 * [ember.js](http://emberjs.com/)
