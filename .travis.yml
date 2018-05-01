@@ -6,12 +6,12 @@ branches:
     - "master"
 dist: trusty
 sudo: required
-# addons:
-#   apt:
-#     sources:
-#       - google-chrome
-#     packages:
-#       - google-chrome-stable
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
 cache:
   directories:
     - "node_modules"
@@ -23,10 +23,6 @@ before_install:
     - npm config set spin false
     - npm install -g ember-cli@2.13.0
     - npm install -g phantomjs-prebuilt
-    - node --version
-    - bower --version
-    - ember --version
-
 install:
     - npm install
     - bower install
