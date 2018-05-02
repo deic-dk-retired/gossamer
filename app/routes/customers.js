@@ -4,15 +4,6 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
   tagName: '',
 
-  beforeModel () {
-    if (this.get('session.data.authenticated.role') === 'netadmin') {
-      this.get('notifications').warning(`You need a db or super admin access for that!`, {
-        autoClear: true,
-        clearDuration: 5000
-      })
-      this.transitionTo('dashboard')
-    }
-  },
   model () {
     return Ember.RSVP.hash({
       customers: this.store.findAll('customer'),
