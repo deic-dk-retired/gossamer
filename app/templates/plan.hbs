@@ -3,12 +3,14 @@
   <div class="sixteen wide mobile ten wide tablet six wide computer column">
 
     <div class="ui padded segment">
-      <div class="ui header large">Create Rule</div>
+      <div class="ui header large">Create BGP FlowSpec Rule</div>
       <form class="ui form" {{action 'addRule' on='submit'}}>
+        <h4 class="ui dividing medium header green">Source</h4>
         <div class="field">
-          <label>Source</label>
-          {{input placeholder="Any" readonly="" type="text" value="Any"}}
-          {{input id="source" value="Any" type="hidden"}}
+          {{!-- <label>Source</label> --}}
+           {{src-fields srcip=srcip srcport=srcport}}
+          {{!-- {{input placeholder="Any" readonly="" type="text" value="Any"}}
+          {{input id="source" value="Any" type="hidden"}} --}}
         </div>
         <div class="required field">
           <label>Protocol</label>
@@ -136,7 +138,7 @@
           </div>
         {{/if}}
 
-        <button class="ui animated fade green button" type="submit">
+        <button class="ui animated fade green button {{if (eq validated false) 'disabled'}}" type="submit">
           <div class="hidden content"><i class="check icon"></i></div>
           <div class="visible content">Deploy Rule</div>
         </button>
