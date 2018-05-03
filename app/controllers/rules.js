@@ -20,9 +20,9 @@ export default Ember.Controller.extend({
   checkLabel: Ember.computed('preChecked', function () {
     let switchLabel = ''
     if (!this.get('preChecked')) {
-      switchLabel = 'Clear Expired Rules ~ Off'
+      switchLabel = 'CLEAR EXP. RULES OFF'
     } else {
-      switchLabel = 'Clear Expired Rules ~ On'
+      switchLabel = 'CLEAR EXP. RULES ON'
     }
     return `${switchLabel}`
   }),

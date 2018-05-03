@@ -6,12 +6,7 @@
       <div class="ui header large">Create BGP FlowSpec Rule</div>
       <form class="ui form" {{action 'addRule' on='submit'}}>
         <h4 class="ui dividing medium header green">Source</h4>
-        <div class="field">
-          {{!-- <label>Source</label> --}}
-           {{src-fields srcip=srcip srcport=srcport}}
-          {{!-- {{input placeholder="Any" readonly="" type="text" value="Any"}}
-          {{input id="source" value="Any" type="hidden"}} --}}
-        </div>
+         {{src-fields srcip=srcip srcport=srcport}}
         <div class="required field">
           <label>Protocol</label>
           <div class="inline fields">
