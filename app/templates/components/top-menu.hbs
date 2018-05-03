@@ -24,22 +24,22 @@
       {{/link-to}}
 
       {{#ui-dropdown class="scrolling item icon notify"}}
-        <i class="alarm outline icon"></i>
+        <i class="alarm icon"></i>
         <span class="ui circular empty green label"></span>
         {{alerts-menu}}
       {{/ui-dropdown}}
 
       {{#ui-dropdown class="item icon"}}
-        <i class="icon setting"></i>
+        <i class="icon sliders"></i>
         <div class="menu user-menu">
           {{#if (eq kind 'globaladmin')}}
             <div class="header">Super Settings</div>
             <div class="divider"></div>
             {{#link-to "users" class="item"}}
-              <i class="users outline icon"></i>Users
+              <i class="address book icon"></i>Users
             {{/link-to}}
             {{#link-to "customers" class="item"}}
-              <i class="hand peace icon"></i>Customers
+              <i class="handshake icon"></i>Customers
             {{/link-to}}
             <div class="divider"></div>
           {{/if}}

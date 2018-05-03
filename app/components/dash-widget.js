@@ -50,9 +50,9 @@ const DashWidgetComponent = Ember.Component.extend({
     let switchLabel = ''
     if (!this.get('preChecked')) {
       this.set('baseRate', 10)
-      switchLabel = 'Streaming Off'
+      switchLabel = 'SNAPSHOT'
     } else {
-      switchLabel = 'Streaming...'
+      switchLabel = 'LIVE'
     }
     return `${switchLabel}`
   }),
