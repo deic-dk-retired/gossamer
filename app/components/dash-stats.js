@@ -18,9 +18,9 @@ const DashStatsComponent = Ember.Component.extend({
     let f = d3.formatPrefix(',.1', 1e3)
     let stats = this.get('stats')
 
-    setTimeout(function () {
-      this.$('.dimmer').remove()
-    }, 1000)
+    this._timer = setTimeout(function () {
+      this.$('.centered.segment > .dimmer').remove()
+    }, 1500)
 
     let clsnm = this.get('class').split('-')[0]
     let stsobj = {
@@ -82,16 +82,17 @@ const DashStatsComponent = Ember.Component.extend({
     tocolor.addClass(c)
   },
 
-  didRender () {
-    this._super(...arguments)
-    Ember.$('.segment').append(`<div class="ui active inverted dimmer">
-    <div class="ui mini text loader">Loading&hellip;</div>
-  </div>`)
-  },
-
   didInsertElement () {
     this._super(...arguments)
+    Ember.$('.statistic').before(`<div class="ui active inverted dimmer">
+      <div class="ui mini text loader">Loading&hellip;</div>
+    </div>`)
     this.renderStat()
+  },
+
+  willDestroyElement () {
+    this._super(...arguments)
+    clearTimeout(this.get('_timer'))
   }
 })
 

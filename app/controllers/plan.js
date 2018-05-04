@@ -1,7 +1,7 @@
 import Ember from 'ember'
 import uuid from 'npm:uuid'
 import moment from 'moment'
-import cidr from 'npm:cidr-range'
+// import cidr from 'npm:cidr-range'
 
 export default Ember.Controller.extend({
   protocol: '',
@@ -70,7 +70,7 @@ export default Ember.Controller.extend({
 
   responseMessage: '',
 
-  validated: false,
+  validated: true,
 
   willDestry () {
     this._super(...arguments)
@@ -103,7 +103,7 @@ export default Ember.Controller.extend({
       this.set('toMinDate', this.get('fromDate'))
     },
 
-    addRule () {
+    createRule () {
       let ruuid = uuid.v4()
       let fxExDt = this.get('extractDate')
       // let dp = cidr(this.get('destip'))

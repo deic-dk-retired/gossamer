@@ -11,5 +11,5 @@ test('it renders', function (assert) {
 
   this.render(hbs`{{alerts-menu}}`)
 
-  assert.equal(this.$().text().trim().split('\n')[0], 'Alerts')
+  assert.equal(this.$().text().trim().split('\n')[0].split(' ')[0], 'Anomalous')
 })

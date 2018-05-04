@@ -245,7 +245,7 @@ const DashWidgetComponent = Ember.Component.extend({
       if (this.get('preChecked') === true) {
         renderD3(ep, render)
       }
-      this._timer = setTimeout(refreshD3, this.get('fr'))
+      this._timerLive = setTimeout(refreshD3, this.get('fr'))
     }.bind(this)
 
     refreshD3()
@@ -275,26 +275,21 @@ const DashWidgetComponent = Ember.Component.extend({
     this._super(...arguments)
   },
 
-  didRender () {
-    this._super(...arguments)
-    this.$('.segment').append(`<div class="ui active inverted dimmer">
-      <div class="ui mini text loader">Loading&hellip;</div>
-    </div>`)
-    if (this.$('.dimmer').length !== 0) {
-      setTimeout(function () {
-        this.$('.dimmer').remove()
-      }.bind(this), 1000)
-    }
-  },
-
   didInsertElement () {
     this._super(...arguments)
+    this.$('.dash-widget').before(`<div class="ui active inverted dimmer">
+      <div class="ui mini text loader">Loading&hellip;</div>
+    </div>`)
+    this._timer = setTimeout(function () {
+      this.$('.segment > .dimmer').remove()
+    }.bind(this), 2000)
     this.renderGraph()
   },
 
   willDestroyElement () {
     this._super(...arguments)
     clearTimeout(this.get('_timer'))
+    clearTimeout(this.get('_timerLive'))
   }
 })
 
