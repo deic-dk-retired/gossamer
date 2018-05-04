@@ -1,11 +1,9 @@
 import Ember from 'ember'
 import uuid from 'npm:uuid'
 import moment from 'moment'
-import cidr from 'npm:cidr-range'
+// import cidr from 'npm:cidr-range'
 
 export default Ember.Controller.extend({
-  // session: Ember.inject.service(),
-
   protocol: '',
   icmptype: null,
   icmpcode: null,
@@ -16,27 +14,9 @@ export default Ember.Controller.extend({
     return `${this.get('session.data.authenticated.uid')}`
   }),
 
-  uuid: Ember.computed('uid', function () {
-    let uid = this.get('uid')
-    return `${this.get('store').peekRecord('user', uid).get('useruuid')}`
-  }),
-
   usrtype: Ember.computed('uid', function () {
     let uid = this.get('uid')
     return `${this.get('store').peekRecord('user', uid).get('kind')}`
-  }),
-
-  fmnuuid: Ember.computed('usrtype', function () {
-    let usertype = this.get('usrtype')
-    let fnmobj = {fnmid: null, fnmuuid: ''}
-    if (usertype === 'globaladmin') {
-      fnmobj.fnmid = 1
-      fnmobj.fnmuuid = 'aac8c5a6-097b-4c0c-bbe6-fe6677ff7eac'
-    } else {
-      fnmobj.fnmid = null
-      fnmobj.fnmuuid = null
-    }
-    return fnmobj
   }),
 
   coid: Ember.computed('uid', function () {
@@ -90,6 +70,8 @@ export default Ember.Controller.extend({
 
   responseMessage: '',
 
+  validated: true,
+
   willDestry () {
     this._super(...arguments)
     this.set('isdefDur', false)
@@ -100,6 +82,8 @@ export default Ember.Controller.extend({
     resetForm () {
       this.setProperties({
         protocol: null,
+        srcip: null,
+        srcport: null,
         destip: null,
         destport: null,
         tcpflags: [],
@@ -119,18 +103,19 @@ export default Ember.Controller.extend({
       this.set('toMinDate', this.get('fromDate'))
     },
 
-    addRule () {
+    createRule () {
       let ruuid = uuid.v4()
       let fxExDt = this.get('extractDate')
-      let dp = cidr(this.get('destip'))
-      Ember.Logger.info(dp)
+      // let dp = cidr(this.get('destip'))
+      // Ember.Logger.info(dp)
       let rule = this.get('store').createRecord('rule', {
         ruleuuid: ruuid,
         couuid: this.get('couuid'),
-        useruuid: this.get('uuid'),
-        fmnuuid: this.get('fmnuuid').fnmuuid,
+        userid: this.get('uid'),
         validfrom: fxExDt(this.get('fromDate')).toISOString(),
         validto: fxExDt(this.get('toDate')).toISOString(),
+        srcprefix: this.get('srcip'),
+        srcport: this.get('srcport'),
         destprefix: this.get('destip'),
         destport: this.get('destport'),
         ipprotocol: this.get('protocol'),
@@ -144,8 +129,9 @@ export default Ember.Controller.extend({
 
       rule.save()
       .then((response) => {
+        let ruleprcl = response.get('store').peekRecord('rule', response.get('id')).get('ipprotocol').toUpperCase()
         this.set('responseMessage',
-          `A ${response.get('store').peekRecord('rule', response.get('id')).get('ipprotocol').toUpperCase()} was created successfully on ${response.get('store').peekRecord('rule', response.get('id')).get('destprefix')}`)
+          `A ${ruleprcl} was created successfully on ${response.get('store').peekRecord('rule', response.get('id')).get('destprefix')}`)
         this.get('notifications').clearAll()
         this.get('notifications').success(this.get('responseMessage'), {
           autoClear: true,

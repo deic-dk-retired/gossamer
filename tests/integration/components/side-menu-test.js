@@ -9,5 +9,5 @@ test('it renders', function (assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
   this.render(hbs`{{side-menu}}`)
-  assert.equal(this.$().text().trim().split('\n')[0], 'Ps')
+  assert.equal(this.$('.logo i').hasClass('jet'), true, 'Renders Logo')
 })

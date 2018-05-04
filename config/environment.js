@@ -40,6 +40,9 @@ module.exports = function (environment) {
   }
 
   if (environment === 'development') {
+    ENV.APP.LOG_BINDINGS = true
+    ENV.RAISE_ON_DEPRECATION = true
+    ENV.LOG_STACKTRACE_ON_DEPRECATION = true
     ENV.APP.LOG_RESOLVER = false
     ENV.APP.LOG_ACTIVE_GENERATION = true
     ENV.APP.LOG_TRANSITIONS = true

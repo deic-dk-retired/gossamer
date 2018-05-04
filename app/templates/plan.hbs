@@ -3,13 +3,10 @@
   <div class="sixteen wide mobile ten wide tablet six wide computer column">
 
     <div class="ui padded segment">
-      <div class="ui header large">Create Rule</div>
-      <form class="ui form" {{action 'addRule' on='submit'}}>
-        <div class="field">
-          <label>Source</label>
-          {{input placeholder="Any" readonly="" type="text" value="Any"}}
-          {{input id="source" value="Any" type="hidden"}}
-        </div>
+      <div class="ui header large">Create BGP FlowSpec Rule</div>
+      <form class="ui form" {{action 'createRule' on='submit'}}>
+        <h4 class="ui dividing medium header green">Source</h4>
+         {{src-fields srcip=srcip srcport=srcport}}
         <div class="required field">
           <label>Protocol</label>
           <div class="inline fields">
@@ -25,7 +22,7 @@
           </div>
         </div>
 
-        <h4 class="ui dividing medium header green">Protocol Information</h4>
+        <h4 class="ui dividing medium header green">Protocol</h4>
         {{#if (eq protocol 'tcp')}}
           {{tcp-fields
             mod=model
@@ -49,7 +46,7 @@
           {{/if}}
         {{/if}}
 
-        <h4 class="ui dividing medium header green">Additional Parameters</h4>
+        <h4 class="ui dividing medium header green">Extra Parameters</h4>
         <div class="field">
           <label>Packet Size or Range</label>
           {{input type="text" id="pktlen" name="pktlen" value=pktlen placeholder="e.g. 1500 or >=64&<=9000"}}
@@ -67,9 +64,9 @@
           {{input type="text" id="shrtcomm" name="shrtcomm" value=shrtcomm placeholder="e.g. optimized rule"}}
         </div>
 
-        <h4 class="ui dividing medium header green">Duration</h4>
+        <h4 class="ui dividing medium header green">Rule Duration</h4>
         <div class="field">
-           {{ui-checkbox label="Run for 10 minutes on deploy" checked=isdefDur onChange=(action (mut isdefDur))}}
+           {{ui-checkbox label="Run on deploy (runs for 10 min)" checked=isdefDur onChange=(action (mut isdefDur))}}
         </div>
 
         <div class="ui grid">
@@ -136,13 +133,13 @@
           </div>
         {{/if}}
 
-        <button class="ui animated fade green button" type="submit">
+        <button class="ui animated fade green button {{if (eq validated false) 'disabled'}}" type="submit">
           <div class="hidden content"><i class="check icon"></i></div>
           <div class="visible content">Deploy Rule</div>
         </button>
         <button class="ui animated fade button" type="reset" {{action 'resetForm'}}>
           <div class="hidden content"><i class="remove icon"></i></div>
-           <div class="visible content">Cancel</div>
+           <div class="visible content">Reset Fields</div>
         </button>
 
       </form>

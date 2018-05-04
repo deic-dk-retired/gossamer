@@ -85,7 +85,7 @@ body .bg {
     overflow-y: scroll;
     .ui.top.fixed.menu {
       padding-left: 55px;
-      padding-right: 15px;
+      padding-right: 1px;
       z-index: 1001;
       background:rgba(255,255,255, .98);
       .togglecon {
@@ -116,22 +116,17 @@ body .bg {
       max-width: 300px;
       min-width: 300px;
       left: -250px;
-      .sticky {
-        // position: fixed!important;
-        // z-index: 1;
-        // top:35px;
-        width: 300px;
-        background: rgba(255,255,255, .95);
-        padding: 20px 20px 20px;
-        box-shadow: 0px 2px 2px 0px #D4D4D5, 0px 0px 0px 0px #D4D4D5;
-      }
       .list {
         margin: 0;
         padding: 0;
       }
       .item {
-        padding: 10px 25px 10px 15px;
+        padding: 10px 25px 10px 10px;
+        box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
         text-align: left;
+        i {
+          float: left;
+        }
       }
       .content {
         white-space: -moz-pre-wrap !important;
@@ -230,14 +225,17 @@ aside {
     text-transform: uppercase;
   }
   .logo {
-    background: @black!important;
+    background: @darker800!important;
      span {
         font-family: 'Kanit'!important;
         font-weight: 800!important;
         font-style: italic;
-        margin-left: -5.2px;
-        font-size: 1.2em;
+        margin-left: 0px;
+        font-size: 1.1em;
         line-height: .9em;
+        i {
+          transform: rotate(-30deg);
+        }
       }
   }
   .user {
@@ -360,7 +358,7 @@ aside {
   .title {
     width: 100%;
     color: @darker800;
-    text-transform: capitalize;
+    text-transform: uppercase;
     font-weight: 300!important;
     padding: 0 0 @lg;
   }

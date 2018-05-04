@@ -203,7 +203,7 @@ export default Ember.Controller.extend({
             this.get('notifications').clearAll()
             this.get('notifications').error('Something went wrong on activate!', {
               autoClear: true,
-              clearDuration: 10000
+              clearDuration: 5000
             })
           })
         }
@@ -245,7 +245,7 @@ export default Ember.Controller.extend({
             this.get('notifications').clearAll()
             this.get('notifications').error('Something went wrong on update!', {
               autoClear: true,
-              clearDuration: 10000
+              clearDuration: 5000
             })
           })
         }
