@@ -28,7 +28,7 @@
             Active for {{moment-from-now rule.validfrom hideSuffix=true interval=120000}}
           </div>
         </div>
-        {{#ui-popup content="(running time / duration) %" variation="mini inverted" position="top center"}}
+        {{#ui-popup content="(completed runtime / duration) %" variation="mini inverted" position="top center"}}
           <div class="progress-{{rule.id}} prog" >
           </div>
         {{/ui-popup}}
@@ -65,7 +65,7 @@
       </div>
     </div>
   </div>
-  <button class="ui bottom attached icon grey button {{if (lte actprogress 0.25) 'disabled'}}" {{action 'toggleClear' rule.id}}>
+  <button class="ui bottom attached icon grey button {{if (lte actprogress 0.05) 'disabled'}}" {{action 'toggleClear' rule.id}}>
     <i class="trash outline icon"></i>
     Clear Rule
   </button>
