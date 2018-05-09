@@ -1,5 +1,5 @@
 <div class="ui grid">
-  <div class="sixteen wide column">
+  <div class="ten wide column">
     <div class="ui link fluid stackable link raised cards user">
       {{#each users as |u|}}
         {{user-card
@@ -11,29 +11,29 @@
       {{/each}}
     </div>
   </div>
+  <div class="six wide column">
+    <div class="right-slider">
+      {{user-edit
 
-  <div class="right-slider hide">
-    {{user-edit
+        userid=userid
+        firstname=firstname
+        kind=kind
+        customerid=customerid
+        couuid=couuid
+        companyname=companyname
+        netids=netids
+        conetlist=conetlist
+        conetworks=conetworks
+        usernetlist=usernetlist
 
-      userid=userid
-      firstname=firstname
-      kind=kind
-      customerid=customerid
-      couuid=couuid
-      companyname=companyname
-      netids=netids
-      conetlist=conetlist
-      conetworks=conetworks
-      usernetlist=usernetlist
-
-      users=users
-      customers=customers
-      networks=networks
-      act=act
-      buttonico=buttonico
-      saveUser=(action 'saveUser')
-      resetForm=(action 'resetForm')
-    }}
+        users=users
+        customers=customers
+        networks=networks
+        act=act
+        buttonico=buttonico
+        saveUser=(action 'saveUser')
+        resetForm=(action 'resetForm')
+      }}
+    </div>
   </div>
-
 </div>

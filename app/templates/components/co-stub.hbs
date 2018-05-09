@@ -1,35 +1,40 @@
 <div class="card co-stub co-{{co.cvr}}">
   <div class="content">
     <div class="right floated meta">
-      <i class="edit green icon" {{action showCustomer co.id co.cvr}}></i>
+      {{#ui-popup content="Edit" variation="small inverted" position="right center"}}
+        <i class="pencil alternate grey icon" {{action showCustomer co.id co.cvr}}></i>
+      {{/ui-popup}}
     </div>
     <div class="header title">{{co.companyname}}</div>
   </div>
   <div class="content">
     <div class="details">
       <div class="ui relaxed list">
-
         <div class="item">
-          <i class="marker icon ui basic grey small"></i>
+          <i class="map icon ui basic small"></i>
           <div class="content">{{co.companyadr1}}, {{co.companyadr2}}, {{co.companyadr3}}, {{co.companyadr4}}</div>
         </div>
-
         <div class="item">
-          <i class="mail outline icon ui basic grey small"></i>
+          <i class="user circle icon"></i>
+          <div class="content">{{co.accountantname}}</div>
+        </div>
+        <div class="item">
+          <i class="envelope icon ui basic small"></i>
           <div class="content">{{co.mainmail}}</div>
         </div>
-
         <div class="item">
-          <i class="phone outline icon ui basic grey small"></i>
+          <i class="mobile icon"></i>
           <div class="content">{{format-phone co.mainphone}}</div>
         </div>
 
       </div>
     </div>
   </div>
-  <div class="extra content">
+  <div class="content">
     <div class="right floated item">
-      <i class="remove grey icon" {{action removeCustomer co.id}}></i>
+      {{#ui-popup content="Erase" variation="small inverted" position="right center"}}
+        <i class="trash grey icon" {{action removeCustomer co.id}}></i>
+      {{/ui-popup}}
     </div>
     <div class="item">
       <i class="id card icon basic black"></i>

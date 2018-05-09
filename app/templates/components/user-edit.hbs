@@ -2,12 +2,12 @@
   <h2 class="title sticky">Edit <span class="enhance">{{firstname}}</span></h2>
   <form class="ui form" {{action saveUser on='submit'}}>
       <div class="required field">
-        <label>Admin Type</label>
+        <label>Administrator Type</label>
         <div class="inline fields togDisabled disabled">
           <div class="field">
             {{ui-radio
               name="kind"
-              label="Net"
+              label="Network"
               value="netadmin"
               current=kind
               onChange=(action (mut kind))
@@ -16,7 +16,7 @@
           <div class="field">
             {{ui-radio
               name="kind"
-              label="DB"
+              label="DataBase"
               value="dbadmin"
               current=kind
               onChange=(action (mut kind))
@@ -63,12 +63,13 @@
           <i class="dropdown icon"></i>
           <div class="default text" data-value="">Networks</div>
           <div class="menu">
-            {{#each conetworks._result.networks as |net|}}
-              {{!-- {{#if (eq customerid net.coid)}} --}}
-                <div class="item" data-value="{{net.id}}" data-text="{{net.id}}, {{net.name}}">
-                  {{net.id}}, {{net.name}} <span class="ui label small">{{net.net}}</span>
+            {{#each networks as |net|}}
+              {{#if (eq (is-user-network conetlist net.id) true)}}
+                <div class="item" data-value="{{net.id}}" data-text="{{net.id}}, {{net.net}}">
+                  <i class="fork icon"></i>
+                  {{net.id}}, <span class="ui label basic black small">{{net.net}}</span>, {{net.name}}
                 </div>
-              {{!-- {{/if}} --}}
+              {{/if}}
             {{/each}}
           </div>
         {{/ui-dropdown}}
@@ -80,7 +81,7 @@
       <div class="hidden content"><i class="{{buttonico}} icon"></i></div>
     </button>
     <button class="ui animated fade button grey" type="reset" {{action resetForm on='click'}}>
-      <div class="visible content">Cancel</div>
+      <div class="visible content">Reset</div>
       <div class="hidden content"><i class="cancel icon"></i></div>
     </button>
   </form>

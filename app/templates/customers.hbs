@@ -1,16 +1,17 @@
 <div class="ui grid">
-    <div class="sixteen wide column">
-      <div class="ui link fluid stackable link raised cards">
-        {{#each model.customers as |co|}}
-          {{co-stub
-            co=co
-            showCustomer=(action 'showCustomer')
-            removeCustomer=(action 'removeCustomer')
-          }}
-        {{/each}}
+  <div class="ten wide column">
+    <div class="ui link fluid stackable link raised cards">
+      {{#each model.customers as |co|}}
+        {{co-stub
+          co=co
+          showCustomer=(action 'showCustomer')
+          removeCustomer=(action 'removeCustomer')
+        }}
+       {{/each}}
       </div>
     </div>
-    <div class="right-slider hide">
+  <div class="six wide column">
+    <div class="right-slider">
       {{co-edit
         coid=coid
         coname=coname
@@ -38,4 +39,5 @@
         required=(action 'required')
       }}
     </div>
+  </div>
 </div>

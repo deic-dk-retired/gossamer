@@ -7,9 +7,8 @@ moduleForComponent('null-replace', 'helper:null-replace', {
 })
 
 // Replace this with your real tests.
-test('it renders', function (assert) {
-  this.set('inputValue', '1234')
+test('it replaces nulls with ellipses', function (assert) {
+  this.set('inputValue', null)
   this.render(hbs`{{null-replace inputValue}}`)
-  assert.equal(this.$().text().trim(), '1234')
+  assert.equal(this.$().text().trim(), '...')
 })
-

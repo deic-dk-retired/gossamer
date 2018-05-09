@@ -2,7 +2,7 @@
   <div class="item logo">
     <span><i class="icon fighter jet"></i></span>
   </div>
-  {{#ui-popup content=name variation="small inverted" position="right center"}}
+  {{#ui-popup content=kind variation="small inverted" position="right center"}}
     <div class="item user">
       <div class="ui list">
           <div class="header avatar">
@@ -51,6 +51,24 @@
       </div>
     {{/link-to}}
   {{/ui-popup}}
+
+  {{#if (not-eq kind 'netadmin')}}
+    {{#ui-popup content="Users" variation="small inverted" position="right center"}}
+      {{#link-to "users" class="item"}}
+        <div class="content">
+          <i class="address book icon"></i>
+        </div>
+      {{/link-to}}
+    {{/ui-popup}}
+
+    {{#ui-popup content="Customers" variation="small inverted" position="right center"}}
+      {{#link-to "customers" class="item"}}
+        <div class="content">
+          <i class="handshake icon"></i>
+        </div>
+      {{/link-to}}
+    {{/ui-popup}}
+  {{/if}}
 
   <span class="item"></span>
 

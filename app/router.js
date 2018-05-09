@@ -17,6 +17,7 @@ Router.map(function () {
   this.route('rules')
   this.route('traffic')
   this.route('users')
+  this.route('profile')
 })
 
 export default Router

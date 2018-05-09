@@ -1,0 +1,48 @@
+<div class="raised card usr-{{u.username}}" >
+    <div class="image">
+      {{ember-initials name=u.name size=600}}
+    </div>
+    <div class="content">
+      <div class="header title">{{u.firstname}}</div>
+      <div class="description">{{user-icon kind=u.kind}} {{u.kind}}</div>
+    </div>
+    <div class="content">
+      <div class="ui relaxed list">
+        <div class="item">
+          <i class="envelope icon"></i>
+          <div class="content">{{u.email}}</div>
+        </div>
+        <div class="item">
+          <i class="phone icon"></i>
+          <div class="content">{{format-phone u.phone}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="ui sub header">Assigned Customer</div>
+      <div class="item">
+        <i class="handshake icon black"></i>
+        <span>{{u.companyname}}</span>
+      </div>
+    </div>
+    <div class="content">
+      <div class="ui sub header">Assigned Networks</div>
+      <div class="ui relaxed divided list">
+        {{#each networks as |net|}}
+          {{#if (eq (is-user-network u.usrnets net.id) true)}}
+            <div class="item">
+              <i class="fork icon"></i>
+              <div class="content">
+                <div class="header">{{net.net}}</div>
+                <div class="meta">{{net.name}}</div>
+              </div>
+            </div>
+          {{/if}}
+        {{/each}}
+      </div>
+    </div>
+    <div class="content">
+      <i class="sign in icon"></i>
+      <span class="description">Last seen {{moment-from-now (moment-format u.lastlogin) hidePrefix=true interval=86400}}</span>
+    </div>
+  </div>

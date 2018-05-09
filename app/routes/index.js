@@ -18,7 +18,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   beforeModel () {
     this._super(...arguments)
     let session = this.get('session')
-    // let texp = 0
+    let texp = this.get('timeToExp')
     if (!Ember.isEmpty(session) && session.isAuthenticated) {
       Ember.run.next(this, () => {
         this.get('notifications').info(`Your session will expire in ${ms(this.get('timeToExp'), { long: true })}`, {
@@ -28,7 +28,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       })
       Ember.run.later(this, () => {
         session.invalidate()
-      }, this.get('timeToExp')).bind(this)
+      }, texp)
 
       Ember.run.later(this, () => {
         this.get('notifications').warning(`Your session is about to expire in ${ms(this.get('min'), { long: true })}`, {
