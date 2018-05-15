@@ -66,7 +66,6 @@ export default Ember.Controller.extend({
       })
       Ember.$('.card').removeClass('green')
       Ember.$('.togDisabled').addClass('disabled')
-      Ember.$('.right-slider').addClass('hide')
     },
 
     saveCustomer () {
@@ -80,7 +79,6 @@ export default Ember.Controller.extend({
         Ember.$('.card').removeClass('green')
         Ember.$(`.co-${toSet}`).addClass('green')
         Ember.$('.togDisabled').removeClass('disabled')
-        Ember.$('.right-slider').removeClass('hide')
       }
     },
 

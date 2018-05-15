@@ -2,9 +2,6 @@ import Ember from 'ember'
 
 export default Ember.Component.extend({
   tagName: '',
-  loggedUser: Ember.computed('session', function () {
-    return `${this.get('session.data.authenticated.uid')}`
-  }),
 
   didInsertElement () {
     this._super(...arguments)

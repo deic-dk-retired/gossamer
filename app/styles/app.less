@@ -5,12 +5,12 @@
 @black: #37474F;
 
 // font and padding sizes
-@xs: 10/16em;
-@sm: 12/16em;
-@md: 14/16em;
-@lg: 16/16em;
-@xlg: 18/16em;
-@xxlg: 20/16em;
+@xs: 10/16rem;
+@sm: 12/16rem;
+@md: 14/16rem;
+@lg: 16/16rem;
+@xlg: 18/16rem;
+@xxlg: 20/16rem;
 
 @darker800: #37474F;
 @grey500: #B0BEC5;
@@ -23,6 +23,10 @@
 
 .hide {
   display: none!important;
+}
+
+i.icon {
+  margin: 0!important;
 }
 
 body.pushable {
@@ -75,6 +79,17 @@ body .bg {
       flex-direction: row;
     }
   }
+  .avatar {
+    display: inline-block;
+    background: @green;
+    color: #fff;
+    border-radius: 50%;
+    width: @xs * 3;
+    height: @xs * 3;
+    text-align: center;
+    font-size: @md;
+    line-height: 2.2;
+  }
   .article {
     -webkit-box-flex: 1;
     -webkit-flex: 1 1 auto;
@@ -99,7 +114,6 @@ body .bg {
     .ui.top.fixed.menu .item:last-child{
       border-right: 1px solid rgba(96, 125, 139, 0.1);
     }
-
     .ui.top.fixed.menu .user-menu {
       max-width: 200px;
       min-width: 200px;
@@ -137,6 +151,12 @@ body .bg {
         white-space: normal;
       }
     }
+    .profile .avatar {
+      width: 100%;
+      height: 100%;
+      font-size: 8rem;
+      border-radius: 0;
+    }
     .right-slider {
       right: 0;
       position: fixed;
@@ -173,7 +193,7 @@ body .bg {
       padding: 10px 20px;
       transition: .2s all ease-out;
     }
-    .right-slider form {
+    .right-slider .edit-box {
       padding: 70px 30px 100px 20px;
     }
   }
@@ -212,6 +232,15 @@ body .bg {
 }
 
 aside {
+  .avatar {
+    background: none;
+    border: 1px solid @light;
+    margin: auto;
+    left: -4px;
+    position: relative;
+    margin: 0 auto;
+    margin-bottom: .5rem;
+  }
   .vertical.menu {
     background: #6FD177!important;
     background: -webkit-linear-gradient(145deg, #25A18E, #6FD177)!important;
@@ -320,8 +349,17 @@ aside {
 }
 
 .inactive.card {
-  .content, .black {
-    color: #f0f0f0!important;
+  div, i {
+    color: #fafafa!important;;
+  }
+  .header {
+    color: #f2f2f2!important;
+  }
+  i.toggle{
+    color: @grey500!important;
+  }
+  .avatar{
+    background: #f0f0f0;
   }
 }
 

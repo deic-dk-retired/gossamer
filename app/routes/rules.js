@@ -18,7 +18,11 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   },
 
   model (params) {
-    return this.fetchRules(params)
+    if (params !== '') {
+      return this.fetchRules(params)
+    } else {
+      return this.store.findAll('rules')
+    }
   },
 
   afterModel () {

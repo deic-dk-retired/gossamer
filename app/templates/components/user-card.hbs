@@ -1,54 +1,57 @@
-<div class="raised {{if (eq u.valid 'inactive') 'inactive pink'}} card usr-stub usr-{{u.username}}" >
-  <div class="content">
-    <div class="right floated meta">
-      {{#if (eq u.valid 'active')}}
-        {{#ui-popup content="edit" variation="small inverted" position="right center"}}
-          <i class="edit green icon" {{action showUser u.id}}></i>
-        {{/ui-popup}}
-      {{/if}}
+{{#if (not-eq loggedUser u.id)}}
+  <div class="raised {{if (eq u.valid 'inactive') 'inactive black'}} card usr-stub usr-{{u.username}}" >
+    <div class="content">
+      <div class="right floated meta">
+        {{#if (eq u.valid 'active')}}
+          {{#ui-popup content="Edit" variation="small inverted" position="right center"}}
+            <i class="pencil alternate grey icon" {{action showUser u.id}}></i>
+          {{/ui-popup}}
+        {{/if}}
+      </div>
+      <div class="header title">
+        {{!-- {{ember-initials name=u.name size=150 class="ui avatar image"}} --}}
+        <div class="avatar">{{user-initials u.name}}</div>
+        {{u.firstname}}
+      </div>
     </div>
-    <div class="header title">
-      {{ember-initials name=u.name size=150 class="ui avatar image"}}
-      {{u.firstname}}
-    </div>
-  </div>
-  <div class="content">
-    <div class="ui relaxed list">
-      <div class="item">
-        {{user-icon kind=u.kind}}
-        {{u.kind}}
-      </div>
-      <div class="item">
-        <i class="mail outline icon"></i>
-        <div class="content">{{u.email}}</div>
-      </div>
-      <div class="item">
-        <i class="phone icon"></i>
-        <div class="content">{{format-phone u.phone}}</div>
-      </div>
-      {{#ui-popup content="last logged in" variation="small inverted" position="bottom left"}}
+    <div class="content">
+      <div class="ui relaxed list">
         <div class="item">
-          <i class="sign in icon"></i>
-          {{moment-from-now (moment-format u.lastlogin) hidePrefix=true interval=86400}}
+          {{user-icon kind=u.kind}}
+          {{u.kind}}
         </div>
-      {{/ui-popup}}
+        <div class="item">
+          <i class="envelope icon"></i>
+          <div class="content">{{u.email}}</div>
+        </div>
+        <div class="item">
+          <i class="mobile icon"></i>
+          <div class="content">{{format-phone u.phone}}</div>
+        </div>
+        {{#ui-popup content="last logged in" variation="small inverted" position="bottom left"}}
+          <div class="item">
+            <i class="sign in icon"></i>
+            {{moment-from-now (moment-format u.lastlogin) hidePrefix=true interval=86400}}
+          </div>
+        {{/ui-popup}}
+      </div>
+    </div>
+    <div class="content">
+      <div class="right floated item">
+        {{#if (eq u.valid 'inactive')}}
+          {{#ui-popup content="Activate" variation="small inverted" position="right center"}}
+            <i class="toggle off grey icon" {{action activateUser u.id}}></i>
+          {{/ui-popup}}
+        {{else}}
+          {{#ui-popup content="Deactivate" variation="small inverted" position="right center"}}
+            <i class="toggle on grey icon" {{action deactivateUser u.id}}></i>
+          {{/ui-popup}}
+        {{/if}}
+      </div>
+      <div class="item">
+        <i class="handshake icon black"></i>
+        <span>{{u.companyname}}</span>
+      </div>
     </div>
   </div>
-  <div class="content">
-    <div class="right floated item">
-      {{#if (eq u.valid 'inactive')}}
-        {{#ui-popup content="activate" variation="small inverted" position="right center"}}
-          <i class="check grey icon" {{action activateUser u.id}}></i>
-        {{/ui-popup}}
-      {{else}}
-        {{#ui-popup content="deactivate" variation="small inverted" position="right center"}}
-          <i class="minus grey icon" {{action deactivateUser u.id}}></i>
-        {{/ui-popup}}
-      {{/if}}
-    </div>
-    <div class="item">
-      <i class="handshake icon black"></i>
-      <span>{{u.companyname}}</span>
-    </div>
-  </div>
-</div>
+{{/if}}

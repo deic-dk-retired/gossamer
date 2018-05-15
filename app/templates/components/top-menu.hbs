@@ -31,12 +31,10 @@
     {{#ui-dropdown class="item icon"}}
       <i class="icon sliders"></i>
       <div class="menu user-menu">
-        {{#link-to "users" class="item"}}
-          <i class="address book icon"></i>{{#if (eq kind 'globaladmin')}}Users {{else}}Profile{{/if}}
+        {{#link-to "profile" class="item"}}
+          <i class="id badge icon"></i>My Profile
         {{/link-to}}
-        {{#link-to "customers" class="item"}}
-          <i class="handshake icon"></i>Customer{{#if (eq kind 'globaladmin')}}s{{/if}}
-        {{/link-to}}
+
         <div class="divider"></div>
         <a href="#" class="item" {{action 'invalidateSession'}}>
           <i class="sign out icon"></i>Sign Out

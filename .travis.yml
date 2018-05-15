@@ -1,31 +1,24 @@
+os: linux
+dist: trusty
+group: stable
+sudo: required
 language: node_js
 node_js:
   - "8.9.4"
 branches:
   only:
     - "master"
-dist: trusty
-sudo: required
-addons:
-  apt:
-    sources:
-      - google-chrome
-    packages:
-      - google-chrome-stable
 cache:
   directories:
     - "node_modules"
 before_install:
-    # starting a GUI to run tests, per https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-a-GUI
-    - sh -e /etc/init.d/xvfb start
-    - npm install -g npm
-    - npm install -g bower
-    - npm config set spin false
     - npm install -g ember-cli@2.13.0
-    - npm install -g phantomjs-prebuilt
+    - npm install phantomjs-prebuilt
+    - npm install -g bower
+    - bower -v
+    - ember -v
 install:
     - npm install
     - bower install
-    - export DISPLAY=':99.0'
 script:
     - ember test

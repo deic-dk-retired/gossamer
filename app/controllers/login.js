@@ -1,14 +1,11 @@
 import Ember from 'ember'
 
 export default Ember.Controller.extend({
-  // session: Ember.inject.service(),
-
   loginFailed: false,
   processed: false,
   errorMessage: null,
 
   actions: {
-
     authenticate () {
       let { username, password } = this.getProperties('username', 'password')
       let session = this.get('session')
