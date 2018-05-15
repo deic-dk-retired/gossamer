@@ -5,14 +5,16 @@
   {{#ui-popup content=kind variation="small inverted" position="right center"}}
     <div class="item user">
       <div class="ui list">
-          <div class="header avatar">
-            {{ember-initials name=name size=30}}
-          </div>
-        <div class="item">
-          <div class="content">
+          <div class="header">
+            {{!-- {{ember-initials name=name size=30}} --}}
+            <div class="avatar">{{user-initials name}}</div>
             {{user-icon kind=kind class="mini"}}
           </div>
-        </div>
+        {{!-- <div class="item">
+          <div class="content">
+
+          </div>
+        </div> --}}
       </div>
     </div>
   {{/ui-popup}}
