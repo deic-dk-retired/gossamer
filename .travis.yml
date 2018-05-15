@@ -18,7 +18,7 @@ before_install:
     - bower -v
     - ember -v
 install:
-    - npm install
     - bower install
+    - npm install
 script:
     - ember test
