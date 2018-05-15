@@ -23,5 +23,5 @@ moduleForComponent('user-profile', 'Integration | Component | user profile', {
 test('it renders last login label', function (assert) {
   this.set('u', profile)
   this.render(hbs`{{user-profile u=u}}`)
-  assert.equal(this.$().text().trim().split(/\n/)[0].slice(0, 6), 'global')
+  assert.equal(this.$().text().trim().split(/\n/)[0].slice(0, 6), 'FD')
 })

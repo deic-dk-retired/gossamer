@@ -1,6 +1,7 @@
-<div class="raised card usr-{{u.username}}" >
+<div class="raised profile card usr-{{u.username}}" >
     <div class="image">
-      {{ember-initials name=u.name size=600}}
+      {{!-- {{ember-initials name=u.name size=600}} --}}
+      <div class="avatar">{{user-initials u.name}}</div>
     </div>
     <div class="content">
       <div class="header title">{{u.firstname}}</div>
