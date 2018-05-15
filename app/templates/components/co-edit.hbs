@@ -1,5 +1,5 @@
+<h2 class="title sticky">{{act}} <span class="enhance">{{coname}}</span> </h2>
 <div class="edit-box">
-  <h2 class="title sticky">{{act}} <span class="enhance">{{coname}}</span> </h2>
   <form class="ui form" {{action saveCustomer on='submit'}}>
     <div class="ui dividing medium header green">General Info</div>
     <div class="required field togDisabled disabled">
@@ -11,15 +11,15 @@
       <label>Address 1</label>
       {{input type="text" id="add1" name="add1" placeholder="Norregade 10" value=add1}}
     </div>
-    <div class=" field togDisabled disabled">
+    <div class="field togDisabled disabled">
       <label>Address 2</label>
       {{input type="text" id="add2" name="add2" placeholder="Sal 4, St Th." value=add2}}
     </div>
-    <div class=" field togDisabled disabled">
+    <div class="field togDisabled disabled">
       <label>Address 3</label>
       {{input type="text" id="add3" name="add3" placeholder="Kgs. Lyngby" value=add3}}
     </div>
-    <div class=" field togDisabled disabled">
+    <div class="field togDisabled disabled">
       <label>Address 4</label>
       {{input type="text" id="add4" name="add4" placeholder="DK 2800" value=add4}}
     </div>
@@ -118,10 +118,39 @@
       </div>
     </div> --}}
 
-    <div class="ui dividing medium header green">Networks</div>
+    <button class="ui animated fade button green disabled togDisabled" type="submit" {{action saveCustomer}}>
+      <div class="visible content">Save</div>
+      <div class="hidden content"><i class="{{buttonico}} icon"></i></div>
+    </button>
+    <button class="ui animated fade button grey" type="reset" {{action resetForm on='click'}}>
+      <div class="visible content">Reset</div>
+      <div class="hidden content"><i class="refresh icon"></i></div>
+    </button>
+  </form>
+
+  <div class="ui dividing medium header green">Listed Networks</div>
+    <div class="ui list ">
+      {{#each networks as |net|}}
+        {{#if (eq net.customerid coid)}}
+        <div class="item">
+          <div class="ui icon basic green label">
+            <i class="icon fork"></i>
+            <div class="detail">{{net.name}} [{{net.net}}]</div>
+            <i class="delete icon" {{action removeNetwork net.id}}></i>
+          </div>
+        </div>
+        {{/if}}
+      {{/each}}
+    </div>
+  <div class="ui dividing medium header green">Add Network</div>
+  <form class="ui form" {{action addNetwork coid netname netkind netformat netdesc on='submit'}}>
     <div class="required field togDisabled disabled column">
       <label>Name</label>
       {{input type="text" id="netname" name="netname" placeholder="Skynet" value=netname}}
+    </div>
+    <div class="field togDisabled disabled column">
+      <label>Description</label>
+      {{input type="text" id="netdesc" name="netdesc" placeholder="skynet is alive" value=netdesc}}
     </div>
     <div class="required field togDisabled disabled column">
       <label>Type</label>
@@ -136,46 +165,27 @@
         </div>
       {{/ui-dropdown}}
     </div>
+
     <div class="required field togDisabled disabled column">
       <label>ipv4/prefix</label>
       {{input type="text" id="netformat" name="netformat" placeholder="255.255.255.255/32" value=netformat}}
+    </div>
 
-    </div>
-    <div class="field togDisabled disabled column">
-      <label>Description</label>
-      {{input type="text" id="netdesc" name="netdesc" placeholder="skynet is alive" value=netdesc}}
-    </div>
     <div class="field disabled center aligned togDisabled column">
       <label>&nbsp;</label>
-      {{#ui-popup content="Add Network" variation="small inverted" position="top left"}}
-        <button class="ui icon button grey" {{action addNetwork coid netname netkind netformat netdesc on='click'}}>
+        {{!-- <button class="ui icon button grey" {{action addNetwork coid netname netkind netformat netdesc on='click'}}>
           <i class="plus icon"></i>
+        </button> --}}
+        <button class="ui animated fade button green" type="submit">
+        {{!-- {{action addNetwork coid netname netkind netformat netdesc on='click'}}> --}}
+          <div class="visible content">Add</div>
+          <div class="hidden content"><i class="add icon"></i></div>
         </button>
-      {{/ui-popup}}
-    </div>
-    <div class="ui list ">
-      {{#each networks as |net|}}
-        {{#if (eq net.customerid coid)}}
-        <div class="item">
-          <div class="ui icon basic green label">
-            <i class="icon fork"></i>
-            <div class="detail">{{net.name}} [{{net.net}}]</div>
-            <i class="delete icon" {{action removeNetwork net.id}}></i>
-          </div>
-        </div>
-        {{/if}}
-      {{/each}}
+        <button class="ui animated fade button grey" type="reset" {{action resetForm on='click'}}>
+          <div class="visible content">Reset</div>
+          <div class="hidden content"><i class="refresh icon"></i></div>
+        </button>
     </div>
 
-
-
-    <button class="ui animated fade button green disabled togDisabled" type="submit" {{action saveCustomer}}>
-      <div class="visible content">Save</div>
-      <div class="hidden content"><i class="{{buttonico}} icon"></i></div>
-    </button>
-    <button class="ui animated fade button grey" type="reset" {{action resetForm on='click'}}>
-      <div class="visible content">Reset</div>
-      <div class="hidden content"><i class="cancel icon"></i></div>
-    </button>
   </form>
 </div>
