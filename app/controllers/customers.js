@@ -2,24 +2,6 @@ import Ember from 'ember'
 import uuid from 'npm:uuid'
 
 export default Ember.Controller.extend({
-  coid: null,
-  couuid: null,
-  coname: '',
-  add1: '',
-  add2: '',
-  add3: '',
-  add4: '',
-  coemail: '',
-  cophone: '',
-  cocvr: '',
-  coean: '',
-  accname: '',
-  accemail: '',
-  accphone: '',
-  accrate: null,
-  fee: null,
-  discount: null,
-
   act: 'Edit',
   isDisabled: 'disabled',
   changePass: 'disabled',
@@ -45,7 +27,7 @@ export default Ember.Controller.extend({
     resetForm () {
       this.setProperties({
         coid: null,
-        couuid: null,
+        couuid: '',
         coname: '',
         add1: '',
         add2: '',
@@ -61,6 +43,7 @@ export default Ember.Controller.extend({
         accrate: null,
         fee: null,
         discount: null,
+        networks: [],
         isDisabled: 'disabled',
         isActive: false
       })
@@ -104,7 +87,8 @@ export default Ember.Controller.extend({
         accphone: co.get('accountantphone'),
         accrate: co.get('hourlyrate'),
         fee: co.get('subscriptionfeee'),
-        discount: co.get('deductionpct')
+        discount: co.get('deductionpct'),
+        networks: co.get('networks')
       })
     },
 
