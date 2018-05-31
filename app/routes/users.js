@@ -6,7 +6,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
   model () {
     return Ember.RSVP.hash({
-      users: this.store.findAll('user'),
+      users: this.store.findAll('user', {include: 'networks'}),
       customers: this.store.findAll('customer'),
       networks: this.store.findAll('network')
     })
