@@ -6,9 +6,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
   model () {
     return Ember.RSVP.hash({
-      user: this.store.findRecord('user', this.get('session.data.authenticated.uid')),
-      customers: this.store.findAll('customer'),
-      networks: this.store.findAll('network')
+      user: this.store.findRecord('user', this.get('session.data.authenticated.uid'), {include: 'networks'})
     })
   },
 
@@ -18,10 +16,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
   setupController (controller, model) {
     this._super(...arguments)
-
     Ember.set(controller, 'profile', model.user)
-    Ember.set(controller, 'customers', model.customers)
-    Ember.set(controller, 'networks', model.networks)
   }
 
 })

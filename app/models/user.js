@@ -15,6 +15,7 @@ export default DS.Model.extend({
   lastpasswordchange: DS.attr('date', {readonly: true}),
   valid: DS.attr('string'),
   usrnets: DS.attr(),
+  networks: DS.hasMany('network'),
 
   firstname: Ember.computed('name', function () {
     let fn = this.get('name').split(' ')[0]

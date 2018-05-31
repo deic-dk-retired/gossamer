@@ -2,7 +2,7 @@ import { moduleForModel, test } from 'ember-qunit'
 
 moduleForModel('user', 'Unit | Serializer | user', {
   // Specify the other units that are required for this test.
-  needs: ['serializer:user']
+  needs: ['serializer:user', 'model:network']
 })
 
 // Replace this with your real tests.
