@@ -13,7 +13,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   model () {
     return fetch(`${this.get('url')}/stats/${this.get('userid')}`,
       { headers: {
-        'jwtauthtkn': this.get('session.data.authenticated.token')}
+        'ddpsauthtkn': this.get('session.data.authenticated.token')}
       }
     )
     .then((response) => {

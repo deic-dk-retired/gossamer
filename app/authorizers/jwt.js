@@ -7,7 +7,7 @@ export default Base.extend({
   authorize (data, block) {
     const { token } = data
     if (this.get('session.isAuthenticated') && token) {
-      block('jwtauthtkn', `${token}`)
+      block('ddpsauthtkn', `${token}`)
     }
   }
 })
