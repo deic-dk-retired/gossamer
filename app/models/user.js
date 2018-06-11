@@ -2,7 +2,6 @@ import Ember from 'ember'
 import DS from 'ember-data'
 
 export default DS.Model.extend({
-  // useruuid: DS.attr('string'),
   couuid: DS.attr('string'),
   customerid: DS.attr('number'),
   companyname: DS.attr('string', {readonly: true}),
