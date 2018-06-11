@@ -6,8 +6,8 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
   model () {
     return Ember.RSVP.hash({
-      customers: this.store.findAll('customer'),
-      networks: this.store.findAll('network')
+      customers: this.store.findAll('customer', {include: 'networks'})
+      // networks: this.store.findAll('network')
     })
   },
 
@@ -18,6 +18,6 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   setupController (controller, model) {
     this._super(...arguments)
     Ember.set(controller, 'customers', model.customers)
-    Ember.set(controller, 'networks', model.networks)
+    // Ember.set(controller, 'networks', model.networks)
   }
 })

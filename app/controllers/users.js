@@ -7,16 +7,27 @@ export default Ember.Controller.extend({
   kind: '',
   customerid: '',
   couuid: '',
-  companyname: '',
-  // netids: [],
+  netids: [],
+
+  companyname: Ember.computed('customerid', function () {
+    let coname = ''
+    if (this.get('customerid') !== '') {
+      let co = this.get('store').peekRecord('customer', parseInt(this.get('customerid')))
+      Ember.Logger.info('coname: ', co.get('companyname'))
+      coname = co.get('companyname')
+    }
+    return coname
+  }),
 
   // customer network list [id,...]
   conetlist: Ember.computed('customerid', function () {
+    let conets = []
     if (this.get('customerid') !== '') {
       let co = this.get('store').peekRecord('customer', parseInt(this.get('customerid')))
-      Ember.Logger.info(co.get('conets'))
-      return `${co.get('conets')}`
+      Ember.Logger.info('conets: ', co.get('conets'))
+      conets = co.get('conets')
     }
+    return conets
   }),
 
   // customer network objects {id, name, net}
@@ -67,8 +78,8 @@ export default Ember.Controller.extend({
     if (this.get('userid') !== '') {
       usernetworks = this.get('store').peekRecord('user', this.get('userid')).get('usrnets')
     }
-    Ember.Logger.info(usernetworks)
-    return `${usernetworks}`
+    Ember.Logger.info('usernets: ', usernetworks)
+    return usernetworks
   }),
 
   isDisabled: 'disabled',
@@ -98,24 +109,20 @@ export default Ember.Controller.extend({
         couuid: '',
         companyname: '',
         netids: [],
-
+        conetlist: [],
         isDisabled: 'disabled',
         changePass: 'disabled'
       })
       Ember.$('.card').removeClass('green')
       Ember.$('.togDisabled').addClass('disabled')
-      Ember.$('.right-slider').addClass('hide')
+      // Ember.$('.right-slider').addClass('hide')
     },
 
     toggleActive (usrname) {
       Ember.$('.card').removeClass('green')
       Ember.$(`.usr-${usrname}`).addClass('green')
       Ember.$('.togDisabled').removeClass('disabled')
-      Ember.$('.right-slider').removeClass('hide')
-    },
-
-    openModal (name) {
-      Ember.$(`.ui.${name}.modal`).modal('show')
+      // Ember.$('.right-slider').removeClass('hide')
     },
 
     showUser (uid) {
@@ -148,11 +155,10 @@ export default Ember.Controller.extend({
           Ember.Logger.info(user.changedAttributes())
           user.save()
           .then((response) => {
-            this.set('responseMessage', `User ${response.get('store').peekRecord('user', response.get('id')).get('firstname')} was deactivated`)
+            this.set('responseMessage', `User ${response.get('store').peekRecord('user', response.get('id')).get('firstname')} is INACTIVE`)
             Ember.Logger.info(this.get('responseMessage'))
 
-            this.get('notifications').clearAll()
-            this.get('notifications').info(`${emuser} was deactivated!`, {
+            this.get('notifications').info(`${emuser} is INACTIVE!`, {
               autoClear: true,
               clearDuration: 5000
             })
@@ -164,7 +170,6 @@ export default Ember.Controller.extend({
             Ember.Logger.info(user.get('isValid'))
             Ember.Logger.info(adapterError)
 
-            this.get('notifications').clearAll()
             this.get('notifications').error('Something went wrong on deactivate!', {
               autoClear: true,
               clearDuration: 10000
@@ -184,11 +189,10 @@ export default Ember.Controller.extend({
           Ember.Logger.info(user.changedAttributes())
           user.save()
           .then((response) => {
-            this.set('responseMessage', `User ${response.get('store').peekRecord('user', response.get('id')).get('firstname')} was activated`)
+            this.set('responseMessage', `User ${response.get('store').peekRecord('user', response.get('id')).get('firstname')} is ACTIVE`)
             Ember.Logger.info(this.get('responseMessage'))
 
-            this.get('notifications').clearAll()
-            this.get('notifications').success(`${emuser} is activated!`, {
+            this.get('notifications').success(`${emuser} is ACTIVE!`, {
               autoClear: true,
               clearDuration: 5000
             })
@@ -200,7 +204,6 @@ export default Ember.Controller.extend({
             Ember.Logger.info(user.get('isValid'))
             Ember.Logger.info(adapterError)
 
-            this.get('notifications').clearAll()
             this.get('notifications').error('Something went wrong on activate!', {
               autoClear: true,
               clearDuration: 5000
@@ -229,7 +232,6 @@ export default Ember.Controller.extend({
           .then((response) => {
             this.set('responseMessage', `User ${response.get('store').peekRecord('user', response.get('id')).get('firstname')} was updated`)
 
-            this.get('notifications').clearAll()
             this.get('notifications').success('Successfully updated!', {
               autoClear: true,
               clearDuration: 5000
@@ -242,7 +244,6 @@ export default Ember.Controller.extend({
             Ember.Logger.info(user.get('isValid'))
             Ember.Logger.info(adapterError)
 
-            this.get('notifications').clearAll()
             this.get('notifications').error('Something went wrong on update!', {
               autoClear: true,
               clearDuration: 5000

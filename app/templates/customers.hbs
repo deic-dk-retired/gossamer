@@ -1,7 +1,7 @@
 <div class="ui grid">
   <div class="eleven wide column">
     <div class="ui link fluid stackable link raised cards">
-      {{#each model.customers as |co|}}
+      {{#each customers as |co|}}
         {{co-stub
           co=co
           showCustomer=(action 'showCustomer')
@@ -13,6 +13,7 @@
   <div class="five wide column">
     <div class="right-slider">
       {{co-edit
+
         coid=coid
         coname=coname
         add1=add1
@@ -23,6 +24,7 @@
         cophone=cophone
         cocvr=cocvr
         coean=coean
+        conets=conets
         accname=accname
         accemail=accemail
         accphone=accphone

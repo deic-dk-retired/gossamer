@@ -129,17 +129,22 @@
   </form>
 
   <div class="ui dividing medium header green">Listed Networks</div>
-    <div class="ui list ">
+    <div class="ui relaxed selection list">
       {{#each networks as |net|}}
-        {{#if (eq net.customerid coid)}}
-        <div class="item">
-          <div class="ui icon basic green label">
-            <i class="icon fork"></i>
-            <div class="detail">{{net.name}} [{{net.net}}]</div>
-            <i class="delete icon" {{action removeNetwork net.id}}></i>
+        {{!-- {{#if (eq net.customerid coid)}} --}}
+          <div class="item">
+            <div class="right floated content">
+              <i class="trash black icon" {{action removeNetwork net.id}}></i>
+            </div>
+            <i class="fork black icon"></i>
+            <div class="content">
+              <div class="header">
+                {{net.net}} ({{calc-ips net.net}})
+              </div>
+              <div class="meta">{{net.name}}</div>
+            </div>
           </div>
-        </div>
-        {{/if}}
+        {{!-- {{/if}} --}}
       {{/each}}
     </div>
   <div class="ui dividing medium header green">Add Network</div>

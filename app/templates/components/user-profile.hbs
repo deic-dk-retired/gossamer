@@ -1,6 +1,5 @@
 <div class="raised profile card usr-{{u.username}}" >
     <div class="image">
-      {{!-- {{ember-initials name=u.name size=600}} --}}
       <div class="avatar">{{user-initials u.name}}</div>
     </div>
     <div class="content">
@@ -28,22 +27,22 @@
     </div>
     <div class="content">
       <div class="ui sub header">Assigned Networks</div>
-      <div class="ui relaxed divided list">
-        {{#each networks as |net|}}
-          {{#if (eq (is-user-network u.usrnets net.id) true)}}
+      <div class="ui relaxed list">
+        {{#each u.networks as |net|}}
             <div class="item">
               <i class="fork icon"></i>
               <div class="content">
-                <div class="header">{{net.net}}</div>
+                <div class="header">
+                  {{net.net}} ({{calc-ips net.net}})
+                </div>
                 <div class="meta">{{net.name}}</div>
               </div>
             </div>
-          {{/if}}
         {{/each}}
       </div>
     </div>
     <div class="content">
       <i class="sign in icon"></i>
-      <span class="description">Last seen {{moment-from-now (moment-format u.lastlogin) hidePrefix=true interval=86400}}</span>
+      <span class="description">Logged in {{moment-from-now (moment-format u.lastlogin) hidePrefix=true interval=86400}}</span>
     </div>
   </div>

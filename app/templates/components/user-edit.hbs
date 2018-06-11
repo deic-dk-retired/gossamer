@@ -64,12 +64,12 @@
           <div class="default text" data-value="">Networks</div>
           <div class="menu">
             {{#each networks as |net|}}
-              {{#if (eq (is-user-network conetlist net.id) true)}}
+              {{!-- {{#if (eq (is-user-network conetlist net.id) true)}} --}}
                 <div class="item" data-value="{{net.id}}" data-text="{{net.id}}, {{net.net}}">
                   <i class="fork icon"></i>
                   {{net.id}}, <span class="ui label basic black small">{{net.net}}</span>, {{net.name}}
                 </div>
-              {{/if}}
+              {{!-- {{/if}} --}}
             {{/each}}
           </div>
         {{/ui-dropdown}}

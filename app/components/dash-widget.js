@@ -4,7 +4,6 @@ import { event } from 'd3-selection'
 import config from '../config/environment'
 
 const DashWidgetComponent = Ember.Component.extend({
-  // session: Ember.inject.service('session'),
 
   endpoint: `${config.APP.PROTOCOL + config.APP.SERV_HOST + ':' + config.APP.SERV_PORT + '/' + config.APP.SERV_API + '/series/'}`,
 
@@ -233,7 +232,7 @@ const DashWidgetComponent = Ember.Component.extend({
       //          .header('jwtauthtkn', this.get('session.data.authenticated.token'))
       return d3.request(u)
       .mimeType('application/json')
-      .header('jwtauthtkn', this.get('session.data.authenticated.token'))
+      .header('ddpsauthtkn', this.get('session.data.authenticated.token'))
       .response(function (xhr) { return JSON.parse(xhr.responseText) })
       .get(func)
     }.bind(this)
