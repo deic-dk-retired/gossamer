@@ -6,5 +6,6 @@ export default DS.Model.extend({
   name: DS.attr('string'),
   kind: DS.attr('string'),
   net: DS.attr(),
-  description: DS.attr('string')
+  description: DS.attr('string'),
+  customer: DS.belongsTo('customer')
 })

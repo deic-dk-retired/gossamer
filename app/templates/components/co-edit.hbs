@@ -1,7 +1,73 @@
 <h2 class="title sticky">{{act}} <span class="enhance">{{coname}}</span> </h2>
 <div class="edit-box">
+
+  <div class="ui dividing medium header green">Listed Networks</div>
+    <div class="ui relaxed selection list">
+      {{#each networks as |net|}}
+        {{!-- {{#if (eq net.customerid coid)}} --}}
+          <div class="item">
+            <div class="right floated content">
+              <i class="trash black icon" {{action removeNetwork net.id}}></i>
+            </div>
+            <i class="fork black icon"></i>
+            <div class="content">
+              <div class="header">
+                {{net.net}} ({{calc-ips net.net}})
+              </div>
+              <div class="meta">{{net.name}}</div>
+            </div>
+          </div>
+        {{!-- {{/if}} --}}
+      {{/each}}
+    </div>
+  <div class="ui dividing medium header green">Add Network</div>
+  <form class="ui form" {{action addNetwork coid netname netkind netformat netdesc on='submit'}}>
+    <div class="required field togDisabled disabled column">
+      <label>Name</label>
+      {{input type="text" id="netname" name="netname" placeholder="Skynet" value=netname}}
+    </div>
+    <div class="field togDisabled disabled column">
+      <label>Description</label>
+      {{input type="text" id="netdesc" name="netdesc" placeholder="skynet is alive" value=netdesc}}
+    </div>
+    <div class="required field togDisabled disabled column">
+      <label>Type</label>
+      {{!-- {{input type="text" id="netkind" name="netkind" placeholder="ipv4" value=netkind}} --}}
+      {{#ui-dropdown class="selection" selected="ipv4" onChange=(action (mut netkind)) selected=netkind}}
+        <div class="default text">IP Ver.</div>
+        <i class="dropdown icon"></i>
+        <div class="menu">
+          <div class="item" data-value="ipv4">
+            ipv4
+          </div>
+        </div>
+      {{/ui-dropdown}}
+    </div>
+
+    <div class="required field togDisabled disabled column">
+      <label>ipv4/prefix</label>
+      {{input type="text" id="netformat" name="netformat" placeholder="255.255.255.255/32" value=netformat}}
+    </div>
+
+    <div class="field disabled center aligned togDisabled column">
+      <label>&nbsp;</label>
+        {{!-- <button class="ui icon button grey" {{action addNetwork coid netname netkind netformat netdesc on='click'}}>
+          <i class="plus icon"></i>
+        </button> --}}
+        <button class="ui animated fade button green" type="submit">
+        {{!-- {{action addNetwork coid netname netkind netformat netdesc on='click'}}> --}}
+          <div class="visible content">Add</div>
+          <div class="hidden content"><i class="add icon"></i></div>
+        </button>
+        <button class="ui animated fade button grey" type="reset" {{action resetForm on='click'}}>
+          <div class="visible content">Reset</div>
+          <div class="hidden content"><i class="refresh icon"></i></div>
+        </button>
+    </div>
+  </form>
+
+  <div class="ui dividing medium header green">Company Info</div>
   <form class="ui form" {{action saveCustomer on='submit'}}>
-    <div class="ui dividing medium header green">General Info</div>
     <div class="required field togDisabled disabled">
       <label>Co. Name</label>
       {{input type="text" id="name" name="name" placeholder="Co. Inc" value=coname change=(action required) }}
@@ -128,69 +194,5 @@
     </button>
   </form>
 
-  <div class="ui dividing medium header green">Listed Networks</div>
-    <div class="ui relaxed selection list">
-      {{#each networks as |net|}}
-        {{!-- {{#if (eq net.customerid coid)}} --}}
-          <div class="item">
-            <div class="right floated content">
-              <i class="trash black icon" {{action removeNetwork net.id}}></i>
-            </div>
-            <i class="fork black icon"></i>
-            <div class="content">
-              <div class="header">
-                {{net.net}} ({{calc-ips net.net}})
-              </div>
-              <div class="meta">{{net.name}}</div>
-            </div>
-          </div>
-        {{!-- {{/if}} --}}
-      {{/each}}
-    </div>
-  <div class="ui dividing medium header green">Add Network</div>
-  <form class="ui form" {{action addNetwork coid netname netkind netformat netdesc on='submit'}}>
-    <div class="required field togDisabled disabled column">
-      <label>Name</label>
-      {{input type="text" id="netname" name="netname" placeholder="Skynet" value=netname}}
-    </div>
-    <div class="field togDisabled disabled column">
-      <label>Description</label>
-      {{input type="text" id="netdesc" name="netdesc" placeholder="skynet is alive" value=netdesc}}
-    </div>
-    <div class="required field togDisabled disabled column">
-      <label>Type</label>
-      {{!-- {{input type="text" id="netkind" name="netkind" placeholder="ipv4" value=netkind}} --}}
-      {{#ui-dropdown class="selection" selected="ipv4" onChange=(action (mut netkind)) selected=netkind}}
-        <div class="default text">IP Ver.</div>
-        <i class="dropdown icon"></i>
-        <div class="menu">
-          <div class="item" data-value="ipv4">
-            ipv4
-          </div>
-        </div>
-      {{/ui-dropdown}}
-    </div>
 
-    <div class="required field togDisabled disabled column">
-      <label>ipv4/prefix</label>
-      {{input type="text" id="netformat" name="netformat" placeholder="255.255.255.255/32" value=netformat}}
-    </div>
-
-    <div class="field disabled center aligned togDisabled column">
-      <label>&nbsp;</label>
-        {{!-- <button class="ui icon button grey" {{action addNetwork coid netname netkind netformat netdesc on='click'}}>
-          <i class="plus icon"></i>
-        </button> --}}
-        <button class="ui animated fade button green" type="submit">
-        {{!-- {{action addNetwork coid netname netkind netformat netdesc on='click'}}> --}}
-          <div class="visible content">Add</div>
-          <div class="hidden content"><i class="add icon"></i></div>
-        </button>
-        <button class="ui animated fade button grey" type="reset" {{action resetForm on='click'}}>
-          <div class="visible content">Reset</div>
-          <div class="hidden content"><i class="refresh icon"></i></div>
-        </button>
-    </div>
-
-  </form>
 </div>
