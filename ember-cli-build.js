@@ -4,6 +4,17 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app')
 module.exports = function (defaults) {
   var app = new EmberApp(defaults, {
     // Add options here
+    minifyJS: {
+      enabled: false
+    },
+    minifyCSS: {
+      enabled: true,
+      options: { processImport: true }
+    },
+    sourcemaps: {
+      enabled: EmberApp.env() !== 'production',
+      extensions: ['js', 'css']
+    },
     flatpickr: {
       theme: 'airbnb'
     },
