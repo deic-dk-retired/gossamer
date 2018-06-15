@@ -8,7 +8,7 @@ moduleForComponent('calc-ips', 'helper:calc-ips', {
 
 // Replace this with your real tests.
 test('it renders', function (assert) {
-  this.set('cidr', '10.33.6.0/24')
+  this.set('cidr', '255.255.255.0/24')
   this.render(hbs`{{calc-ips cidr}}`)
   assert.equal(this.$().text().trim(), '256')
 })
