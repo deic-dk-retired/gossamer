@@ -22,10 +22,10 @@ export default Ember.Controller.extend({
   usrNetworks: Ember.computed('uid', function () {
     let uid = this.get('uid')
     let usrNets = []
-    this.get('store').peekRecord('user', uid).get('networks').forEach(function (item) {
-      usrNets.push(item.get('net'))
+    this.get('store').peekRecord('user', uid).get('networks').forEach(function (e) {
+      usrNets.push(e.get('net'))
     })
-    // Ember.Logger.info(cidr)
+    // Ember.Logger.info(usrNets)
     return usrNets
   }),
 
@@ -121,8 +121,9 @@ export default Ember.Controller.extend({
       let ruuid = uuid.v4()
       let fxExDt = this.get('extractDate')
       let matchedNetworks = this.get('usrNetworks').map((e) => nc.default.cidr.includes(e, this.get('destip')))
+      // Ember.Logger.info(matchedNetworks)
       let ifNetBelongsToUser = matchedNetworks.indexOf(true) !== -1
-      Ember.Logger.info(ifNetBelongsToUser)
+      Ember.Logger.info(ifNetBelongsToUser ? `Input ip/cidr is in user's networks` : `You can't add rules on non-assigned networks`)
       if (ifNetBelongsToUser) {
         let rule = this.get('store').createRecord('rule', {
           ruleuuid: ruuid,
