@@ -1,7 +1,7 @@
 import Ember from 'ember'
 import uuid from 'npm:uuid'
 import moment from 'moment'
-// import cidr from 'npm:cidr-range'
+import * as nc from 'npm:node-cidr'
 
 export default Ember.Controller.extend({
   protocol: '',
@@ -17,6 +17,16 @@ export default Ember.Controller.extend({
   usrtype: Ember.computed('uid', function () {
     let uid = this.get('uid')
     return `${this.get('store').peekRecord('user', uid).get('kind')}`
+  }),
+
+  usrNetworks: Ember.computed('uid', function () {
+    let uid = this.get('uid')
+    let usrNets = []
+    this.get('store').peekRecord('user', uid).get('networks').forEach(function (item) {
+      usrNets.push(item.get('net'))
+    })
+    // Ember.Logger.info(cidr)
+    return usrNets
   }),
 
   coid: Ember.computed('uid', function () {
@@ -103,31 +113,37 @@ export default Ember.Controller.extend({
       this.set('toMinDate', this.get('fromDate'))
     },
 
+    validateNetwork () {
+      Ember.Logger.info('Entered cidr/ip: ', this.get('destip'))
+    },
+
     createRule () {
       let ruuid = uuid.v4()
       let fxExDt = this.get('extractDate')
-      // let dp = cidr(this.get('destip'))
-      // Ember.Logger.info(dp)
-      let rule = this.get('store').createRecord('rule', {
-        ruleuuid: ruuid,
-        couuid: this.get('couuid'),
-        userid: this.get('uid'),
-        validfrom: fxExDt(this.get('fromDate')).toISOString(),
-        validto: fxExDt(this.get('toDate')).toISOString(),
-        srcprefix: this.get('srcip') || null,
-        srcport: this.get('srcport') || null,
-        destprefix: this.get('destip'),
-        destport: this.get('destport'),
-        ipprotocol: this.get('protocol'),
-        icmptype: this.get('icmptype'),
-        icmpcode: this.get('icmpcode'),
-        tcpflags: this.get('tcpflags').join().toLowerCase(),
-        description: this.get('shrtcomm'),
-        pktlen: this.get('pktlen'),
-        action: this.get('resact')
-      })
+      let matchedNetworks = this.get('usrNetworks').map((e) => nc.default.cidr.includes(e, this.get('destip')))
+      let ifNetBelongsToUser = matchedNetworks.indexOf(true) !== -1
+      Ember.Logger.info(ifNetBelongsToUser)
+      if (ifNetBelongsToUser) {
+        let rule = this.get('store').createRecord('rule', {
+          ruleuuid: ruuid,
+          couuid: this.get('couuid'),
+          userid: this.get('uid'),
+          validfrom: fxExDt(this.get('fromDate')).toISOString(),
+          validto: fxExDt(this.get('toDate')).toISOString(),
+          srcprefix: this.get('srcip') || null,
+          srcport: this.get('srcport') || null,
+          destprefix: this.get('destip'),
+          destport: this.get('destport'),
+          ipprotocol: this.get('protocol'),
+          icmptype: this.get('icmptype'),
+          icmpcode: this.get('icmpcode'),
+          tcpflags: this.get('tcpflags').join().toLowerCase(),
+          description: this.get('shrtcomm'),
+          pktlen: this.get('pktlen'),
+          action: this.get('resact')
+        })
 
-      rule.save()
+        rule.save()
       .then((response) => {
         let ruleprcl = response.get('store').peekRecord('rule', response.get('id')).get('ipprotocol').toUpperCase()
         this.set('responseMessage',
@@ -147,6 +163,7 @@ export default Ember.Controller.extend({
           clearDuration: 10000
         })
       })
+      }
     }
   }
 })
