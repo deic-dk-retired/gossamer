@@ -26,16 +26,21 @@ module.exports = function (deployTarget) {
     ENV.build.environment = 'development'
     ENV.APP.SERV_PORT = 9696
     ENV.APP.PORT = 8686
+    ENV.build.outputPath = 'dist/dev'
     // configure other plugins for development deploy target here
   }
 
   if (deployTarget === 'staging') {
     ENV.build.environment = 'staging'
+    ENV.build.outputPath = 'dist/stage'
+    ENV.APP.SERV_PORT = 9393
+    ENV.APP.PORT = 8383
     // configure other plugins for staging deploy target here
   }
 
   if (deployTarget === 'production') {
     ENV.build.environment = 'production'
+    ENV.build.outputPath = 'dist/pro'
     ENV.APP.SERV_PORT = 9090
     ENV.APP.PORT = 8080
     ENV.APP.LOG_RESOLVER = false

@@ -189,6 +189,10 @@ Make use of the many generators for code, try `ember h g` for more details
 * `ember build -prod` (production)
 * `ember build -prod --output-path <path/to/build>` (to a specific folder other than `/dist`)
 
+or you could use [ember-cli-deploy](http://ember-cli-deploy.com/docs) to build:
+* `ember deploy env` where env coudl be "production", "staging" or "development"
+* Additionally, you could refer to [Build Targets](https://guides.emberjs.com/release/configuring-ember/build-targets/) to quickly configure outputs for major browsers in specific geo-location.
+
 ## Deploying
 Ensure that all the tests pass before building a production version of the app. Also, ensure that a local .env file (not committed to git)
 has all the relevant variables and their values stated correctly. They are different for test, staging and production apis (ddosapi).
