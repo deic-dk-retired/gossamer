@@ -1,7 +1,7 @@
 import Ember from 'ember'
 import uuid from 'npm:uuid'
 import moment from 'moment'
-import * as nc from 'npm:node-cidr'
+import { default as nc } from 'npm:node-cidr'
 
 export default Ember.Controller.extend({
   protocol: '',
@@ -120,7 +120,7 @@ export default Ember.Controller.extend({
     createRule () {
       let ruuid = uuid.v4()
       let fxExDt = this.get('extractDate')
-      let matchedNetworks = this.get('usrNetworks').map((e) => nc.default.cidr.includes(e, this.get('destip')))
+      let matchedNetworks = this.get('usrNetworks').map((e) => nc.cidr.includes(e, this.get('destip')))
       let ifNetBelongsToUser = matchedNetworks.indexOf(true) !== -1
       if (ifNetBelongsToUser) {
         let rule = this.get('store').createRecord('rule', {
