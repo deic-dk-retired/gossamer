@@ -1,9 +1,23 @@
 <div class="required field">
   <label>Destination Host or CIDR</label>
-  {{input type="text" name="destip" id="destip" value=destip placeholder="e.g. 192.0.2.1 or 192.0.2.0/24"}}
+  {{!-- show entered values on blur next to the label --}}
+  {{input
+    type="text"
+    name="destip"
+    id="destip"
+    value=destip
+    placeholder="e.g. 192.0.2.1 or 192.0.2.0/24"
+    focus-out=(action (mut showDestPrefixError) true)}}
 </div>
+
+  {{!-- {{#if showDestPrefixError}} --}}
+    {{!-- <div class="error">
+      {{v-get rule 'destprefix' 'message'}}
+    </div> --}}
+  {{!-- {{/if}} --}}
 
 <div class="required field">
   <label>Destination Port</label>
+  {{!-- show entered values on blur next to the label --}}
   {{input type="text" name="destport" id="destport" value=destport placeholder="e.g 80"}}
 </div>

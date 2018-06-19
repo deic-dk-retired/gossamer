@@ -25,7 +25,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     Ember.set(controller, 'users', model.users)
     Ember.set(controller, 'customers', model.customers)
     Ember.set(controller, 'networks', model.networks)
-    Ember.set(controller, 'ictype', model.icmptype)
+    Ember.set(controller, 'icmptype', model.icmptype)
     Ember.set(controller, 'tcps', model.tcps)
   }
 })

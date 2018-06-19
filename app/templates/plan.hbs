@@ -3,12 +3,19 @@
   <div class="sixteen wide mobile ten wide tablet six wide computer column">
 
     <div class="ui padded segment">
-      <div class="ui header large">Create BGP FlowSpec Rule</div>
+      <div class="ui list">
+        <div class="item">
+          <div class="right floated content">
+            fields marked with <div class="ui red tiny circular empty label dot"></div> are required
+          </div>
+          <div class="content">
+             <div class="ui header large">Create BGP FlowSpec Rule</div>
+          </div>
+        </div>
+      </div>
       <form class="ui form" {{action 'createRule' on='submit'}}>
-        <h4 class="ui dividing medium header green">Source</h4>
-         {{src-fields srcip=srcip srcport=srcport}}
+        <h4 class="ui dividing medium header green">Protocol <div class="ui red tiny circular empty label dot"></div></h4>
         <div class="required field">
-          <label>Protocol</label>
           <div class="inline fields">
             <div class="field">
               {{ui-radio name="protocol" label="TCP" value="tcp" current=protocol onChange=(action (mut protocol))}}
@@ -21,56 +28,54 @@
             </div>
           </div>
         </div>
-
-        <h4 class="ui dividing medium header green">Protocol</h4>
-        {{#if (eq protocol 'tcp')}}
-          {{tcp-fields
-            mod=model
-            destip=destip
-            destport=destport
-            tcpflags=tcpflags}}
-        {{else}}
-          {{#if (eq protocol 'udp')}}
-            {{udp-fields
+        <h4 class="ui dividing medium header blue">Source Information</h4>
+         {{src-fields
+            srcip=srcip
+            srcport=srcport
+            notIcmp=notIcmp}}
+        <h4 class="ui dividing medium header green">Destination Information <div class="ui red tiny circular empty label dot"></div></h4>
+        {{#if (not-eq protocol '')}}
+          {{dest-fields
+              mod=model
               destip=destip
-              destport=destport}}
-          {{else}}
-            {{#if (eq protocol 'icmp')}}
-              {{icmp-fields
-                mod=model
-                icmptype=icmptype
-                icmpcode=icmpcode}}
-            {{else}}
-              <p>Select a protocol above to proceed</p>
-            {{/if}}
-          {{/if}}
+              destport=destport
+              isTcp=isTcp
+              tcpflags=tcpflags
+              notIcmp=notIcmp
+              icmptype=icmptype
+              icmpcode=icmpcode}}
+        {{else}}
+          <p>Select a protocol above to proceed</p>
         {{/if}}
 
-        <h4 class="ui dividing medium header green">Extra Parameters</h4>
+        <h4 class="ui dividing medium header green">IP Parameters</h4>
         <div class="field">
           <label>Packet Size or Range</label>
-          {{input type="text" id="pktlen" name="pktlen" value=pktlen placeholder="e.g. 1500 or >=64&<=9000"}}
+          {{input type="text" id="pktlen" name="pktlen" value=pktlen placeholder="e.g. 1500 or >=64 <=9000"}}
         </div>
         <div class="field">
-          <label>Fragment Options</label>
+          <label>Fragment Encoding</label>
           {{#ui-dropdown name="fragenc" class="search selection" allowAdditions=true selected=fragenc onChange=(action (mut fragenc))}}
             <div class="default text">Select/Add encoding</div>
             <i class="dropdown icon"></i>
+            <div class="menu">
+              {{#each fragmentList as |fragment|}}
+                <div class="item" data-value="{{fragment}}" data-text="{{fragment}}">
+                  {{fragment}}
+                </div>
+              {{/each}}
+            </div>
           {{/ui-dropdown}}
         </div>
 
+        <h4 class="ui dividing medium header green">Rule Duration <div class="ui red tiny circular empty label dot"></div></h4>
         <div class="field">
-          <label>Short Description&hellip;</label>
-          {{input type="text" id="shrtcomm" name="shrtcomm" value=shrtcomm placeholder="e.g. optimized rule"}}
-        </div>
-
-        <h4 class="ui dividing medium header green">Rule Duration</h4>
-        <div class="field">
-           {{ui-checkbox label="Run on deploy (runs for 10 min)" checked=isdefDur onChange=(action (mut isdefDur))}}
+           {{ui-checkbox label="Run on deploy" checked=isdefDur onChange=(action (mut isdefDur))}}
+           {{ui-popup tagName="i" class="info icon green" content="Time range of rule is set to 10 minutes. It starts when you ''Deploy Rule''" variation="mini wide" position="right center"}}
         </div>
 
         <div class="ui grid">
-          <div class="required field eight wide column">
+          <div class="field eight wide column">
             <label>From:</label>
             {{ember-flatpickr
               altFormat='D, d M \'y, H:i'
@@ -91,7 +96,7 @@
               time_24hr=true
             }}
           </div>
-          <div class="required field eight wide column">
+          <div class="field eight wide column">
             <label>To:</label>
             {{ember-flatpickr
               altFormat='D, d M \'y, H:i'
@@ -115,8 +120,7 @@
 
         </div>
 
-        <h4 class="ui dividing medium header green">Required Action</h4>
-
+        <h4 class="ui dividing medium header green">Ruele Action <div class="ui red tiny circular empty label dot"></div></h4>
         <div class="inline fields">
           <div class="field">
             {{ui-radio name="ruleact" label="Block" value="discard" current=ruleact onChange=(action (mut ruleact))}}
@@ -125,13 +129,17 @@
             {{ui-radio name="ruleact" label="Rate Limit" value="rate limit" current=ruleact onChange=(action (mut ruleact))}}
           </div>
         </div>
-
         {{#if (eq ruleact 'rate limit')}}
           <div class="required field">
             <label>Bits/sec > 0</label>
-            {{input type="text" id="pktrate" name="pktrate" value=pktrate placeholder="e.g. 9600"}}
+            {{input type="number" id="pktrate" name="pktrate" value=pktrate placeholder="e.g. 9600"}}
           </div>
         {{/if}}
+
+        <h4 class="ui dividing medium header green">Rule Description</h4>
+        <div class="field">
+          {{input type="text" id="shrtcomm" name="shrtcomm" value=shrtcomm placeholder="e.g. why is this rule being added?"}}
+        </div>
 
         <button class="ui animated fade green button {{if (eq validated false) 'disabled'}}" type="submit">
           <div class="hidden content"><i class="check icon"></i></div>

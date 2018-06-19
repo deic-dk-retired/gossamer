@@ -25,7 +25,6 @@ export default Ember.Controller.extend({
     this.get('store').peekRecord('user', uid).get('networks').forEach(function (e) {
       usrNets.push(e.get('net'))
     })
-    // Ember.Logger.info(usrNets)
     return usrNets
   }),
 
@@ -67,6 +66,23 @@ export default Ember.Controller.extend({
     return exdt
   },
 
+  notIcmp: Ember.computed('protocol', function () {
+    let p = this.get('protocol')
+    return p !== 'icmp'
+  }),
+
+  isTcp: Ember.computed('protocol', function () {
+    let p = this.get('protocol')
+    return p === 'tcp'
+  }),
+
+  processedFragenc: Ember.computed('fragenc', function () {
+    let fe = this.get('fragenc')
+    return fe !== null ? `[${fe}]` : ``
+  }),
+
+  fragmentList: ['dont-fragment', 'first-fragment', 'is-fragment', 'last-fragment', 'not-a-fragment'],
+
   ruleact: 'discard',
 
   resact: Ember.computed('ruleact', function () {
@@ -91,7 +107,7 @@ export default Ember.Controller.extend({
   actions: {
     resetForm () {
       this.setProperties({
-        protocol: null,
+        protocol: '',
         srcip: null,
         srcport: null,
         destip: null,
@@ -137,6 +153,7 @@ export default Ember.Controller.extend({
           icmptype: this.get('icmptype'),
           icmpcode: this.get('icmpcode'),
           tcpflags: this.get('tcpflags').join().toLowerCase(),
+          fragenc: this.get('processedFragenc') || null,
           description: this.get('shrtcomm'),
           pktlen: this.get('pktlen'),
           action: this.get('resact')
