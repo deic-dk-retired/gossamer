@@ -6,7 +6,7 @@
       <div class="ui list">
         <div class="item">
           <div class="right floated content">
-            fields marked with <div class="ui red tiny circular empty label dot"></div> are required
+            <span>fields marked with <div class="ui red tiny circular empty label dot"></div> are required</span>
           </div>
           <div class="content">
              <div class="ui header large">Create BGP FlowSpec Rule</div>
@@ -50,8 +50,10 @@
 
         <h4 class="ui dividing medium header green">IP Parameters</h4>
         <div class="field">
-          <label>Packet Size or Range</label>
-          {{input type="text" id="pktlen" name="pktlen" value=pktlen placeholder="e.g. 1500 or >=64 <=9000"}}
+          <label>Packet Size or Range <span class="ui green header tiny">`{{pktlen}}`</span></label>
+          {{input type="text"
+            id="pktlen" name="pktlen" id="pktlen"
+            value=pktlen placeholder="e.g. 1500 or >=64 <=9000"}}
         </div>
         <div class="field">
           <label>Fragment Encoding</label>
@@ -71,7 +73,7 @@
         <h4 class="ui dividing medium header green">Rule Duration <div class="ui red tiny circular empty label dot"></div></h4>
         <div class="field">
            {{ui-checkbox label="Run on deploy" checked=isdefDur onChange=(action (mut isdefDur))}}
-           {{ui-popup tagName="i" class="info icon green" content="Time range of rule is set to 10 minutes. It starts when you ''Deploy Rule''" variation="mini wide" position="right center"}}
+           {{ui-popup tagName="i" class="info icon green tiny" content="Time range of rule is set to 10 minutes. It starts when you ''Deploy Rule''" variation="mini wide" position="right center"}}
         </div>
 
         <div class="ui grid">
@@ -130,9 +132,13 @@
           </div>
         </div>
         {{#if (eq ruleact 'rate limit')}}
-          <div class="required field">
-            <label>Bits/sec > 0</label>
-            {{input type="number" id="pktrate" name="pktrate" value=pktrate placeholder="e.g. 9600"}}
+          <div class="field">
+            <label>Bits/sec<div class="ui red tiny circular empty label dot"></div> {{ui-popup tagName="i" class="info icon green tiny" content="Only positive integers > 0" variation="mini wide" position="right center"}}</label>
+            {{input type="number"
+              id="pktrate"
+              name="pktrate"
+              id="pktrate"
+              value=pktrate placeholder="e.g. 9600"}}
           </div>
         {{/if}}
 

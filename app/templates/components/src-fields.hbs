@@ -1,13 +1,14 @@
 <div class="field">
-  <label>Source Host or CIDR</label>
-  {{!-- add empty field description with a ? popup--}}
-  {{!-- show entered values on blur next to the label --}}
+  <label>Source Host or CIDR
+    {{ui-popup tagName="i" class="info icon blue tiny" content="Empty source ip/cidr means any/all sources" variation="mini" position="right center"}}
+  </label>
   {{input type="text" name="srcip" value=srcip placeholder="e.g. 192.0.2.1 or 192.0.2.0/24"}}
 </div>
 
 {{#if notIcmp}}
   <div class="field">
-    <label>Source Port</label>
+    <label>Source Port {{ui-popup tagName="i" class="info icon blue tiny" content="Empty port means any/all ports; on the right you can see the entered value" variation="mini wide" position="right center"}} <span class="ui green header tiny">`{{srcport}}`</span>
+    </label>
     {{input type="text" name="srcport" value=srcport placeholder="e.g 80"}}
   </div>
 {{/if}}
