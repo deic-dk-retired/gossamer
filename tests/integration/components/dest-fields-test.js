@@ -9,7 +9,7 @@ test('it renders for not ICMP', function (assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
   this.render(hbs`{{dest-fields notIcmp=true}}`)
-  assert.equal(this.$().text().trim().split('\n')[0], 'Destination Host or CIDR')
+  assert.equal(this.$().text().trim().split('\n')[0], 'Destination Host or CIDR ')
   // Template block usage:
   this.render(hbs`
     {{#dest-fields notIcmp=true}}
@@ -20,12 +20,12 @@ test('it renders for not ICMP', function (assert) {
         <label>Destination Port</label>
       </div>
     {{/dest-fields}}`)
-  assert.equal(this.$().text().trim().split('\n')[0], `Destination Host or CIDR`)
+  assert.equal(this.$().text().trim().split('\n')[0], `Destination Host or CIDR `)
 })
 
 test('it renders for ICMP', function (assert) {
   this.render(hbs`{{dest-fields notIcmp=false}}`)
-  assert.equal(this.$().text().trim().split('\n')[0], 'ICMP Type')
+  assert.equal(this.$().text().trim().split('\n')[0], 'ICMP Type ')
   // Template block usage:
   this.render(hbs`
     {{#dest-fields notIcmp=false}}
@@ -44,5 +44,5 @@ test('it renders for ICMP', function (assert) {
           </div>
       </div>
     {{/dest-fields}}`)
-  assert.equal(this.$().text().trim().split('\n')[0], `ICMP Type`)
+  assert.equal(this.$().text().trim().split('\n')[0], `ICMP Type `)
 })
