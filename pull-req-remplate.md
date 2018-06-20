@@ -6,6 +6,8 @@ changes.
 You do not need to check all the boxes below all at once, feel free to take
 your time and add more commits. If you're done and ready for review, please
 check the last box.
+
+When done, please remove the section within <!-- --> from the pull request
 —>
 ## What is the purpose of this change? What does it change?
 Explain what changed and why, as detailed as necessary.
