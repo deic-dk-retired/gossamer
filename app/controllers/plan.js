@@ -1,7 +1,7 @@
 import Ember from 'ember'
 import uuid from 'npm:uuid'
 import moment from 'moment'
-import * as nc from 'npm:node-cidr'
+import { default as nc } from 'npm:node-cidr'
 
 export default Ember.Controller.extend({
   protocol: '',
@@ -25,7 +25,6 @@ export default Ember.Controller.extend({
     this.get('store').peekRecord('user', uid).get('networks').forEach(function (e) {
       usrNets.push(e.get('net'))
     })
-    // Ember.Logger.info(usrNets)
     return usrNets
   }),
 
@@ -58,14 +57,23 @@ export default Ember.Controller.extend({
     let d = new Date(this.get('mnow'))
     return d
   }),
+
   toDate: Ember.computed('mnowef10m', function () {
     let d = new Date(this.get('mnowef10m'))
     return d
   }),
+
   extractDate (dt) {
     let exdt = Array.isArray(dt) ? dt[0] : dt
     return exdt
   },
+
+  fragmentList: ['dont-fragment', 'first-fragment', 'is-fragment', 'last-fragment', 'not-a-fragment'],
+
+  processedFragenc: Ember.computed('fragenc', function () {
+    let fe = this.get('fragenc')
+    return fe !== null ? `[${fe}]` : ``
+  }),
 
   ruleact: 'discard',
 
@@ -91,7 +99,7 @@ export default Ember.Controller.extend({
   actions: {
     resetForm () {
       this.setProperties({
-        protocol: null,
+        protocol: '',
         srcip: null,
         srcport: null,
         destip: null,
@@ -99,7 +107,6 @@ export default Ember.Controller.extend({
         tcpflags: [],
         icmptype: null,
         icmpcode: null,
-
         pktlen: null,
         fragenc: null,
         shrtcomm: null,
@@ -120,7 +127,7 @@ export default Ember.Controller.extend({
     createRule () {
       let ruuid = uuid.v4()
       let fxExDt = this.get('extractDate')
-      let matchedNetworks = this.get('usrNetworks').map((e) => nc.default.cidr.includes(e, this.get('destip')))
+      let matchedNetworks = this.get('usrNetworks').map((e) => nc.cidr.includes(e, this.get('destip')))
       let ifNetBelongsToUser = matchedNetworks.indexOf(true) !== -1
       if (ifNetBelongsToUser) {
         let rule = this.get('store').createRecord('rule', {
@@ -137,6 +144,7 @@ export default Ember.Controller.extend({
           icmptype: this.get('icmptype'),
           icmpcode: this.get('icmpcode'),
           tcpflags: this.get('tcpflags').join().toLowerCase(),
+          fragenc: this.get('processedFragenc') || null,
           description: this.get('shrtcomm'),
           pktlen: this.get('pktlen'),
           action: this.get('resact')
