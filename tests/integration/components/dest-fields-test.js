@@ -8,11 +8,11 @@ moduleForComponent('dest-fields', 'Integration | Component | dest fields', {
 test('it renders for not ICMP', function (assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
-  this.render(hbs`{{dest-fields notIcmp=true}}`)
+  this.render(hbs`{{dest-fields protocol='udp'}}`)
   assert.equal(this.$().text().trim().split('\n')[0], 'Destination Host or CIDR ')
   // Template block usage:
   this.render(hbs`
-    {{#dest-fields notIcmp=true}}
+    {{#dest-fields protocol='udp'}}
       <div class="required field">
         <label>Destination Host or CIDR</label>
       </div>
@@ -24,11 +24,11 @@ test('it renders for not ICMP', function (assert) {
 })
 
 test('it renders for ICMP', function (assert) {
-  this.render(hbs`{{dest-fields notIcmp=false}}`)
+  this.render(hbs`{{dest-fields protocol='icmp'}}`)
   assert.equal(this.$().text().trim().split('\n')[0], 'ICMP Type ')
   // Template block usage:
   this.render(hbs`
-    {{#dest-fields notIcmp=false}}
+    {{#dest-fields protocol='icmp'}}
       <div class="required twelve wide field">
         <label>ICMP Type</label>
             <div class="default text">Select Type</div>

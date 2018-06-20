@@ -1,4 +1,4 @@
-{{#if notIcmp}}
+{{#if (not-eq protocol 'icmp')}}
   <div class="field">
     <label>Destination Host or CIDR <div class="ui red tiny circular empty label dot"></div></label>
     {{input type="text" name="destip" id="destip" value=destip placeholder="e.g. 192.0.2.1 or 192.0.2.0/24"}}
@@ -9,7 +9,7 @@
     {{input type="text" name="destport" id="destport" value=destport placeholder="e.g 80"}}
   </div>
 
-  {{#if isTcp}}
+  {{#if (eq protocol 'tcp')}}
     <div class="field">
       <label>TCP Flags</label>
       {{#ui-dropdown
@@ -42,7 +42,7 @@
         <div class="default text">Select Type</div>
         <i class="dropdown icon"></i>
         <div class="menu">
-          {{#each mod.ictype as |ictype|}}
+          {{#each mod.icmps as |ictype|}}
             <div class="item" data-value="{{ictype.id}}" data-text="{{ictype.name}}">
               {{ictype.id}}, {{ictype.name}}
             </div>
@@ -61,7 +61,7 @@
       <div class="default text">Select Code</div>
       <i class="dropdown icon"></i>
       <div class="menu">
-        {{#each mod.iccode as |iccode|}}
+        {{#each mod.icmps as |iccode|}}
             <div class="item" data-value="{{iccode.id}}" data-text="{{iccode.name}}" >
               {{iccode.id}}, {{iccode.name}}
             </div>

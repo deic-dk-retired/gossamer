@@ -32,16 +32,15 @@
          {{src-fields
             srcip=srcip
             srcport=srcport
-            notIcmp=notIcmp}}
+            protocol=protocol}}
         <h4 class="ui dividing medium header green">Destination Information <div class="ui red tiny circular empty label dot"></div></h4>
         {{#if (not-eq protocol '')}}
           {{dest-fields
               mod=model
               destip=destip
               destport=destport
-              isTcp=isTcp
+              protocol=protocol
               tcpflags=tcpflags
-              notIcmp=notIcmp
               icmptype=icmptype
               icmpcode=icmpcode}}
         {{else}}
@@ -135,6 +134,8 @@
           <div class="field">
             <label>Bits/sec<div class="ui red tiny circular empty label dot"></div> {{ui-popup tagName="i" class="info icon green tiny" content="Only positive integers > 0" variation="mini wide" position="right center"}}</label>
             {{input type="number"
+              min="0"
+              max="9600"
               id="pktrate"
               name="pktrate"
               id="pktrate"
