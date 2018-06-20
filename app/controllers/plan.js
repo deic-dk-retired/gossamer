@@ -57,31 +57,23 @@ export default Ember.Controller.extend({
     let d = new Date(this.get('mnow'))
     return d
   }),
+
   toDate: Ember.computed('mnowef10m', function () {
     let d = new Date(this.get('mnowef10m'))
     return d
   }),
+
   extractDate (dt) {
     let exdt = Array.isArray(dt) ? dt[0] : dt
     return exdt
   },
 
-  notIcmp: Ember.computed('protocol', function () {
-    let p = this.get('protocol')
-    return p !== 'icmp'
-  }),
-
-  isTcp: Ember.computed('protocol', function () {
-    let p = this.get('protocol')
-    return p === 'tcp'
-  }),
+  fragmentList: ['dont-fragment', 'first-fragment', 'is-fragment', 'last-fragment', 'not-a-fragment'],
 
   processedFragenc: Ember.computed('fragenc', function () {
     let fe = this.get('fragenc')
     return fe !== null ? `[${fe}]` : ``
   }),
-
-  fragmentList: ['dont-fragment', 'first-fragment', 'is-fragment', 'last-fragment', 'not-a-fragment'],
 
   ruleact: 'discard',
 
@@ -115,7 +107,6 @@ export default Ember.Controller.extend({
         tcpflags: [],
         icmptype: null,
         icmpcode: null,
-
         pktlen: null,
         fragenc: null,
         shrtcomm: null,
