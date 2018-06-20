@@ -158,18 +158,21 @@ You will need the following things properly installed on your computer.
 ### Semantic-UI
 * `npm install -g gulp`
 * Pull out a terminal window and goto the project directory and then do `cd /bower_components/semantic-ui`
-* Run `npm install` and follow the default instructions to install
+* Run `npm install` and follow the default instructions to install.
+* In case `npm install` exists with errors run it again or try `gulp install`.
 * `Yes, extend my current settings.`
 * `Automatic (Use defaults locations and all components)`
 * `Do not remove Setup Files`
 * `Yes to building semantic now`
 * This would create a `site` that you can then modify to reflect changes over elements of semantic-ui
-* Make changes to `/globals/site.variables`, `/collections/menu.varibales`. To start, copy some of the variables and properties from `themes/default`
+* Make changes to `/globals/site.variables`, `/collections/menu.variables`. To start, copy some of the variables and properties from `themes/default`
 * Then run `gulp build` once done with changes.
 * Or you can run `gulp watch` to watch changes and build the less files as you go.
 
 ### Running / Development
-* `ember serve` or `ember s`
+* `ember serve` or `ember s` or you could run with a specific port and environment like:
+* `ember s -p 8989 -e "production"`. The possible envirorments are "development", "testing" and "production"
+* Just type `ember` on the command line and enter to see all possible configurations of `ember serve`
 * Visit your app at [http://localhost:8686](http://localhost:8686).
 * You could change the port in `.ember-cli` or have a more tailored `config/environment.js` file that allows for additional app settings.
 
@@ -185,6 +188,10 @@ Make use of the many generators for code, try `ember h g` for more details
 * Build development `ember build -dev` (development)
 * `ember build -prod` (production)
 * `ember build -prod --output-path <path/to/build>` (to a specific folder other than `/dist`)
+
+or you could use [ember-cli-deploy](http://ember-cli-deploy.com/docs) to build:
+* `ember deploy env` where env coudl be "production", "staging" or "development"
+* Additionally, you could refer to [Build Targets](https://guides.emberjs.com/release/configuring-ember/build-targets/) to quickly configure outputs for major browsers in specific geo-location.
 
 ## Deploying
 Ensure that all the tests pass before building a production version of the app. Also, ensure that a local .env file (not committed to git)

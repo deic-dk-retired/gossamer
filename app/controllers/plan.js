@@ -22,10 +22,10 @@ export default Ember.Controller.extend({
   usrNetworks: Ember.computed('uid', function () {
     let uid = this.get('uid')
     let usrNets = []
-    this.get('store').peekRecord('user', uid).get('networks').forEach(function (item) {
-      usrNets.push(item.get('net'))
+    this.get('store').peekRecord('user', uid).get('networks').forEach(function (e) {
+      usrNets.push(e.get('net'))
     })
-    // Ember.Logger.info(cidr)
+    // Ember.Logger.info(usrNets)
     return usrNets
   }),
 
@@ -122,7 +122,6 @@ export default Ember.Controller.extend({
       let fxExDt = this.get('extractDate')
       let matchedNetworks = this.get('usrNetworks').map((e) => nc.default.cidr.includes(e, this.get('destip')))
       let ifNetBelongsToUser = matchedNetworks.indexOf(true) !== -1
-      Ember.Logger.info(ifNetBelongsToUser)
       if (ifNetBelongsToUser) {
         let rule = this.get('store').createRecord('rule', {
           ruleuuid: ruuid,
@@ -142,27 +141,32 @@ export default Ember.Controller.extend({
           pktlen: this.get('pktlen'),
           action: this.get('resact')
         })
-
         rule.save()
-      .then((response) => {
-        let ruleprcl = response.get('store').peekRecord('rule', response.get('id')).get('ipprotocol').toUpperCase()
-        this.set('responseMessage',
-          `A ${ruleprcl} was created successfully on ${response.get('store').peekRecord('rule', response.get('id')).get('destprefix')}`)
-        this.get('notifications').clearAll()
-        this.get('notifications').success(this.get('responseMessage'), {
-          autoClear: true,
-          clearDuration: 5000
+        .then((response) => {
+          let ruleprcl = response.get('store').peekRecord('rule', response.get('id')).get('ipprotocol').toUpperCase()
+          this.set('responseMessage',
+            `A ${ruleprcl} was created successfully on ${response.get('store').peekRecord('rule', response.get('id')).get('destprefix')}`)
+          this.get('notifications').clearAll()
+          this.get('notifications').success(this.get('responseMessage'), {
+            autoClear: true,
+            clearDuration: 5000
+          })
         })
-      })
-      .catch((adapterError) => {
-        Ember.Logger.info(adapterError)
-
-        this.get('notifications').clearAll()
-        this.get('notifications').error('Something went wrong on create!', {
+        .catch((adapterError) => {
+          Ember.Logger.info(adapterError)
+          this.get('notifications').clearAll()
+          this.get('notifications').error('Something went wrong on create!', {
+            autoClear: true,
+            clearDuration: 10000
+          })
+        })
+      } else {
+        this.set('responseMessage', `You can't add rules on non-assigned networks`)
+        // this.get('notifications').clearAll()
+        this.get('notifications').warning(this.get('responseMessage'), {
           autoClear: true,
           clearDuration: 10000
         })
-      })
       }
     }
   }
