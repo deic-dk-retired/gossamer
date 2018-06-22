@@ -1,49 +1,6 @@
 import Ember from 'ember'
 import DS from 'ember-data'
 import moment from 'moment'
-// import { buildValidations, validator } from 'ember-cp-validations'
-
-// const Validations = buildValidations(
-//   {
-//     ipprotocol: {
-//       description: 'Protocol',
-//       validators: [
-//         validator('presence', true)
-//       ]
-//     },
-//     srcprefix: {
-//       description: 'Source Host/CIDR',
-//       validators: [
-//         validator('presence', true),
-//         validator('format', {
-//           regex: /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b|\/\d{1,2}\b/,
-//           message:
-//             '{description} must be a valid cidr or ip address'
-//         })
-//       ]
-//     },
-//     destprefix: {
-//       description: 'Destination Host/CIDR',
-//       validators: [
-//         validator('presence', true),
-//         validator('format', {
-//           regex: /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b|\/\d{1,2}\b/,
-//           message:
-//             '{description} must be a valid cidr or ip address'
-//         })
-//       ]
-//     },
-//     destport: {
-//       description: 'Destination Port',
-//       validators: [
-//         validator('presence', true)
-//       ]
-//     }
-//   },
-//   {
-//     debounce: 500
-//   }
-// )
 
 export default DS.Model.extend({
   ruleuuid: DS.attr('string'),

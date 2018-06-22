@@ -1,38 +1,78 @@
-{{#if (not-eq protocol 'icmp')}}
-  <div class="field">
-    <label>Destination Host or CIDR <div class="ui red tiny circular empty label dot"></div></label>
-    {{input type="text" name="destip" id="destip" value=destip placeholder="e.g. 192.0.2.1 or 192.0.2.0/24"}}
-  </div>
-  <div class="field">
-    <label>Destination Port <div class="ui red tiny circular empty label dot"></div> {{ui-popup tagName="i" class="info icon blue tiny" content="On the right you can see the entered value" variation="mini wide" position="right center"}} <span class="ui green header tiny">`{{destport}}`</span>
-    </label>
-    {{input type="text" name="destport" id="destport" value=destport placeholder="e.g 80"}}
-  </div>
+<div class="field {{unless (eq destErr '') 'error'}}">
+  <label>Destination Host or CIDR <div class="ui red tiny circular empty label dot"></div>
+    {{#ui-popup class="pop inline"
+        html=userNetworksPopup
+        variation="mini wide"
+        position="right center"}}
+      <i class="info icon green tiny"></i>
+    {{/ui-popup}}
+  </label>
+  {{input
+      type="text"
+      name="destip"
+      id="destip"
+      value=destip
+      placeholder="e.g. 192.0.2.1 or 192.0.2.0/24"
+      focus-out=(action "validateDestPrefix")}}
+    {{#unless (eq destErr '')}}
+      <div class="ui pointing basic red label">
+        {{destErr}}
+      </div>
+    {{/unless}}
+</div>
 
-  {{#if (eq protocol 'tcp')}}
-    <div class="field">
-      <label>TCP Flags</label>
-      {{#ui-dropdown
-        name="tcpflags"
-        class="fluid search multiple selection"
-        selected=tcpflags
-        onChange=(action (mut tcpflags))
-      }}
-        <i class="dropdown icon"></i>
-        <div class="default text">Flags</div>
-        <div class="menu">
-          {{#each mod.tcps as |tcp|}}
-            <div class="item" data-value="{{tcp.flag}}" data-text="{{tcp.flag}}">
-              {{tcp.flag}}
-            </div>
-          {{/each}}
+{{#unless (eq protocol 'icmp')}}
+  <div class="field {{unless (eq destPortErr '') 'error'}}">
+    <label>Destination Port
+      {{ui-popup tagName="i"
+          class="info icon green tiny"
+          content="You can see the entered value on the right"
+          variation="mini wide"
+          position="right center"}}
+      <span class="ui green header tiny">`{{destport}}`</span>
+    </label>
+    {{input
+        type="text"
+        name="destport"
+        id="destport"
+        value=destport
+        placeholder="e.g 80"
+        focus-out=(action "validateDestPort")}}
+      {{#unless (eq destPortErr '')}}
+        <div class="ui pointing basic red label">
+          {{destPortErr}}
         </div>
-      {{/ui-dropdown}}
-    </div>
-  {{/if}}
-{{else}}
+      {{/unless}}
+  </div>
+{{/unless}}
+
+{{#if (eq protocol 'tcp')}}
+  <h4 class="ui dividing medium header green">TCP Parameters</h4>
+  <div class="field">
+    <label>TCP Flags</label>
+    {{#ui-dropdown
+      name="tcpflags"
+      class="fluid search multiple selection"
+      selected=tcpflags
+      onChange=(action (mut tcpflags))
+    }}
+      <i class="dropdown icon"></i>
+      <div class="default text">Flags</div>
+      <div class="menu">
+        {{#each mod.tcps as |tcp|}}
+          <div class="item" data-value="{{tcp.flag}}" data-text="{{tcp.flag}}">
+            {{tcp.flag}}
+          </div>
+        {{/each}}
+      </div>
+    {{/ui-dropdown}}
+  </div>
+{{/if}}
+
+{{#if (eq protocol 'icmp')}}
+  <h4 class="ui dividing medium header green">ICMP Parameters</h4>
   <div class="twelve wide field">
-    <label>ICMP Type <div class="ui red tiny circular empty label dot"></div></label>
+    <label>ICMP Type</label>
       {{#ui-dropdown
         name="icmptype"
         class="search selection"
@@ -51,12 +91,12 @@
       {{/ui-dropdown}}
   </div>
   <div class="twelve wide field">
-    <label>ICMP Code <div class="ui red tiny circular empty label dot"></div></label>
+    <label>ICMP Code</label>
     {{#ui-dropdown
-      name="icmpcode"
-      class="search selection"
-      selected=icmpcode
-      onChange=(action (mut icmpcode))
+        name="icmpcode"
+        class="search selection"
+        selected=icmpcode
+        onChange=(action (mut icmpcode))
     }}
       <div class="default text">Select Code</div>
       <i class="dropdown icon"></i>
