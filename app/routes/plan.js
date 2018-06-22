@@ -9,7 +9,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       users: this.store.findAll('user', {include: 'networks'}),
       customers: this.store.findAll('customer'),
       networks: this.store.findAll('network'),
-      ictype: this.get('store').findAll('icmptype'),
+      icmps: this.get('store').findAll('icmptype'),
       tcps: this.store.findAll('tcp')
     })
   },
@@ -25,7 +25,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     Ember.set(controller, 'users', model.users)
     Ember.set(controller, 'customers', model.customers)
     Ember.set(controller, 'networks', model.networks)
-    Ember.set(controller, 'ictype', model.icmptype)
+    Ember.set(controller, 'icmps', model.icmps)
     Ember.set(controller, 'tcps', model.tcps)
   }
 })

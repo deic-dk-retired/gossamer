@@ -1,0 +1,72 @@
+{{#if (not-eq protocol 'icmp')}}
+  <div class="field">
+    <label>Destination Host or CIDR <div class="ui red tiny circular empty label dot"></div></label>
+    {{input type="text" name="destip" id="destip" value=destip placeholder="e.g. 192.0.2.1 or 192.0.2.0/24"}}
+  </div>
+  <div class="field">
+    <label>Destination Port <div class="ui red tiny circular empty label dot"></div> {{ui-popup tagName="i" class="info icon blue tiny" content="On the right you can see the entered value" variation="mini wide" position="right center"}} <span class="ui green header tiny">`{{destport}}`</span>
+    </label>
+    {{input type="text" name="destport" id="destport" value=destport placeholder="e.g 80"}}
+  </div>
+
+  {{#if (eq protocol 'tcp')}}
+    <div class="field">
+      <label>TCP Flags</label>
+      {{#ui-dropdown
+        name="tcpflags"
+        class="fluid search multiple selection"
+        selected=tcpflags
+        onChange=(action (mut tcpflags))
+      }}
+        <i class="dropdown icon"></i>
+        <div class="default text">Flags</div>
+        <div class="menu">
+          {{#each mod.tcps as |tcp|}}
+            <div class="item" data-value="{{tcp.flag}}" data-text="{{tcp.flag}}">
+              {{tcp.flag}}
+            </div>
+          {{/each}}
+        </div>
+      {{/ui-dropdown}}
+    </div>
+  {{/if}}
+{{else}}
+  <div class="twelve wide field">
+    <label>ICMP Type <div class="ui red tiny circular empty label dot"></div></label>
+      {{#ui-dropdown
+        name="icmptype"
+        class="search selection"
+        selected=icmptype
+        onChange=(action (mut icmptype))
+      }}
+        <div class="default text">Select Type</div>
+        <i class="dropdown icon"></i>
+        <div class="menu">
+          {{#each mod.icmps as |ictype|}}
+            <div class="item" data-value="{{ictype.id}}" data-text="{{ictype.name}}">
+              {{ictype.id}}, {{ictype.name}}
+            </div>
+          {{/each}}
+        </div>
+      {{/ui-dropdown}}
+  </div>
+  <div class="twelve wide field">
+    <label>ICMP Code <div class="ui red tiny circular empty label dot"></div></label>
+    {{#ui-dropdown
+      name="icmpcode"
+      class="search selection"
+      selected=icmpcode
+      onChange=(action (mut icmpcode))
+    }}
+      <div class="default text">Select Code</div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        {{#each mod.icmps as |iccode|}}
+            <div class="item" data-value="{{iccode.id}}" data-text="{{iccode.name}}" >
+              {{iccode.id}}, {{iccode.name}}
+            </div>
+          {{/each}}
+      </div>
+    {{/ui-dropdown}}
+  </div>
+{{/if}}
