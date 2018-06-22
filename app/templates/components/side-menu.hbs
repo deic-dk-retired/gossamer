@@ -2,7 +2,7 @@
   <div class="item logo">
     <span><i class="icon fighter jet"></i></span>
   </div>
-  {{#ui-popup content=kind variation="small inverted" position="right center"}}
+  {{#ui-popup content=kind variation="tiny" position="right center"}}
     <div class="item user">
       <div class="ui list">
         <div class="header">
@@ -12,35 +12,35 @@
       </div>
     </div>
   {{/ui-popup}}
-  {{#ui-popup content="Dashboard" variation="small inverted" position="right center"}}
+  {{#ui-popup content="Dashboard" variation="tiny" position="right center"}}
     {{#link-to "dashboard" class="item"}}
       <div class="content">
         <i class="icon bar chart"></i>
       </div>
     {{/link-to}}
   {{/ui-popup}}
-  {{#ui-popup content="Rules" variation="small inverted" position="right center"}}
+  {{#ui-popup content="Rules" variation="tiny" position="right center"}}
     {{#link-to "rules" class="item"}}
       <div class="content">
         <i class="icon database"></i>
       </div>
     {{/link-to}}
   {{/ui-popup}}
-  {{#ui-popup content="Packet stats" variation="small inverted" position="right center"}}
+  {{#ui-popup content="Packet stats" variation="tiny" position="right center"}}
     {{#link-to "packets" class="item"}}
       <div class="content">
         <i class="icon cube"></i>
       </div>
     {{/link-to}}
   {{/ui-popup}}
-  {{#ui-popup content="Traffic stats" variation="small inverted" position="right center"}}
+  {{#ui-popup content="Traffic stats" variation="tiny" position="right center"}}
     {{#link-to "traffic" class="item"}}
       <div class="content">
         <i class="icon exchange"></i>
       </div>
     {{/link-to}}
   {{/ui-popup}}
-  {{#ui-popup content="Measurement stats" variation="small inverted" position="right center"}}
+  {{#ui-popup content="Measurement stats" variation="tiny" position="right center"}}
     {{#link-to "measurements" class="item"}}
       <div class="content">
         <i class="server icon"></i>
@@ -49,7 +49,7 @@
   {{/ui-popup}}
 
   {{#if (not-eq kind 'netadmin')}}
-    {{#ui-popup content="Users" variation="small inverted" position="right center"}}
+    {{#ui-popup content="Users" variation="tiny" position="right center"}}
       {{#link-to "users" class="item"}}
         <div class="content">
           <i class="address book icon"></i>
@@ -57,7 +57,7 @@
       {{/link-to}}
     {{/ui-popup}}
 
-    {{#ui-popup content="Customers" variation="small inverted" position="right center"}}
+    {{#ui-popup content="Customers" variation="tiny" position="right center"}}
       {{#link-to "customers" class="item"}}
         <div class="content">
           <i class="handshake icon"></i>
