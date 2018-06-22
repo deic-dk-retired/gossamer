@@ -88,7 +88,7 @@ export default Ember.Controller.extend({
 
   responseMessage: '',
 
-  validated: true,
+  validated: false,
 
   willDestry () {
     this._super(...arguments)
@@ -118,10 +118,6 @@ export default Ember.Controller.extend({
 
     setMinDate () {
       this.set('toMinDate', this.get('fromDate'))
-    },
-
-    validateNetwork () {
-      Ember.Logger.info('Entered cidr/ip: ', this.get('destip'))
     },
 
     createRule () {
