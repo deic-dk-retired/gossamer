@@ -3,7 +3,7 @@
     <div class="content">
       <div class="right floated meta">
         {{#if (eq u.valid 'active')}}
-          {{#ui-popup content="Edit" variation="small inverted" position="right center"}}
+          {{#ui-popup content="Edit" variation="tiny" position="top center"}}
             <i class="pencil alternate grey icon" {{action showUser u.id}}></i>
           {{/ui-popup}}
         {{/if}}
@@ -27,7 +27,7 @@
           <i class="mobile icon"></i>
           <div class="content">{{format-phone u.phone}}</div>
         </div>
-        {{#ui-popup content="last logged in" variation="small inverted" position="bottom left"}}
+        {{#ui-popup content="last logged in" variation="tiny" position="bottom left"}}
           <div class="item">
             <i class="sign in icon"></i>
             {{moment-from-now (moment-format u.lastlogin) hidePrefix=true interval=86400}}
@@ -38,11 +38,11 @@
     <div class="content">
       <div class="right floated item">
         {{#if (eq u.valid 'inactive')}}
-          {{#ui-popup content="Activate" variation="small inverted" position="right center"}}
+          {{#ui-popup content="Activate" variation="tiny" position="top center"}}
             <i class="toggle off grey icon" {{action activateUser u.id}}></i>
           {{/ui-popup}}
         {{else}}
-          {{#ui-popup content="Deactivate" variation="small inverted" position="right center"}}
+          {{#ui-popup content="Deactivate" variation="tiny" position="top center"}}
             <i class="toggle on grey icon" {{action deactivateUser u.id}}></i>
           {{/ui-popup}}
         {{/if}}
