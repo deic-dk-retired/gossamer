@@ -2,9 +2,9 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8bd0f85baa7f4ceebe78dbddadc75ff4)](https://app.codacy.com/app/DeIC/gossamer?utm_source=github.com&utm_medium=referral&utm_content=deic-dk/gossamer&utm_campaign=badger) [![Maintainability](https://api.codeclimate.com/v1/badges/4fb040104bac9e23c224/maintainability)](https://codeclimate.com/github/deic-dk/gossamer/maintainability) [![Known Vulnerabilities](https://snyk.io/test/github/deic-dk/gossamer/badge.svg)](https://snyk.io/test/github/deic-dk/gossamer) [![Build Status](https://travis-ci.org/deic-dk/gossamer.svg?branch=master)](https://travis-ci.org/deic-dk/gossamer) [![Build Status](https://semaphoreci.com/api/v1/ashokaditya/gossamer/branches/master/badge.svg)](https://semaphoreci.com/ashokaditya/gossamer)
 
 # UI
-Built using [Ember.js](http://emberjs.com/) framework that incorporates common idioms of app development so we could focus on creating special features for this app than reinventing the wheel.  Also, we use [EmberCLI](https://ember-cli.com) to create consistent files, maintain a standard app structure, install and manage javascript library necessary for certain features and finally creating a production distribution of the app. Ember CLI ensures that relevant source and test files are created void of bugs and unnecessary development errors.  
+Built using the [Ember.js](http://emberjs.com/) framework that incorporates common idioms of app development.  We focused on creating special features for this app rather than reinventing the wheel. We also use [EmberCLI](https://ember-cli.com) to create consistent files, maintain a standard app structure, install and manage javascript library necessary for certain features and creating a production distribution of the app.  
 
-Let us now get on with the application’s front-end structure and design. Below is a screenshot of one of the sections of the app.
+Let us now get on to the application’s front-end structure and design. Below is a screenshot of one of the sections of the app.
 
 ## Top Navigation
 Along with the app logo, this section displays notification counts, and a quick link for adding a /flowspec/ rule.
@@ -12,24 +12,24 @@ Along with the app logo, this section displays notification counts, and a quick 
 ![](public/readme/user-menu.png)
 
 ### Search
-A site wide search bar that lets users to query rules by name, protocol, timestamp etc.
+A site wide search bar that lets users to query rules by name, protocol, timestamp, etc.
 
 ![](public/readme/search.png)
 
 ### Add Rule
-This section allows a user to add a rule over the networks assigned to that user. A user can be assigned networks by a global admin or a db admin. A network admin is the lowest level of access that can only view and add rules over her own networks.
+This section allows a user to add a rule over the networks assigned to this specific user. A user can be assigned networks by a global admin or a db admin. A network admin is the lowest level of access. A db admin can only view and add rules over her own networks.
 
 ![](public/readme/Add-rules.png)
 
-Basically each global admin can create customers and their networks. Each customer has a database admin that has access over all networks of her customer. A db admin in turn creates many network admins under him or her who have access over specific networks under a customer.
+Each global admin can create customers and their networks. Each customer has a database admin that has access to all networks of her customer. A db admin in turn creates many network admins under her who have access over specific networks under a customer.
 
 Thus in short if you are logged in the client app you can only pick and choose your own assigned networks to add rules on. Adding rules to unassigned networks is simply not possible.
 
 There are also several small features included in the form to help create a rule in an efficient and easy way.
-For example, a user simply can not add a rule on a network that is not assigned to her; only relevant fields for each protocol are visible when creating a rule; default duration for a rule can be 10 minutes etc.
+For example, a user cannot add a rule on a network that is not assigned to her; only relevant fields for each protocol are visible when creating a rule; default duration for a rule can be 10 minutes etc.
 
 ### Alerts
-A user sees a blue dot over the *bell* icon on the main navigation if there have been anaomalous activities or important updates since the last time the user logged out. This is displayed in a alerts menu from where the user can navigate to relavant section of the app to take necessary actions.
+A user sees a blue dot over the *bell* icon on the main navigation if there have been anomalous activities or important updates since the last time the user logged out. This is displayed in a alerts menu from where the user can navigate to the  relevant section of the app to take necessary actions.
 
 ![](public/readme/alerts.png)
 
@@ -57,12 +57,12 @@ Here you can see a customer's editable fields.
 
 ![](public/readme/edit-customers.png)
 
-Screenshot below shows the added dummy network `Skynet` on a selected customer 'DeIC'. When a user clicks Save, all the other changes to the customer is saved to the server.
+The screenshot below shows the added dummy network `Skynet` on a selected customer 'DeIC'. When a user clicks Save, all the other changes to the customer is saved to the server.
 
 ![](public/readme/add-edit-customer-networks.png)
 
 ## Side Navigation
-The logged in user’s first name is displayed on a hover tooltip. An icon that denotes the user’s role or access rights is seen below the user's pic thumbnail.
+The logged-in user’s first name is displayed on a hover tooltip. An icon that denotes the user’s role or access rights is seen below the user's pic thumbnail.
 
 The side nav links allow access to key views. It is responsive and can be used over a small screen equally well. The intuitive icons allow for least cognitive load. On mouseover you can also see what view the icons link to.
 
