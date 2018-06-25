@@ -9,7 +9,10 @@
 
   <div class="right menu">
     <div class="item">
-      {{#ui-search source=someList onSearchQuery=(action (mut query)) onSelect=(action (mut selected))}}
+      {{#ui-search
+          source=someList
+          onSearchQuery=(action (mut query))
+          onSelect=(action (mut selected))}}
         <div class="ui transparent icon input">
           <input class="prompt" type="text" placeholder="Search...">
           <i class="search link icon"></i>

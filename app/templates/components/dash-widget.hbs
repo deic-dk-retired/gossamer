@@ -8,31 +8,40 @@
           <div class="ui tiny horizontal list">
             <div class="item">
               {{ui-checkbox
-                class="toggle"
-                label=checkLabel
-                checked=preChecked
-                onChange=(action (mut preChecked))
+                  class="toggle"
+                  label=checkLabel
+                  checked=preChecked
+                  onChange=(action (mut preChecked))
               }}
             </div>
             <div class="item">
-              {{ui-radio name=rdioGrpName label="10s" value=10
-               disabled=(if preChecked false true)
-               current=baseRate
-               onChange=(action (mut baseRate))
+              {{ui-radio
+                  name=rdioGrpName
+                  label="10s"
+                  value=10
+                  disabled=(if preChecked false true)
+                  current=baseRate
+                  onChange=(action (mut baseRate))
               }}
             </div>
             <div class="item">
-              {{ui-radio name=rdioGrpName label="30s" value=30
-               disabled=(if preChecked false true)
-               current=baseRate
-               onChange=(action (mut baseRate))
+              {{ui-radio
+                  name=rdioGrpName
+                  label="30s"
+                  value=30
+                  disabled=(if preChecked false true)
+                  current=baseRate
+                  onChange=(action (mut baseRate))
               }}
             </div>
             <div class="item">
-              {{ui-radio name=rdioGrpName label="1m" value=60
-               disabled=(if preChecked false true)
-               current=baseRate
-               onChange=(action (mut baseRate))
+              {{ui-radio
+                  name=rdioGrpName
+                  label="1m"
+                  value=60
+                  disabled=(if preChecked false true)
+                  current=baseRate
+                  onChange=(action (mut baseRate))
               }}
             </div>
           </div>

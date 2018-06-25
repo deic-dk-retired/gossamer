@@ -5,5 +5,9 @@
   <td> {{rule.destport}}</td>
   <td> {{rule.pktlen}}</td>
   <td> {{rule.action}}</td>
-  <td class="right aligned"> {{moment-from-now rule.validfrom hidePrefix=true interval=86400}}</td>
+  <td class="right aligned">
+    {{moment-from-now
+        rule.validfrom
+        hidePrefix=true
+        interval=86400}}</td>
 </tr>
