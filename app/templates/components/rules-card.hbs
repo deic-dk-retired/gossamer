@@ -2,11 +2,17 @@
   <div class="content">
     <div class="right floated meta">
       {{#if (eq (null-replace rule.destport) '...')}}
-        {{#ui-popup content="no dst. ports assigned" variation="tiny" position="top center"}}
+        {{#ui-popup
+            content="no dst. ports assigned"
+            variation="tiny"
+            position="top center"}}
           <a class="ui circular empty green label"></a>
         {{/ui-popup}}
       {{else}}
-        {{#ui-popup content="affected ports" variation="tiny" position="top center"}}
+        {{#ui-popup
+            content="affected ports"
+            variation="tiny"
+            position="top center"}}
           <a class="ui circular green label">{{rule.destport}}</a>
         {{/ui-popup}}
       {{/if}}
@@ -19,16 +25,26 @@
         <div class="item">
           <i class="icon calendar"></i>
           <div class="content">
-            {{moment-format rule.validfrom 'ddd, DD MMM'}} &#126; {{moment-format rule.validfrom 'hh:mm:ss a'}}
+            {{moment-format
+                rule.validfrom 'ddd, DD MMM'}} &#126;
+                  {{moment-format
+                      rule.validfrom 'hh:mm:ss a'}}
           </div>
         </div>
         <div class="item">
           <i class="icon clock notched end"></i>
           <div class="content">
-            Active for {{moment-from-now rule.validfrom hideSuffix=true interval=120000}}
+            Active for
+            {{moment-from-now
+                rule.validfrom
+                hideSuffix=true
+                interval=120000}}
           </div>
         </div>
-        {{#ui-popup content="(completed runtime / duration) %" variation="tiny" position="top center"}}
+        {{#ui-popup
+            content="(completed runtime / duration) %"
+            variation="tiny"
+            position="top center"}}
           <div class="progress-{{rule.id}} prog" >
           </div>
         {{/ui-popup}}
@@ -65,7 +81,8 @@
       </div>
     </div>
   </div>
-  <button class="ui bottom attached icon grey button {{if (lte actprogress 0.05) 'disabled'}}" {{action 'toggleClear' rule.id}}>
+  <button class="ui bottom attached icon grey button"
+    disabled="{{if (lte actprogress 0.05) 'disabled'}}" {{action 'toggleClear' rule.id}}>
     <i class="trash outline icon"></i>
     Clear Rule
   </button>
