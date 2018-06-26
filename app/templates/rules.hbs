@@ -6,7 +6,11 @@
         <h3 class="ui header">ACTIVE</h3>
       </div>
       <div class="item">
-        {{ui-checkbox class="toggle" label=checkLabel checked=preChecked onChange=(action (mut preChecked))}}
+        {{ui-checkbox
+            class="toggle"
+            label=checkLabel
+            checked=preChecked
+            onChange=(action (mut preChecked))}}
       </div>
       <div>&nsbp;</div>
     </div>
@@ -15,11 +19,10 @@
         {{#each rules as |rule i|}}
           {{#if rule.isactive}}
             {{rules-card
-              rule=rule
-              preChecked=preChecked
-              showRule=(action 'showRule')
-              updateRule=(action 'updateRule')
-            }}
+                rule=rule
+                preChecked=preChecked
+                showRule=(action "showRule")
+                updateRule=(action "updateRule")}}
           {{/if}}
         {{/each}}
       {{else}}
@@ -47,10 +50,8 @@
             {{#each rules as |rule j|}}
               {{#if rule.isexpired}}
                 {{rules-list
-                  rule=rule
-                  showRule=(action 'showRule')
-                  fetchMore=(action 'fetchMore')
-                }}
+                    rule=rule
+                    showRule=(action "showRule")}}
               {{/if}}
             {{/each}}
           {{else}}
@@ -61,7 +62,7 @@
     </div>
   </div>
   <div class="sixteen wide mobile six wide tablet three wide computer centered column">
-    <button class="ui labeled icon black grey button fluid" {{action 'fetchMore'}}>
+    <button class="ui labeled icon black grey button fluid" {{action "fetchMore"}}>
       <i class="arrow down icon"></i>
       VIEW MORE
     </button>

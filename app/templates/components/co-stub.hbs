@@ -1,7 +1,10 @@
 <div class="card co-stub co-{{co.cvr}}">
   <div class="content">
     <div class="right floated meta">
-      {{#ui-popup content="Edit" variation="small inverted" position="right center"}}
+      {{#ui-popup
+          content="Edit"
+          variation="tiny"
+          position="top center"}}
         <i class="pencil alternate grey icon" {{action showCustomer co.id co.cvr}}></i>
       {{/ui-popup}}
     </div>
@@ -32,7 +35,10 @@
   </div>
   <div class="content">
     <div class="right floated item">
-      {{#ui-popup content="Erase" variation="small inverted" position="right center"}}
+      {{#ui-popup
+          content="Erase"
+          variation="tiny"
+          position="top center"}}
         <i class="trash grey icon" {{action removeCustomer co.id}}></i>
       {{/ui-popup}}
     </div>

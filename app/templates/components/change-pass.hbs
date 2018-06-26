@@ -1,12 +1,21 @@
 {{#if (eq state 'edit')}}
   <div class="field">
     <label>Password</label>
-    {{input type="password" id="password" name="password" placeholder="new password" value=password disabled="disabled"}}
+    {{input
+        type="password"
+        id="password"
+        name="password"
+        placeholder="new password"
+        value=password disabled="disabled"}}
   </div>
 {{else}}
   <div class="required field">
     <label>Password</label>
-    {{input type="password" id="password" name="password" placeholder="new password" value=password}}
+    {{input type="password"
+        id="password"
+        name="password"
+        placeholder="new password"
+        value=password}}
   </div>
 {{/if}}
 

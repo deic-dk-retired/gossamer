@@ -21,7 +21,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     let texp = this.get('timeToExp')
     if (!Ember.isEmpty(session) && session.isAuthenticated) {
       Ember.run.next(this, () => {
-        this.get('notifications').info(`Your session will expire in ${ms(this.get('timeToExp'), { long: true })}`, {
+        this.get('notifications').info(`Your session expires in ${ms(this.get('timeToExp'), { long: true })}`, {
           autoClear: true,
           clearDuration: 5000
         })

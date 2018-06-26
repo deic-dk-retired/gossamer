@@ -3,9 +3,9 @@
     <div class="ui link fluid stackable link raised cards">
       {{#each customers as |co|}}
         {{co-stub
-          co=co
-          showCustomer=(action 'showCustomer')
-          removeCustomer=(action 'removeCustomer')
+            co=co
+            showCustomer=(action "showCustomer")
+            removeCustomer=(action "removeCustomer")
         }}
        {{/each}}
       </div>
@@ -13,32 +13,31 @@
   <div class="five wide column">
     <div class="right-slider">
       {{co-edit
-
-        coid=coid
-        coname=coname
-        add1=add1
-        add2=add2
-        add3=add3
-        add4=add4
-        coemail=coemail
-        cophone=cophone
-        cocvr=cocvr
-        coean=coean
-        conets=conets
-        accname=accname
-        accemail=accemail
-        accphone=accphone
-        accrate=accrate
-        fee=fee
-        discount=discount
-        act=act
-        buttonico=buttonico
-        networks=networks
-        saveCustomer=(action 'saveCustomer')
-        addNetwork=(action 'addNetwork')
-        removeNetwork=(action 'removeNetwork')
-        resetForm=(action 'resetForm')
-        required=(action 'required')
+          coid=coid
+          coname=coname
+          add1=add1
+          add2=add2
+          add3=add3
+          add4=add4
+          coemail=coemail
+          cophone=cophone
+          cocvr=cocvr
+          coean=coean
+          conets=conets
+          accname=accname
+          accemail=accemail
+          accphone=accphone
+          accrate=accrate
+          fee=fee
+          discount=discount
+          act=act
+          buttonico=buttonico
+          networks=networks
+          saveCustomer=(action "saveCustomer")
+          addNetwork=(action "addNetwork")
+          removeNetwork=(action "removeNetwork")
+          resetForm=(action "resetForm")
+          required=(action "required")
       }}
     </div>
   </div>
