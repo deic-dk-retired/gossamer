@@ -3,7 +3,6 @@ import Ember from 'ember'
 import ms from 'npm:ms'
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
-  // session: Ember.inject.service('session'),
   timeToExp: Ember.computed('session', function () {
     let session = this.get('session')
     let texp = 0

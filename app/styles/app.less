@@ -63,6 +63,16 @@ body .bg {
 .pushable .begin {
   position: relative;
   top: 22vh;
+
+  .transparent {
+    background: rgba(0,0,0,.25);
+    label {
+      color: @light;
+    }
+    input {
+      color: @darker800;
+    }
+  }
 }
 
 .pushable {
@@ -224,22 +234,10 @@ body .bg {
   }
 }
 
-.logsign{
-  color:#fff;
-  font-size: 2rem;
-}
-.welcome {
-  padding-bottom: @xxlg;
-  font-family: 'Kanit'!important;
-  color: @green;
-  .welcome {
-    font-size: 1.5em;
-  }
-  .logo {
-    font-weight: 800!important;
-    font-style: italic;
-    font-size: 2.5em;
-    color: #000;
+.ui.logo {
+  div {
+    margin-top: 0;
+    margin-bottom: 2em!important;
   }
 }
 

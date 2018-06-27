@@ -9,10 +9,10 @@ export default Ember.Controller.extend({
     authenticate () {
       let { username, password } = this.getProperties('username', 'password')
       let session = this.get('session')
-      this.set('processed', `Logging you in...`)
+      this.set('processed', `Verifying...`)
       this.get('notifications').info(this.get('processed'), {
         autoClear: true,
-        clearDuration: 2000
+        clearDuration: 500
       })
       session.authenticate('authenticator:jwt', {username, password})
       .then(() => {
@@ -40,10 +40,10 @@ export default Ember.Controller.extend({
        * store in session
        */
       this.get('notifications').clearAll()
-      this.set('processed', 'Redirecting to WAYF')
+      this.set('processed', 'Redirecting...')
       this.get('notifications').info(this.get('processed'), {
         autoClear: true,
-        clearDuration: 3000
+        clearDuration: 2000
       })
     }
   }
