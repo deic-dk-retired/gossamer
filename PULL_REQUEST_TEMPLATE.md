@@ -19,9 +19,9 @@ Link to related issues in this or other repositories (if any)
 Mention people who would be interested in the change set (if any)
 
 ## PR Checklist
-- [ ] I have read the [Contribution Guidelines](https://github.com/restic/restic/blob/master/CONTRIBUTING.md#providing-patches)
+- [ ] I have read the [Contribution Guidelines](https://github.com/deic-dk/deic-styleguides/blob/master/CONTRIBUTING.md)
 - [ ] I have added tests for all changes in this PR
 - [ ] I have run `npm test` on the for all commits
 - [ ] I have added documentation for the changes [manual]()
-- [ ] All commit messages are formatted in the same style as described in [DeiC Styleguides](https://github.com/ashoakditya/styleguides)
+- [ ] All commit messages are formatted in the same style as described in [DeiC Styleguides](https://github.com/deic-dk/deic-styleguides)
 - [ ] I'm done, this Pull Request is ready for review

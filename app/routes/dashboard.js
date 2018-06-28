@@ -31,6 +31,12 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     })
   },
 
+  afterModel () {
+    Ember.run.later(this, () => {
+      Ember.$('.dimmer').remove()
+    }, 2000)
+  },
+
   setupController (controller, model) {
     this._super(...arguments)
     Ember.set(controller, 'stats', model)

@@ -1,8 +1,8 @@
 <div class="bg"></div>
 <div class="ui centered grid begin">
   <div class="column sixteen wide mobile six wide tablet three wide computer">
-    <div class="ui centered">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 145.86" height="30">
+    <div class="ui centered logo">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 145.86" height="35">
         <title>DeiC</title>
         <path d="M204.77,127.44C203.2,120,195.63,115,186.62,115c-8.71,0-15.57,4.86-18,12.43ZM187.34,158a21.53,21.53,0,0,0,17.66-9.9l16.64,10.18c-7.42,10.32-18.3,16.86-34,16.86-24.15,0-40.15-15.86-40.15-39.29,0-22.57,17.57-37.71,40.57-37.71s38.15,17.14,38.15,41.57v2.57H168.06C169.48,152,177.48,158,187.34,158Z" transform="translate(-15.25 -29.3)" style="fill:#fff"/>
         <path d="M329.47,175.16c-29.86,0-54.14-24.43-54.14-54.72s24.28-54.72,54.14-54.72A54.18,54.18,0,0,1,376,92.3L356.9,103.58A32.75,32.75,0,0,0,329.47,88c-17.14,0-32.14,15.14-32.14,32.43s15,32.43,32.14,32.43A31.87,31.87,0,0,0,356.9,137l19.29,11.43A54.38,54.38,0,0,1,329.47,175.16Z" transform="translate(-15.25 -29.3)" style="fill:#fff"/>
@@ -11,11 +11,11 @@
         <rect x="224.22" y="69.44" width="22.08" height="73.85" style="fill:#fff"/>
         <path d="M213.55,72.22C212,71,183.66,59.49,156.28,74.44c-11.87-14.75-41.89-53.52-141-38.1,0,0,98.5-28.71,143.21,29.82a66.34,66.34,0,0,1,50.33-2.23S214,44.53,237,36.63c24.94-8.57,45.25,9.76,45.25,9.76.66-.46,60.13-43.89,123,14.64,0,0-62.81-51.41-123.73-5.74,0,0-16-20.33-41.37-12.84C218.06,49,213.81,70.3,213.55,72.22Z" transform="translate(-15.25 -29.3)" style="fill:#fff"/>
       </svg>
+      <div class="ui header huge centered inverted">DDoS Protection Sys.</div>
     </div>
-    <div class="ui header medium inverted centered">Sign in to DdPs</div>
     <div class="row">
       <form class="ui large form">
-        <div class="ui padded segment">
+        <div class="ui padded segment transparent">
           <button
               class="ui fluid large black submit animated fade button"
               value="WAYF" {{action "authwayf" on="click"}}>
@@ -25,19 +25,19 @@
         </div>
       </form>
     </div>
-    <div class="ui horizontal divider">
+    <div class="ui horizontal inverted divider">
       or
     </div>
      <div class="row">
       <form class="ui large form">
-        <div class="ui padded segment">
+        <div class="ui padded segment transparent">
           <div class="field">
             <label>Username</label>
             <div class="ui left icon input">
               <i class="user black icon"></i>
               {{input
                   type='text'
-                  placeholder='e.g. ddpsuser'
+                  placeholder='e.g. jondoe'
                   value=username}}
             </div>
           </div>
@@ -46,14 +46,23 @@
             <div class="ui left icon input">
               <i class="lock black icon"></i>
               {{input
-                  type='password'
+                  type=passType
                   placeholder=''
                   value=password}}
+              {{#ui-popup
+                    content="Show Password"
+                    variation="tiny"
+                    position="right center"}}
+                <span>
+                  <i class="icon eye {{unless showPass 'slash'}}" {{action "showPassword" on="click"}}></i>
+                </span>
+              {{/ui-popup}}
             </div>
+
           </div>
           <button
-              class="ui fluid large black submit animated fade button"
-              value="Login" {{action "authenticate" on="click"}}>
+              class="ui fluid large black submit animated fade button {{if loginOk 'loading'}}"
+              value="Login" disabled="{{if loginOk 'disabled'}}" {{action "authenticate" on="click"}}>
             <div class="hidden content"><i class="sign in icon"></i></div>
             <div class="visible content">Sign In Locally</div>
           </button>
