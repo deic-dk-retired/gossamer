@@ -19,6 +19,9 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     let session = this.get('session')
     let texp = this.get('timeToExp')
     if (!Ember.isEmpty(session) && session.isAuthenticated) {
+      Ember.$('.bg').remove()
+      Ember.$('.begin').remove()
+
       Ember.run.next(this, () => {
         this.get('notifications').info(`Your session expires in ${ms(this.get('timeToExp'), { long: true })}`, {
           autoClear: true,
@@ -35,7 +38,14 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
           clearDuration: this.get('min')
         })
       }, this.get('timeToExp') - this.get('min')).bind(this)
-      this.transitionTo('dashboard')
+
+      Ember.run.next(this, () => {
+        this.transitionTo('dashboard')
+        Ember.$('div.pusher')
+          .before(`<div class="ui active inverted dimmer">
+              <div class="ui mini text loader">Loading&hellip;</div>
+            </div>`)
+      })
     }
 
     if (Ember.isEmpty(session) || !session.isAuthenticated) {
