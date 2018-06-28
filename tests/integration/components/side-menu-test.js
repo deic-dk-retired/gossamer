@@ -12,5 +12,5 @@ test('it renders', function (assert) {
   // Handle any actions with this.on('myAction', function(val) { ... });
   this.set('fname', fname)
   this.render(hbs`{{side-menu name=fname}}`)
-  assert.equal(this.$('.logo i').hasClass('jet'), true, 'Renders Logo')
+  assert.equal(this.$('.item.logo svg title').text(), 'DeiC')
 })
