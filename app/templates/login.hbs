@@ -37,7 +37,7 @@
               <i class="user black icon"></i>
               {{input
                   type='text'
-                  placeholder='e.g. ddpsuser'
+                  placeholder='e.g. jondoe'
                   value=username}}
             </div>
           </div>
@@ -46,14 +46,23 @@
             <div class="ui left icon input">
               <i class="lock black icon"></i>
               {{input
-                  type='password'
+                  type=passType
                   placeholder=''
                   value=password}}
+              {{#ui-popup
+                    content="Show Password"
+                    variation="tiny"
+                    position="right center"}}
+                <span>
+                  <i class="icon eye {{unless showPass 'slash'}}" {{action "showPassword" on="click"}}></i>
+                </span>
+              {{/ui-popup}}
             </div>
+
           </div>
           <button
-              class="ui fluid large black submit animated fade button"
-              value="Login" {{action "authenticate" on="click"}}>
+              class="ui fluid large black submit animated fade button {{if loginOk 'loading'}}"
+              value="Login" disabled="{{if loginOk 'disabled'}}" {{action "authenticate" on="click"}}>
             <div class="hidden content"><i class="sign in icon"></i></div>
             <div class="visible content">Sign In Locally</div>
           </button>
