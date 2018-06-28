@@ -4,7 +4,7 @@
         html=userNetworksPopup
         variation="mini wide"
         position="right center"}}
-      <i class="info icon green tiny"></i>
+      <i class="info icon green small"></i>
     {{/ui-popup}}
   </label>
   {{input
@@ -13,9 +13,9 @@
       id="destip"
       value=destip
       placeholder="e.g. 192.0.2.1 or 192.0.2.0/24"
-      focus-out=(action "validateDestPrefix")}}
+      focus-out=(action "validatePrefix")}}
     {{#unless (eq destErr '')}}
-      <div class="ui pointing basic red label">
+      <div class="ui pointing red label">
         {{destErr}}
       </div>
     {{/unless}}
@@ -25,7 +25,7 @@
   <div class="field {{unless (eq destPortErr '') 'error'}}">
     <label>Destination Port
       {{ui-popup tagName="i"
-          class="info icon green tiny"
+          class="info icon green small"
           content="You can see the entered value on the right"
           variation="mini wide"
           position="right center"}}
@@ -37,9 +37,9 @@
         id="destport"
         value=destport
         placeholder="e.g 80"
-        focus-out=(action "validateDestPort")}}
+        focus-out=(action "validatePort" '#destport')}}
       {{#unless (eq destPortErr '')}}
-        <div class="ui pointing basic red label">
+        <div class="ui pointing red label">
           {{destPortErr}}
         </div>
       {{/unless}}
