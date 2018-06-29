@@ -6,3 +6,11 @@
 + SERV_HOST=ddosapi host ip or url (ddps.deic.dk or dev.ddps.deic.dk or localhost)
 + SERV_PORT=port for ddosapi
 + SERV_NAMESPACE=api namepspace (ddosapi)
+
+### build env
+## we build using ember-cli-deploy
+
++ instead of one .env we have .env.deploy.development for development builds
++ instead of one .env we have .env.deploy.production for production builds
+
+The configuration for each go in config/deploy.js
