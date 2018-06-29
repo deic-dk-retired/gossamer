@@ -14,3 +14,6 @@
 + instead of one .env we have .env.deploy.production for production builds
 
 The configuration for each go in config/deploy.js
+
++ The file is in plain text and should be named .env and not checked into git. 
++ .gitignore should include all .files to be excluded from git commits.
