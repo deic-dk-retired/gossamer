@@ -13,7 +13,9 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   },
 
   afterModel () {
-
+    if (this.get('session.data.authenticated.role') === 'netadmin') {
+      this.replaceWith('dashboard')
+    }
   },
 
   setupController (controller, model) {
