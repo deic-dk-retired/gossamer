@@ -1,6 +1,7 @@
 import Ember from 'ember'
 import uuid from 'npm:uuid'
 import moment from 'moment'
+import { default as nc } from 'npm:node-cidr'
 
 export default Ember.Controller.extend({
   protocol: '',
@@ -8,16 +9,20 @@ export default Ember.Controller.extend({
   icmpcode: null,
   tcpflags: [],
   isdefDur: false,
-  rateLimErr: '',
 
-  validRateLim: false,
+  validSrcPort: false,
+  srcPortErr: '',
 
   validDest: false,
-  validDestPort: false,
-  validIcType: false,
-  validIcCode: false,
-  validDestFields: false,
   destErr: '',
+
+  validDestPort: false,
+  destPortErr: '',
+
+  validRateLim: false,
+  rateLimErr: '',
+
+  validated: false,
 
   uid: Ember.computed('session', function () {
     return `${this.get('session.data.authenticated.uid')}`
@@ -112,9 +117,28 @@ export default Ember.Controller.extend({
     return `${react}`
   }),
 
-  responseMessage: '',
+  protocolDidChange: Ember.on('init', Ember.observer('protocol', function () {
+    if (this.get('protocol') === 'icmp') {
+      this.setProperties({
+        srcport: null,
+        destport: null,
+        tcpflags: []
+      })
+    }
+    if (this.get('protocol') !== 'icmp') {
+      this.setProperties({
+        icmptype: null,
+        icmpcode: null
+      })
+      if (this.get('protocol') !== 'tcp') {
+        this.setProperties({
+          tcpflags: []
+        })
+      }
+    }
+  })),
 
-  validated: false,
+  responseMessage: '',
 
   willDestry () {
     this._super(...arguments)
@@ -138,7 +162,15 @@ export default Ember.Controller.extend({
         shrtcomm: null,
         isdefDur: false,
         ruleact: 'discard',
-        pktrate: 0
+        pktrate: 0,
+
+        validDest: false,
+        validDestPort: false,
+        validRateLim: false,
+        validated: false,
+        destErr: '',
+        destPortErr: '',
+        rateLimErr: ''
       })
     },
 
@@ -146,7 +178,7 @@ export default Ember.Controller.extend({
       this.set('toMinDate', this.get('fromDate'))
     },
 
-    validatePrefix (prefixinput) {
+    validateIpCidr (prefixinput) {
       let t = Ember.$(prefixinput).val()
       let v = (t.split('/').length < 2) ? nc.ip.validate(t) : nc.cidr.validate(t)
       let ms = (typeof v !== 'object') ? v.split(': ') : v
@@ -164,10 +196,8 @@ export default Ember.Controller.extend({
     },
 
     validatePort (portid) {
-      const pattern = new RegExp(/^=(\d+)$/, 'g')
+      const pattern = new RegExp(/^(=\d+-\d+)\s*?$|^(=[<>]?\d+\s*)+$/, 'gm')
       let t = Ember.$(portid).val().trim()
-      Ember.Logger.info(t)
-      Ember.Logger.info(pattern.test(t))
       let m = pattern.test(t) ? '' : 'That is not a valid flowspec port pattern'
       if (pattern.test(t)) {
         this.set('validDestPort', true)

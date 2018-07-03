@@ -13,9 +13,9 @@
       id="destip"
       value=destip
       placeholder="e.g. 192.0.2.1 or 192.0.2.0/24"
-      focus-out=(action "validatePrefix")}}
+      focus-out=(action "validateIpCidr" "#destip")}}
     {{#unless (eq destErr '')}}
-      <div class="ui pointing red label">
+      <div class="ui pointing basic red label">
         {{destErr}}
       </div>
     {{/unless}}
@@ -36,10 +36,10 @@
         name="destport"
         id="destport"
         value=destport
-        placeholder="e.g 80"
+        placeholder="e.g =8080 =1000 <=5200"
         focus-out=(action "validatePort" '#destport')}}
       {{#unless (eq destPortErr '')}}
-        <div class="ui pointing red label">
+        <div class="ui pointing basic red label">
           {{destPortErr}}
         </div>
       {{/unless}}

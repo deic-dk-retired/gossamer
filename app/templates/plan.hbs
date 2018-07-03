@@ -49,13 +49,15 @@
             protocol=protocol
             validated=validated
             validatePort=(action "validatePort")
-            validatePrefix=(action "validatePrefix")}}
+            validateIpCidr=(action "validateIpCidr")}}
         <h4 class="ui dividing medium header green">Destination Information</h4>
         {{#if (not-eq protocol '')}}
           {{dest-fields
               mod=model
               destip=destip
+              destErr=destErr
               destport=destport
+              destPortErr=destPortErr
               protocol=protocol
               tcpflags=tcpflags
               icmptype=icmptype
@@ -63,11 +65,10 @@
               usrNetworks=usrNetworks
               userNetworksPopup=userNetworksPopup
               validated=validated
-              destErr=destErr
-              destPortErr=destPortErr
+
               validDestPort=validDestPort
               validatePort=(action "validatePort")
-              validatePrefix=(action "validatePrefix")}}
+              validateIpCidr=(action "validateIpCidr")}}
         {{else}}
           <p>Select a protocol above to proceed</p>
         {{/if}}
@@ -197,7 +198,7 @@
                 placeholder="e.g. 9600"
                 focus-out=(action "validateRateLimit")}}
             {{#unless (eq rateLimErr '')}}
-              <div class="ui pointing red label">
+              <div class="ui pointing basic red label">
                 {{rateLimErr}}
               </div>
             {{/unless}}

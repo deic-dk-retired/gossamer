@@ -28,6 +28,14 @@
     {{input
         type="text"
         name="srcport"
-        value=srcport placeholder="e.g 80"}}
+        id="srcport"
+        value=srcport
+        placeholder="e.g =8080 =1000 <=5200"
+        focus-out=(action "validatePort" '#srcport')}}
+    {{#unless (eq srcPortErr '')}}
+        <div class="ui pointing basic red label">
+          {{srcPortErr}}
+        </div>
+      {{/unless}}
   </div>
 {{/if}}
