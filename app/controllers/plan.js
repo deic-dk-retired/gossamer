@@ -169,6 +169,7 @@ export default Ember.Controller.extend({
         validRateLim: false,
         validated: false,
         destErr: '',
+        srcPortErr: '',
         destPortErr: '',
         rateLimErr: ''
       })
@@ -197,14 +198,17 @@ export default Ember.Controller.extend({
 
     validatePort (portid) {
       const pattern = new RegExp(/^(=\d+-\d+)\s*?$|^(=[<>]?\d+\s*)+$/, 'gm')
-      let t = Ember.$(portid).val().trim()
-      let m = pattern.test(t) ? '' : 'That is not a valid flowspec port pattern'
-      if (pattern.test(t)) {
-        this.set('validDestPort', true)
-        this.set('destPortErr', '')
+      const t = Ember.$(portid).val().trim()
+      const m = 'That is not a valid flowspec port pattern'
+      const test = t.length > 0 ? pattern.test(t) : true
+      const validProp = portid === '#destport' ? 'validDestPort' : 'validSrcPort'
+      const portErr = portid === '#destport' ? 'destPortErr' : 'srcPortErr'
+      if (test) {
+        this.set(validProp, true)
+        this.set(portErr, '')
       } else {
-        this.set('validDestPort', false)
-        this.set('destPortErr', m)
+        this.set(validProp, false)
+        this.set(portErr, m)
       }
     },
 
