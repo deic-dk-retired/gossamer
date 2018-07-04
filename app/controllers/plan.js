@@ -117,6 +117,13 @@ export default Ember.Controller.extend({
     return `${react}`
   }),
 
+  ruleactDidChange: Ember.on('init', Ember.observer('ruleact', function () {
+    if (this.get('ruleact') === 'discard') {
+      this.set('pktrate', null)
+      this.set('rateLimErr', '')
+    }
+  })),
+
   protocolDidChange: Ember.on('init', Ember.observer('protocol', function () {
     if (this.get('protocol') === 'icmp') {
       this.setProperties({
@@ -182,16 +189,16 @@ export default Ember.Controller.extend({
     validateIpCidr (prefixinput) {
       let t = Ember.$(prefixinput).val()
       let v = (t.split('/').length < 2) ? nc.ip.validate(t) : nc.cidr.validate(t)
-      let ms = (typeof v !== 'object') ? v.split(': ') : v
+      let m = (typeof v !== 'object') ? v.split(': ') : v
       let matchedNetworks = this.get('usrNetworks').map((e) => nc.cidr.includes(e, this.get('destip')))
       let ifNetBelongsToUser = matchedNetworks.indexOf(true) !== -1
       let msg = ''
-      if (ms === null && ifNetBelongsToUser) {
+      if (m === null && ifNetBelongsToUser) {
         this.set('validDest', true)
         this.set('destErr', '')
       } else {
         this.set('validDest', false)
-        msg = (ms === null) ? 'This is not within networks assigned to you!' : ms.join(', ')
+        msg = (m === null) ? 'This is not within networks assigned to you!' : m.join(', ')
         this.set('destErr', msg)
       }
     },
@@ -214,16 +221,16 @@ export default Ember.Controller.extend({
 
     validateRateLimit () {
       const pattern = new RegExp(/^[^0\+\-\.\s](\d*)(?!\.|\,)$/, 'gm')
-      let t = Ember.$('#pktrate').val().trim()
+      const t = Ember.$('#pktrate').val().trim()
       let msg = ''
-      let m = pattern.test(t) ? '' : 'That is not a positive integer'
-      let ms = parseInt(t) <= Math.pow(10, 11) ? '' : 'Max allowed value is 100 gigabits or 10^11 bits'
-      if (m === '' && ms === '') {
+      const m1 = pattern.test(t) ? '' : 'That is not a positive integer'
+      const m2 = parseInt(t) <= Math.pow(10, 11) ? '' : 'Max allowed value is 100 gigabits or 10^11 bits'
+      if (m1 === '' && m2 === '') {
         this.set('validRateLim', true)
         this.set('rateLimErr', '')
       } else {
         this.set('validRateLim', false)
-        msg = (m === '') ? ms : m
+        msg = (m1 === '') ? m2 : m1
         this.set('rateLimErr', msg)
       }
     },
