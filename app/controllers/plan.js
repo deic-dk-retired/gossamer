@@ -129,7 +129,9 @@ export default Ember.Controller.extend({
       this.setProperties({
         srcport: null,
         destport: null,
-        tcpflags: []
+        tcpflags: [],
+        srcPortErr: '',
+        destPortErr: ''
       })
     }
     if (this.get('protocol') !== 'icmp') {
