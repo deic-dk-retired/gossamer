@@ -2,10 +2,9 @@ import Ember from 'ember'
 
 export default Ember.Component.extend({
   tagName: '',
-
   actions: {
-    validatePrefix (prxinp) {
-      this.sendAction('validatePrefix', prxinp)
+    validateIpCidr (prxinp) {
+      this.sendAction('validateIpCidr', prxinp)
     },
     validatePort (portid) {
       this.sendAction('validatePort', portid)

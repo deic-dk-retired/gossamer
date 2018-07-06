@@ -11,7 +11,8 @@
       type="text"
       name="srcip"
       value=srcip
-      placeholder="e.g. 192.0.2.1 or 192.0.2.0/24"}}
+      placeholder="e.g. 192.0.2.1 or 192.0.2.0/24"
+      focus-out=(action "validateIpCidr" "#srcip")}}
 </div>
 
 {{#if (not-eq protocol 'icmp')}}

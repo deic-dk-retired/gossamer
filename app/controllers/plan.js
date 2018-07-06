@@ -10,19 +10,25 @@ export default Ember.Controller.extend({
   tcpflags: [],
   isdefDur: false,
 
-  validSrcPort: false,
+  validSrc: true,
+  srcErr: '',
+
+  validSrcPort: true,
   srcPortErr: '',
 
   validDest: false,
   destErr: '',
 
-  validDestPort: false,
+  validDestPort: true,
   destPortErr: '',
 
-  validRateLim: false,
+  validRateLimit: true,
   rateLimErr: '',
 
   validated: false,
+  // validated: Ember.on('didRender', Ember.$('input', function () {
+  //   Ember.Logger.info('blur')
+  // })),
 
   uid: Ember.computed('session', function () {
     return `${this.get('session.data.authenticated.uid')}`
@@ -118,10 +124,14 @@ export default Ember.Controller.extend({
   }),
 
   ruleactDidChange: Ember.on('init', Ember.observer('ruleact', function () {
-    if (this.get('ruleact') === 'discard') {
-      this.set('pktrate', null)
-      this.set('rateLimErr', '')
+    this.set('pktrate', null)
+    this.set('rateLimErr', '')
+    if (this.get('ruleact') === 'rate limit') {
+      this.set('validRateLimit', false)
+    } else {
+      this.set('validRateLimit', true)
     }
+    this.send('checkValidated')
   })),
 
   protocolDidChange: Ember.on('init', Ember.observer('protocol', function () {
@@ -173,14 +183,17 @@ export default Ember.Controller.extend({
         ruleact: 'discard',
         pktrate: 0,
 
-        validDest: false,
-        validDestPort: false,
-        validRateLim: false,
-        validated: false,
-        destErr: '',
+        srcErr: '',
         srcPortErr: '',
+        destErr: '',
         destPortErr: '',
-        rateLimErr: ''
+        rateLimErr: '',
+        validSrc: true,
+        validSrcPort: true,
+        validDest: false,
+        validDestPort: true,
+        validRateLimit: true,
+        validated: false
       })
     },
 
@@ -188,12 +201,33 @@ export default Ember.Controller.extend({
       this.set('toMinDate', this.get('fromDate'))
     },
 
+    checkValidated () {
+      let protocol = this.get('protocol')
+      let vldSrc = this.get('validSrc')
+      let vldSrcPort = this.get('validSrcPort')
+      let vldDes = this.get('validDest')
+      let vldDesPort = this.get('validDestPort')
+      let vldRtLim = this.get('validRateLimit')
+      this.set('validated', false)
+      // Ember.Logger.info(protocol !== 'icmp' && vldSrc && vldSrcPort && vldDes && vldDesPort && vldRtLim)
+      if (protocol !== 'icmp' && vldSrc && vldSrcPort && vldDes && vldDesPort && vldRtLim) {
+        this.set('validated', true)
+      }
+      // Ember.Logger.info(protocol === 'icmp' && vldSrc && vldDes && vldRtLim)
+      if (protocol === 'icmp' && vldSrc && vldDes && vldRtLim) {
+        this.set('validated', true)
+      }
+    },
+
     validateIpCidr (prefixinput) {
       let t = Ember.$(prefixinput).val()
       let v = (t.split('/').length < 2) ? nc.ip.validate(t) : nc.cidr.validate(t)
       let m = (typeof v !== 'object') ? v.split(': ') : v
-      let matchedNetworks = this.get('usrNetworks').map((e) => nc.cidr.includes(e, this.get('destip')))
-      let ifNetBelongsToUser = matchedNetworks.indexOf(true) !== -1
+      let ifNetBelongsToUser = false
+      if (prefixinput === '#destip') {
+        const matchedNetworks = this.get('usrNetworks').map((e) => nc.cidr.includes(e, this.get('destip')))
+        ifNetBelongsToUser = matchedNetworks.indexOf(true) !== -1
+      }
       let msg = ''
       if (m === null && ifNetBelongsToUser) {
         this.set('validDest', true)
@@ -203,6 +237,7 @@ export default Ember.Controller.extend({
         msg = (m === null) ? 'This is not within networks assigned to you!' : m.join(', ')
         this.set('destErr', msg)
       }
+      this.send('checkValidated')
     },
 
     validatePort (portid) {
@@ -219,6 +254,7 @@ export default Ember.Controller.extend({
         this.set(validProp, false)
         this.set(portErr, m)
       }
+      this.send('checkValidated')
     },
 
     validateRateLimit () {
@@ -228,13 +264,14 @@ export default Ember.Controller.extend({
       const m1 = pattern.test(t) ? '' : 'That is not a positive integer'
       const m2 = parseInt(t) <= Math.pow(10, 11) ? '' : 'Max allowed value is 100 gigabits or 10^11 bits'
       if (m1 === '' && m2 === '') {
-        this.set('validRateLim', true)
+        this.set('validRateLimit', true)
         this.set('rateLimErr', '')
       } else {
-        this.set('validRateLim', false)
+        this.set('validRateLimit', false)
         msg = (m1 === '') ? m2 : m1
         this.set('rateLimErr', msg)
       }
+      this.send('checkValidated')
     },
 
     createRule () {
@@ -291,4 +328,5 @@ export default Ember.Controller.extend({
       }
     }
   }
+
 })

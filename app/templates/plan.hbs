@@ -44,30 +44,33 @@
         </div>
         <h4 class="ui dividing medium header blue">Source Information</h4>
          {{src-fields
+            protocol=protocol
             srcip=srcip
+            srcErr=srcErr
             srcport=srcport
             srcPortErr=srcPortErr
-            protocol=protocol
+            validSrc=validSrc
+            validSrcPort=validSrcPort
             validated=validated
             validatePort=(action "validatePort")
             validateIpCidr=(action "validateIpCidr")}}
         <h4 class="ui dividing medium header green">Destination Information</h4>
         {{#if (not-eq protocol '')}}
           {{dest-fields
+              protocol=protocol
               mod=model
               destip=destip
               destErr=destErr
               destport=destport
               destPortErr=destPortErr
-              protocol=protocol
+              validDestPort=validDestPort
+              validDest=validDest
               tcpflags=tcpflags
               icmptype=icmptype
               icmpcode=icmpcode
               usrNetworks=usrNetworks
               userNetworksPopup=userNetworksPopup
               validated=validated
-
-              validDestPort=validDestPort
               validatePort=(action "validatePort")
               validateIpCidr=(action "validateIpCidr")}}
         {{else}}
