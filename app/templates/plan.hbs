@@ -194,12 +194,12 @@
             </label>
             {{input type="number"
                 min="1"
-                max="9600"
+                max="100000000000"
                 id="pktrate"
                 name="pktrate"
                 id="pktrate"
                 value=pktrate
-                placeholder="e.g. 9600"
+                placeholder="e.g. 5899828"
                 focus-out=(action "validateRateLimit")}}
             {{#unless (eq rateLimErr '')}}
               <div class="ui pointing basic red label">
