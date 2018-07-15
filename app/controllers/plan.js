@@ -152,6 +152,7 @@ export default Ember.Controller.extend({
         })
       }
     }
+    this.send('checkValidated')
   })),
 
   responseMessage: '',
@@ -199,49 +200,51 @@ export default Ember.Controller.extend({
     },
 
     checkValidated () {
-      let protocol = this.get('protocol')
-      let vldSrc = this.get('validSrc')
-      let vldSrcPort = this.get('validSrcPort')
-      let vldDes = this.get('validDest')
-      let vldDesPort = this.get('validDestPort')
-      let vldRtLim = this.get('validRateLimit')
+      const protocol = this.get('protocol')
+      const vldSrc = this.get('validSrc')
+      const vldSrcPort = this.get('validSrcPort')
+      const vldDes = this.get('validDest')
+      const vldDesPort = this.get('validDestPort')
+      const vldRtLim = this.get('validRateLimit')
       this.set('validated', false)
-      if (protocol !== 'icmp' && vldSrc && vldSrcPort && vldDes && vldDesPort && vldRtLim) {
-        this.set('validated', true)
-      }
-      if (protocol === 'icmp' && vldSrc && vldDes && vldRtLim) {
+      if ((protocol !== 'icmp' && (vldSrc && vldSrcPort && vldDes && vldDesPort && vldRtLim)) ||
+          (protocol === 'icmp' && (vldSrc && vldDes && vldRtLim))) {
         this.set('validated', true)
       }
     },
 
-    validateIpCidr (prefixinput) {
-      const t = Ember.$(prefixinput).val()
-      const validipcidr = (t.split('/').length < 2) ? nc.ip.validate(t) : nc.cidr.validate(t)
-      const m = (typeof validipcidr !== 'object') ? validipcidr.split(': ') : validipcidr
-      let ifNetBelongsToUser = false
-      let msg = ''
-      if (prefixinput === '#destip') {
-        const matchedNetworks = this.get('usrNetworks').map((e) => nc.cidr.includes(e, this.get('destip')))
-        ifNetBelongsToUser = matchedNetworks.indexOf(true) !== -1
-        if (m === null && ifNetBelongsToUser) {
-          this.set('validDest', true)
-          this.set('destErr', '')
-        } else {
-          this.set('validDest', false)
-          msg = (m === null) ? 'This is not within networks assigned to you!' : m.join(', ')
-          this.set('destErr', msg)
-        }
-      }
-      if (prefixinput === '#srcip') {
-        if (t.length > 0 && m !== null) {
-          this.set('validSrc', false)
-          this.set('srcErr', m.join(', '))
-        } else {
-          this.set('validSrc', true)
-          this.set('srcErr', '')
-        }
+    validateSrcIp (elem, errMsg) {
+      if (elem.length > 0 && errMsg !== null) {
+        this.set('validSrc', false)
+        this.set('srcErr', errMsg.join(', '))
+      } else {
+        this.set('validSrc', true)
+        this.set('srcErr', '')
       }
       this.send('checkValidated')
+    },
+
+    validateDestIp (errMsg) {
+      let netBelongsToUser = false
+      let errMsgHasNet = ''
+      const matchedNetworks = this.get('usrNetworks').map((e) => nc.cidr.includes(e, this.get('destip')))
+      netBelongsToUser = matchedNetworks.indexOf(true) !== -1
+      if (errMsg === null && netBelongsToUser) {
+        this.set('validDest', true)
+        this.set('destErr', '')
+      } else {
+        this.set('validDest', false)
+        errMsgHasNet = (errMsg === null) ? 'This is not within networks assigned to you!' : errMsg.join(', ')
+        this.set('destErr', errMsgHasNet)
+      }
+      this.send('checkValidated')
+    },
+
+    validateIpCidr (prefixinput) {
+      const elemVal = Ember.$(prefixinput).val()
+      const validated = (elemVal.split('/').length < 2) ? nc.ip.validate(elemVal) : nc.cidr.validate(elemVal)
+      const frmtdMsg = (typeof validated !== 'object') ? validated.split(': ') : validated
+      prefixinput === '#destip' ? this.send('validateDestIp', frmtdMsg) : this.send('validateSrcIp', elemVal, frmtdMsg)
     },
 
     validatePort (portid) {
@@ -262,7 +265,7 @@ export default Ember.Controller.extend({
     },
 
     validateRateLimit () {
-      const pattern = new RegExp(/^[^0\+\-\.\s](\d*)(?!\.|\,)$/, 'gm')
+      const pattern = new RegExp(/^[^0+\-.\s](\d*)(?!\.|,)$/, 'gm')
       const t = Ember.$('#pktrate').val().trim()
       let msg = ''
       const m1 = pattern.test(t) ? '' : 'That is not a positive integer'
@@ -281,8 +284,6 @@ export default Ember.Controller.extend({
     createRule () {
       let ruuid = uuid.v4()
       let fxExDt = this.get('extractDate')
-      // let matchedNetworks = this.get('usrNetworks').map((e) => nc.cidr.includes(e, this.get('destip')))
-      // let ifNetBelongsToUser = matchedNetworks.indexOf(true) !== -1
       if (this.get('validated')) {
         let rule = this.get('store').createRecord('rule', {
           ruleuuid: ruuid,

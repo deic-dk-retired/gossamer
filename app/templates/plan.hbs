@@ -82,7 +82,7 @@
           <label>Packet Size or Range <span class="ui green header tiny">`{{pktlen}}`</span></label>
           {{input type="text"
             id="pktlen" name="pktlen" id="pktlen"
-            value=pktlen placeholder="e.g. 1500 or >=64 <=9000"}}
+            value=pktlen placeholder="e.g. =2900 =500-25000 =>1000 =<5200"}}
         </div>
         <div class="field">
           <label>Fragment Encoding</label>
@@ -112,7 +112,7 @@
               onChange=(action (mut isdefDur))}}
            {{ui-popup tagName="i"
               class="info icon green small"
-              content="If checked, time range of rule is set to 10 minutes. It starts when you ''Deploy Rule''"
+              content="If checked, time range of rule is set to 10 minutes starting from the time it is deployed. It starts when you ''Deploy Rule''"
               variation="mini wide"
               position="right center"}}
         </div>

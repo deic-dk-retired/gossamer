@@ -27,7 +27,7 @@
       {{ui-popup
           tagName="i"
           class="info icon blue small"
-          content="Empty port means any/all ports. You can see the entered value on the right"
+          content="Empty port means any/all ports. You can see the entered value next to the field label"
           variation="tiny wide"
           position="right center"}}
       <span class="ui green header tiny">`{{srcport}}`</span>
@@ -37,7 +37,7 @@
         name="srcport"
         id="srcport"
         value=srcport
-        placeholder="e.g =8080 =1000 <=5200"
+        placeholder="e.g =8080 =90-1000 =>1000 =<5200"
         focus-out=(action "validatePort" '#srcport')}}
     {{#unless (eq srcPortErr '')}}
       <div class="ui pointing basic red label">

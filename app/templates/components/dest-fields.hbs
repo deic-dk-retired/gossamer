@@ -26,7 +26,7 @@
     <label>Destination Port
       {{ui-popup tagName="i"
           class="info icon green small"
-          content="You can see the entered value on the right"
+          content="Empty port means any/all ports. You can see the entered value next to the field label"
           variation="mini wide"
           position="right center"}}
       <span class="ui green header tiny">`{{destport}}`</span>
@@ -36,7 +36,7 @@
         name="destport"
         id="destport"
         value=destport
-        placeholder="e.g =8080 =1000 <=5200"
+        placeholder="e.g =8080 =90-1000 =>1000 =<5200"
         focus-out=(action "validatePort" '#destport')}}
       {{#unless (eq destPortErr '')}}
         <div class="ui pointing basic red label">
