@@ -26,22 +26,19 @@ export default Ember.Controller.extend({
   rateLimErr: '',
 
   validated: false,
-  // validated: Ember.on('didRender', Ember.$('input', function () {
-  //   Ember.Logger.info('blur')
-  // })),
 
   uid: Ember.computed('session', function () {
     return `${this.get('session.data.authenticated.uid')}`
   }),
 
   usrtype: Ember.computed('uid', function () {
-    let uid = this.get('uid')
+    const uid = this.get('uid')
     return `${this.get('store').peekRecord('user', uid).get('kind')}`
   }),
 
   usrNetworks: Ember.computed('uid', function () {
-    let uid = this.get('uid')
-    let usrNets = []
+    const uid = this.get('uid')
+    const usrNets = []
     this.get('store').peekRecord('user', uid).get('networks').forEach(function (e) {
       usrNets.push(e.get('net'))
     })
@@ -51,7 +48,7 @@ export default Ember.Controller.extend({
   userNetworksPopup: Ember.computed('usrNetworks', function () {
     let p = `<div class="ui small header">Assigned Networks</div>
       <div class="ui relaxed list">`
-    let un = this.get('usrNetworks')
+    const un = this.get('usrNetworks')
     un.forEach((e) => {
       p += `<div class="item">
               <i class="fork icon"></i>
@@ -66,12 +63,12 @@ export default Ember.Controller.extend({
   }),
 
   coid: Ember.computed('uid', function () {
-    let uid = this.get('uid')
+    const uid = this.get('uid')
     return `${this.get('store').peekRecord('user', uid).get('customerid')}`
   }),
 
   couuid: Ember.computed('uid', function () {
-    let uid = this.get('uid')
+    const uid = this.get('uid')
     return `${this.get('store').peekRecord('user', uid).get('couuid')}`
   }),
 
@@ -81,7 +78,7 @@ export default Ember.Controller.extend({
   }),
 
   isdefDurChanged: Ember.on('init', Ember.observer('isdefDur', function () {
-    let uptime = function () {
+    const uptime = function () {
       if (this.get('isdefDur')) {
         this.set('mnow', moment.now())
       }
@@ -91,31 +88,31 @@ export default Ember.Controller.extend({
   })),
 
   fromDate: Ember.computed('mnow', function () {
-    let d = new Date(this.get('mnow'))
+    const d = new Date(this.get('mnow'))
     return d
   }),
 
   toDate: Ember.computed('mnowef10m', function () {
-    let d = new Date(this.get('mnowef10m'))
+    const d = new Date(this.get('mnowef10m'))
     return d
   }),
 
   extractDate (dt) {
-    let exdt = Array.isArray(dt) ? dt[0] : dt
+    const exdt = Array.isArray(dt) ? dt[0] : dt
     return exdt
   },
 
   fragmentList: ['dont-fragment', 'first-fragment', 'is-fragment', 'last-fragment', 'not-a-fragment'],
 
   processedFragenc: Ember.computed('fragenc', function () {
-    let fe = this.get('fragenc')
+    const fe = this.get('fragenc')
     return fe !== null ? `[${fe}]` : ``
   }),
 
   ruleact: 'discard',
 
   resact: Ember.computed('ruleact', function () {
-    let act = this.get('ruleact')
+    const act = this.get('ruleact')
     let react = 'discard'
     if (act === 'rate limit') {
       react = `${act} ${this.get('pktrate')}`
@@ -209,33 +206,40 @@ export default Ember.Controller.extend({
       let vldDesPort = this.get('validDestPort')
       let vldRtLim = this.get('validRateLimit')
       this.set('validated', false)
-      // Ember.Logger.info(protocol !== 'icmp' && vldSrc && vldSrcPort && vldDes && vldDesPort && vldRtLim)
       if (protocol !== 'icmp' && vldSrc && vldSrcPort && vldDes && vldDesPort && vldRtLim) {
         this.set('validated', true)
       }
-      // Ember.Logger.info(protocol === 'icmp' && vldSrc && vldDes && vldRtLim)
       if (protocol === 'icmp' && vldSrc && vldDes && vldRtLim) {
         this.set('validated', true)
       }
     },
 
     validateIpCidr (prefixinput) {
-      let t = Ember.$(prefixinput).val()
-      let v = (t.split('/').length < 2) ? nc.ip.validate(t) : nc.cidr.validate(t)
-      let m = (typeof v !== 'object') ? v.split(': ') : v
+      const t = Ember.$(prefixinput).val()
+      const validipcidr = (t.split('/').length < 2) ? nc.ip.validate(t) : nc.cidr.validate(t)
+      const m = (typeof validipcidr !== 'object') ? validipcidr.split(': ') : validipcidr
       let ifNetBelongsToUser = false
+      let msg = ''
       if (prefixinput === '#destip') {
         const matchedNetworks = this.get('usrNetworks').map((e) => nc.cidr.includes(e, this.get('destip')))
         ifNetBelongsToUser = matchedNetworks.indexOf(true) !== -1
+        if (m === null && ifNetBelongsToUser) {
+          this.set('validDest', true)
+          this.set('destErr', '')
+        } else {
+          this.set('validDest', false)
+          msg = (m === null) ? 'This is not within networks assigned to you!' : m.join(', ')
+          this.set('destErr', msg)
+        }
       }
-      let msg = ''
-      if (m === null && ifNetBelongsToUser) {
-        this.set('validDest', true)
-        this.set('destErr', '')
-      } else {
-        this.set('validDest', false)
-        msg = (m === null) ? 'This is not within networks assigned to you!' : m.join(', ')
-        this.set('destErr', msg)
+      if (prefixinput === '#srcip') {
+        if (t.length > 0 && m !== null) {
+          this.set('validSrc', false)
+          this.set('srcErr', m.join(', '))
+        } else {
+          this.set('validSrc', true)
+          this.set('srcErr', '')
+        }
       }
       this.send('checkValidated')
     },
@@ -320,7 +324,6 @@ export default Ember.Controller.extend({
         })
       } else {
         this.set('responseMessage', `You can't add rules on non-assigned networks`)
-        // this.get('notifications').clearAll()
         this.get('notifications').warning(this.get('responseMessage'), {
           autoClear: true,
           clearDuration: 10000
