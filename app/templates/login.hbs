@@ -14,23 +14,19 @@
       <div class="ui header huge centered inverted">DDoS Protection Sys.</div>
     </div>
     <div class="row">
-      <form class="ui large form">
-        <div class="ui padded segment transparent">
+      <div class="ui padded segment transparent">
+        <form class="ui large form">
           <button
               class="ui fluid large black submit animated fade button"
               value="WAYF" {{action "authwayf" on="click"}}>
             <div class="hidden content"><i class="sign in icon"></i></div>
             <div class="visible content">Log In via Institution</div>
           </button>
+        </form>
+        <div class="ui horizontal inverted divider">
+          or
         </div>
-      </form>
-    </div>
-    <div class="ui horizontal inverted divider">
-      or
-    </div>
-     <div class="row">
-      <form class="ui large form">
-        <div class="ui padded segment transparent">
+        <form class="ui large form">
           <div class="field">
             <label>Username</label>
             <div class="ui left icon input">
@@ -53,12 +49,9 @@
                     content="Show Password"
                     variation="tiny"
                     position="right center"}}
-                <span>
-                  <i class="icon eye {{unless showPass 'slash'}}" {{action "showPassword" on="click"}}></i>
-                </span>
+                <span><i class="icon eye {{unless showPass 'slash'}}" {{action "showPassword" on="click"}}></i></span>
               {{/ui-popup}}
             </div>
-
           </div>
           <button
               class="ui fluid large black submit animated fade button {{if loginOk 'loading'}}"
@@ -66,8 +59,8 @@
             <div class="hidden content"><i class="sign in icon"></i></div>
             <div class="visible content">Sign In Locally</div>
           </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
 </div>
