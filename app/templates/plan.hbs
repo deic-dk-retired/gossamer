@@ -13,7 +13,7 @@
           </div>
         </div>
       </div>
-      <form class="ui form" {{action 'createRule' on='submit'}}>
+      <form class="ui form" {{action "createRule" on="submit"}}>
         <h4 class="ui dividing medium header green">Protocol <div class="ui red tiny circular empty label dot"></div></h4>
         <div class="required field">
           <div class="inline fields">
@@ -44,22 +44,35 @@
         </div>
         <h4 class="ui dividing medium header blue">Source Information</h4>
          {{src-fields
-            srcip=srcip
-            srcport=srcport
             protocol=protocol
-            validated=validated}}
+            srcip=srcip
+            srcErr=srcErr
+            srcport=srcport
+            srcPortErr=srcPortErr
+            validSrc=validSrc
+            validSrcPort=validSrcPort
+            validated=validated
+            validatePort=(action "validatePort")
+            validateIpCidr=(action "validateIpCidr")}}
         <h4 class="ui dividing medium header green">Destination Information</h4>
         {{#if (not-eq protocol '')}}
           {{dest-fields
+              protocol=protocol
               mod=model
               destip=destip
+              destErr=destErr
               destport=destport
-              protocol=protocol
+              destPortErr=destPortErr
+              validDestPort=validDestPort
+              validDest=validDest
               tcpflags=tcpflags
               icmptype=icmptype
               icmpcode=icmpcode
               usrNetworks=usrNetworks
-              validated=validated}}
+              userNetworksPopup=userNetworksPopup
+              validated=validated
+              validatePort=(action "validatePort")
+              validateIpCidr=(action "validateIpCidr")}}
         {{else}}
           <p>Select a protocol above to proceed</p>
         {{/if}}
@@ -69,7 +82,7 @@
           <label>Packet Size or Range <span class="ui green header tiny">`{{pktlen}}`</span></label>
           {{input type="text"
             id="pktlen" name="pktlen" id="pktlen"
-            value=pktlen placeholder="e.g. 1500 or >=64 <=9000"}}
+            value=pktlen placeholder="e.g. =2900 =500-25000 =>1000 =<5200"}}
         </div>
         <div class="field">
           <label>Fragment Encoding</label>
@@ -98,15 +111,15 @@
               checked=isdefDur
               onChange=(action (mut isdefDur))}}
            {{ui-popup tagName="i"
-              class="info icon green tiny"
-              content="If checked, time range of rule is set to 10 minutes. It starts when you ''Deploy Rule''"
+              class="info icon green small"
+              content="If checked, time range of rule is set to 10 minutes starting from the time it is deployed. It starts when you ''Deploy Rule''"
               variation="mini wide"
               position="right center"}}
         </div>
 
         <div class="ui grid">
           <div class="field eight wide column">
-            <label>From:</label>
+            <label>From: <div class="ui red tiny circular empty label dot"></div></label>
             {{ember-flatpickr
                 altFormat='D, d M \'y, H:i'
                 altInput=true
@@ -126,7 +139,7 @@
                 time_24hr=true}}
           </div>
           <div class="field eight wide column">
-            <label>To:</label>
+            <label>To: <div class="ui red tiny circular empty label dot"></div></label>
             {{ember-flatpickr
                 altFormat='D, d M \'y, H:i'
                 altInput=true
@@ -171,16 +184,28 @@
         </div>
         {{#if (eq ruleact 'rate limit')}}
           <div class="field">
-            <label>Bits/sec<div class="ui red tiny circular empty label dot"></div> {{ui-popup tagName="i" class="info icon green tiny" content="Only positive integers > 0" variation="mini wide" position="right center"}}</label>
+            <label>Bits/sec<div class="ui red tiny circular empty label dot"></div>
+              {{ui-popup
+                  tagName="i"
+                  class="info icon green small"
+                  content="Only positive integers >= 1 and <=10^11, e.g 8300"
+                  variation="mini wide"
+                  position="right center"}}
+            </label>
             {{input type="number"
-                min="0"
-                max="9600"
+                min="1"
+                max="100000000000"
                 id="pktrate"
                 name="pktrate"
                 id="pktrate"
                 value=pktrate
-                placeholder="e.g. 9600"
-                focus-out=(action "")}}
+                placeholder="e.g. 5899828"
+                focus-out=(action "validateRateLimit")}}
+            {{#unless (eq rateLimErr '')}}
+              <div class="ui pointing basic red label">
+                {{rateLimErr}}
+              </div>
+            {{/unless}}
           </div>
         {{/if}}
 
@@ -193,11 +218,11 @@
               placeholder="e.g. why is this rule being added?"}}
         </div>
 
-        <button class="ui animated fade green button {{unless validated 'disabled'}}" type="submit">
+        <button class="ui animated fade green button" disabled="{{unless validated 'disabled'}}" type="submit">
           <div class="hidden content"><i class="check icon"></i></div>
           <div class="visible content">Deploy Rule</div>
         </button>
-        <button class="ui animated fade button" type="reset" {{action 'resetForm'}}>
+        <button class="ui animated fade button" type="reset" {{action "resetForm"}}>
           <div class="hidden content"><i class="refresh icon"></i></div>
            <div class="visible content">Reset Fields</div>
         </button>

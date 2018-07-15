@@ -4,7 +4,7 @@
         html=userNetworksPopup
         variation="mini wide"
         position="right center"}}
-      <i class="info icon green tiny"></i>
+      <i class="info icon green small"></i>
     {{/ui-popup}}
   </label>
   {{input
@@ -13,7 +13,7 @@
       id="destip"
       value=destip
       placeholder="e.g. 192.0.2.1 or 192.0.2.0/24"
-      focus-out=(action "validateDestPrefix")}}
+      focus-out=(action "validateIpCidr" "#destip")}}
     {{#unless (eq destErr '')}}
       <div class="ui pointing basic red label">
         {{destErr}}
@@ -25,8 +25,8 @@
   <div class="field {{unless (eq destPortErr '') 'error'}}">
     <label>Destination Port
       {{ui-popup tagName="i"
-          class="info icon green tiny"
-          content="You can see the entered value on the right"
+          class="info icon green small"
+          content="Empty port means any/all ports. You can see the entered value next to the field label"
           variation="mini wide"
           position="right center"}}
       <span class="ui green header tiny">`{{destport}}`</span>
@@ -36,8 +36,8 @@
         name="destport"
         id="destport"
         value=destport
-        placeholder="e.g 80"
-        focus-out=(action "validateDestPort")}}
+        placeholder="e.g =8080 =90-1000 =>1000 =<5200"
+        focus-out=(action "validatePort" '#destport')}}
       {{#unless (eq destPortErr '')}}
         <div class="ui pointing basic red label">
           {{destPortErr}}

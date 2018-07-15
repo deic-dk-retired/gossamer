@@ -2,7 +2,7 @@
   <label>Source Host or CIDR
     {{ui-popup
         tagName="i"
-        class="info icon blue tiny"
+        class="info icon blue small"
         content="Empty source ip/cidr means any/all sources"
         variation="tiny"
         position="right center"}}
@@ -10,8 +10,15 @@
   {{input
       type="text"
       name="srcip"
+      id="srcip"
       value=srcip
-      placeholder="e.g. 192.0.2.1 or 192.0.2.0/24"}}
+      placeholder="e.g. 192.0.2.1 or 192.0.2.0/24"
+      focus-out=(action "validateIpCidr" "#srcip")}}
+  {{#unless (eq srcErr '')}}
+      <div class="ui pointing basic red label">
+        {{srcErr}}
+      </div>
+    {{/unless}}
 </div>
 
 {{#if (not-eq protocol 'icmp')}}
@@ -19,8 +26,8 @@
     <label>Source Port
       {{ui-popup
           tagName="i"
-          class="info icon blue tiny"
-          content="Empty port means any/all ports. You can see the entered value on the right"
+          class="info icon blue small"
+          content="Empty port means any/all ports. You can see the entered value next to the field label"
           variation="tiny wide"
           position="right center"}}
       <span class="ui green header tiny">`{{srcport}}`</span>
@@ -28,6 +35,14 @@
     {{input
         type="text"
         name="srcport"
-        value=srcport placeholder="e.g 80"}}
+        id="srcport"
+        value=srcport
+        placeholder="e.g =8080 =90-1000 =>1000 =<5200"
+        focus-out=(action "validatePort" '#srcport')}}
+    {{#unless (eq srcPortErr '')}}
+      <div class="ui pointing basic red label">
+        {{srcPortErr}}
+      </div>
+    {{/unless}}
   </div>
 {{/if}}
